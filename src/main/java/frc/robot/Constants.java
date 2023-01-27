@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import java.util.Enumeration;
+
+import com.fasterxml.jackson.databind.introspect.AnnotationCollector.OneAnnotation;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 
@@ -95,5 +99,13 @@ public final class Constants {
   public static final boolean KFrontRightDriveEncoderReversed = false;
   public static final boolean KBackLeftDriveEncoderReversed = false;
   public static final boolean KBackRightDriveEncoderReversed = false; 
+
+  //LED ports
+  public static final int KLEDPort = 2;
+  public static final int KLEDBuffer = 20;
+  public static enum KLEDSTATE {
+    OFF,
+    YELLOW,
+    PURPLE
+  };
 }
-        
