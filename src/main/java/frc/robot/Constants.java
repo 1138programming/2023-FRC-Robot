@@ -95,5 +95,9 @@ public final class Constants {
   public static final boolean KFrontRightDriveEncoderReversed = false;
   public static final boolean KBackLeftDriveEncoderReversed = false;
   public static final boolean KBackRightDriveEncoderReversed = false; 
+
+  // Endgame
+  // public static final int
+  // public static final int
 }
         
