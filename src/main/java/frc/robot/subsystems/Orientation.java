@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.I2C; // Color Sensor
  * 1 proximity sensor
  * Potientially 1 pnuematic piston (Double acting solinoid)
  */
-public class Orientation {
+public class Orientation extends SubsystemBase {
     
     private DigitalInput proximitySensor;
     private CANSparkMax orientationMotor1;

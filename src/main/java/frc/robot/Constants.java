@@ -103,6 +103,8 @@ public final class Constants {
   public static final int KOrientationPossiblePistonFrontID = 3;
   public static final int KOrientationPossiblePistonBackID = 4;
   public static final int KOrientationColorID = 5;
+  public static final int KMotor1Speed = 6;
+  public static final int KMotor2Speed = 7;
  
 }
         
