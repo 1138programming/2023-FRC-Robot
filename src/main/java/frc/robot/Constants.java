@@ -95,5 +95,14 @@ public final class Constants {
   public static final boolean KFrontRightDriveEncoderReversed = false;
   public static final boolean KBackLeftDriveEncoderReversed = false;
   public static final boolean KBackRightDriveEncoderReversed = false; 
+
+  // Scoring
+  public static final int KClawMotor1 = 1;
+  public static final int KClawMotor2 = 2;
+  public static final int KAngleArmMotor = 3;
+  public static final int KExtensionMotor1 = 4;
+  public static final int KExtensionMotor2 = 5;
+  public static final boolean KExtensionMotor1Reversed = true;
+
 }
         
