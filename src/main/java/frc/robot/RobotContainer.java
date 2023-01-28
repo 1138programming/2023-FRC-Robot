@@ -6,6 +6,11 @@ package frc.robot;
 
 import static frc.robot.Constants.*;
 
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -34,8 +39,13 @@ public class RobotContainer {
   private final ToggleGenerateOdometryLog toggleGenerateOdometryLog = new ToggleGenerateOdometryLog(base);
   private final WriteOdometryLog writeOdometryLog = new WriteOdometryLog(base);
   private final ToggleSpeed toggleFastSpeed = new ToggleSpeed(base, 1);
-  private final ToggleSpeed toggleMidSpeed = new ToggleSpeed(base, KBaseDriveHighPercent);
   private final ToggleSpeed toggleSlowSpeed = new ToggleSpeed(base, KBaseDriveLowPercent);
+
+  // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
+  PathPlannerTrajectory blue1 = PathPlanner.loadPath("Blue1", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
+
+  // This trajectory can then be passed to a path follower such as a PPSwerveControllerCommand
+  // Or the path can be sampled at a given point in time for custom path following
 
   //Controller Ports (check in Driver Station, IDs may be different for each computer)
   private static final int KLogitechPort = 0;
@@ -87,7 +97,7 @@ public class RobotContainer {
     //Game controllers
     logitech = new Joystick(KLogitechPort); //Logitech Dual Action
     xbox = new XboxController(KXboxPort);   //Xbox 360 for Windows
-
+    
     // Logitch Buttons 
     logitechBtnX = new JoystickButton(logitech, KLogitechButtonX);
     logitechBtnA = new JoystickButton(logitech, KLogitechButtonA);

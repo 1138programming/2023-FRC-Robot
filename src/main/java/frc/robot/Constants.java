@@ -95,5 +95,22 @@ public final class Constants {
   public static final boolean KFrontRightDriveEncoderReversed = false;
   public static final boolean KBackLeftDriveEncoderReversed = false;
   public static final boolean KBackRightDriveEncoderReversed = false; 
+
+  public static final double KPPMaxVelocity = 4;
+  public static final double KPPMaxAcceleration = 3;
+
+  public static final double KXControllerP = 1;
+  public static final double KXControllerI = 0;
+  public static final double KXControllerD = 0;
+
+  public static final double KYControllerP = 1;
+  public static final double KYControllerI = 0;
+  public static final double KYControllerD = 0;
+
+  public static final double KRotControllerP = 1;
+  public static final double KRotControllerI = 0;
+  public static final double KRotControllerD = 0;
+
+  public static final double KRotMaxVelocity = 6.28;
+  public static final double KRotMaxAcceleration = 3.14;
 }
-        

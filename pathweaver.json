@@ -1,0 +1,9 @@
+{
+  "lengthUnit": "Foot",
+  "exportUnit": "Always Meters",
+  "maxVelocity": 15.0,
+  "maxAcceleration": 60.0,
+  "trackWidth": 1.875,
+  "gameName": "Charged Up",
+  "outputDir": "../../../Desktop/2023-FRC-Robot-Pathweaver"
+}

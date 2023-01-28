@@ -16,6 +16,9 @@ import com.revrobotics.CANSparkMax;
 
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.HolonomicDriveController;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -23,6 +26,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.SPI;
@@ -48,6 +52,12 @@ public class Base extends SubsystemBase {
   private ArrayList<String> odometryData;
   private static final String logFolder = "/media/sda2/";
   private static final String logTitle = "'OdometryLog'_yy-MM-dd_HH-mm-ss'.csv'";
+
+  private PIDController xController;
+  private PIDController yController;
+  private ProfiledPIDController rotController;
+  private TrapezoidProfile.Constraints constraints;
+  private HolonomicDriveController HDC;
   
   public Base() {
     frontLeftModule = new SwerveModule(
@@ -100,6 +110,7 @@ public class Base extends SubsystemBase {
     enableLogging = false;
     startTime = RobotController.getFPGATime();
     odometryData = new ArrayList<String>();
+
   }
 
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, double maxDriveSpeedMPS) {
