@@ -43,11 +43,11 @@ public class Orientation extends SubsystemBase {
         orientationMotor2.set(speed);
     }
 
-    public void stopOrientationMotor1(double stop) {
+    public void stopOrientationMotor1() {
         orientationMotor1.set(0);
     }
 
-    public void stopOrientationMotor2(double stop) {
+    public void stopOrientationMotor2() {
         orientationMotor2.set(0);
     }
 
