@@ -2,24 +2,30 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+package frc.robot.commands.Base;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Endgame;
+
+import static frc.robot.Constants.*;
 
 public class EndgameCommand extends CommandBase {
-  /** Creates a new WriteOdometryLog. */
-  public EndgameCommand() {
-    this.base = base;
-    addRequirements(base);
+  Endgame endgame;
+  /** Creates a new EndgameCommand. */
+  public EndgameCommand(Endgame endgame) {
+    this.endgame = endgame;
+    addRequirements(endgame);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    base.writeOdometryData();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    endgame.moveServo(KEndgameServoPos);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -28,5 +34,6 @@ public class EndgameCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    return true;
   }
 }

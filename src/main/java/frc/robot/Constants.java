@@ -101,9 +101,6 @@ public final class Constants {
   public static final int KLimitSwitchBottom = 1;
   public static final int KLinearServoTop = 2;
   public static final int KLinearServoBottom = 3;
-  public static enum SERVONUM {
-    TOP,
-    BOTTOM
-  }
+  public static final double KEndgameServoPos = 2;
 }
         
