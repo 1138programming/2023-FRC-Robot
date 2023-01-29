@@ -37,7 +37,10 @@ public final class Constants {
   public static final double KAngleMotorRotToDeg = 35;
   public static final double KNeoMaxRPM = 5700;
   public static final double KPhysicalMaxDriveSpeedMPS = KNeoMaxRPM * KDriveMotorRPMToMetersPerSec;
-  public static final double KMaxAngularSpeed = Math.PI;
+  // public static final double KMaxAngularSpeed = Math.PI * 2;
+  private static final double KBaseCircumference = 2.493518;
+  public static final double KMaxAngularSpeed = 10;
+  // KPhysicalMaxDriveSpeedMPS / KBaseCircumference;
   
   
   //Base
@@ -113,4 +116,9 @@ public final class Constants {
 
   public static final double KRotMaxVelocity = 6.28;
   public static final double KRotMaxAcceleration = 3.14;
+
+    //sys id config numbers 
+  public static final double ks = 0.20309;
+  public static final double kv = 2.5574;
+  public static final double ka = 0.38422;
 }

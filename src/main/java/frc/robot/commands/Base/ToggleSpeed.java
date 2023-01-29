@@ -8,8 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Base;
 import static frc.robot.Constants.*;
 public class ToggleSpeed extends CommandBase {
-  private Base base;
-//   private 
+private Base base;
 private double speedFactor;
 
   public ToggleSpeed(Base base, double speedFactor) {

@@ -6,10 +6,13 @@ package frc.robot;
 
 import static frc.robot.Constants.*;
 
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
+import java.io.ObjectInputFilter.Config;
+import java.util.List;
+
+// import com.pathplanner.lib.PathConstraints;
+// import com.pathplanner.lib.PathPlanner;
+// import com.pathplanner.lib.PathPlannerTrajectory;
+// import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -22,13 +25,35 @@ import frc.robot.commands.Base.WriteOdometryLog;
 import frc.robot.subsystems.Base;
 import frc.robot.commands.Base.ToggleSpeed;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.math.controller.HolonomicDriveController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
@@ -41,64 +66,71 @@ public class RobotContainer {
   private final ToggleSpeed toggleFastSpeed = new ToggleSpeed(base, 1);
   private final ToggleSpeed toggleSlowSpeed = new ToggleSpeed(base, KBaseDriveLowPercent);
 
-  // This will load the file "Example Path.path" and generate it with a max velocity of 4 m/s and a max acceleration of 3 m/s^2
-  PathPlannerTrajectory blue1 = PathPlanner.loadPath("Blue1", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
+  // This will load the file "Example Path.path" and generate it with a max
+  // velocity of 4 m/s and a max acceleration of 3 m/s^2
+  // PathPlannerTrajectory blue1 = PathPlanner.loadPath("Blue1", new
+  // PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
 
-  // This trajectory can then be passed to a path follower such as a PPSwerveControllerCommand
+  // This trajectory can then be passed to a path follower such as a
+  // PPSwerveControllerCommand
   // Or the path can be sampled at a given point in time for custom path following
 
-  //Controller Ports (check in Driver Station, IDs may be different for each computer)
+  // Controller Ports (check in Driver Station, IDs may be different for each
+  // computer)
   private static final int KLogitechPort = 0;
-  private static final int KXboxPort = 1;  
+  private static final int KXboxPort = 1;
 
-  //Deadzone
+  // Deadzone
   private static final double KDeadZone = 0.05;
-  
-  //Joystick Axis IDs 
+
+  // Joystick Axis IDs
   private static final int KLeftYAxis = 1;
   private static final int KRightYAxis = 3;
   private static final int KLeftXAxis = 0;
   private static final int KRightXAxis = 2;
 
-  //Logitech Button Constants
+  // Logitech Button Constants
   public static final int KLogitechButtonX = 1;
   public static final int KLogitechButtonA = 2;
   public static final int KLogitechButtonB = 3;
   public static final int KLogitechButtonY = 4;
-  public static final int KLogitechLeftBumper = 5; 
+  public static final int KLogitechLeftBumper = 5;
   public static final int KLogitechRightBumper = 6;
   public static final int KLogitechLeftTrigger = 7;
   public static final int KLogitechRightTrigger = 8;
 
-  //Xbox Button Constants
-  public static final int KXboxButtonA = 1; 
+  // Xbox Button Constants
+  public static final int KXboxButtonA = 1;
   public static final int KXboxButtonB = 2;
-  public static final int KXboxButtonX = 3;  
-  public static final int KXboxButtonY = 4; 
-  public static final int KXboxLeftBumper = 5; 
-  public static final int KXboxRightBumper = 6; 
-  public static final int KXboxSelectButton = 7; 
-  public static final int KXboxStartButton = 8; 
-  public static final int KXboxLeftTrigger = 2; 
-  public static final int KXboxRightTrigger = 3; 
+  public static final int KXboxButtonX = 3;
+  public static final int KXboxButtonY = 4;
+  public static final int KXboxLeftBumper = 5;
+  public static final int KXboxRightBumper = 6;
+  public static final int KXboxSelectButton = 7;
+  public static final int KXboxStartButton = 8;
+  public static final int KXboxLeftTrigger = 2;
+  public static final int KXboxRightTrigger = 3;
 
-  //Game Controllers
+  // Game Controllers
   public static Joystick logitech;
-  public static XboxController xbox; 
-  //Controller Buttons/Triggers
-  public JoystickButton logitechBtnX, logitechBtnA, logitechBtnB, logitechBtnY, logitechBtnLB, logitechBtnRB, logitechBtnLT, logitechBtnRT; //Logitech Button
+  public static XboxController xbox;
+  // Controller Buttons/Triggers
+  public JoystickButton logitechBtnX, logitechBtnA, logitechBtnB, logitechBtnY, logitechBtnLB, logitechBtnRB,
+      logitechBtnLT, logitechBtnRT; // Logitech Button
   public JoystickButton xboxBtnA, xboxBtnB, xboxBtnX, xboxBtnY, xboxBtnLB, xboxBtnRB, xboxBtnStrt, xboxBtnSelect;
   public Trigger xboxBtnRT, xboxBtnLT;
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
   public RobotContainer() {
     base.setDefaultCommand(driveWithJoysticks);
 
-    //Game controllers
-    logitech = new Joystick(KLogitechPort); //Logitech Dual Action
-    xbox = new XboxController(KXboxPort);   //Xbox 360 for Windows
-    
-    // Logitch Buttons 
+    // Game controllers
+    logitech = new Joystick(KLogitechPort); // Logitech Dual Action
+    xbox = new XboxController(KXboxPort); // Xbox 360 for Windows
+
+    // Logitch Buttons
     logitechBtnX = new JoystickButton(logitech, KLogitechButtonX);
     logitechBtnA = new JoystickButton(logitech, KLogitechButtonA);
     logitechBtnB = new JoystickButton(logitech, KLogitechButtonB);
@@ -110,13 +142,13 @@ public class RobotContainer {
 
     // XBox Buttons
     xboxBtnA = new JoystickButton(xbox, KXboxButtonA);
-  	xboxBtnB = new JoystickButton(xbox, KXboxButtonB);
-		xboxBtnX = new JoystickButton(xbox, KXboxButtonX);
-		xboxBtnY = new JoystickButton(xbox, KXboxButtonY);
-		xboxBtnLB = new JoystickButton(xbox, KXboxLeftBumper);
+    xboxBtnB = new JoystickButton(xbox, KXboxButtonB);
+    xboxBtnX = new JoystickButton(xbox, KXboxButtonX);
+    xboxBtnY = new JoystickButton(xbox, KXboxButtonY);
+    xboxBtnLB = new JoystickButton(xbox, KXboxLeftBumper);
     xboxBtnRB = new JoystickButton(xbox, KXboxRightBumper);
     xboxBtnSelect = new JoystickButton(xbox, KXboxSelectButton);
-		xboxBtnStrt = new JoystickButton(xbox, KXboxStartButton);
+    xboxBtnStrt = new JoystickButton(xbox, KXboxStartButton);
     xboxBtnLT = new Trigger(() -> (joystickThreshold(xbox.getRawAxis(KXboxLeftTrigger))));
     xboxBtnRT = new Trigger(() -> (joystickThreshold(xbox.getRawAxis(KXboxRightTrigger))));
     // Configure the button bindings
@@ -124,9 +156,11 @@ public class RobotContainer {
   }
 
   /**
-   * Use this method to define your button->command mappings. Buttons can be created by
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
+   * it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
@@ -143,14 +177,35 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+
+    TrajectoryConfig config = new TrajectoryConfig(
+        KPhysicalMaxDriveSpeedMPS,
+        KPPMaxAcceleration)
+        // Add kinematics to ensure max speed is actually obeyed
+        .setKinematics(base.getKinematics());
+    // Apply the voltage constraint
+
+    Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+        // Start at the origin facing the +X direction
+        new Pose2d(0, 0, new Rotation2d(0)),
+        // Pass through these two interior waypoints, making an 's' curve path
+        List.of(new Translation2d(1, 0), new Translation2d(2, 0)),
+        // End 3 meters straight ahead of where we started, facing forward
+        new Pose2d(3, 0, new Rotation2d(0)),
+        // Pass config
+        config);
+        
+    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(exampleTrajectory, base::getPose2d,
+        base.getKinematics(), base.getHDC(), base::setModuleStates, base);
+    // Apply the voltage constraint
     // An ExampleCommand will run in autonomous
-    return null;
+    return swerveControllerCommand.andThen(() -> base.stop());
   }
 
   public static double scaleBetween(double unscaledNum, double minAllowed, double maxAllowed, double min, double max) {
     return (maxAllowed - minAllowed) * (unscaledNum - min) / (max - min) + minAllowed;
   }
-       
+
   public double getLogiRightYAxis() {
     final double Y = logitech.getRawAxis(KRightYAxis);
     SmartDashboard.putNumber("getLogiRightYAxis", -Y);
@@ -163,10 +218,10 @@ public class RobotContainer {
   public double getLogiLeftYAxis() {
     final double Y = logitech.getY();
     SmartDashboard.putNumber("getLogiLeftYAxis", -Y);
-    if(Y > KDeadZone || Y < -KDeadZone)
+    if (Y > KDeadZone || Y < -KDeadZone)
       return -Y;
-    else 
-      return 0; 
+    else
+      return 0;
   }
 
   public double getLogiRightXAxis() {
@@ -175,7 +230,7 @@ public class RobotContainer {
     if (X > KDeadZone || X < -KDeadZone) {
       return -X;
     } else {
-      return 0; 
+      return 0;
     }
   }
 
@@ -191,17 +246,17 @@ public class RobotContainer {
 
   public double getXboxLeftAxis() {
     final double Y = xbox.getRawAxis(KLeftYAxis);
-    if(Y > KDeadZone || Y < -KDeadZone)
+    if (Y > KDeadZone || Y < -KDeadZone)
       return -Y;
-    else 
+    else
       return 0;
   }
 
   public double getXboxLeftXAxis() {
     final double X = xbox.getRawAxis(KRightXAxis);
-    if(X > KDeadZone || X < -KDeadZone)
+    if (X > KDeadZone || X < -KDeadZone)
       return X;
-    else 
+    else
       return 0;
   }
 
@@ -215,9 +270,9 @@ public class RobotContainer {
 
   public double getXboxLeftYAxis() {
     final double Y = xbox.getRawAxis(KLeftYAxis);
-    if(Y > KDeadZone || Y < -KDeadZone)
+    if (Y > KDeadZone || Y < -KDeadZone)
       return -Y;
-    else 
+    else
       return 0;
   }
 
@@ -228,10 +283,11 @@ public class RobotContainer {
     else
       return 0;
   }
-public boolean joystickThreshold(double triggerValue) {
-    if (Math.abs(triggerValue) < .09) 
+
+  public boolean joystickThreshold(double triggerValue) {
+    if (Math.abs(triggerValue) < .09)
       return false;
-    else 
+    else
       return true;
   }
 }

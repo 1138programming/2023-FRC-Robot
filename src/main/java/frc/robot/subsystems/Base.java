@@ -104,15 +104,41 @@ public class Base extends SubsystemBase {
       KFrontLeftLocation, KFrontRightLocation,
       KBackLeftLocation, KBackRightLocation
     );
+
+    
     odometry = new SwerveDriveOdometry(kinematics, getHeading(), getPositions());
     driveSpeedFactor = KBaseDriveLowPercent;
 
     enableLogging = false;
     startTime = RobotController.getFPGATime();
     odometryData = new ArrayList<String>();
+    
+    xController = new PIDController(KXControllerP, KXControllerI, KXControllerD);
+    yController = new PIDController(KYControllerP, KYControllerI, KYControllerD);
+    constraints = new TrapezoidProfile.Constraints(KRotMaxAcceleration, KRotMaxAcceleration);
+    rotController = new ProfiledPIDController(KRotControllerP, KRotControllerI, KRotControllerD, constraints);
 
+    HDC = new HolonomicDriveController(xController, yController, rotController);    
+    
   }
-
+  public HolonomicDriveController getHDC() {
+    return HDC;
+  }
+  public SwerveDriveKinematics getKinematics() {
+    return kinematics; 
+  }
+  public Pose2d getPose2d() {
+    return pose;
+  }
+  public void setModuleStates(SwerveModuleState[] desiredStates) {
+    frontLeftModule.setDesiredState(desiredStates[0]);
+    frontRightModule.setDesiredState(desiredStates[1]);
+    backLeftModule.setDesiredState(desiredStates[2]);
+    backRightModule.setDesiredState(desiredStates[3]);
+  }
+  public void stop(){
+    drive(0, 0, 0, true, 0);
+  }
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, double maxDriveSpeedMPS) {
     xSpeed *= maxDriveSpeedMPS;
     ySpeed *= maxDriveSpeedMPS;
@@ -211,12 +237,12 @@ public class Base extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Gyro", getHeadingDeg());
+    // SmartDashboard.putNumber("Gyro", getHeadingDeg());
 
-    SmartDashboard.putNumber("Front left module", frontLeftModule.getAngleDeg());
-    SmartDashboard.putNumber("Front right module", frontRightModule.getAngleDeg());
-    SmartDashboard.putNumber("Back left module", backLeftModule.getAngleDeg());
-    SmartDashboard.putNumber("Back right module", backRightModule.getAngleDeg());
+    // SmartDashboard.putNumber("Front left module", frontLeftModule.getAngleDeg());
+    // SmartDashboard.putNumber("Front right module", frontRightModule.getAngleDeg());
+    // SmartDashboard.putNumber("Back left module", backLeftModule.getAngleDeg());
+    // SmartDashboard.putNumber("Back right module", backRightModule.getAngleDeg());
 
     SmartDashboard.putNumber("front left mag", frontLeftModule.getMagRotations());
     SmartDashboard.putNumber("front right mag", frontRightModule.getMagRotations());
@@ -228,9 +254,9 @@ public class Base extends SubsystemBase {
     SmartDashboard.putNumber("back left big", backLeftModule.getAbsoluteOffset());
     SmartDashboard.putNumber("back right big", backRightModule.getAbsoluteOffset());
 
-    SmartDashboard.putString("odometry pose", odometry.getPoseMeters().toString());
+    // SmartDashboard.putString("odometry pose", odometry.getPoseMeters().toString());
 
-    SmartDashboard.putBoolean("isCalibrating", gyro.isCalibrating());
+    // SmartDashboard.putBoolean("isCalibrating", gyro.isCalibrating());
 
     odometry.update(getHeading(), getPositions());
     pose = odometry.getPoseMeters();
