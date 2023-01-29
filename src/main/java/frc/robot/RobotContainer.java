@@ -14,7 +14,10 @@ import frc.robot.commands.Base.DriveWithJoysticks;
 import frc.robot.commands.Base.ResetEncoders;
 import frc.robot.commands.Base.ToggleGenerateOdometryLog;
 import frc.robot.commands.Base.WriteOdometryLog;
+import frc.robot.commands.Intake.IntakeSpinRollers;
+import frc.robot.commands.Intake.IntakeSpinSpaghetti;
 import frc.robot.subsystems.Base;
+import frc.robot.subsystems.Intake;
 import frc.robot.commands.Base.ToggleSpeed;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -30,6 +33,11 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Base base = new Base();
 
+  private final Intake intake = new Intake();
+
+  private final IntakeSpinRollers StorageForward1 = new IntakeSpinRollers(intake); 
+  private final IntakeSpinSpaghetti StorageForward2 = new IntakeSpinSpaghetti(intake); 
+   
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
   private final ToggleGenerateOdometryLog toggleGenerateOdometryLog = new ToggleGenerateOdometryLog(base);
   private final WriteOdometryLog writeOdometryLog = new WriteOdometryLog(base);
@@ -83,7 +91,8 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     base.setDefaultCommand(driveWithJoysticks);
-
+    
+    
     //Game controllers
     logitech = new Joystick(KLogitechPort); //Logitech Dual Action
     xbox = new XboxController(KXboxPort);   //Xbox 360 for Windows
@@ -125,6 +134,9 @@ public class RobotContainer {
     logitechBtnY.onTrue(new ResetEncoders(base));
     logitechBtnLB.onTrue(toggleFastSpeed);
     logitechBtnLB.onFalse(toggleSlowSpeed);
+
+    xboxBtnA.onTrue(StorageForward1);
+    xboxBtnB.onTrue(StorageForward2);
   }
 
   /**
