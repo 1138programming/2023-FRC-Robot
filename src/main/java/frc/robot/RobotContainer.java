@@ -9,6 +9,10 @@ import static frc.robot.Constants.*;
 import java.io.ObjectInputFilter.Config;
 import java.util.List;
 
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+
 // import com.pathplanner.lib.PathConstraints;
 // import com.pathplanner.lib.PathPlanner;
 // import com.pathplanner.lib.PathPlannerTrajectory;
@@ -177,6 +181,9 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    base.resetOdometry();
+
+    PathPlannerTrajectory blue1 = PathPlanner.loadPath("Blue1", new PathConstraints(4, 3));
 
     TrajectoryConfig config = new TrajectoryConfig(
         KPhysicalMaxDriveSpeedMPS,
@@ -185,21 +192,23 @@ public class RobotContainer {
         .setKinematics(base.getKinematics());
     // Apply the voltage constraint
 
-    Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-        // Start at the origin facing the +X direction
-        new Pose2d(0, 0, new Rotation2d(0)),
-        // Pass through these two interior waypoints, making an 's' curve path
-        List.of(new Translation2d(1, 0), new Translation2d(2, 0)),
-        // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(3, 0, new Rotation2d(0)),
-        // Pass config
-        config);
+    // Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
+    //     // Start at the origin facing the +X direction
+    //     new Pose2d(0, 0, base.getHeading()),
+    //     // Pass through these two interior waypoints, making an 's' curve path
+    //     List.of(new Translation2d(1, 0), new Translation2d(2, 0)),
+    //     // End 3 meters straight ahead of where we started, facing forward
+    //     new Pose2d(3, 0, new Rotation2d(0)),
+    //     // Pass config
+    //     config);
         
-    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(exampleTrajectory, base::getPose2d,
-        base.getKinematics(), base.getHDC(), base::setModuleStates, base);
-    // Apply the voltage constraint
+    // SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(exampleTrajectory, base::getPose2d,
+    //     base.getKinematics(), base.getHDC(), base::setModuleStates, base);
+    // // Apply the voltage constraint
     // An ExampleCommand will run in autonomous
-    return swerveControllerCommand.andThen(() -> base.stop());
+    // base.resetGyro();
+    // return swerveControllerCommand.andThen(() -> base.stop());
+    return base.followTrajectoryCommand(blue1, true);
   }
 
   public static double scaleBetween(double unscaledNum, double minAllowed, double maxAllowed, double min, double max) {

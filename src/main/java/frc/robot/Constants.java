@@ -39,7 +39,7 @@ public final class Constants {
   public static final double KPhysicalMaxDriveSpeedMPS = KNeoMaxRPM * KDriveMotorRPMToMetersPerSec;
   // public static final double KMaxAngularSpeed = Math.PI * 2;
   private static final double KBaseCircumference = 2.493518;
-  public static final double KMaxAngularSpeed = 10;
+  public static final double KMaxAngularSpeed = 6;
   // KPhysicalMaxDriveSpeedMPS / KBaseCircumference;
   
   
