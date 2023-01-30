@@ -117,6 +117,12 @@ public final class Constants {
   public static final double KRotMaxVelocity = 6.28;
   public static final double KRotMaxAcceleration = 3.14;
 
+  // Auto balance PID
+  public static final double KBalanceP = 0.0055;
+  public static final double KBalanceI = 0;
+  public static final double KBalanceD = 0.001;
+
+
     //sys id config numbers 
   public static final double ks = 0.20309;
   public static final double kv = 2.5574;

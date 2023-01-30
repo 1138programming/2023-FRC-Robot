@@ -6,22 +6,15 @@ package frc.robot;
 
 import static frc.robot.Constants.*;
 
-import java.io.ObjectInputFilter.Config;
-import java.util.List;
-
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
-
-// import com.pathplanner.lib.PathConstraints;
-// import com.pathplanner.lib.PathPlanner;
-// import com.pathplanner.lib.PathPlannerTrajectory;
-// import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.Base.AutoBalance;
 import frc.robot.commands.Base.DriveWithJoysticks;
 import frc.robot.commands.Base.ResetEncoders;
 import frc.robot.commands.Base.ToggleGenerateOdometryLog;
@@ -29,27 +22,10 @@ import frc.robot.commands.Base.WriteOdometryLog;
 import frc.robot.subsystems.Base;
 import frc.robot.commands.Base.ToggleSpeed;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.math.controller.HolonomicDriveController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -69,6 +45,12 @@ public class RobotContainer {
   private final WriteOdometryLog writeOdometryLog = new WriteOdometryLog(base);
   private final ToggleSpeed toggleFastSpeed = new ToggleSpeed(base, 1);
   private final ToggleSpeed toggleSlowSpeed = new ToggleSpeed(base, KBaseDriveLowPercent);
+  private final AutoBalance autoBalance = new AutoBalance(base);
+
+
+  private final PathPlannerTrajectory blue1 = PathPlanner.loadPath("Blue1", new PathConstraints(1, 1));
+  private final PathPlannerTrajectory blue2 = PathPlanner.loadPath("Blue1 Part 2", new PathConstraints(4, 3));
+
 
   // This will load the file "Example Path.path" and generate it with a max
   // velocity of 4 m/s and a max acceleration of 3 m/s^2
@@ -168,10 +150,12 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    logitechBtnA.onTrue(toggleGenerateOdometryLog);
+    // logitechBtnA.onTrue(base.followTrajectoryCommand(blue1, true));
     logitechBtnB.onTrue(writeOdometryLog);
     logitechBtnY.onTrue(new ResetEncoders(base));
     logitechBtnLB.onTrue(toggleFastSpeed);
+    logitechBtnB.whileTrue(autoBalance);
+    logitechBtnB.onFalse(new InstantCommand(() -> base.stop()));
     logitechBtnLB.onFalse(toggleSlowSpeed);
   }
 
@@ -183,31 +167,12 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     base.resetOdometry();
 
-    PathPlannerTrajectory blue1 = PathPlanner.loadPath("Blue1", new PathConstraints(4, 3));
+    PathPlannerTrajectory blue1 = PathPlanner.loadPath("Blue1", new PathConstraints(1, 1));
 
     TrajectoryConfig config = new TrajectoryConfig(
         KPhysicalMaxDriveSpeedMPS,
         KPPMaxAcceleration)
-        // Add kinematics to ensure max speed is actually obeyed
         .setKinematics(base.getKinematics());
-    // Apply the voltage constraint
-
-    // Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-    //     // Start at the origin facing the +X direction
-    //     new Pose2d(0, 0, base.getHeading()),
-    //     // Pass through these two interior waypoints, making an 's' curve path
-    //     List.of(new Translation2d(1, 0), new Translation2d(2, 0)),
-    //     // End 3 meters straight ahead of where we started, facing forward
-    //     new Pose2d(3, 0, new Rotation2d(0)),
-    //     // Pass config
-    //     config);
-        
-    // SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(exampleTrajectory, base::getPose2d,
-    //     base.getKinematics(), base.getHDC(), base::setModuleStates, base);
-    // // Apply the voltage constraint
-    // An ExampleCommand will run in autonomous
-    // base.resetGyro();
-    // return swerveControllerCommand.andThen(() -> base.stop());
     return base.followTrajectoryCommand(blue1, true);
   }
 

@@ -103,7 +103,7 @@ public class Base extends SubsystemBase {
     );
 
     gyro = new AHRS(SPI.Port.kMXP);
-    gyro.reset();
+    resetGyro();
 
     kinematics = new SwerveDriveKinematics(
       KFrontLeftLocation, KFrontRightLocation,
@@ -147,8 +147,8 @@ public class Base extends SubsystemBase {
              traj, 
              this::getPose2d, // Pose supplier
              this.kinematics, // SwerveDriveKinematics
-             new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-             new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
+             new PIDController(0.5, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+             new PIDController(0.5, 0, 0), // Y controller (usually the same values as X controller)
              new PIDController(0, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
              this::setModuleStates, // Module states consumer
              true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
@@ -184,7 +184,14 @@ public class Base extends SubsystemBase {
     frontRightModule.setDesiredState(states[1]);
     backLeftModule.setDesiredState(states[2]);
     backRightModule.setDesiredState(states[3]);
-}
+  }
+
+  public void lockWheels() {
+    frontLeftModule.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+    frontRightModule.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
+    backLeftModule.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
+    frontLeftModule.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+  }
 
   public void calibrateGyro() {
     gyro.calibrate();
@@ -222,6 +229,12 @@ public class Base extends SubsystemBase {
     return Rotation2d.fromDegrees(getHeadingDeg());
   }
 
+  public double getRoll() {
+    return gyro.getRoll();
+  }
+  public double getPitch() {
+    return gyro.getPitch();
+  }
   public double getHeadingDeg() {
     return -gyro.getAngle();
   }
@@ -287,6 +300,10 @@ public class Base extends SubsystemBase {
     SmartDashboard.putNumber("back right big", backRightModule.getAbsoluteOffset());
 
     SmartDashboard.putString("odometry pose", odometry.getPoseMeters().toString());
+
+    SmartDashboard.putNumber("pitch", gyro.getPitch());
+    SmartDashboard.putNumber("roll", gyro.getRoll());
+    SmartDashboard.putNumber("yaw", gyro.getYaw());
 
     odometry.update(getHeading(), getPositions());
     pose = odometry.getPoseMeters();
