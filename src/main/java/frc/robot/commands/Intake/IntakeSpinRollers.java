@@ -24,6 +24,7 @@ public class IntakeSpinRollers extends CommandBase {
   @Override
   public void execute() {
     intake.flexspin(KIntakeRollerSpeed);
+    intake.spaghettiSpin(KIntakeSpaghettitSpeed);
   }
 
   // Called once the command ends or is interrupted.

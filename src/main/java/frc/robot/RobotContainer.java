@@ -47,7 +47,7 @@ public class RobotContainer {
 
   //Controller Ports (check in Driver Station, IDs may be different for each computer)
   private static final int KLogitechPort = 0;
-  private static final int KXboxPort = 1;  
+  private static final int KXboxPort = 0;  
 
   //Deadzone
   private static final double KDeadZone = 0.05;
@@ -136,7 +136,7 @@ public class RobotContainer {
     logitechBtnLB.onFalse(toggleSlowSpeed);
 
     xboxBtnA.onTrue(StorageForward1);
-    xboxBtnB.onTrue(StorageForward2);
+    
   }
 
   /**

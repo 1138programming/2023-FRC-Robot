@@ -102,7 +102,7 @@ public final class Constants {
   public static final int KRightIntakeId = 13;
 
   public static final double KIntakeSpaghettitSpeed = 0.35;
-  public static final double KIntakeRollerSpeed = 0.35;
+  public static final double KIntakeRollerSpeed = 0.45;
 
   public static final double KIntakeSwivelTopPos = 1;
   public static final double KIntakeSwivelBottumPos = 1;
