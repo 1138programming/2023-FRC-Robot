@@ -14,6 +14,7 @@ import frc.robot.commands.Base.DriveWithJoysticks;
 import frc.robot.commands.Base.ResetEncoders;
 import frc.robot.commands.Base.ToggleGenerateOdometryLog;
 import frc.robot.commands.Base.WriteOdometryLog;
+import frc.robot.commands.Intake.IntakeSpin;
 import frc.robot.commands.Intake.IntakeSpinRollers;
 import frc.robot.commands.Intake.IntakeSpinSpaghetti;
 import frc.robot.subsystems.Base;
@@ -35,8 +36,9 @@ public class RobotContainer {
 
   private final Intake intake = new Intake();
 
-  private final IntakeSpinRollers StorageForward1 = new IntakeSpinRollers(intake); 
-  private final IntakeSpinSpaghetti StorageForward2 = new IntakeSpinSpaghetti(intake); 
+  private final IntakeSpin StorageForward1 = new IntakeSpin(intake);
+  
+  
    
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
   private final ToggleGenerateOdometryLog toggleGenerateOdometryLog = new ToggleGenerateOdometryLog(base);

@@ -7,13 +7,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 import static frc.robot.Constants.*;
 
-public class IntakeSpinRollers extends CommandBase {
+public class IntakeSpin extends CommandBase {
   private Intake intake;
   /** Creates a new IntakeSpinRollers. */
-  public IntakeSpinRollers(Intake intake) {
+  public IntakeSpin(Intake intake) {
     this.intake = intake; 
     addRequirements(intake);
-    // Use addRequirements() here to declare subsystem dependencies.
+    
   }
 
   // Called when the command is initially scheduled.
@@ -24,13 +24,14 @@ public class IntakeSpinRollers extends CommandBase {
   @Override
   public void execute() {
     intake.flexspin(KIntakeRollerSpeed);
- 
+    intake.spaghettiSpin(KIntakeSpaghettitSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     intake.flexStop();
+    intake.spaghettiStop();
   }
 
   // Returns true when the command should end.
