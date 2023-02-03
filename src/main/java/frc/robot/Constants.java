@@ -97,8 +97,7 @@ public final class Constants {
   public static final boolean KBackRightDriveEncoderReversed = false; 
 
   // Endgame
-  public static final int KLimitSwitchTop = 0;
-  public static final int KLimitSwitchBottom = 1;
+  public static final int KLimitSwitch = 0;
   public static final int KLinearServoTop = 2;
   public static final int KLinearServoBottom = 3;
   public static final double KEndgameServoPos = 2;

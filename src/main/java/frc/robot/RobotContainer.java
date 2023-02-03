@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.Base.DriveWithJoysticks;
-import frc.robot.commands.Base.EndgameCommand;
+import frc.robot.commands.Base.Endgame.*;
 import frc.robot.commands.Base.ResetEncoders;
 import frc.robot.commands.Base.ToggleGenerateOdometryLog;
 import frc.robot.commands.Base.WriteOdometryLog;
@@ -32,14 +32,16 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Base base = new Base();
   private final Endgame endgame = new Endgame();
-
+  
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
   private final ToggleGenerateOdometryLog toggleGenerateOdometryLog = new ToggleGenerateOdometryLog(base);
   private final WriteOdometryLog writeOdometryLog = new WriteOdometryLog(base);
   private final ToggleSpeed toggleFastSpeed = new ToggleSpeed(base, 1);
   private final ToggleSpeed toggleMidSpeed = new ToggleSpeed(base, KBaseDriveHighPercent);
   private final ToggleSpeed toggleSlowSpeed = new ToggleSpeed(base, KBaseDriveLowPercent);
-  private final EndgameCommand endgameCommand = new EndgameCommand(endgame);
+  //Endgame
+  private final DriveBaseOffEdge driveBaseOffEdge = new DriveBaseOffEdge(endgame, base);
+  private final MoveLinearServosOut moveLinearServosOut = new MoveLinearServosOut(endgame);
 
   //Controller Ports (check in Driver Station, IDs may be different for each computer)
   private static final int KLogitechPort = 0;
@@ -129,7 +131,7 @@ public class RobotContainer {
     logitechBtnY.onTrue(new ResetEncoders(base));
     logitechBtnLB.onTrue(toggleFastSpeed);
     logitechBtnLB.onFalse(toggleSlowSpeed);
-    logitechBtnX.onTrue(endgameCommand);
+    logitechBtnX.onTrue(moveLinearServosOut.andThen(driveBaseOffEdge));
   }
 
   /**

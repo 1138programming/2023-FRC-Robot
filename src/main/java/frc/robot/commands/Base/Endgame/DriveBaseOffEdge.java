@@ -2,19 +2,24 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Base;
+package frc.robot.commands.Base.Endgame;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Endgame;
+import frc.robot.subsystems.Base;
+import static frc.robot.Constants.KPhysicalMaxDriveSpeedMPS;
 
-import static frc.robot.Constants.*;
 
-public class EndgameCommand extends CommandBase {
+
+public class DriveBaseOffEdge extends CommandBase {
   Endgame endgame;
-  /** Creates a new EndgameCommand. */
-  public EndgameCommand(Endgame endgame) {
+  Base base;
+  /** Creates a new DriveBaseOffEdge. */
+  public DriveBaseOffEdge(Endgame endgame, Base base) {
+    this.base = base;
     this.endgame = endgame;
-    addRequirements(endgame);
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(endgame, base);
   }
 
   // Called when the command is initially scheduled.
@@ -24,7 +29,7 @@ public class EndgameCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    endgame.moveServo(KEndgameServoPos);
+    base.drive(0.1, 0, 0, isFinished(), KPhysicalMaxDriveSpeedMPS);
   }
 
   // Called once the command ends or is interrupted.
@@ -34,6 +39,9 @@ public class EndgameCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    if (endgame.isLimitSwitchPressed()) {
+      return true;
+    }
+    return false;
   }
 }

@@ -2,23 +2,19 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.*;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 //import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Endgame extends SubsystemBase {
 
-    // Can be used if needed...
-    // private DigitalInput endgameTopLimitSwitch;
-    // private DigitalInput endgameBottomLimitSwitch;
-
     private Servo endgameLinearServoTop;
     private Servo endgameLinearServoBottom;
-    
+    private DigitalInput endgameLimitSwitch;
 
     public Endgame() {
-        // endgameTopLimitSwitch = new DigitalInput(KLimitSwitchTop);
-        // endgameBottomLimitSwitch = new DigitalInput(KLimitSwitchBottom);
+        endgameLimitSwitch = new DigitalInput(KLimitSwitch);
         endgameLinearServoTop = new Servo(KLinearServoTop);
         endgameLinearServoBottom = new Servo(KLinearServoBottom);
 
@@ -30,5 +26,9 @@ public class Endgame extends SubsystemBase {
     public void moveServo(double pos) {
         endgameLinearServoTop.set(pos);
         endgameLinearServoBottom.set(pos);
+    }
+
+    public boolean isLimitSwitchPressed() {
+        return endgameLimitSwitch.get();
     }
 }
