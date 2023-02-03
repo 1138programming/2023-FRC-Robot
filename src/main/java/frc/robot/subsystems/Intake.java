@@ -5,6 +5,9 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.*;
+
+import java.util.ResourceBundle.Control;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.*;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -13,6 +16,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
@@ -20,12 +24,14 @@ public class Intake extends SubsystemBase {
   private TalonSRX swivel;
   private TalonSRX spaghetti;
   private PIDController intakeController;
+  private DigitalInput intakeLimit;
 
   public Intake() {
     spaghetti = new TalonSRX(KSpaghettiIntakeId);
     swivel = new TalonSRX(KLeftIntakeId);
     flex = new TalonSRX(KRightIntakeId);
     intakeController = new PIDController(KIntakeP, KIntakeI, KIntakeD);
+    intakeLimit = new DigitalInput(KIntakeLimitId);
 
   }
 
@@ -38,7 +44,19 @@ public class Intake extends SubsystemBase {
   }
 
   public void swivelSpinToPos(double setPoint) {
-    swivel.set(ControlMode.PercentOutput, intakeController.calculate(getIntakeEncoderRaw(), setPoint));
+  
+   moveSwivel(intakeController.calculate(getIntakeEncoderRaw(),setPoint));
+
+  }
+
+  public void moveSwivel(double speed) {
+
+    if (!getIntakeLimitSwitch()) {
+      swivel.set(ControlMode.PercentOutput,speed);
+    }
+    else {
+      swivel.set(ControlMode.PercentOutput,0); 
+    }
 
   }
 
@@ -61,6 +79,10 @@ public class Intake extends SubsystemBase {
 
   public double getIntakeEncoderRaw() {
     return swivel.getSelectedSensorPosition();
+  }
+
+  public boolean getIntakeLimitSwitch() {
+    return intakeLimit.get();
   }
 
   @Override
