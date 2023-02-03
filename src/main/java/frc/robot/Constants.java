@@ -107,7 +107,7 @@ public final class Constants {
   public static final double KIntakeSwivelTopPos = 1;
   public static final double KIntakeSwivelBottumPos = 1;
 
-  public static final double KIntakeLimitId = 1; 
+  public static final int KIntakeLimitId = 1; 
 
 
   //Pid
