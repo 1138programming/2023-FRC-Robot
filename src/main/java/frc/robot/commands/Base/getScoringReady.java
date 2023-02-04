@@ -11,6 +11,7 @@ public class getScoringReady extends CommandBase {
 
   public getScoringReady(Scoring scoring) {
     this.scoring = scoring;
+    addRequirements(scoring);
   }
 
   // Called when the command is initially scheduled.
@@ -24,10 +25,10 @@ public class getScoringReady extends CommandBase {
   @Override
   public void execute() //if the game object has been picked up, claw closes
   {
-    if(true/*establish if game object has been picked up*/){
-        scoring.moveClawMotors(0); //establish another constant for this. only use if the game object hasn't been picked up
-        scoring.moveExtensionMotors(0); //establish a constant for this
-    }
+    
+      scoring.moveClawMotors(0); //establish another constant for this. only use if the game object hasn't been picked up
+      scoring.moveExtensionMotors(0); //establish a constant for this
+    
   }
 
   // Called once the command ends or is interrupted.

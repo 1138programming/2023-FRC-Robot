@@ -103,6 +103,9 @@ public final class Constants {
   public static final int KExtensionMotor1 = 4;
   public static final int KExtensionMotor2 = 5;
   public static final boolean KExtensionMotor1Reversed = true;
+  public static final double KLiftSpeed = 0.0;
+  public static final double KClawSpeed = 0.0;
+  public static final double KExtensionSpeed = 0.0;
 
 }
         

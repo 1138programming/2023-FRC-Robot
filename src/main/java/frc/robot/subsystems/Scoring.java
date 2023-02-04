@@ -10,7 +10,6 @@ import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*; // Pnuematics
 
 
 public class Scoring extends SubsystemBase{
-
     private CANSparkMax clawMotor1;
     private CANSparkMax clawMotor2;
     private CANSparkMax angleArmMotor;
@@ -24,8 +23,8 @@ public class Scoring extends SubsystemBase{
         angleArmMotor = new CANSparkMax(KAngleArmMotor, MotorType.kBrushless);
         extensionMotor1 = new CANSparkMax(KExtensionMotor1, MotorType.kBrushless);
         extensionMotor2 = new CANSparkMax(KExtensionMotor2, MotorType.kBrushless);
-        extensionMotor1.setInverted(KExtensionMotor1Reversed);
 
+        extensionMotor1.setInverted(KExtensionMotor1Reversed);
     }
 
     public void moveClawMotors(double speed) {
@@ -41,22 +40,12 @@ public class Scoring extends SubsystemBase{
         extensionMotor1.set(speed);
         extensionMotor2.set(speed);
     }
-
-    public void stopClawMotors() {
-        clawMotor1.set(0);
-        clawMotor2.set(0);
-    }
-
-    public void stopAngleArmMotor() {
-        angleArmMotor.set(0);
-    }
-
-    public void stopExtensionMotors() {
+    
+    public void stop() {
         extensionMotor1.set(0);
         extensionMotor2.set(0);
-    }
-
-    
-
-    
+        angleArmMotor.set(0);
+        clawMotor1.set(0);
+        clawMotor2.set(0);
+    }    
 }

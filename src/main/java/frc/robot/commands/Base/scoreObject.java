@@ -11,20 +11,21 @@ public class scoreObject extends CommandBase {
 
   public scoreObject(Scoring scoring) {
     this.scoring = scoring;
+    addRequirements(scoring);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() 
   {
-    if(true /*if limelight says we're ready*/) scoring.moveClawMotors(0); //establish a constant for this   
+    
   }
 
   
   @Override
   public void execute() //if the game object has been picked up, claw closes
   {
-    
+    scoring.moveClawMotors(0); //establish a constant for this   
   }
 
   // Called once the command ends or is interrupted.
