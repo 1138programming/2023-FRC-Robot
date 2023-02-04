@@ -66,4 +66,11 @@ public class Orientation extends SubsystemBase {
     public void setFoward() {
         possiblePiston.set(kForward);
     }
+
+    public boolean getInput() {
+        return proximitySensor.get();
+    }
 }
+
+
+
