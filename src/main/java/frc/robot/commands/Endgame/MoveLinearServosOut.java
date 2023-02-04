@@ -2,29 +2,31 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Base.Endgame;
+package frc.robot.commands.Endgame;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Endgame;
+import static frc.robot.Constants.*;
 
-public class MoveLinearServosIn extends CommandBase {
+
+public class MoveLinearServosOut extends CommandBase {
   Endgame endgame;
-  /** Creates a new moveLinearServosIn. */
-  public MoveLinearServosIn(Endgame endgame) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.endgame = endgame; 
+  /** Creates a new MoveLinearServosOut. */
+  public MoveLinearServosOut(Endgame endgame) {
+    this.endgame = endgame;
     addRequirements(endgame);
-
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
-
+  public void initialize() {
+    // endgame.moveServo(KEndgameServoPos);
+  }
+  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    endgame.moveServo(0);
+    endgame.moveServo(KEndgameServoPos);
   }
 
   // Called once the command ends or is interrupted.
