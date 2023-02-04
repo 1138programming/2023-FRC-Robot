@@ -19,20 +19,20 @@ import edu.wpi.first.wpilibj.I2C; // Color Sensor
  * Potientially 1 pnuematic piston (Double acting solinoid)
  */
 public class Orientation extends SubsystemBase {
-    
-    private DigitalInput proximitySensor;
     private CANSparkMax orientationMotor1;
     private CANSparkMax orientationMotor2;
+    
+    private DigitalInput proximitySensor;
+    
     private DoubleSolenoid possiblePiston;
-    //private DigitalInput colorSensor; //Assuming it's the Color Sensor V3
-
     
     public Orientation() {
-        proximitySensor = new DigitalInput (KOrientationProximityID);
         orientationMotor1 = new CANSparkMax(KOrientationMotor1ID, MotorType.kBrushless);
         orientationMotor2 = new CANSparkMax(KOrientationMotor2ID, MotorType.kBrushless);
-        possiblePiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, KBackLeftDriveID, KBackLeftAngleID);
         
+        proximitySensor = new DigitalInput (KOrientationProximityID);
+        
+        possiblePiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, KBackLeftDriveID, KBackLeftAngleID);
     }
 
     public void moveOrientationMotor1(double speed) {
@@ -66,9 +66,4 @@ public class Orientation extends SubsystemBase {
     public void setFoward() {
         possiblePiston.set(kForward);
     }
-    /* 
-    public Boolean getColorSensor() {
-        return colorSensor.get();
-    } */
-
 }

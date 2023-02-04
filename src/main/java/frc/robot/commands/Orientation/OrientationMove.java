@@ -14,10 +14,8 @@ public class OrientationMove extends CommandBase {
   private Orientation orientation; 
 
   public OrientationMove(Orientation orientation) {
-
     this.orientation = orientation;
     addRequirements(orientation);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
