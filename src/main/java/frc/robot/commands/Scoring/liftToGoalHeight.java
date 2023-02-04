@@ -2,14 +2,18 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Base;
+package frc.robot.commands.Scoring;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Scoring;
-public class getScoringReady extends CommandBase {
+import edu.wpi.first.wpilibj2.command.CommandBase;
+
+public class liftToGoalHeight extends CommandBase {
+  /** Creates a new liftToGoalHeight. */
+  
+
   Scoring scoring = new Scoring();
 
-  public getScoringReady(Scoring scoring) {
+  public liftToGoalHeight(Scoring scoring) {
     this.scoring = scoring;
     addRequirements(scoring);
   }
@@ -18,17 +22,15 @@ public class getScoringReady extends CommandBase {
   @Override
   public void initialize() 
   {
-    scoring.moveClawMotors(0); //establish a constant for this   
+
   }
 
   
   @Override
   public void execute() //if the game object has been picked up, claw closes
   {
-    
-      scoring.moveClawMotors(0); //establish another constant for this. only use if the game object hasn't been picked up
-      scoring.moveExtensionMotors(0); //establish a constant for this
-    
+    scoring.moveClawMotors(0); //establish another constant for this. only use if the game object hasn't been picked up
+    scoring.moveAngleArmMotor(0); //establish a constant for this
   }
 
   // Called once the command ends or is interrupted.

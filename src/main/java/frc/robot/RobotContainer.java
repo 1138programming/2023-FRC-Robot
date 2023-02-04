@@ -15,6 +15,7 @@ import frc.robot.commands.Base.ResetEncoders;
 import frc.robot.commands.Base.ToggleGenerateOdometryLog;
 import frc.robot.commands.Base.WriteOdometryLog;
 import frc.robot.subsystems.Base;
+import frc.robot.subsystems.Scoring;
 import frc.robot.commands.Base.ToggleSpeed;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -29,6 +30,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Base base = new Base();
+  private final Scoring scoring = new Scoring();
 
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
   private final ToggleGenerateOdometryLog toggleGenerateOdometryLog = new ToggleGenerateOdometryLog(base);

@@ -15,7 +15,7 @@ public class Scoring extends SubsystemBase{
     private CANSparkMax angleArmMotor;
     private CANSparkMax extensionMotor1;
     private CANSparkMax extensionMotor2;
-
+    private DoubleSolenoid clawSolenoid;
 
     public Scoring() {
         clawMotor1 = new CANSparkMax(KClawMotor1, MotorType.kBrushless);
@@ -25,6 +25,8 @@ public class Scoring extends SubsystemBase{
         extensionMotor2 = new CANSparkMax(KExtensionMotor2, MotorType.kBrushless);
 
         extensionMotor1.setInverted(KExtensionMotor1Reversed);
+
+        clawSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, KCLawSolenoidForwardChannel, KCLawSolenoidReverseChannel);
     }
 
     public void moveClawMotors(double speed) {
@@ -48,4 +50,13 @@ public class Scoring extends SubsystemBase{
         clawMotor1.set(0);
         clawMotor2.set(0);
     }    
+    
+    public void cLawSolenoidForward() {
+        clawSolenoid.set(kForward);
+    }
+    
+    public void cLawSolenoidReverse() {
+        clawSolenoid.set(kReverse);
+    }
+    
 }
