@@ -6,6 +6,11 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -30,9 +35,9 @@ public final class Constants {
   private static final double KDriveMotorGearRatio = 1/6.55;
   private static final double KWheelDiameterMeters = 0.1016;
   public static final double KDriveMotorRotToMeter = KDriveMotorGearRatio * KWheelDiameterMeters * Math.PI;
-
+  
   public static final double KDriveMotorRPMToMetersPerSec = KDriveMotorRotToMeter / 60;
-
+  
   private static final double KAngleMotorShaftToWheelRatio = 1 / 10.2857;
   public static final double KAngleMotorRotToDeg = 35;
   public static final double KNeoMaxRPM = 5700;
@@ -73,57 +78,59 @@ public final class Constants {
   
   public static final Translation2d KFrontLeftLocation = new Translation2d(
     KWheelDistanceFromCenter, KWheelDistanceFromCenter
-  );
-  public static final Translation2d KFrontRightLocation = new Translation2d(
-    KWheelDistanceFromCenter, -KWheelDistanceFromCenter
-  );
-  public static final Translation2d KBackLeftLocation = new Translation2d(
-    -KWheelDistanceFromCenter, KWheelDistanceFromCenter
-  );
-  public static final Translation2d KBackRightLocation = new Translation2d(
-    -KWheelDistanceFromCenter, -KWheelDistanceFromCenter
-  );
-
-  public static final boolean KFrontLeftDriveReversed = false;
-  public static final boolean KFrontRightDriveReversed = false;
-  public static final boolean KBackLeftDriveReversed = false;
-  public static final boolean KBackRightDriveReversed = false;
-
-  public static final boolean KFrontLeftAngleReversed = true;
-  public static final boolean KFrontRightAngleReversed = true;
-  public static final boolean KBackLeftAngleReversed = true;
-  public static final boolean KBackRightAngleReversed = true;
-
-  public static final boolean KFrontLeftDriveEncoderReversed = false;
-  public static final boolean KFrontRightDriveEncoderReversed = false;
-  public static final boolean KBackLeftDriveEncoderReversed = false;
-  public static final boolean KBackRightDriveEncoderReversed = false; 
-
-  public static final double KPPMaxVelocity = 4;
-  public static final double KPPMaxAcceleration = 3;
-
-  public static final double KXControllerP = 1;
-  public static final double KXControllerI = 0;
-  public static final double KXControllerD = 0;
+    );
+    public static final Translation2d KFrontRightLocation = new Translation2d(
+      KWheelDistanceFromCenter, -KWheelDistanceFromCenter
+      );
+      public static final Translation2d KBackLeftLocation = new Translation2d(
+        -KWheelDistanceFromCenter, KWheelDistanceFromCenter
+        );
+        public static final Translation2d KBackRightLocation = new Translation2d(
+          -KWheelDistanceFromCenter, -KWheelDistanceFromCenter
+          );
+          
+          
+          public static final boolean KFrontLeftDriveReversed = false;
+          public static final boolean KFrontRightDriveReversed = false;
+          public static final boolean KBackLeftDriveReversed = false;
+          public static final boolean KBackRightDriveReversed = false;
+          
+          public static final boolean KFrontLeftAngleReversed = true;
+          public static final boolean KFrontRightAngleReversed = true;
+          public static final boolean KBackLeftAngleReversed = true;
+          public static final boolean KBackRightAngleReversed = true;
+          
+          public static final boolean KFrontLeftDriveEncoderReversed = false;
+          public static final boolean KFrontRightDriveEncoderReversed = false;
+          public static final boolean KBackLeftDriveEncoderReversed = false;
+          public static final boolean KBackRightDriveEncoderReversed = false; 
+          
+          public static final double KPPMaxVelocity = 4;
+          public static final double KPPMaxAcceleration = 3;
+          public static final PathPlannerTrajectory KPath1 = PathPlanner.loadPath("blue1", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
+          
+          public static final double KXControllerP = 1;
+          public static final double KXControllerI = 0;
+          public static final double KXControllerD = 0;
 
   public static final double KYControllerP = 1;
   public static final double KYControllerI = 0;
   public static final double KYControllerD = 0;
-
+  
   public static final double KRotControllerP = 1;
   public static final double KRotControllerI = 0;
   public static final double KRotControllerD = 0;
-
+  
   public static final double KRotMaxVelocity = 6.28;
   public static final double KRotMaxAcceleration = 3.14;
-
+  
   // Auto balance PID
   public static final double KBalanceP = 0.0055;
   public static final double KBalanceI = 0;
   public static final double KBalanceD = 0.001;
-
-
-    //sys id config numbers 
+  
+  
+  //sys id config numbers 
   public static final double ks = 0.20309;
   public static final double kv = 2.5574;
   public static final double ka = 0.38422;

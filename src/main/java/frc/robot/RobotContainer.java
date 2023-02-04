@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.CommandGroups.TestAuton;
+import frc.robot.commands.Auton.FollowPath;
 import frc.robot.commands.Base.AutoBalance;
 import frc.robot.commands.Base.DriveWithJoysticks;
 import frc.robot.commands.Base.ResetEncoders;
@@ -46,6 +48,8 @@ public class RobotContainer {
   private final ToggleSpeed toggleFastSpeed = new ToggleSpeed(base, 1);
   private final ToggleSpeed toggleSlowSpeed = new ToggleSpeed(base, KBaseDriveLowPercent);
   private final AutoBalance autoBalance = new AutoBalance(base);
+  private final FollowPath followPath = new FollowPath(base, "blue1", KPPMaxAcceleration, KPPMaxAcceleration, false);
+  private final TestAuton testAuton = new TestAuton(base);
 
 
   private final PathPlannerTrajectory blue1 = PathPlanner.loadPath("Blue1", new PathConstraints(1, 1));
@@ -167,13 +171,14 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     base.resetOdometry();
 
-    PathPlannerTrajectory blue1 = PathPlanner.loadPath("Blue1", new PathConstraints(1, 1));
+    // PathPlannerTrajectory blue1 = base.getPathPlannerTrajectory("blue1", KPPMaxVelocity, KPPMaxAcceleration);
+    // // PathPlanner.loadPath("Blue1", new PathConstraints(1, 1));
 
-    TrajectoryConfig config = new TrajectoryConfig(
-        KPhysicalMaxDriveSpeedMPS,
-        KPPMaxAcceleration)
-        .setKinematics(base.getKinematics());
-    return base.followTrajectoryCommand(blue1, true);
+    // TrajectoryConfig config = new TrajectoryConfig(
+    //     KPhysicalMaxDriveSpeedMPS,
+    //     KPPMaxAcceleration)
+    //     .setKinematics(base.getKinematics());
+    return testAuton;
   }
 
   public static double scaleBetween(double unscaledNum, double minAllowed, double maxAllowed, double min, double max) {

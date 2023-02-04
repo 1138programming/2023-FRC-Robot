@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 import com.fasterxml.jackson.databind.node.POJONode;
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import com.revrobotics.CANSparkMax;
@@ -63,6 +65,7 @@ public class Base extends SubsystemBase {
   private ProfiledPIDController rotController;
   private TrapezoidProfile.Constraints constraints;
   private HolonomicDriveController HDC;
+  private PathPlannerTrajectory path;
   
   public Base() {
     frontLeftModule = new SwerveModule(
@@ -125,6 +128,9 @@ public class Base extends SubsystemBase {
 
     HDC = new HolonomicDriveController(xController, yController, rotController);    
     
+  }
+  public PathPlannerTrajectory getPathPlannerTrajectory(String name, double maxVelocity, double maxAcceleration) {
+    return PathPlanner.loadPath(name, new PathConstraints(maxVelocity, maxAcceleration));
   }
   public HolonomicDriveController getHDC() {
     return HDC;
