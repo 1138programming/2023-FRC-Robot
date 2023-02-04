@@ -42,20 +42,14 @@ public class Scoring extends SubsystemBase{
         extensionMotor1.set(speed);
         extensionMotor2.set(speed);
     }
-
-    public void stopClawMotors() {
-        clawMotor1.set(0);
-        clawMotor2.set(0);
-    }
-
-    public void stopAngleArmMotor() {
-        angleArmMotor.set(0);
-    }
-
-    public void stopExtensionMotors() {
+    
+    public void stop() {
         extensionMotor1.set(0);
         extensionMotor2.set(0);
-    }
+        angleArmMotor.set(0);
+        clawMotor1.set(0);
+        clawMotor2.set(0);
+    }    
     
     public void cLawSolenoidForward() {
         clawSolenoid.set(kForward);
