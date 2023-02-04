@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.Base.BaseStop;
 import frc.robot.commands.Base.DriveWithJoysticks;
 import frc.robot.commands.Base.Endgame.*;
 import frc.robot.commands.Base.ResetEncoders;
@@ -42,6 +43,7 @@ public class RobotContainer {
   //Endgame
   private final DriveBaseOffEdge driveBaseOffEdge = new DriveBaseOffEdge(endgame, base);
   private final MoveLinearServosOut moveLinearServosOut = new MoveLinearServosOut(endgame);
+  private final MoveLinearServosIn moveLinearServosIn = new MoveLinearServosIn(endgame);
 
   //Controller Ports (check in Driver Station, IDs may be different for each computer)
   private static final int KLogitechPort = 0;
@@ -88,7 +90,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    base.setDefaultCommand(driveWithJoysticks);
+    base.setDefaultCommand(new BaseStop(base));
+    // endgame.setDefaultCommand(moveLinearServosOut);
 
     //Game controllers
     logitech = new Joystick(KLogitechPort); //Logitech Dual Action
@@ -131,7 +134,10 @@ public class RobotContainer {
     logitechBtnY.onTrue(new ResetEncoders(base));
     logitechBtnLB.onTrue(toggleFastSpeed);
     logitechBtnLB.onFalse(toggleSlowSpeed);
-    logitechBtnX.onTrue(moveLinearServosOut.andThen(driveBaseOffEdge));
+    // logitechBtnX.onTrue(moveLinearServosOut.andThen(driveBaseOffEdge));
+
+    xboxBtnA.onTrue(moveLinearServosOut);
+    xboxBtnB.onTrue(moveLinearServosIn);
   }
 
   /**

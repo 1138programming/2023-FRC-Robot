@@ -16,11 +16,11 @@ public class Endgame extends SubsystemBase {
     public Endgame() {
         endgameLimitSwitch = new DigitalInput(KLimitSwitch);
         endgameLinearServoTop = new Servo(KLinearServoTop);
-        endgameLinearServoBottom = new Servo(KLinearServoBottom);
+        endgameLinearServoBottom = new Servo(3);
 
         // Bounds copied from 2022 FRC robot.. the values are most likely wrong. Check with Patrick for values possibly
         endgameLinearServoTop.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
-        endgameLinearServoTop.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
+        endgameLinearServoBottom.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
     }
 
     public void moveServo(double pos) {

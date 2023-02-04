@@ -98,8 +98,10 @@ public final class Constants {
 
   // Endgame
   public static final int KLimitSwitch = 0;
-  public static final int KLinearServoTop = 2;
+  public static final int KLinearServoTop = 0;
+
   public static final int KLinearServoBottom = 3;
-  public static final double KEndgameServoPos = 2;
+
+  public static final double KEndgameServoPos = 1;
 }
         

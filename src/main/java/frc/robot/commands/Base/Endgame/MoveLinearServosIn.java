@@ -6,27 +6,25 @@ package frc.robot.commands.Base.Endgame;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Endgame;
-import static frc.robot.Constants.*;
 
-
-public class MoveLinearServosOut extends CommandBase {
+public class MoveLinearServosIn extends CommandBase {
   Endgame endgame;
-  /** Creates a new MoveLinearServosOut. */
-  public MoveLinearServosOut(Endgame endgame) {
-    this.endgame = endgame;
+  /** Creates a new moveLinearServosIn. */
+  public MoveLinearServosIn(Endgame endgame) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.endgame = endgame; 
     addRequirements(endgame);
+
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    // endgame.moveServo(KEndgameServoPos);
-  }
-  
+  public void initialize() {}
+
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    endgame.moveServo(KEndgameServoPos);
+    endgame.moveServo(0);
   }
 
   // Called once the command ends or is interrupted.
