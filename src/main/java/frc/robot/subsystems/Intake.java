@@ -77,4 +77,10 @@ public class Intake extends SubsystemBase {
   public boolean getIntakeLimitSwitch() {
     return intakeLimit.get();
   }
+
+  public void intakeStop() {
+    spaghetti.set(ControlMode.PercentOutput, 0);
+    swivel.set(ControlMode.PercentOutput, 0);
+    flex.set(ControlMode.PercentOutput, 0);
+  }
 }

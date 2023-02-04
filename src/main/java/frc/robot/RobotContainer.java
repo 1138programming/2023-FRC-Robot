@@ -17,6 +17,7 @@ import frc.robot.commands.Base.ToggleGenerateOdometryLog;
 import frc.robot.commands.Base.WriteOdometryLog;
 import frc.robot.commands.Endgame.*;
 import frc.robot.commands.Intake.IntakeSpin;
+import frc.robot.commands.Intake.IntakeStop;
 import frc.robot.subsystems.Base;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Endgame;
@@ -25,6 +26,7 @@ import frc.robot.commands.Base.ToggleSpeed;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -49,6 +51,7 @@ public class RobotContainer {
 
   // Intake
   private final IntakeSpin StorageForward1 = new IntakeSpin(intake);
+  private final IntakeStop intakeStop = new IntakeStop(intake);
 
   // Endgame
   private final MoveLinearServosOut moveLinearServosOut = new MoveLinearServosOut(endgame);
@@ -100,7 +103,8 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     base.setDefaultCommand(driveWithJoysticks);
-    
+    intake.setDefaultCommand(intakeStop);
+
     //Game controllers
     logitech = new Joystick(KLogitechPort); //Logitech Dual Action
     xbox = new XboxController(KXboxPort);   //Xbox 360 for Windows
