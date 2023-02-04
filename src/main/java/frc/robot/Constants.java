@@ -129,8 +129,13 @@ public final class Constants {
   public static final int KExtensionMotor1 = 4;
   public static final int KExtensionMotor2 = 5;
   public static final boolean KExtensionMotor1Reversed = true;
-  public static final int KCLawSolenoidForwardChannel = 1;
-  public static final int KCLawSolenoidReverseChannel = 2;
+  public static final int KClawSolenoidForwardChannel = 1;
+  public static final int KClawSolenoidReverseChannel = 2;
+
+
+  public static final double KClawMotorSpeed = 0; //TBD
+  public static final double KAngleMotorSpeed = 0; //TBD
+  public static final double KExtensionMotorSpeed = 0; //TBD
   //Orientation
   public static final int KOrientationProximityID = 0;
   public static final int KOrientationMotor1ID = 1;

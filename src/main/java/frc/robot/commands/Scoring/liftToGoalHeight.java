@@ -6,7 +6,7 @@ package frc.robot.commands.Scoring;
 
 import frc.robot.subsystems.Scoring;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
+import static frc.robot.Constants.*;
 public class liftToGoalHeight extends CommandBase {
   /** Creates a new liftToGoalHeight. */
   
@@ -29,8 +29,8 @@ public class liftToGoalHeight extends CommandBase {
   @Override
   public void execute() //if the game object has been picked up, claw closes
   {
-    scoring.moveClawMotors(0); //establish another constant for this. only use if the game object hasn't been picked up
-    scoring.moveAngleArmMotor(0); //establish a constant for this
+    scoring.moveClawMotors(KClawMotorSpeed); 
+    scoring.moveAngleArmMotor(KAngleMotorSpeed);
   }
 
   // Called once the command ends or is interrupted.

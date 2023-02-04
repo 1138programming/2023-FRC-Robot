@@ -26,7 +26,7 @@ public class Scoring extends SubsystemBase{
 
         extensionMotor1.setInverted(KExtensionMotor1Reversed);
 
-        clawSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, KCLawSolenoidForwardChannel, KCLawSolenoidReverseChannel);
+        clawSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, KClawSolenoidForwardChannel, KClawSolenoidReverseChannel);
     }
 
     public void moveClawMotors(double speed) {

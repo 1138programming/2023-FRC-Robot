@@ -6,6 +6,7 @@ package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Scoring;
+import static frc.robot.Constants.*;
 public class getScoringReady extends CommandBase {
   Scoring scoring = new Scoring();
 
@@ -18,7 +19,7 @@ public class getScoringReady extends CommandBase {
   @Override
   public void initialize() 
   {
-    scoring.moveClawMotors(0); //establish a constant for this   
+    scoring.moveClawMotors(KClawMotorSpeed); //establish a constant for this   
   }
 
   
@@ -26,9 +27,8 @@ public class getScoringReady extends CommandBase {
   public void execute() //if the game object has been picked up, claw closes
   {
     
-      scoring.moveClawMotors(0); //establish another constant for this. only use if the game object hasn't been picked up
-      scoring.moveExtensionMotors(0); //establish a constant for this
-    
+      scoring.moveClawMotors(KClawMotorSpeed);
+      scoring.moveExtensionMotors(KExtensionMotorSpeed);    
   }
 
   // Called once the command ends or is interrupted.
