@@ -103,6 +103,7 @@ public final class Constants {
   public static final int KExtensionMotor1 = 4;
   public static final int KExtensionMotor2 = 5;
   public static final boolean KExtensionMotor1Reversed = true;
-
+  public static final int KCLawSolenoidForwardChannel = 1;
+  public static final int KCLawSolenoidReverseChannel = 2;
 }
         
