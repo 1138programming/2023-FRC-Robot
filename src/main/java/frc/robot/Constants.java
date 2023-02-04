@@ -115,5 +115,12 @@ public final class Constants {
   public static final double KIntakeI = 0;
   public static final double KIntakeD = 0;
 
+  // Endgame
+  public static final int KLimitSwitch = 0;
+  public static final int KLinearServoTop = 0;
+
+  public static final int KLinearServoBottom = 3;
+
+  public static final double KEndgameServoPos = 1;
 }
         

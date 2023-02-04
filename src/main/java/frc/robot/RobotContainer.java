@@ -10,7 +10,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.Base.BaseStop;
 import frc.robot.commands.Base.DriveWithJoysticks;
+import frc.robot.commands.Base.Endgame.*;
 import frc.robot.commands.Base.ResetEncoders;
 import frc.robot.commands.Base.ToggleGenerateOdometryLog;
 import frc.robot.commands.Base.WriteOdometryLog;
@@ -19,6 +21,7 @@ import frc.robot.commands.Intake.IntakeSpinRollers;
 import frc.robot.commands.Intake.IntakeSpinSpaghetti;
 import frc.robot.subsystems.Base;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Endgame;
 import frc.robot.commands.Base.ToggleSpeed;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -40,12 +43,17 @@ public class RobotContainer {
   
   
    
+  private final Endgame endgame = new Endgame();
+  
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
   private final ToggleGenerateOdometryLog toggleGenerateOdometryLog = new ToggleGenerateOdometryLog(base);
   private final WriteOdometryLog writeOdometryLog = new WriteOdometryLog(base);
   private final ToggleSpeed toggleFastSpeed = new ToggleSpeed(base, 1);
   private final ToggleSpeed toggleMidSpeed = new ToggleSpeed(base, KBaseDriveHighPercent);
   private final ToggleSpeed toggleSlowSpeed = new ToggleSpeed(base, KBaseDriveLowPercent);
+  //Endgame
+  private final MoveLinearServosOut moveLinearServosOut = new MoveLinearServosOut(endgame);
+  private final MoveLinearServosIn moveLinearServosIn = new MoveLinearServosIn(endgame);
 
   //Controller Ports (check in Driver Station, IDs may be different for each computer)
   private static final int KLogitechPort = 0;
@@ -136,9 +144,10 @@ public class RobotContainer {
     logitechBtnY.onTrue(new ResetEncoders(base));
     logitechBtnLB.onTrue(toggleFastSpeed);
     logitechBtnLB.onFalse(toggleSlowSpeed);
+    // logitechBtnX.onTrue(moveLinearServosOut.andThen(driveBaseOffEdge));
 
-    xboxBtnA.onTrue(StorageForward1);
-    
+    xboxBtnA.onTrue(moveLinearServosOut);
+    xboxBtnB.onTrue(moveLinearServosIn);
   }
 
   /**
