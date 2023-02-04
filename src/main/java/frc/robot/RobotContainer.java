@@ -33,25 +33,24 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
+  //Subsystems
   private final Base base = new Base();
   private final Scoring scoring = new Scoring();
-
+  private final Endgame endgame = new Endgame();
   private final Intake intake = new Intake();
 
-  private final IntakeSpin StorageForward1 = new IntakeSpin(intake);
-  
-  
-   
-  private final Endgame endgame = new Endgame();
-  
+  // Base 
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
   private final ToggleGenerateOdometryLog toggleGenerateOdometryLog = new ToggleGenerateOdometryLog(base);
   private final WriteOdometryLog writeOdometryLog = new WriteOdometryLog(base);
   private final ToggleSpeed toggleFastSpeed = new ToggleSpeed(base, 1);
   private final ToggleSpeed toggleMidSpeed = new ToggleSpeed(base, KBaseDriveHighPercent);
   private final ToggleSpeed toggleSlowSpeed = new ToggleSpeed(base, KBaseDriveLowPercent);
-  //Endgame
+
+  // Intake
+  private final IntakeSpin StorageForward1 = new IntakeSpin(intake);
+
+  // Endgame
   private final MoveLinearServosOut moveLinearServosOut = new MoveLinearServosOut(endgame);
   private final MoveLinearServosIn moveLinearServosIn = new MoveLinearServosIn(endgame);
 
@@ -101,7 +100,6 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     base.setDefaultCommand(driveWithJoysticks);
-    
     
     //Game controllers
     logitech = new Joystick(KLogitechPort); //Logitech Dual Action
