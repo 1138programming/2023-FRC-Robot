@@ -14,9 +14,7 @@ public class IntakeSwivelTop extends CommandBase {
  /** Creates a new intakeSpaghettiSet. */
   private Intake intake;
   
-  
   public IntakeSwivelTop (Intake intake, double encoderTarget ) {
-    // Use addRequirements() here to declare subsystem dependencies.
     this.intake = intake; 
     addRequirements(intake);
   }

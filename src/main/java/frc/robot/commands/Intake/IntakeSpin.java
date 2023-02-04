@@ -12,8 +12,7 @@ public class IntakeSpin extends CommandBase {
   /** Creates a new IntakeSpinRollers. */
   public IntakeSpin(Intake intake) {
     this.intake = intake; 
-    addRequirements(intake);
-    
+    addRequirements(intake); 
   }
 
   // Called when the command is initially scheduled.
