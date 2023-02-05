@@ -22,6 +22,9 @@ import frc.robot.subsystems.Base;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Endgame;
 import frc.robot.subsystems.Scoring;
+import frc.robot.subsystems.Orientation;
+import frc.robot.commands.Orientation.OrientationMove;
+import frc.robot.commands.Orientation.OrientationMoveReverse;
 import frc.robot.commands.Base.ToggleSpeed;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -40,6 +43,7 @@ public class RobotContainer {
   private final Scoring scoring = new Scoring();
   private final Endgame endgame = new Endgame();
   private final Intake intake = new Intake();
+  private final Orientation orientation = new Orientation();
 
   // Base 
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
@@ -52,6 +56,10 @@ public class RobotContainer {
   // Intake
   private final IntakeSpin StorageForward1 = new IntakeSpin(intake);
   private final IntakeStop intakeStop = new IntakeStop(intake);
+
+  //Orientation
+  private final OrientationMove OrientationFoward1 = new OrientationMove(orientation);
+  private final OrientationMoveReverse OrientationBackward1 = new OrientationMoveReverse(orientation);
 
   // Endgame
   private final MoveLinearServosOut moveLinearServosOut = new MoveLinearServosOut(endgame);
@@ -150,6 +158,9 @@ public class RobotContainer {
 
     xboxBtnA.onTrue(moveLinearServosOut);
     xboxBtnB.onTrue(moveLinearServosIn);
+
+    xboxBtnA.whileTrue(OrientationFoward1);
+    xboxBtnB.whileTrue(OrientationBackward1);
   }
 
   /**
