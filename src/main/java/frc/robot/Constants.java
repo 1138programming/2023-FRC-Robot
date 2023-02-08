@@ -78,41 +78,40 @@ public final class Constants {
   
   public static final Translation2d KFrontLeftLocation = new Translation2d(
     KWheelDistanceFromCenter, KWheelDistanceFromCenter
-    );
-    public static final Translation2d KFrontRightLocation = new Translation2d(
-      KWheelDistanceFromCenter, -KWheelDistanceFromCenter
-      );
-      public static final Translation2d KBackLeftLocation = new Translation2d(
-        -KWheelDistanceFromCenter, KWheelDistanceFromCenter
-        );
-        public static final Translation2d KBackRightLocation = new Translation2d(
-          -KWheelDistanceFromCenter, -KWheelDistanceFromCenter
-          );
+  );
+  public static final Translation2d KFrontRightLocation = new Translation2d(
+    KWheelDistanceFromCenter, -KWheelDistanceFromCenter
+  );
+  public static final Translation2d KBackLeftLocation = new Translation2d(
+    -KWheelDistanceFromCenter, KWheelDistanceFromCenter
+  );
+  public static final Translation2d KBackRightLocation = new Translation2d(
+    -KWheelDistanceFromCenter, -KWheelDistanceFromCenter
+  );
           
           
-          public static final boolean KFrontLeftDriveReversed = false;
-          public static final boolean KFrontRightDriveReversed = false;
-          public static final boolean KBackLeftDriveReversed = false;
-          public static final boolean KBackRightDriveReversed = false;
-          
-          public static final boolean KFrontLeftAngleReversed = true;
-          public static final boolean KFrontRightAngleReversed = true;
-          public static final boolean KBackLeftAngleReversed = true;
-          public static final boolean KBackRightAngleReversed = true;
-          
-          public static final boolean KFrontLeftDriveEncoderReversed = false;
-          public static final boolean KFrontRightDriveEncoderReversed = false;
-          public static final boolean KBackLeftDriveEncoderReversed = false;
-          public static final boolean KBackRightDriveEncoderReversed = false; 
-          
-          public static final double KPPMaxVelocity = 4;
-          public static final double KPPMaxAcceleration = 3;
-          public static final PathPlannerTrajectory KPath1 = PathPlanner.loadPath("blue1", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
-          
-          public static final double KXControllerP = 1;
-          public static final double KXControllerI = 0;
-          public static final double KXControllerD = 0;
-
+  public static final boolean KFrontLeftDriveReversed = false;
+  public static final boolean KFrontRightDriveReversed = false;
+  public static final boolean KBackLeftDriveReversed = false;
+  public static final boolean KBackRightDriveReversed = false;
+  
+  public static final boolean KFrontLeftAngleReversed = true;
+  public static final boolean KFrontRightAngleReversed = true;
+  public static final boolean KBackLeftAngleReversed = true;
+  public static final boolean KBackRightAngleReversed = true;
+  
+  public static final boolean KFrontLeftDriveEncoderReversed = false;
+  public static final boolean KFrontRightDriveEncoderReversed = false;
+  public static final boolean KBackLeftDriveEncoderReversed = false;
+  public static final boolean KBackRightDriveEncoderReversed = false; 
+  
+  public static final double KPPMaxVelocity = 4;
+  public static final double KPPMaxAcceleration = 3;
+  
+  public static final double KXControllerP = 1;
+  public static final double KXControllerI = 0;
+  public static final double KXControllerD = 0;
+  
   public static final double KYControllerP = 1;
   public static final double KYControllerI = 0;
   public static final double KYControllerD = 0;
@@ -129,6 +128,10 @@ public final class Constants {
   public static final double KBalanceI = 0;
   public static final double KBalanceD = 0.001;
   
+  // Pathplanner trajectories
+  public static final PathPlannerTrajectory KBlue1 = PathPlanner.loadPath("Blue1", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
+  public static final PathPlannerTrajectory KBlue1Part2 = PathPlanner.loadPath("Blue1 Part 2", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
+  // public static final PathPlannerTrajectory KLeftSideLeaveCommunity = PathPlanner.loadPath("blue1", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
   
   //sys id config numbers 
   public static final double ks = 0.20309;

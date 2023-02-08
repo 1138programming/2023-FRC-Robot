@@ -16,7 +16,6 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class TestAuton extends SequentialCommandGroup {
-  private PathPlannerTrajectory pathPlannerTrajectory;
 
   /** Creates a new TestAuton. */
   public TestAuton(Base base) {
@@ -25,7 +24,8 @@ public class TestAuton extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ResetOdometry(base),
-      base.followTrajectoryCommand(KPath1, true)
+      // base.followTrajectoryCommand(KBlue1, true)
+      base.followTrajectoryCommand(KBlue1Part2, true)
     );
   }
 }

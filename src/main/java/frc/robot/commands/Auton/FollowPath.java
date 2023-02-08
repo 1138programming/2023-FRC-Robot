@@ -31,6 +31,7 @@ public class FollowPath extends CommandBase {
   @Override
   public void execute() {
     base.followTrajectoryCommand(pathPlannerTrajectory, isFirstPath);
+    
   }
 
   // Called once the command ends or is interrupted.

@@ -141,6 +141,7 @@ public class Base extends SubsystemBase {
   public Pose2d getPose2d() {
     return pose;
   }
+
   public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
     return new SequentialCommandGroup(
          new InstantCommand(() -> {
@@ -150,11 +151,11 @@ public class Base extends SubsystemBase {
            }
          }),
          new PPSwerveControllerCommand(
-             traj, 
+             traj,
              this::getPose2d, // Pose supplier
              this.kinematics, // SwerveDriveKinematics
-             new PIDController(0.5, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-             new PIDController(0.5, 0, 0), // Y controller (usually the same values as X controller)
+             new PIDController(2, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+             new PIDController(2, 0, 0), // Y controller (usually the same values as X controller)
              new PIDController(0, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
              this::setModuleStates, // Module states consumer
              true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
@@ -162,12 +163,14 @@ public class Base extends SubsystemBase {
          )
      );
  }
+
   public void setModuleStates(SwerveModuleState[] desiredStates) {
     frontLeftModule.setDesiredState(desiredStates[0]);
     frontRightModule.setDesiredState(desiredStates[1]);
     backLeftModule.setDesiredState(desiredStates[2]);
     backRightModule.setDesiredState(desiredStates[3]);
   }
+
   public void stop(){
     drive(0, 0, 0, true, 0);
   }

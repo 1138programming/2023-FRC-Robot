@@ -161,6 +161,8 @@ public class RobotContainer {
     logitechBtnB.whileTrue(autoBalance);
     logitechBtnB.onFalse(new InstantCommand(() -> base.stop()));
     logitechBtnLB.onFalse(toggleSlowSpeed);
+
+    logitechBtnRT.onTrue(testAuton);
   }
 
   /**
@@ -169,15 +171,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    base.resetOdometry();
-
-    // PathPlannerTrajectory blue1 = base.getPathPlannerTrajectory("blue1", KPPMaxVelocity, KPPMaxAcceleration);
-    // // PathPlanner.loadPath("Blue1", new PathConstraints(1, 1));
-
-    // TrajectoryConfig config = new TrajectoryConfig(
-    //     KPhysicalMaxDriveSpeedMPS,
-    //     KPPMaxAcceleration)
-    //     .setKinematics(base.getKinematics());
     return testAuton;
   }
 

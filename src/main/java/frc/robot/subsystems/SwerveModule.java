@@ -47,11 +47,8 @@ public class SwerveModule extends SubsystemBase {
     driveEncoder.setPositionConversionFactor(KDriveMotorRotToMeter);
 
 
-    // if (driveEncoderReversed) {
-    //   driveEncoder.setVelocityConversionFactor(-KDriveMotorRPMToMetersPerSec);
-    // } else {
-      driveEncoder.setVelocityConversionFactor(KDriveMotorRPMToMetersPerSec);
-    // }
+    driveEncoder.setVelocityConversionFactor(KDriveMotorRPMToMetersPerSec);
+    
     angleEncoder.setPositionConversionFactor(KAngleMotorRotToDeg);
 
     angleController = new PIDController(KAngleP, KAngleI, KAngleD);
