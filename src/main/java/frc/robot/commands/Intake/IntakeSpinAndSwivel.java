@@ -3,16 +3,12 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands.Intake;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
-import static frc.robot.Constants.*;
 
-public class IntakeSpinRollers extends CommandBase {
-  private Intake intake;
-  /** Creates a new IntakeSpinRollers. */
-  public IntakeSpinRollers(Intake intake) {
-    this.intake = intake; 
-    addRequirements(intake);
+import edu.wpi.first.wpilibj2.command.CommandBase;
+
+public class IntakeSpinAndSwivel extends CommandBase {
+  /** Creates a new IntakeSpinAndSwivel. */
+  public IntakeSpinAndSwivel() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -22,16 +18,11 @@ public class IntakeSpinRollers extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    intake.flexspin(KIntakeRollerSpeed);
- 
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    intake.flexStop();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
