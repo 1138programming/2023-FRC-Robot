@@ -21,27 +21,32 @@ import edu.wpi.first.wpilibj.I2C; // Color Sensor
 public class Orientation extends SubsystemBase {
     private CANSparkMax orientationMotor1;
     private CANSparkMax orientationMotor2;
+    private CANSparkMax orientationMotorExtension;
     
     private DigitalInput proximitySensor;
     
-    private DoubleSolenoid possiblePiston;
+    // private DoubleSolenoid possiblePiston;
     
     public Orientation() {
         orientationMotor1 = new CANSparkMax(KOrientationMotor1ID, MotorType.kBrushless);
         orientationMotor2 = new CANSparkMax(KOrientationMotor2ID, MotorType.kBrushless);
-        
+        orientationMotorExtension = new CANSparkMax(KOrientationMotorExtensionID, MotorType.kBrushless);
+    
         proximitySensor = new DigitalInput (KOrientationProximityID);
         
-        possiblePiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, KBackLeftDriveID, KBackLeftAngleID);
+        //possiblePiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, KOrientationPossiblePistonFrontID, KOrientationPossiblePistonBackID);
     }
 
     public void moveOrientationMotor1(double speed) {
         orientationMotor1.set(speed);
-        
     }
 
     public void moveOrientationMotor2(double speed) {
         orientationMotor2.set(speed);
+    }
+
+    public void moveOrientationMotorExtension(double speed) {
+        orientationMotorExtension.set(speed);
     }
 
     public void stopOrientationMotor1() {
@@ -52,19 +57,23 @@ public class Orientation extends SubsystemBase {
         orientationMotor2.set(0);
     }
 
+    public void stopOrientationMotorExtension() {
+        orientationMotorExtension.set(0);
+    }
+
     public Boolean getProximitySensor() {
         return proximitySensor.get();
     }
 
-    public void setOff () {
+    /* public void setPossiblePistonOff () {
        possiblePiston.set(kOff);
-      }
+    }
     
-    public void setReverse() {
+    public void setPossiblePistonReverse() {
         possiblePiston.set(kReverse);
     } 
 
-    public void setFoward() {
+    public void setPossiblePistonFoward() {
         possiblePiston.set(kForward);
-    }
+    } */
 }

@@ -25,6 +25,8 @@ import frc.robot.subsystems.Scoring;
 import frc.robot.subsystems.Orientation;
 import frc.robot.commands.Orientation.OrientationMove;
 import frc.robot.commands.Orientation.OrientationMoveReverse;
+import frc.robot.commands.Orientation.OrientationSpinFoward;
+import frc.robot.commands.Orientation.OrientationSpinReverse;
 import frc.robot.commands.Base.ToggleSpeed;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;

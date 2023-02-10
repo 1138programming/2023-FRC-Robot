@@ -25,9 +25,9 @@ public class OrientationMoveReverse extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    orientation.moveOrientationMotor1(-KMotor1Speed);
-    orientation.moveOrientationMotor2(-KMotor2Speed);
-
+    orientation.moveOrientationMotor1(KMotor1Speed);
+    orientation.moveOrientationMotor2(KMotor2Speed);
+    orientation.moveOrientationMotorExtension(-KMotorExtensionSpeed);
   }
 
   // Called once the command ends or is interrupted.
