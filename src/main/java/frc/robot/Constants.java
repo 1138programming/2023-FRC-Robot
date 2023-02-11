@@ -146,6 +146,16 @@ public final class Constants {
   public static final double KMotor1Speed = 0.5;
   public static final double KMotor2Speed = 0.5;
 
+
+   //LED ports
+   public static final int KLEDPort = 2;
+   public static final int KLEDBuffer = 20;
+   public static enum KLEDSTATE {
+     OFF,
+     YELLOW,
+     PURPLE
+   };
+
   
  
 }
