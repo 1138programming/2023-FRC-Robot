@@ -4,19 +4,12 @@ import static frc.robot.Constants.*;
 import com.revrobotics.CANSparkMax; // Covers Neo's
 import com.revrobotics.CANSparkMaxLowLevel.MotorType; // Cover's Neo's
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.DoubleSolenoid; // Pnuematics
-import edu.wpi.first.wpilibj.PneumaticsModuleType; // Pnuematics
-import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*; // Pnuematics
-import edu.wpi.first.wpilibj.DigitalInput; // Color Sensor
-import edu.wpi.first.wpilibj.util.Color; // Color Sensor
+import edu.wpi.first.wpilibj.DigitalInput; // Proximity Sensors
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; 
-import edu.wpi.first.wpilibj.I2C; // Color Sensor
 
 /* 
- * 2 motors: Undecided: Neos or 775's
- * 1 color sensor
- * 1 proximity sensor
- * Potientially 1 pnuematic piston (Double acting solinoid)
+ * 3 motors: Undecided: Neos or 775's
+ * Possibly 10 or more sensors proximity sensor
  */
 public class Orientation extends SubsystemBase {
     private CANSparkMax orientationMotor1;
@@ -31,10 +24,8 @@ public class Orientation extends SubsystemBase {
         orientationMotor1 = new CANSparkMax(KOrientationMotor1ID, MotorType.kBrushless);
         orientationMotor2 = new CANSparkMax(KOrientationMotor2ID, MotorType.kBrushless);
         orientationMotorExtension = new CANSparkMax(KOrientationMotorExtensionID, MotorType.kBrushless);
-    
         proximitySensor = new DigitalInput (KOrientationProximityID);
         
-        //possiblePiston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, KOrientationPossiblePistonFrontID, KOrientationPossiblePistonBackID);
     }
 
     public void moveOrientationMotor1(double speed) {
@@ -65,15 +56,4 @@ public class Orientation extends SubsystemBase {
         return proximitySensor.get();
     }
 
-    /* public void setPossiblePistonOff () {
-       possiblePiston.set(kOff);
-    }
-    
-    public void setPossiblePistonReverse() {
-        possiblePiston.set(kReverse);
-    } 
-
-    public void setPossiblePistonFoward() {
-        possiblePiston.set(kForward);
-    } */
 }
