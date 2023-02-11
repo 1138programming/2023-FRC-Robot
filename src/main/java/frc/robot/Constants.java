@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import java.util.Enumeration;
+
+import com.fasterxml.jackson.databind.introspect.AnnotationCollector.OneAnnotation;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 
@@ -144,9 +148,15 @@ public final class Constants {
   public static final int KOrientationPossiblePistonBackID = 4;
   // public static final int KOrientationColorID = 5;
   public static final int KMotor1Speed = 6;
-  public static final int KMotor2Speed = 7;
-
-  
- 
+  public static final int KMotor2Speed = 7;   
 }
         
+  //LED ports
+  public static final int KLEDPort = 2;
+  public static final int KLEDBuffer = 20;
+  public static enum KLEDSTATE {
+    OFF,
+    YELLOW,
+    PURPLE
+  };
+}
