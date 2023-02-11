@@ -127,11 +127,11 @@ public final class Constants {
 
   public static final double KEndgameServoPos = 1;
   // Scoring
-  public static final int KClawMotor1 = 1;
-  public static final int KClawMotor2 = 2;
-  public static final int KAngleArmMotor = 3;
-  public static final int KExtensionMotor1 = 4;
-  public static final int KExtensionMotor2 = 5;
+  public static final int KClawMotor = 15;
+  public static final int KWristMotor = 16;
+  public static final int KLiftMotor = 17;
+  public static final int KFlipperMotor = 18;
+
   public static final boolean KExtensionMotor1Reversed = true;
   public static final int KClawSolenoidForwardChannel = 1;
   public static final int KClawSolenoidReverseChannel = 2;

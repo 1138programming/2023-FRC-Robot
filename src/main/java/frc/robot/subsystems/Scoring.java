@@ -16,30 +16,25 @@ public class Scoring extends SubsystemBase{
     private CANSparkMax lift;
 
     public Scoring() {
-        claw = new CANSparkMax(KClawMotor1, MotorType.kBrushless);
-        wrist = new CANSparkMax(KClawMotor2, MotorType.kBrushless);
-        flipper = new CANSparkMax(KAngleArmMotor, MotorType.kBrushless);
-        lift = new CANSparkMax(KExtensionMotor1, MotorType.kBrushless);
-        
-
-        
+        claw = new CANSparkMax(KClawMotor, MotorType.kBrushless);
+        wrist = new CANSparkMax(KWristMotor, MotorType.kBrushless);
+        flipper = new CANSparkMax(KFlipperMotor, MotorType.kBrushless);
+        lift = new CANSparkMax(KLiftMotor, MotorType.kBrushless);
     }
 
     public void moveClaw(double speed) {
         claw.set(speed);
     }
-
     public void moveWrist(double speed) {
         wrist.set(speed);
     }
-
     public void moveFlipper(double speed) {
         flipper.set(speed);
     }
-    public void moveLift(double speed)
-    {
+    public void moveLift(double speed) {
         lift.set(speed);
     }
+
     public void stop() {
         claw.set(0);
         wrist.set(0);
