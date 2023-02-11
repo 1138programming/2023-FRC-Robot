@@ -143,8 +143,7 @@ public final class Constants {
   public static final int KOrientationLeftMotorID = 12;
   public static final int KOrientationRightMotorID = 13;
   public static final int KOrientationMotorExtensionID = 14;
-  public static final double KLeftMotorSpeed = 18;
-  public static final double KRightMotorSpeed = 19;
+  public static final double KLeftandRightMotorSpeeds = 18;
   public static final double KMotorExtensionSpeed = 20;
 
  

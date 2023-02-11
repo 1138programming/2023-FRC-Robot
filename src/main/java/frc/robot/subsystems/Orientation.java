@@ -28,27 +28,20 @@ public class Orientation extends SubsystemBase {
         Sensor1 = new DigitalInput (KOrientationSensor1ID);
         Sensor2 = new DigitalInput (KOrientationSensor2ID);
         Sensor3 = new DigitalInput (KOrientationSensor3ID);
-        
+
+        orientationRightMotor.follow(orientationLeftMotor);
     }
 
-    public void moveOrientationLeftMotor(double speed) {
+    public void moveOrientationLeftandRightMotors(double speed) {
         orientationLeftMotor.set(speed);
-    }
-
-    public void moveOrientationRightMotor(double speed) {
-        orientationRightMotor.set(speed);
     }
 
     public void moveOrientationMotorExtension(double speed) {
         orientationMotorExtension.set(speed);
     }
 
-    public void stopOrientationLeftMotor() {
+    public void stopOrientationLeftandRightMotors() {
         orientationLeftMotor.set(0);
-    }
-
-    public void stopOrientationRightMotor() {
-        orientationRightMotor.set(0);
     }
 
     public void stopOrientationMotorExtension() {
