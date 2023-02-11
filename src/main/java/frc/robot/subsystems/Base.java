@@ -35,14 +35,16 @@ public class Base extends SubsystemBase {
   private SwerveModule backLeftModule;
   private SwerveModule backRightModule;
 
-  private SwerveDriveKinematics kinematics;
-  private SwerveDriveOdometry odometry;
   private AHRS gyro;
 
+  private SwerveDriveKinematics kinematics;
+  private SwerveDriveOdometry odometry;
   private Pose2d pose;
+
   
   private double driveSpeedFactor;
 
+  // logging stuff: not currently being used
   private boolean enableLogging;
   private long startTime;
   private ArrayList<String> odometryData;
@@ -51,40 +53,36 @@ public class Base extends SubsystemBase {
   
   public Base() {
     frontLeftModule = new SwerveModule(
-      new CANSparkMax(KFrontLeftAngleID, MotorType.kBrushless),
-      new CANSparkMax(KFrontLeftDriveID, MotorType.kBrushless),
+      KFrontLeftAngleID,
+      KFrontLeftDriveID,
       new DutyCycleEncoder(KFrontLeftMagEncoderID),
       KFrontLeftOffset,
       KFrontLeftDriveReversed,
-      KFrontLeftAngleReversed,
-      KFrontLeftDriveEncoderReversed
+      KFrontLeftAngleReversed
     );
     frontRightModule = new SwerveModule(
-        new CANSparkMax(KFrontRightAngleID, MotorType.kBrushless), 
-      new CANSparkMax(KFrontRightDriveID, MotorType.kBrushless), 
+      KFrontRightAngleID,
+      KFrontRightDriveID,
       new DutyCycleEncoder(KFrontRightMagEncoderID), 
       KFrontRightOffset,
       KFrontRightDriveReversed,
-      KFrontRightAngleReversed,
-      KFrontRightDriveEncoderReversed
+      KFrontRightAngleReversed
     );
     backLeftModule = new SwerveModule(
-      new CANSparkMax(KBackLeftAngleID, MotorType.kBrushless), 
-      new CANSparkMax(KBackLeftDriveID, MotorType.kBrushless), 
+      KBackLeftAngleID,
+      KBackLeftDriveID,
       new DutyCycleEncoder(KBackLeftMagEncoderID), 
       KBackLeftOffset,
       KBackLeftDriveReversed,
-      KBackLeftAngleReversed,
-      KBackLeftDriveEncoderReversed
+      KBackLeftAngleReversed
     );
     backRightModule = new SwerveModule(
-      new CANSparkMax(KBackRightAngleID, MotorType.kBrushless), 
-      new CANSparkMax(KBackRightDriveID, MotorType.kBrushless), 
+      KBackRightAngleID,
+      KBackRightDriveID,
       new DutyCycleEncoder(KBackRightMagEncoderID), 
       KBackRightOffset,
       KBackRightDriveReversed,
-      KBackRightAngleReversed,
-      KBackRightDriveEncoderReversed
+      KBackRightAngleReversed
     );
 
     gyro = new AHRS(SPI.Port.kMXP);
@@ -113,7 +111,7 @@ public class Base extends SubsystemBase {
         fieldRelative
           ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, getHeading())
           : new ChassisSpeeds(xSpeed, ySpeed, rot));
-    SwerveDriveKinematics.desaturateWheelSpeeds(states, KPhysicalMaxDriveSpeedMPS * driveSpeedFactor);
+    SwerveDriveKinematics.desaturateWheelSpeeds(states, KPhysicalMaxDriveSpeedMPS);
     SmartDashboard.putNumber("speedFactor", driveSpeedFactor);
 
     //setting module states, aka moving the motors
@@ -122,10 +120,6 @@ public class Base extends SubsystemBase {
     backLeftModule.setDesiredState(states[2]);
     backRightModule.setDesiredState(states[3]);
 }
-
-  public void calibrateGyro() {
-    gyro.calibrate();
-  }
 
   // recalibrates gyro offset
   public void resetGyro() {

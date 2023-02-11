@@ -58,7 +58,7 @@ public class DriveWithJoysticks extends CommandBase {
     // else {
     //   initHeading = base.getHeadingDeg();
     // }
-    base.drive(fbSpeed, lrSpeed, rot, true, maxDriveSpeed);
+    base.drive(fbSpeed, lrSpeed, rot, true, maxDriveSpeed * base.getDriveSpeedFactor());
 
     // SmartDashboard.putNumber(getName(), KAngleD)
   }
