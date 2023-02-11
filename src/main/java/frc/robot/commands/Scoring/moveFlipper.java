@@ -6,29 +6,23 @@ package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Scoring;
-import static frc.robot.Constants.*;
-public class getScoringReady extends CommandBase {
+public class moveFlipper extends CommandBase {
   Scoring scoring = new Scoring();
-
-  public getScoringReady(Scoring scoring) {
+  double speed;
+  public moveFlipper(Scoring scoring, double speed) {
     this.scoring = scoring;
-    addRequirements(scoring);
+    this.speed = speed;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() 
-  {
-    scoring.moveClawMotors(KClawMotorSpeed); //establish a constant for this   
-  }
+  public void initialize() {}
 
-  
+  // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() //if the game object has been picked up, claw closes
+  public void execute()
   {
-    
-      scoring.moveClawMotors(KClawMotorSpeed);
-      scoring.moveExtensionMotors(KExtensionMotorSpeed);    
+    scoring.moveFlipper(speed);
   }
 
   // Called once the command ends or is interrupted.

@@ -10,53 +10,40 @@ import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*; // Pnuematics
 
 
 public class Scoring extends SubsystemBase{
-    private CANSparkMax clawMotor1;
-    private CANSparkMax clawMotor2;
-    private CANSparkMax angleArmMotor;
-    private CANSparkMax extensionMotor1;
-    private CANSparkMax extensionMotor2;
-    private DoubleSolenoid clawSolenoid;
+    private CANSparkMax claw;
+    private CANSparkMax wrist;
+    private CANSparkMax flipper;
+    private CANSparkMax lift;
 
     public Scoring() {
-        clawMotor1 = new CANSparkMax(KClawMotor1, MotorType.kBrushless);
-        clawMotor2 = new CANSparkMax(KClawMotor2, MotorType.kBrushless);
-        angleArmMotor = new CANSparkMax(KAngleArmMotor, MotorType.kBrushless);
-        extensionMotor1 = new CANSparkMax(KExtensionMotor1, MotorType.kBrushless);
-        extensionMotor2 = new CANSparkMax(KExtensionMotor2, MotorType.kBrushless);
+        claw = new CANSparkMax(KClawMotor1, MotorType.kBrushless);
+        wrist = new CANSparkMax(KClawMotor2, MotorType.kBrushless);
+        flipper = new CANSparkMax(KAngleArmMotor, MotorType.kBrushless);
+        lift = new CANSparkMax(KExtensionMotor1, MotorType.kBrushless);
+        
 
-        extensionMotor1.setInverted(KExtensionMotor1Reversed);
-
-        clawSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, KClawSolenoidForwardChannel, KClawSolenoidReverseChannel);
+        
     }
 
-    public void moveClawMotors(double speed) {
-        clawMotor1.set(speed);
-        clawMotor2.set(speed);
+    public void moveClaw(double speed) {
+        claw.set(speed);
     }
 
-    public void moveAngleArmMotor(double speed) {
-        angleArmMotor.set(speed);
+    public void moveWrist(double speed) {
+        wrist.set(speed);
     }
 
-    public void moveExtensionMotors(double speed) {
-        extensionMotor1.set(speed);
-        extensionMotor2.set(speed);
+    public void moveFlipper(double speed) {
+        flipper.set(speed);
     }
-    
+    public void moveLift(double speed)
+    {
+        lift.set(speed);
+    }
     public void stop() {
-        extensionMotor1.set(0);
-        extensionMotor2.set(0);
-        angleArmMotor.set(0);
-        clawMotor1.set(0);
-        clawMotor2.set(0);
-    }    
-    
-    public void cLawSolenoidForward() {
-        clawSolenoid.set(kForward);
-    }
-    
-    public void cLawSolenoidReverse() {
-        clawSolenoid.set(kReverse);
-    }
-    
+        claw.set(0);
+        wrist.set(0);
+        flipper.set(0);
+        lift.set(0);
+    }       
 }
