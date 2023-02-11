@@ -27,6 +27,13 @@ import frc.robot.commands.LED.LEDPurple;
 import frc.robot.commands.LED.LEDYellow;
 import frc.robot.subsystems.Base;
 import frc.robot.subsystems.LEDs;
+import frc.robot.subsystems.Orientation;
+import frc.robot.commands.Orientation.OrientationMoveAllForward;
+import frc.robot.commands.Orientation.OrientationMoveAllReverse;
+import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightForward;
+import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
+import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionForward;
+import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionReverse;
 import frc.robot.commands.Base.ToggleSpeed;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -46,6 +53,7 @@ public class RobotContainer {
   private final Endgame endgame = new Endgame();
   private final Intake intake = new Intake();
   private final LEDs LEDs = new LEDs();
+  private final Orientation orientation = new Orientation();
 
   // Base 
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
@@ -61,6 +69,10 @@ public class RobotContainer {
   // Intake
   private final IntakeSpin StorageForward1 = new IntakeSpin(intake);
   private final IntakeStop intakeStop = new IntakeStop(intake);
+
+  //Orientation
+  private final OrientationMoveAllForward OrientationFoward1 = new OrientationMoveAllForward(orientation);
+  private final OrientationMoveAllReverse OrientationBackward1 = new OrientationMoveAllReverse(orientation);
 
   // Endgame
   private final MoveLinearServosOut moveLinearServosOut = new MoveLinearServosOut(endgame);
@@ -159,6 +171,10 @@ public class RobotContainer {
 
     xboxBtnA.onTrue(moveLinearServosOut);
     xboxBtnB.onTrue(moveLinearServosIn);
+
+    xboxBtnA.whileTrue(OrientationFoward1);
+    xboxBtnB.whileTrue(OrientationBackward1);
+
   }
 
   /**
