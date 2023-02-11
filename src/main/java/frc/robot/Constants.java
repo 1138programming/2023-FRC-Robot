@@ -137,6 +137,12 @@ public final class Constants {
   public static final double KAngleMotorSpeed = 0; //TBD
   public static final double KExtensionMotorSpeed = 0; //TBD
 
+    //lift PID
+    public static final double KLiftP = 0; //TBD
+    public static final double KLiftI = 0; //TBD
+    public static final double KLiftD = 0; //TBD
+    public static final double KLiftRotToFoot = 0; //TBD
+
   // Orientation
   public static final int KOrientationSensor1ID = 0;
   public static final int KOrientationSensor2ID = 0;

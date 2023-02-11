@@ -6,12 +6,12 @@ package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Scoring;
-public class moveLift extends CommandBase {
+public class moveLiftTest extends CommandBase {
   Scoring scoring = new Scoring();
-  private double setPoint;
-  public moveLift(Scoring scoring, double setPoint) {
+  double speed;
+  public moveLiftTest(Scoring scoring, double speed) {
     this.scoring = scoring;
-    this.setPoint = setPoint;
+    this.speed = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -22,7 +22,7 @@ public class moveLift extends CommandBase {
   @Override
   public void execute()
   {
-    scoring.moveLift(setPoint);
+    scoring.moveLift(speed);
   }
 
   // Called once the command ends or is interrupted.
