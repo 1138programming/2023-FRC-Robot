@@ -98,11 +98,16 @@ public final class Constants {
 
   //intake
   public static final int KSpaghettiIntakeId = 12;
-  public static final int KLeftIntakeId = 0;
-  public static final int KRightIntakeId = 13;
+  public static final int KKSwivelIntakeId = 0;
+  public static final int KFlewIntakeId= 13;
+
+
 
   public static final double KIntakeSpaghettitSpeed = 0.35;
-  public static final double KIntakeRollerSpeed = 0.35;
+  public static final double KIntakeFlexSpeed = 0.35;
+
+  public static final double KIntakeCubeSpaghettitSpeed = 0.35;
+  public static final double KIntakeCubeFlexSpeed = 0.35;
 
   public static final double KIntakeSwivelTopPos = 1;
   public static final double KIntakeSwivelBottumPos = 1;

@@ -23,8 +23,7 @@ public class IntakeSwivelUpAndStop extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.spaghettiStop();
-    intake.flexStop();
+    intake.intakeStop();
     intake.swivelSpinToPos(KIntakeSwivelTopPos);
   }
 

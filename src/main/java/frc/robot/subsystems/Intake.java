@@ -24,8 +24,8 @@ public class Intake extends SubsystemBase {
 
   public Intake() {
     spaghetti = new TalonSRX(KSpaghettiIntakeId);
-    swivel = new TalonSRX(KLeftIntakeId);
-    flex = new TalonSRX(KRightIntakeId);
+    swivel = new TalonSRX(KKSwivelIntakeId);
+    flex = new TalonSRX(KFlewIntakeId);
 
     intakeController = new PIDController(KIntakeP, KIntakeI, KIntakeD);
 
@@ -36,45 +36,41 @@ public class Intake extends SubsystemBase {
     spaghetti.set(ControlMode.PercentOutput, speed);
   }
 
-  public void spaghettiStop() {
-    spaghetti.set(ControlMode.PercentOutput, 0);
-  }
+  
 
   public void swivelSpinToPos(double setPoint) {
-    moveSwivel(intakeController.calculate(getIntakeEncoderRaw(),setPoint));
+    moveSwivel(intakeController.calculate(getIntakeEncoder(), setPoint));
   }
 
   public void moveSwivel(double speed) {
     if (!getIntakeLimitSwitch()) {
-      swivel.set(ControlMode.PercentOutput,speed);
-    }
-    else {
-      swivel.set(ControlMode.PercentOutput,0); 
+      swivel.set(ControlMode.PercentOutput, speed);
+    } else {
+      swivel.set(ControlMode.PercentOutput, 0);
     }
   }
 
-  public void swivelStop() {
-    swivel.set(ControlMode.PercentOutput, 0);
-  }
 
-  public void flexspin(double speed) {
+
+  public void flexSpin(double speed) {
     flex.set(ControlMode.PercentOutput, speed);
 
   }
 
-  public void flexStop() {
-    flex.set(ControlMode.PercentOutput, 0);
-  }
 
-  public double getEncoder() {
+
+  public double getIntakeEncoder() {
     return swivel.getSelectedSensorPosition();
   }
 
-  public double getIntakeEncoderRaw() {
-    return swivel.getSelectedSensorPosition();
-  }
 
   public boolean getIntakeLimitSwitch() {
     return intakeLimit.get();
+  } 
+  
+  public void intakeStop() {
+    flex.set(ControlMode.PercentOutput, 0);
+    swivel.set(ControlMode.PercentOutput, 0);
+    spaghetti.set(ControlMode.PercentOutput, 0);
   }
 }
