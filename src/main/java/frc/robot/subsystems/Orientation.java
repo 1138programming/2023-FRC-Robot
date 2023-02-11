@@ -9,51 +9,62 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /* 
  * 3 motors: Undecided: Neos or 775's
- * Possibly 10 or more sensors proximity sensor
+ * 3 sensors most likely
  */
 public class Orientation extends SubsystemBase {
-    private CANSparkMax orientationMotor1;
-    private CANSparkMax orientationMotor2;
+    private CANSparkMax orientationLeftMotor;
+    private CANSparkMax orientationRightMotor;
     private CANSparkMax orientationMotorExtension;
     
-    private DigitalInput proximitySensor;
+    private DigitalInput Sensor1;
+    private DigitalInput Sensor2;
+    private DigitalInput Sensor3;
     
-    // private DoubleSolenoid possiblePiston;
     
     public Orientation() {
-        orientationMotor1 = new CANSparkMax(KOrientationMotor1ID, MotorType.kBrushless);
-        orientationMotor2 = new CANSparkMax(KOrientationMotor2ID, MotorType.kBrushless);
+        orientationLeftMotor = new CANSparkMax(KOrientationLeftMotorID, MotorType.kBrushless);
+        orientationRightMotor = new CANSparkMax(KOrientationRightMotorID, MotorType.kBrushless);
         orientationMotorExtension = new CANSparkMax(KOrientationMotorExtensionID, MotorType.kBrushless);
-        proximitySensor = new DigitalInput (KOrientationProximityID);
+        Sensor1 = new DigitalInput (KOrientationSensor1ID);
+        Sensor2 = new DigitalInput (KOrientationSensor2ID);
+        Sensor3 = new DigitalInput (KOrientationSensor3ID);
         
     }
 
-    public void moveOrientationMotor1(double speed) {
-        orientationMotor1.set(speed);
+    public void moveOrientationLeftMotor(double speed) {
+        orientationLeftMotor.set(speed);
     }
 
-    public void moveOrientationMotor2(double speed) {
-        orientationMotor2.set(speed);
+    public void moveOrientationRightMotor(double speed) {
+        orientationRightMotor.set(speed);
     }
 
     public void moveOrientationMotorExtension(double speed) {
         orientationMotorExtension.set(speed);
     }
 
-    public void stopOrientationMotor1() {
-        orientationMotor1.set(0);
+    public void stopOrientationLeftMotor() {
+        orientationLeftMotor.set(0);
     }
 
-    public void stopOrientationMotor2() {
-        orientationMotor2.set(0);
+    public void stopOrientationRightMotor() {
+        orientationRightMotor.set(0);
     }
 
     public void stopOrientationMotorExtension() {
         orientationMotorExtension.set(0);
     }
 
-    public Boolean getProximitySensor() {
-        return proximitySensor.get();
+    public Boolean getSensor1() {
+        return Sensor1.get();
+    }
+
+    public Boolean getSensor2() {
+        return Sensor2.get();
+    }
+
+    public Boolean getSensor3() {
+        return Sensor3.get();
     }
 
 }

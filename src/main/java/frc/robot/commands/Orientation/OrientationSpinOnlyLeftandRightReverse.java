@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Orientation;
 import static frc.robot.Constants.*;
 
-public class OrientationMoveReverse extends CommandBase {
+public class OrientationSpinOnlyLeftandRightReverse extends CommandBase {
   /** Creates a new OrientationMove. */
 
   private Orientation orientation; 
 
-  public OrientationMoveReverse(Orientation orientation) {
+  public OrientationSpinOnlyLeftandRightReverse(Orientation orientation) {
     this.orientation = orientation;
     addRequirements(orientation);
   }
@@ -25,9 +25,8 @@ public class OrientationMoveReverse extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    orientation.moveOrientationMotor1(KMotor1Speed);
-    orientation.moveOrientationMotor2(KMotor2Speed);
-    orientation.moveOrientationMotorExtension(-KMotorExtensionSpeed);
+    orientation.moveOrientationLeftMotor(-KLeftMotorSpeed);
+    orientation.moveOrientationRightMotor(-KRightMotorSpeed);
   }
 
   // Called once the command ends or is interrupted.
@@ -40,3 +39,4 @@ public class OrientationMoveReverse extends CommandBase {
     return false;
   }
 }
+

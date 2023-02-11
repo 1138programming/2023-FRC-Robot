@@ -23,10 +23,10 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Endgame;
 import frc.robot.subsystems.Scoring;
 import frc.robot.subsystems.Orientation;
-import frc.robot.commands.Orientation.OrientationMove;
-import frc.robot.commands.Orientation.OrientationMoveReverse;
-import frc.robot.commands.Orientation.OrientationSpinFoward;
-import frc.robot.commands.Orientation.OrientationSpinReverse;
+import frc.robot.commands.Orientation.OrientationMoveAllForward;
+import frc.robot.commands.Orientation.OrientationMoveAllReverse;
+import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightFoward;
+import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
 import frc.robot.commands.Base.ToggleSpeed;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -60,8 +60,8 @@ public class RobotContainer {
   private final IntakeStop intakeStop = new IntakeStop(intake);
 
   //Orientation
-  private final OrientationMove OrientationFoward1 = new OrientationMove(orientation);
-  private final OrientationMoveReverse OrientationBackward1 = new OrientationMoveReverse(orientation);
+  private final OrientationMoveAllForward OrientationFoward1 = new OrientationMoveAllForward(orientation);
+  private final OrientationMoveAllReverse OrientationBackward1 = new OrientationMoveAllReverse(orientation);
 
   // Endgame
   private final MoveLinearServosOut moveLinearServosOut = new MoveLinearServosOut(endgame);
