@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.*;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 //import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Servo;
@@ -11,24 +13,30 @@ public class Endgame extends SubsystemBase {
 
     private Servo endgameLinearServoTop;
     private Servo endgameLinearServoBottom;
-    private DigitalInput endgameLimitSwitch;
+    private DigitalInput endgameBottomIRSensor;
 
     public Endgame() {
-        endgameLimitSwitch = new DigitalInput(KLimitSwitch);
+        endgameBottomIRSensor = new DigitalInput(KEndgameIRSensor);
         endgameLinearServoTop = new Servo(KLinearServoTop);
-        endgameLinearServoBottom = new Servo(3);
+        endgameLinearServoBottom = new Servo(KLinearServoBottom);
 
         // Bounds copied from 2022 FRC robot.. the values are most likely wrong. Check with Patrick for values possibly
         endgameLinearServoTop.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
         endgameLinearServoBottom.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
     }
 
+    @Override
+    public void periodic()
+    {
+        SmartDashboard.putBoolean("IR Sensor Test",isBottomIRSensorPressed());
+    }
+
     public void moveServo(double pos) {
         endgameLinearServoTop.set(pos);
         endgameLinearServoBottom.set(pos);
     }
-
-    public boolean isLimitSwitchPressed() {
-        return endgameLimitSwitch.get();
+    public boolean isBottomIRSensorPressed()
+    {
+        return endgameBottomIRSensor.get();
     }
 }

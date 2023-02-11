@@ -120,12 +120,12 @@ public final class Constants {
   public static final double KIntakeD = 0;
 
   // Endgame
-  public static final int KLimitSwitch = 0;
   public static final int KLinearServoTop = 0;
-
   public static final int KLinearServoBottom = 3;
+  public static final int KEndgameIRSensor = 1;
 
   public static final double KEndgameServoPos = 1;
+  
   // Scoring
   public static final int KClawMotor1 = 1;
   public static final int KClawMotor2 = 2;
@@ -149,8 +149,7 @@ public final class Constants {
   // public static final int KOrientationColorID = 5;
   public static final int KMotor1Speed = 6;
   public static final int KMotor2Speed = 7;   
-}
-        
+
   //LED ports
   public static final int KLEDPort = 2;
   public static final int KLEDBuffer = 20;
