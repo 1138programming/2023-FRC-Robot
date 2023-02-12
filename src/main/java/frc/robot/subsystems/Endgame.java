@@ -28,7 +28,7 @@ public class Endgame extends SubsystemBase {
     @Override
     public void periodic()
     {
-        SmartDashboard.putBoolean("IR Sensor Test",isBottomIRSensorPressed());
+        SmartDashboard.putBoolean("IR Sensor Test", isBottomIRSensorPressed());
     }
 
     public void moveServo(double pos) {
