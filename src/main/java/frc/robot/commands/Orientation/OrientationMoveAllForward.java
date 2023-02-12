@@ -6,11 +6,14 @@ package frc.robot.commands.Orientation;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Orientation;
+import static frc.robot.Constants.*;
 
-public class OrientationStop extends CommandBase {
-  private Orientation orientation;
-  /** Creates a new OrientationStop. */
-  public OrientationStop(Orientation orientation) {
+public class OrientationMoveAllForward extends CommandBase {
+  /** Creates a new OrientationMove. */
+
+  private Orientation orientation; 
+
+  public OrientationMoveAllForward(Orientation orientation) {
     this.orientation = orientation;
     addRequirements(orientation);
   }
@@ -22,8 +25,9 @@ public class OrientationStop extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    orientation.moveOrientationMotor1(0);
-    orientation.moveOrientationMotor2(0);
+    orientation.moveOrientationLeftandRightMotors(KLeftandRightMotorSpeeds);
+    orientation.moveOrientationMotorExtension(KMotorExtensionSpeed);
+
   }
 
   // Called once the command ends or is interrupted.

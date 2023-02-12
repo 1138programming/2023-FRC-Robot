@@ -3,15 +3,17 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands.Orientation;
-import static frc.robot.Constants.*;
-import frc.robot.subsystems.Orientation;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class OrientationMoveToLimit extends CommandBase {
-  /** Creates a new OrientationMoveToLimit. */
-  Orientation orientation;
-  public OrientationMoveToLimit(Orientation orientation) {
-    
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Orientation;
+import static frc.robot.Constants.*;
+
+public class OrientationMoveOnlyExtensionReverse extends CommandBase {
+  /** Creates a new OrientationMove. */
+
+  private Orientation orientation; 
+
+  public OrientationMoveOnlyExtensionReverse(Orientation orientation) {
     this.orientation = orientation;
     addRequirements(orientation);
   }
@@ -23,10 +25,8 @@ public class OrientationMoveToLimit extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    orientation.moveOrientationMotor1(KMotor1Speed);
-    orientation.moveOrientationMotor1(KMotor1Speed);
+    orientation.moveOrientationMotorExtension(-KMotorExtensionSpeed);
 
-    
   }
 
   // Called once the command ends or is interrupted.
@@ -36,12 +36,6 @@ public class OrientationMoveToLimit extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (orientation.getInput()) {
-      return true;
-    }
-    else {
-      return false;
-    }
-    
+    return false;
   }
 }
