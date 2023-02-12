@@ -6,10 +6,10 @@ package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Scoring;
-public class moveWrist extends CommandBase {
+public class moveLiftTest extends CommandBase {
   Scoring scoring;
   double speed;
-  public moveWrist(Scoring scoring, double speed) {
+  public moveLiftTest(Scoring scoring, double speed) {
     this.scoring = scoring;
     this.speed = speed;
   }
@@ -20,9 +20,9 @@ public class moveWrist extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() 
+  public void execute()
   {
-    scoring.moveWrist(speed);
+    scoring.moveLift(speed);
   }
 
   // Called once the command ends or is interrupted.
