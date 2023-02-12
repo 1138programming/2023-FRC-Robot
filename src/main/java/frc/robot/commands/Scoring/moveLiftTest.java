@@ -7,7 +7,7 @@ package frc.robot.commands.Scoring;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Scoring;
 public class moveLiftTest extends CommandBase {
-  Scoring scoring = new Scoring();
+  Scoring scoring;
   double speed;
   public moveLiftTest(Scoring scoring, double speed) {
     this.scoring = scoring;
