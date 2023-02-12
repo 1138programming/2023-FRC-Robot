@@ -30,6 +30,8 @@ public class Orientation extends SubsystemBase {
     private DigitalInput IRSensor1;
     private DigitalInput IRSensor2;
     private DigitalInput IRSensor3;
+    private DigitalInput HallEffectSensor1;
+    private DigitalInput HallEffectSensor2;
     
     
     public Orientation() {
@@ -38,9 +40,11 @@ public class Orientation extends SubsystemBase {
 
         orientationMotorExtension = new VictorSPX(KOrientationMotorExtensionID);
         
-        IRSensor1 = new DigitalInput (KOrientationSensor1ID);
-        IRSensor2 = new DigitalInput (KOrientationSensor2ID);
-        IRSensor3 = new DigitalInput (KOrientationSensor3ID);
+        IRSensor1 = new DigitalInput (KOrientationIRSensor1ID);
+        IRSensor2 = new DigitalInput (KOrientationIRSensor2ID);
+        IRSensor3 = new DigitalInput (KOrientationIRSensor3ID);
+        HallEffectSensor1 = new DigitalInput(KOrientationHallEffectSensor1ID);
+        HallEffectSensor2 = new DigitalInput(KOrientationHallEffectSensor2ID);
 
         extensionController = new PIDController(extensionControllerkP, extensionControllerkI, extensionControllerkD);
         //orientationMotorExtension.getSelectedSensorPosition();
@@ -76,12 +80,12 @@ public class Orientation extends SubsystemBase {
         return IRSensor3.get();
     }
 
-    public double getEncoder() {
-        return orientationMotorExtension.getSelectedSensorPosition();
-      }
+    public Boolean getHallEffectSensor1() {
+        return HallEffectSensor1.get();
+    }
 
-    public void extensionPosition(double setPoint) {
-        moveOrientationMotorExtension(extensionController.calculate(getEncoder(),setPoint));
+    public Boolean getHallEffectSensor2(){
+        return HallEffectSensor2.get();
     }
 
 }

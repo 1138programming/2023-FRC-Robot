@@ -137,10 +137,11 @@ public final class Constants {
   public static final double KAngleMotorSpeed = 0; //TBD
   public static final double KExtensionMotorSpeed = 0; //TBD
   //Orientation
-  public static final int KOrientationSensor1ID = 0;
-  public static final int KOrientationSensor2ID = 0;
-  public static final int KOrientationSensor3ID = 0;
-  public static final double KOrientationExtensionEncoder = 0;
+  public static final int KOrientationIRSensor1ID = 0;
+  public static final int KOrientationIRSensor2ID = 0;
+  public static final int KOrientationIRSensor3ID = 0;
+  public static final int KOrientationHallEffectSensor1ID = 0;
+  public static final int KOrientationHallEffectSensor2ID = 0;
   public static final int KOrientationLeftMotorID = 12;
   public static final int KOrientationRightMotorID = 13;
   public static final int KOrientationMotorExtensionID = 14;
