@@ -151,11 +151,16 @@ public final class Constants {
     public static final double KLiftD = 0; //TBD
     public static final double KLiftRotToFoot = 0; //TBD
   //Orientation
-  public static final int KOrientationProximityID = 0;
-  public static final int KOrientationMotor1ID = 1;
-  public static final int KOrientationMotor2ID = 2;
-  public static final int KOrientationPossiblePistonFrontID = 3;
-  public static final int KOrientationPossiblePistonBackID = 4;
+  public static final int KOrientationIRSensor1ID = 0;
+  public static final int KOrientationIRSensor2ID = 0;
+  public static final int KOrientationIRSensor3ID = 0;
+  public static final int KOrientationHallEffectSensor1ID = 0;
+  public static final int KOrientationHallEffectSensor2ID = 0;
+  public static final int KOrientationLeftMotorID = 12;
+  public static final int KOrientationRightMotorID = 13;
+  public static final int KOrientationMotorExtensionID = 14;
+  public static final double KLeftandRightMotorSpeeds = 18;
+  public static final double KMotorExtensionSpeed = 20;
   // public static final int KOrientationColorID = 5;
   public static final double KMotor1Speed = 0.5;
   public static final double KMotor2Speed = 0.5;
