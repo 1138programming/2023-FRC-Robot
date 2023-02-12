@@ -4,30 +4,46 @@ import static frc.robot.Constants.*;
 import com.revrobotics.CANSparkMax; // Covers Neo's
 import com.revrobotics.CANSparkMaxLowLevel.MotorType; // Cover's Neo's
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.DigitalInput; // Proximity Sensors
+import edu.wpi.first.wpilibj.DigitalInput; // Sensors
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; 
+import edu.wpi.first.math.controller.PIDController;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 /* 
- * 3 motors: Undecided: Neos or 775's
+ * 3 motors - 2 Neos or 775s & 1 Snow Blower
+ * 1 encoder for extension
  * 3 sensors most likely
  */
 public class Orientation extends SubsystemBase {
     private CANSparkMax orientationLeftMotor;
     private CANSparkMax orientationRightMotor;
-    private CANSparkMax orientationMotorExtension;
+    private VictorSPX orientationMotorExtension;
+
+    private PIDController extensionController;
+    private double extensionControllerkP = 0.00001;
+    private double extensionControllerkI = 0;
+    private double extensionControllerkD = 0;
     
-    private DigitalInput Sensor1;
-    private DigitalInput Sensor2;
-    private DigitalInput Sensor3;
+    private DigitalInput IRSensor1;
+    private DigitalInput IRSensor2;
+    private DigitalInput IRSensor3;
     
     
     public Orientation() {
         orientationLeftMotor = new CANSparkMax(KOrientationLeftMotorID, MotorType.kBrushless);
         orientationRightMotor = new CANSparkMax(KOrientationRightMotorID, MotorType.kBrushless);
-        orientationMotorExtension = new CANSparkMax(KOrientationMotorExtensionID, MotorType.kBrushless);
-        Sensor1 = new DigitalInput (KOrientationSensor1ID);
-        Sensor2 = new DigitalInput (KOrientationSensor2ID);
-        Sensor3 = new DigitalInput (KOrientationSensor3ID);
+
+        orientationMotorExtension = new VictorSPX(KOrientationMotorExtensionID);
+        
+        IRSensor1 = new DigitalInput (KOrientationSensor1ID);
+        IRSensor2 = new DigitalInput (KOrientationSensor2ID);
+        IRSensor3 = new DigitalInput (KOrientationSensor3ID);
+
+        extensionController = new PIDController(extensionControllerkP, extensionControllerkI, extensionControllerkD);
+        //orientationMotorExtension.getSelectedSensorPosition();
 
         orientationRightMotor.follow(orientationLeftMotor);
     }
@@ -37,7 +53,7 @@ public class Orientation extends SubsystemBase {
     }
 
     public void moveOrientationMotorExtension(double speed) {
-        orientationMotorExtension.set(speed);
+        orientationMotorExtension.set(ControlMode.PercentOutput, speed);
     }
 
     public void stopOrientationLeftandRightMotors() {
@@ -45,19 +61,27 @@ public class Orientation extends SubsystemBase {
     }
 
     public void stopOrientationMotorExtension() {
-        orientationMotorExtension.set(0);
+        orientationMotorExtension.set(ControlMode.PercentOutput, 0);
     }
 
     public Boolean getSensor1() {
-        return Sensor1.get();
+        return IRSensor1.get();
     }
 
     public Boolean getSensor2() {
-        return Sensor2.get();
+        return IRSensor2.get();
     }
 
     public Boolean getSensor3() {
-        return Sensor3.get();
+        return IRSensor3.get();
+    }
+
+    public double getEncoder() {
+        return orientationMotorExtension.getSelectedSensorPosition();
+      }
+
+    public void extensionPosition(double setPoint) {
+        moveOrientationMotorExtension(extensionController.calculate(getEncoder(),setPoint));
     }
 
 }

@@ -140,6 +140,7 @@ public final class Constants {
   public static final int KOrientationSensor1ID = 0;
   public static final int KOrientationSensor2ID = 0;
   public static final int KOrientationSensor3ID = 0;
+  public static final double KOrientationExtensionEncoder = 0;
   public static final int KOrientationLeftMotorID = 12;
   public static final int KOrientationRightMotorID = 13;
   public static final int KOrientationMotorExtensionID = 14;
