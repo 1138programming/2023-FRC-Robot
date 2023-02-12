@@ -5,6 +5,7 @@ import static frc.robot.Constants.*;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -19,34 +20,33 @@ public class SwerveModule extends SubsystemBase {
   private CANSparkMax angleMotor;
   private CANSparkMax driveMotor;
 
+  // magEncoder = absolute encoder to reset position of relative angle encoders
   private DutyCycleEncoder magEncoder;
+
+  // Relative encoders are used for robot odometry and controlling speed/position
   private RelativeEncoder driveEncoder;
   private RelativeEncoder angleEncoder;
-
-  private boolean driveEncoderReversed;
 
   private PIDController angleController;
 
   private SimpleMotorFeedforward feedforward;
     
-  public SwerveModule(CANSparkMax angleMotor, CANSparkMax driveMotor, DutyCycleEncoder magEncoder, double offset, 
-                      boolean driveMotorReversed, boolean angleMotorReversed, boolean driveEncoderReversed) {
+  public SwerveModule(int angleMotorID, int driveMotorID, DutyCycleEncoder magEncoder, double offset, 
+                      boolean driveMotorReversed, boolean angleMotorReversed) {
+    angleMotor = new CANSparkMax(angleMotorID, MotorType.kBrushless);
+    driveMotor = new CANSparkMax(driveMotorID, MotorType.kBrushless);
+
     angleMotor.setIdleMode(IdleMode.kBrake);
     driveMotor.setIdleMode(IdleMode.kBrake);
-    this.angleMotor = angleMotor;
-    this.driveMotor = driveMotor;
+
     this.angleMotor.setInverted(angleMotorReversed);
     this.driveMotor.setInverted(driveMotorReversed);
 
     this.magEncoder = magEncoder;
     driveEncoder = driveMotor.getEncoder();
     angleEncoder = angleMotor.getEncoder();
-
-    this.driveEncoderReversed = driveEncoderReversed;
     
     driveEncoder.setPositionConversionFactor(KDriveMotorRotToMeter);
-
-
     driveEncoder.setVelocityConversionFactor(KDriveMotorRPMToMetersPerSec);
     
     angleEncoder.setPositionConversionFactor(KAngleMotorRotToDeg);
@@ -111,15 +111,9 @@ public class SwerveModule extends SubsystemBase {
 
   // Drive Encoder getters
   public double getDriveEncoderPos() {
-    if (driveEncoderReversed) {
-      return -driveEncoder.getPosition();
-    }
     return driveEncoder.getPosition();
   }
   public double getDriveEncoderVel() {
-    if (driveEncoderReversed) {
-      return -driveEncoder.getVelocity();
-    }
     return driveEncoder.getVelocity();
   }
 

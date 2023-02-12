@@ -17,17 +17,37 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.CommandGroups.TestAuton;
 import frc.robot.commands.Auton.FollowPath;
 import frc.robot.commands.Base.AutoBalance;
+import frc.robot.commands.Base.BaseStop;
 import frc.robot.commands.Base.DriveWithJoysticks;
 import frc.robot.commands.Base.ResetEncoders;
 import frc.robot.commands.Base.ToggleGenerateOdometryLog;
 import frc.robot.commands.Base.WriteOdometryLog;
+import frc.robot.commands.Endgame.*;
+import frc.robot.commands.Intake.IntakeSpin;
+import frc.robot.commands.Intake.IntakeStop;
 import frc.robot.subsystems.Base;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Endgame;
+import frc.robot.subsystems.Scoring;
+import frc.robot.commands.LED.LEDOff;
+import frc.robot.commands.LED.LEDPurple;
+import frc.robot.commands.LED.LEDYellow;
+import frc.robot.subsystems.Base;
+import frc.robot.subsystems.LEDs;
+import frc.robot.subsystems.Orientation;
+import frc.robot.commands.Orientation.OrientationMoveAllForward;
+import frc.robot.commands.Orientation.OrientationMoveAllReverse;
+import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightForward;
+import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
+import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionForward;
+import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionReverse;
 import frc.robot.commands.Base.ToggleSpeed;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -39,9 +59,15 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
+  //Subsystems
   private final Base base = new Base();
+  private final Scoring scoring = new Scoring();
+  private final Endgame endgame = new Endgame();
+  private final Intake intake = new Intake();
+  private final LEDs LEDs = new LEDs();
+  private final Orientation orientation = new Orientation();
 
+  // Base 
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
   private final ToggleGenerateOdometryLog toggleGenerateOdometryLog = new ToggleGenerateOdometryLog(base);
   private final WriteOdometryLog writeOdometryLog = new WriteOdometryLog(base);
@@ -50,20 +76,21 @@ public class RobotContainer {
   private final AutoBalance autoBalance = new AutoBalance(base);
   private final FollowPath followPath = new FollowPath(base, "blue1", KPPMaxAcceleration, KPPMaxAcceleration, false);
   private final TestAuton testAuton = new TestAuton(base);
+  private final LEDOff ledOff = new LEDOff(LEDs);
+  private final LEDPurple ledPurple = new LEDPurple(LEDs);
+  private final LEDYellow ledYellow = new LEDYellow(LEDs);
 
+  // Intake
+  private final IntakeSpin StorageForward1 = new IntakeSpin(intake);
+  private final IntakeStop intakeStop = new IntakeStop(intake);
 
-  private final PathPlannerTrajectory blue1 = PathPlanner.loadPath("Blue1", new PathConstraints(1, 1));
-  private final PathPlannerTrajectory blue2 = PathPlanner.loadPath("Blue1 Part 2", new PathConstraints(4, 3));
+  //Orientation
+  private final OrientationMoveAllForward OrientationFoward1 = new OrientationMoveAllForward(orientation);
+  private final OrientationMoveAllReverse OrientationBackward1 = new OrientationMoveAllReverse(orientation);
 
-
-  // This will load the file "Example Path.path" and generate it with a max
-  // velocity of 4 m/s and a max acceleration of 3 m/s^2
-  // PathPlannerTrajectory blue1 = PathPlanner.loadPath("Blue1", new
-  // PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
-
-  // This trajectory can then be passed to a path follower such as a
-  // PPSwerveControllerCommand
-  // Or the path can be sampled at a given point in time for custom path following
+  // Endgame
+  private final MoveLinearServosOut moveLinearServosOut = new MoveLinearServosOut(endgame);
+  private final MoveLinearServosIn moveLinearServosIn = new MoveLinearServosIn(endgame);
 
   // Controller Ports (check in Driver Station, IDs may be different for each
   // computer)
@@ -115,6 +142,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
     base.setDefaultCommand(driveWithJoysticks);
+    intake.setDefaultCommand(intakeStop);
 
     // Game controllers
     logitech = new Joystick(KLogitechPort); // Logitech Dual Action

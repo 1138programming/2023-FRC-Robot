@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import java.util.Enumeration;
+
+import com.fasterxml.jackson.databind.introspect.AnnotationCollector.OneAnnotation;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import com.pathplanner.lib.PathConstraints;
@@ -30,25 +34,26 @@ public final class Constants {
   public static final double KDriveI = 0.75;
   public static final double KDriveD = 0.005;
   
+    // used for math in Constants and SwerveModules to set up encoder units
   public static final double KDegPerRotation = 360;
+  public static final double KNeoMaxRPM = 5700;
   
+    // Sets up drive encoders to use meters as the unit
   private static final double KDriveMotorGearRatio = 1/6.55;
   private static final double KWheelDiameterMeters = 0.1016;
   public static final double KDriveMotorRotToMeter = KDriveMotorGearRatio * KWheelDiameterMeters * Math.PI;
-  
   public static final double KDriveMotorRPMToMetersPerSec = KDriveMotorRotToMeter / 60;
-  
-  private static final double KAngleMotorShaftToWheelRatio = 1 / 10.2857;
+
+    // Math to set up 
   public static final double KAngleMotorRotToDeg = 35;
-  public static final double KNeoMaxRPM = 5700;
   public static final double KPhysicalMaxDriveSpeedMPS = KNeoMaxRPM * KDriveMotorRPMToMetersPerSec;
-  // public static final double KMaxAngularSpeed = Math.PI * 2;
-  private static final double KBaseCircumference = 2.493518;
-  public static final double KMaxAngularSpeed = 6;
-  // KPhysicalMaxDriveSpeedMPS / KBaseCircumference;
+  public static final double KMaxAngularSpeed = Math.PI; // MAY NEED CHANGING
   
+  // not used, may be useful to know/keep
+  private static final double KAngleMotorShaftToWheelRatio = 1 / 10.2857; 
   
   //Base
+    // Motor Controller IDs
   public static final int KFrontLeftAngleID = 5;
   public static final int KFrontLeftDriveID = 4;
   
@@ -61,21 +66,26 @@ public final class Constants {
   public static final int KBackRightAngleID = 1;
   public static final int KBackRightDriveID = 8;
   
+    // Low and high percent: sets max speed of drivetrain for driver
   public static final double KBaseDriveLowPercent = 0.5;
   public static final double KBaseDriveHighPercent = 0.7;
   
+    // Offsets for absolute encoders, used to set up angle encoders
   public static final double KFrontLeftOffset = 0.159;
   public static final double KFrontRightOffset = 0.5047;
   public static final double KBackLeftOffset = 0.2044;
   public static final double KBackRightOffset = 0.192;
   
+    // Absolute encoder port IDs
   public static final int KFrontLeftMagEncoderID = 7;
   public static final int KFrontRightMagEncoderID = 5;
   public static final int KBackLeftMagEncoderID = 2;
   public static final int KBackRightMagEncoderID = 0;
   
-  public static final double KWheelDistanceFromCenter = 0.29845;
   
+    // Describes the locations of the swerve modules relative to the center of the robot
+    // Important for kinematics
+  public static final double KWheelDistanceFromCenter = 0.29845;
   public static final Translation2d KFrontLeftLocation = new Translation2d(
     KWheelDistanceFromCenter, KWheelDistanceFromCenter
   );
@@ -88,8 +98,8 @@ public final class Constants {
   public static final Translation2d KBackRightLocation = new Translation2d(
     -KWheelDistanceFromCenter, -KWheelDistanceFromCenter
   );
-          
-          
+
+    // Setting up which motors are reversed
   public static final boolean KFrontLeftDriveReversed = false;
   public static final boolean KFrontRightDriveReversed = false;
   public static final boolean KBackLeftDriveReversed = false;
@@ -137,4 +147,61 @@ public final class Constants {
   public static final double ks = 0.20309;
   public static final double kv = 2.5574;
   public static final double ka = 0.38422;
+
+  //intake
+  public static final int KSpaghettiIntakeId = 12;
+  public static final int KLeftIntakeId = 0;
+  public static final int KRightIntakeId = 13;
+
+  public static final double KIntakeSpaghettitSpeed = 0.35;
+  public static final double KIntakeRollerSpeed = 0.35;
+
+  public static final double KIntakeSwivelTopPos = 1;
+  public static final double KIntakeSwivelBottumPos = 1;
+
+  public static final int KIntakeLimitId = 1; 
+    // Pid
+  public static final double KIntakeP = 0;
+  public static final double KIntakeI = 0;
+  public static final double KIntakeD = 0;
+
+  // Endgame
+  public static final int KLimitSwitch = 0;
+  public static final int KLinearServoTop = 0;
+
+  public static final int KLinearServoBottom = 3;
+
+  public static final double KEndgameServoPos = 1;
+  // Scoring
+  public static final int KClawMotor1 = 1;
+  public static final int KClawMotor2 = 2;
+  public static final int KAngleArmMotor = 3;
+  public static final int KExtensionMotor1 = 4;
+  public static final int KExtensionMotor2 = 5;
+  public static final boolean KExtensionMotor1Reversed = true;
+  public static final int KClawSolenoidForwardChannel = 1;
+  public static final int KClawSolenoidReverseChannel = 2;
+
+
+  public static final double KClawMotorSpeed = 0; //TBD
+  public static final double KAngleMotorSpeed = 0; //TBD
+  public static final double KExtensionMotorSpeed = 0; //TBD
+
+  public static final int KOrientationSensor1ID = 0;
+  public static final int KOrientationSensor2ID = 0;
+  public static final int KOrientationSensor3ID = 0;
+  public static final int KOrientationLeftMotorID = 12;
+  public static final int KOrientationRightMotorID = 13;
+  public static final int KOrientationMotorExtensionID = 14;
+  public static final double KLeftandRightMotorSpeeds = 18;
+  public static final double KMotorExtensionSpeed = 20;
+          
+  //LED ports
+  public static final int KLEDPort = 2;
+  public static final int KLEDBuffer = 20;
+  public static enum KLEDSTATE {
+    OFF,
+    YELLOW,
+    PURPLE
+  }; 
 }

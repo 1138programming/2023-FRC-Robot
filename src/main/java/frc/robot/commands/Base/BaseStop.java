@@ -11,7 +11,7 @@ import static frc.robot.Constants.*;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class DriveWithJoysticks extends CommandBase {
+public class BaseStop extends CommandBase {
 
   private final Base base;
 
@@ -19,21 +19,9 @@ public class DriveWithJoysticks extends CommandBase {
   private double lrSpeed; //Speed of the robot in the Y direction (sideways).
   private double rot;
 
-  private PIDController rotationCorrectionPID;
-  private double initHeading;
-
-  private double kRotationP = 0.005;
-  private double kRotationI = 0;
-  private double kRotationD = 0;
-  
-  private double maxDriveSpeed = KPhysicalMaxDriveSpeedMPS;
-
   /** Creates a new DriveWithJoysticks. */
-  public DriveWithJoysticks(Base base) {
+  public BaseStop(Base base) {
     this.base = base;
-  
-    rotationCorrectionPID = new PIDController(kRotationP, kRotationI, kRotationD);
-
     addRequirements(base);
   }
 
@@ -46,21 +34,7 @@ public class DriveWithJoysticks extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    fbSpeed = Robot.m_robotContainer.getLogiLeftYAxis();
-    
-    lrSpeed = Robot.m_robotContainer.getLogiLeftXAxis();
-    
-    rot = Robot.m_robotContainer.getLogiRightXAxis();
-    
-    // if (Math.abs(rot) <= 0.01 && (Math.abs(fbSpeed) >= 0.01 || Math.abs(lrSpeed) >= 0.01)) {
-    //   rot = rotationCorrectionPID.calculate(base.getHeadingDeg(), initHeading);
-    // }
-    // else {
-    //   initHeading = base.getHeadingDeg();
-    // }
-    base.drive(fbSpeed, lrSpeed, rot, true, maxDriveSpeed * base.getDriveSpeedFactor());
-
-    // SmartDashboard.putNumber(getName(), KAngleD)
+    base.drive(0, 0, 0, true, 0);
   }
 
   // Called once the command ends or is interrupted.
