@@ -4,34 +4,25 @@
 
 package frc.robot.commands.Scoring;
 
-import frc.robot.subsystems.Scoring;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
-public class liftToGoalHeight extends CommandBase {
-  /** Creates a new liftToGoalHeight. */
-  
-
+import frc.robot.subsystems.Scoring;
+public class moveLift extends CommandBase {
   Scoring scoring = new Scoring();
-
-  public liftToGoalHeight(Scoring scoring) {
+  double speed;
+  public moveLift(Scoring scoring, double speed) {
     this.scoring = scoring;
+    this.speed = speed;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() 
-  {
-    scoring.moveClawMotors(0); //establish a constant for this   
-  }
+  public void initialize() {}
 
-  
+  // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() //if the game object has been picked up, claw closes
+  public void execute()
   {
-    if(true/*establish if game object has been picked up*/){
-        scoring.moveClawMotors(0); //establish another constant for this. only use if the game object hasn't been picked up
-        scoring.moveAngleArmMotor(0); //establish a constant for this
-    }
+    scoring.moveLift(speed);
   }
 
   // Called once the command ends or is interrupted.
