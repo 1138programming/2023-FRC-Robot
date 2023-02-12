@@ -4,6 +4,8 @@ import static frc.robot.Constants.*;
 import com.revrobotics.CANSparkMax; // Neos and 775
 import com.revrobotics.CANSparkMaxLowLevel.MotorType; // Covers Neos and 775 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.controller.PIDController;
+import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj.DoubleSolenoid; // Pnuematics
 import edu.wpi.first.wpilibj.PneumaticsModuleType; // Pnuematics
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*; // Pnuematics
@@ -15,11 +17,18 @@ public class Scoring extends SubsystemBase{
     private CANSparkMax flipper;
     private CANSparkMax lift;
 
+    private RelativeEncoder flipperEncoder;
+    private PIDController flipperController;
+
     public Scoring() {
         claw = new CANSparkMax(KClawMotor, MotorType.kBrushless);
         wrist = new CANSparkMax(KWristMotor, MotorType.kBrushless);
         flipper = new CANSparkMax(KFlipperMotor, MotorType.kBrushless);
         lift = new CANSparkMax(KLiftMotor, MotorType.kBrushless);
+
+        flipperEncoder = flipper.getEncoder();
+
+        flipperController = new PIDController(KFlipperP, KFlipperI, KFlipperD);
     }
 
     public void moveClaw(double speed) {
@@ -33,6 +42,13 @@ public class Scoring extends SubsystemBase{
     }
     public void moveLift(double speed) {
         lift.set(speed);
+    }
+
+    public double getFlipperPos(){
+        return flipperEncoder.getPosition();
+    }
+    public void flipToPos(double setPoint) {
+        moveFlipper(flipperController.calculate(getFlipperPos(), setPoint));
     }
 
     public void stop() {

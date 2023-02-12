@@ -113,7 +113,6 @@ public final class Constants {
 
   public static final int KIntakeLimitId = 1; 
 
-
   //Pid
   public static final double KIntakeP = 0;
   public static final double KIntakeI = 0;
@@ -136,6 +135,11 @@ public final class Constants {
   public static final double KClawMotorSpeed = 0; //TBD
   public static final double KAngleMotorSpeed = 0; //TBD
   public static final double KExtensionMotorSpeed = 0; //TBD
+
+  public static final double KFlipperP = 0;
+  public static final double KFlipperI = 0;
+  public static final double KFlipperD = 0;
+  public static final double KScoringFlipPos = 0;
 
   // Orientation
   public static final int KOrientationSensor1ID = 0;
