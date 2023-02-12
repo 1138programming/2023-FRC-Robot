@@ -103,8 +103,8 @@ public final class Constants {
 
 
 
-  public static final double KIntakeSpaghettitSpeed = 0.35;
-  public static final double KIntakeFlexSpeed = 0.35;
+  public static final double KIntakeConeSpaghettitSpeed = 0.35;
+  public static final double KIntakeConeFlexSpeed = 0.35;
 
   public static final double KIntakeCubeSpaghettitSpeed = 0.35;
   public static final double KIntakeCubeFlexSpeed = 0.35;
@@ -132,14 +132,24 @@ public final class Constants {
 
   public static final double KEndgameServoPos = 1;
   // Scoring
-  public static final int KClawMotor1 = 1;
-  public static final int KClawMotor2 = 2;
-  public static final int KAngleArmMotor = 3;
-  public static final int KExtensionMotor1 = 4;
-  public static final int KExtensionMotor2 = 5;
-  public static final boolean KExtensionMotor1Reversed = true;
-  public static final int KCLawSolenoidForwardChannel = 1;
-  public static final int KCLawSolenoidReverseChannel = 2;
+  public static final int KClawMotor = 15;
+  public static final int KWristMotor = 16;
+  public static final int KLiftMotor = 17;
+  public static final int KFlipperMotor = 18;
+
+  public static final double KClawMotorSpeed = 0; //TBD
+  public static final double KAngleMotorSpeed = 0; //TBD
+  public static final double KExtensionMotorSpeed = 0; //TBD
+
+  public static final double KFlipperP = 0;
+  public static final double KFlipperI = 0;
+  public static final double KFlipperD = 0;
+  public static final double KScoringFlipPos = 0;
+    //lift PID
+    public static final double KLiftP = 0; //TBD
+    public static final double KLiftI = 0; //TBD
+    public static final double KLiftD = 0; //TBD
+    public static final double KLiftRotToFoot = 0; //TBD
   //Orientation
   public static final int KOrientationProximityID = 0;
   public static final int KOrientationMotor1ID = 1;

@@ -25,8 +25,8 @@ public class IntakeSpinAndSwivel extends CommandBase {
   @Override
   public void execute() {
     intake.swivelSpinToPos(KIntakeSwivelTopPos);
-    intake.spaghettiSpin(KIntakeSpaghettitSpeed);
-    intake.flexSpin(KIntakeFlexSpeed);
+    intake.spaghettiSpin();
+    intake.flexSpin();
   }
 
   // Called once the command ends or is interrupted.

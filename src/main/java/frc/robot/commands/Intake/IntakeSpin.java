@@ -22,8 +22,8 @@ public class IntakeSpin extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.flexSpin(KIntakeFlexSpeed);
-    intake.spaghettiSpin(KIntakeSpaghettitSpeed);
+    intake.flexSpin();
+    intake.spaghettiSpin();
   }
 
   // Called once the command ends or is interrupted.
