@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.*;
 
+import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -19,6 +20,8 @@ public class SwerveModule extends SubsystemBase {
   private CANSparkMax angleMotor;
   private CANSparkMax driveMotor;
 
+  private CANCoder canCoder;
+
   // magEncoder = absolute encoder to reset position of relative angle encoders
   private DutyCycleEncoder magEncoder;
 
@@ -27,8 +30,10 @@ public class SwerveModule extends SubsystemBase {
   private RelativeEncoder angleEncoder;
 
   private PIDController angleController;
+
+  private double offset;
     
-  public SwerveModule(int angleMotorID, int driveMotorID, DutyCycleEncoder magEncoder, double offset, 
+  public SwerveModule(int angleMotorID, int driveMotorID, int encoderPort, double offset, 
                       boolean driveMotorReversed, boolean angleMotorReversed) {
     angleMotor = new CANSparkMax(angleMotorID, MotorType.kBrushless);
     driveMotor = new CANSparkMax(driveMotorID, MotorType.kBrushless);
@@ -39,7 +44,10 @@ public class SwerveModule extends SubsystemBase {
     this.angleMotor.setInverted(angleMotorReversed);
     this.driveMotor.setInverted(driveMotorReversed);
 
-    this.magEncoder = magEncoder;
+    // this.magEncoder = magEncoder;
+    canCoder = new CANCoder(encoderPort);
+    canCoder.setPositionToAbsolute();
+
     driveEncoder = driveMotor.getEncoder();
     angleEncoder = angleMotor.getEncoder();
     
@@ -96,12 +104,13 @@ public class SwerveModule extends SubsystemBase {
   }
 
   public void setAbsoluteOffset(double offset) {
-    magEncoder.setPositionOffset(offset);
+    // magEncoder.setPositionOffset(offset);
+    this.offset = 360 * offset;
   }
   
-  public double getAbsoluteOffset() {
-    return magEncoder.getPositionOffset();
-  }
+  // public double getAbsoluteOffset() {
+  //   return magEncoder.getPositionOffset();
+  // }
 
   // Drive Encoder getters
   public double getDriveEncoderPos() {
@@ -113,7 +122,7 @@ public class SwerveModule extends SubsystemBase {
 
   // Angle Encoder getters
   public double getMagRotations() {
-    double pos = magEncoder.get() % 1;
+    double pos = canCoder.getPosition() + offset;
     return pos;
   }
   public double getMagDeg() {
@@ -126,7 +135,4 @@ public class SwerveModule extends SubsystemBase {
   public Rotation2d getAngleR2D() {
     return Rotation2d.fromDegrees(getAngleDeg()); 
   }
-  // public Rotation2d getReverseAngleR2D() {
-  //   return Rotation2d.fromDegrees(-getAngleDeg());
-  // }
 }

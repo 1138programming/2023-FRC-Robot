@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.Base.BaseStop;
 import frc.robot.commands.Base.DriveWithJoysticks;
 import frc.robot.commands.Base.ResetEncoders;
 import frc.robot.commands.Base.ToggleGenerateOdometryLog;
@@ -25,15 +24,10 @@ import frc.robot.subsystems.Scoring;
 import frc.robot.commands.LED.LEDOff;
 import frc.robot.commands.LED.LEDPurple;
 import frc.robot.commands.LED.LEDYellow;
-import frc.robot.subsystems.Base;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Orientation;
 import frc.robot.commands.Orientation.OrientationMoveAllForward;
 import frc.robot.commands.Orientation.OrientationMoveAllReverse;
-import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightForward;
-import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
-import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionForward;
-import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionReverse;
 import frc.robot.commands.Base.ToggleSpeed;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -80,7 +74,7 @@ public class RobotContainer {
 
   //Controller Ports (check in Driver Station, IDs may be different for each computer)
   private static final int KLogitechPort = 0;
-  private static final int KXboxPort = 0;  
+  private static final int KXboxPort = 1;  
 
   //Deadzone
   private static final double KDeadZone = 0.05;

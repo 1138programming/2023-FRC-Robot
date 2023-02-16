@@ -49,8 +49,8 @@ public final class Constants {
   
   //Base
     // Motor Controller IDs
-  public static final int KFrontLeftAngleID = 5;
-  public static final int KFrontLeftDriveID = 4;
+  public static final int KFrontLeftAngleID = 10;
+  public static final int KFrontLeftDriveID = 9;
   
   public static final int KFrontRightAngleID = 7;
   public static final int KFrontRightDriveID = 6;

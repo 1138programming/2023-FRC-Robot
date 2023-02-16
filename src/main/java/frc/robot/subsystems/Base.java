@@ -55,7 +55,7 @@ public class Base extends SubsystemBase {
     frontLeftModule = new SwerveModule(
       KFrontLeftAngleID,
       KFrontLeftDriveID,
-      new DutyCycleEncoder(KFrontLeftMagEncoderID),
+      KFrontLeftMagEncoderID,
       KFrontLeftOffset,
       KFrontLeftDriveReversed,
       KFrontLeftAngleReversed
@@ -63,7 +63,7 @@ public class Base extends SubsystemBase {
     frontRightModule = new SwerveModule(
       KFrontRightAngleID,
       KFrontRightDriveID,
-      new DutyCycleEncoder(KFrontRightMagEncoderID), 
+      KFrontRightMagEncoderID, 
       KFrontRightOffset,
       KFrontRightDriveReversed,
       KFrontRightAngleReversed
@@ -71,7 +71,7 @@ public class Base extends SubsystemBase {
     backLeftModule = new SwerveModule(
       KBackLeftAngleID,
       KBackLeftDriveID,
-      new DutyCycleEncoder(KBackLeftMagEncoderID), 
+      KBackLeftMagEncoderID, 
       KBackLeftOffset,
       KBackLeftDriveReversed,
       KBackLeftAngleReversed
@@ -79,7 +79,7 @@ public class Base extends SubsystemBase {
     backRightModule = new SwerveModule(
       KBackRightAngleID,
       KBackRightDriveID,
-      new DutyCycleEncoder(KBackRightMagEncoderID), 
+      KBackRightMagEncoderID, 
       KBackRightOffset,
       KBackRightDriveReversed,
       KBackRightAngleReversed
@@ -116,9 +116,9 @@ public class Base extends SubsystemBase {
 
     //setting module states, aka moving the motors
     frontLeftModule.setDesiredState(states[0]);
-    frontRightModule.setDesiredState(states[1]);
-    backLeftModule.setDesiredState(states[2]);
-    backRightModule.setDesiredState(states[3]);
+    // frontRightModule.setDesiredState(states[1]);
+    // backLeftModule.setDesiredState(states[2]);
+    // backRightModule.setDesiredState(states[3]);
 }
 
   // recalibrates gyro offset
@@ -137,10 +137,6 @@ public class Base extends SubsystemBase {
   public SwerveModulePosition[] getPositions() {
     SwerveModulePosition[] positions = new SwerveModulePosition[4];
 
-    // positions[0] = new SwerveModulePosition(frontLeftModule.getDriveEncoderPos(), frontLeftModule.getAngleR2D());
-    // positions[1] = new SwerveModulePosition(frontRightModule.getDriveEncoderPos(), frontRightModule.getAngleR2D());
-    // positions[2] = new SwerveModulePosition(backLeftModule.getDriveEncoderPos(), backLeftModule.getAngleR2D());
-    // positions[3] = new SwerveModulePosition(backRightModule.getDriveEncoderPos(), backRightModule.getAngleR2D());
     positions[0] = frontLeftModule.getPosition();
     positions[1] = frontRightModule.getPosition();
     positions[2] = backLeftModule.getPosition();
@@ -206,10 +202,10 @@ public class Base extends SubsystemBase {
     SmartDashboard.putNumber("back left mag", backLeftModule.getMagRotations());
     SmartDashboard.putNumber("back right mag", backRightModule.getMagRotations());
 
-    SmartDashboard.putNumber("front left big", frontLeftModule.getAbsoluteOffset());
-    SmartDashboard.putNumber("front right big", frontRightModule.getAbsoluteOffset());
-    SmartDashboard.putNumber("back left big", backLeftModule.getAbsoluteOffset());
-    SmartDashboard.putNumber("back right big", backRightModule.getAbsoluteOffset());
+    // SmartDashboard.putNumber("front left big", frontLeftModule.getAbsoluteOffset());
+    // SmartDashboard.putNumber("front right big", frontRightModule.getAbsoluteOffset());
+    // SmartDashboard.putNumber("back left big", backLeftModule.getAbsoluteOffset());
+    // SmartDashboard.putNumber("back right big", backRightModule.getAbsoluteOffset());
 
     SmartDashboard.putString("odometry pose", odometry.getPoseMeters().toString());
 
