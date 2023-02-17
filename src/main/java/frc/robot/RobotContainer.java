@@ -27,6 +27,7 @@ import frc.robot.commands.Orientation.OrientationMoveAllForward;
 import frc.robot.commands.Orientation.OrientationMoveAllReverse;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightForward;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
+import frc.robot.commands.Orientation.OrientationStopOnlyExtension;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionForward;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionReverse;
 import frc.robot.commands.Base.ToggleSpeed;
@@ -64,6 +65,7 @@ public class RobotContainer {
   //Orientation
   private final OrientationMoveOnlyExtensionForward OrientationFoward1 = new OrientationMoveOnlyExtensionForward(orientation);
   private final OrientationMoveOnlyExtensionReverse OrientationBackward1 = new OrientationMoveOnlyExtensionReverse(orientation);
+  private final OrientationStopOnlyExtension OrientationStop = new OrientationStopOnlyExtension(orientation);
 
   // Endgame
   private final MoveLinearServosOut moveLinearServosOut = new MoveLinearServosOut(endgame);
@@ -71,7 +73,7 @@ public class RobotContainer {
 
   //Controller Ports (check in Driver Station, IDs may be different for each computer)
   private static final int KLogitechPort = 0;
-  private static final int KXboxPort = 0;  
+  private static final int KXboxPort = 1;  
 
   //Deadzone
   private static final double KDeadZone = 0.05;
@@ -160,11 +162,13 @@ public class RobotContainer {
     logitechBtnLB.onFalse(toggleSlowSpeed);
     // logitechBtnX.onTrue(moveLinearServosOut.andThen(driveBaseOffEdge));
 
-    xboxBtnA.onTrue(moveLinearServosOut);
-    xboxBtnB.onTrue(moveLinearServosIn);
+    // xboxBtnA.onTrue(moveLinearServosOut);
+    // xboxBtnB.onTrue(moveLinearServosIn);
 
     xboxBtnA.whileTrue(OrientationFoward1);
     xboxBtnB.whileTrue(OrientationBackward1);
+    xboxBtnA.whileFalse(OrientationStop);
+    xboxBtnB.whileFalse(OrientationStop);
 
   }
 

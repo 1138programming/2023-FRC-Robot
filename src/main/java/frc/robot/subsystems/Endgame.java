@@ -14,7 +14,7 @@ public class Endgame extends SubsystemBase {
     private DigitalInput endgameLimitSwitch;
 
     public Endgame() {
-        endgameLimitSwitch = new DigitalInput(KLimitSwitch);
+        // endgameLimitSwitch = new DigitalInput(KLimitSwitch);
         endgameLinearServoTop = new Servo(KLinearServoTop);
         endgameLinearServoBottom = new Servo(3);
 

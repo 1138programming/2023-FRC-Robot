@@ -49,6 +49,9 @@ public class Orientation extends SubsystemBase {
         extensionController = new PIDController(extensionControllerkP, extensionControllerkI, extensionControllerkD);
         //orientationMotorExtension.getSelectedSensorPosition();
 
+        orientationLeftMotor.setIdleMode(IdleMode.kBrake);
+        // orientationMotorExtension.setIdleMode(IdleMode.kBrake);
+
         orientationRightMotor.follow(orientationLeftMotor);
     }
 
@@ -69,7 +72,7 @@ public class Orientation extends SubsystemBase {
     }
 
     public Boolean getSensor1() {
-        return IRSensor1.get();
+         return IRSensor1.get();
     }
 
     public Boolean getSensor2() {

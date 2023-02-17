@@ -116,18 +116,18 @@ public final class Constants {
   public static final double KIntakeD = 0;
 
   // Endgame
-  public static final int KLimitSwitch = 0;
-  public static final int KLinearServoTop = 0;
+  public static final int KLimitSwitch = 27;
+  public static final int KLinearServoTop = 12;
 
   public static final int KLinearServoBottom = 3;
 
   public static final double KEndgameServoPos = 1;
-  // Scoring
-  public static final int KClawMotor1 = 1;
-  public static final int KClawMotor2 = 2;
-  public static final int KAngleArmMotor = 3;
-  public static final int KExtensionMotor1 = 4;
-  public static final int KExtensionMotor2 = 5;
+  // Scoring (old)
+  public static final int KClawMotor1 = 19;
+  public static final int KClawMotor2 = 20;
+  public static final int KAngleArmMotor = 21;
+  public static final int KExtensionMotor1 = 24;
+  public static final int KExtensionMotor2 = 25;
   public static final boolean KExtensionMotor1Reversed = true;
   public static final int KClawSolenoidForwardChannel = 1;
   public static final int KClawSolenoidReverseChannel = 2;
@@ -136,17 +136,18 @@ public final class Constants {
   public static final double KClawMotorSpeed = 0; //TBD
   public static final double KAngleMotorSpeed = 0; //TBD
   public static final double KExtensionMotorSpeed = 0; //TBD
+
   //Orientation
-  public static final int KOrientationIRSensor1ID = 0;
-  public static final int KOrientationIRSensor2ID = 0;
-  public static final int KOrientationIRSensor3ID = 0;
-  public static final int KOrientationHallEffectSensor1ID = 0;
-  public static final int KOrientationHallEffectSensor2ID = 0;
+  public static final int KOrientationIRSensor1ID = 8;
+  public static final int KOrientationIRSensor2ID = 9;
+  public static final int KOrientationIRSensor3ID = 10;
+  public static final int KOrientationHallEffectSensor1ID = 8;
+  public static final int KOrientationHallEffectSensor2ID = 6;
   public static final int KOrientationLeftMotorID = 12;
   public static final int KOrientationRightMotorID = 13;
-  public static final int KOrientationMotorExtensionID = 14;
+  public static final int KOrientationMotorExtensionID = 15;
   public static final double KLeftandRightMotorSpeeds = 18;
-  public static final double KMotorExtensionSpeed = 20;
+  public static final double KMotorExtensionSpeed = 0.5;
 
  
 }
