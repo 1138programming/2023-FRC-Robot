@@ -62,8 +62,8 @@ public class RobotContainer {
   private final IntakeStop intakeStop = new IntakeStop(intake);
 
   //Orientation
-  private final OrientationMoveAllForward OrientationFoward1 = new OrientationMoveAllForward(orientation);
-  private final OrientationMoveAllReverse OrientationBackward1 = new OrientationMoveAllReverse(orientation);
+  private final OrientationMoveOnlyExtensionForward OrientationFoward1 = new OrientationMoveOnlyExtensionForward(orientation);
+  private final OrientationMoveOnlyExtensionReverse OrientationBackward1 = new OrientationMoveOnlyExtensionReverse(orientation);
 
   // Endgame
   private final MoveLinearServosOut moveLinearServosOut = new MoveLinearServosOut(endgame);
