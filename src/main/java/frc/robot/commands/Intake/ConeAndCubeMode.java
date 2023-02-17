@@ -31,6 +31,13 @@ public class ConeAndCubeMode extends CommandBase {
       intake.setConeMode();
     }
 
+    if (orientation.getMode()) {
+      orientation.setCubeMode();
+    }
+    else if (!orientation.getMode()) {
+      orientation.setConeMode();
+    }
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.

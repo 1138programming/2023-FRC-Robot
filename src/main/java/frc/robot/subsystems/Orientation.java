@@ -32,6 +32,9 @@ public class Orientation extends SubsystemBase {
     private DigitalInput IRSensor3;
     private DigitalInput HallEffectSensor1;
     private DigitalInput HallEffectSensor2;
+
+    private boolean OrientationMode;
+
     
     
     public Orientation() {
@@ -52,12 +55,29 @@ public class Orientation extends SubsystemBase {
         orientationRightMotor.follow(orientationLeftMotor);
     }
 
-    public void moveOrientationLeftandRightMotors(double speed) {
-        orientationLeftMotor.set(speed);
+    public void moveOrientationLeftandRightMotors() {
+        if (OrientationMode) {
+            orientationLeftMotor.set(KCubeLeftandRightMotorSpeeds);
+        }
+        else if (!OrientationMode) {
+            orientationLeftMotor.set(KConeLeftandRightMotorSpeeds);
+        }
     }
 
     public void moveOrientationMotorExtension(double speed) {
         orientationMotorExtension.set(ControlMode.PercentOutput, speed);
+    }
+
+    public void setCubeMode() {
+        OrientationMode = false;
+    }
+
+    public void setConeMode() {
+        OrientationMode = true; 
+    }
+
+    public boolean getMode() {
+            return OrientationMode;
     }
 
     public void stopOrientationLeftandRightMotors() {

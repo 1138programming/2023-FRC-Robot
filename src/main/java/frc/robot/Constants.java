@@ -145,11 +145,13 @@ public final class Constants {
   public static final double KFlipperI = 0;
   public static final double KFlipperD = 0;
   public static final double KScoringFlipPos = 0;
-    //lift PID
-    public static final double KLiftP = 0; //TBD
-    public static final double KLiftI = 0; //TBD
-    public static final double KLiftD = 0; //TBD
-    public static final double KLiftRotToFoot = 0; //TBD
+  
+  //lift PID
+  public static final double KLiftP = 0; //TBD
+  public static final double KLiftI = 0; //TBD
+  public static final double KLiftD = 0; //TBD
+  public static final double KLiftRotToFoot = 0; //TBD
+
   //Orientation
   public static final int KOrientationIRSensor1ID = 0;
   public static final int KOrientationIRSensor2ID = 0;
@@ -159,7 +161,10 @@ public final class Constants {
   public static final int KOrientationLeftMotorID = 12;
   public static final int KOrientationRightMotorID = 13;
   public static final int KOrientationMotorExtensionID = 14;
-  public static final double KLeftandRightMotorSpeeds = 18;
+
+  public static final double KCubeLeftandRightMotorSpeeds = 18;
+  public static final double KConeLeftandRightMotorSpeeds = 18;
+
   public static final double KMotorExtensionSpeed = 20;
   // public static final int KOrientationColorID = 5;
   public static final double KMotor1Speed = 0.5;
