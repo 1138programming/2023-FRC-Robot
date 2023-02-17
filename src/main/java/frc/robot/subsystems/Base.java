@@ -197,15 +197,10 @@ public class Base extends SubsystemBase {
     SmartDashboard.putNumber("Back left module", backLeftModule.getAngleDeg());
     SmartDashboard.putNumber("Back right module", backRightModule.getAngleDeg());
 
-    SmartDashboard.putNumber("front left mag", frontLeftModule.getMagRotations());
-    SmartDashboard.putNumber("front right mag", frontRightModule.getMagRotations());
-    SmartDashboard.putNumber("back left mag", backLeftModule.getMagRotations());
-    SmartDashboard.putNumber("back right mag", backRightModule.getMagRotations());
-
-    // SmartDashboard.putNumber("front left big", frontLeftModule.getAbsoluteOffset());
-    // SmartDashboard.putNumber("front right big", frontRightModule.getAbsoluteOffset());
-    // SmartDashboard.putNumber("back left big", backLeftModule.getAbsoluteOffset());
-    // SmartDashboard.putNumber("back right big", backRightModule.getAbsoluteOffset());
+    SmartDashboard.putNumber("front left mag", frontLeftModule.getMagDeg());
+    SmartDashboard.putNumber("front right mag", frontRightModule.getMagDeg());
+    SmartDashboard.putNumber("back left mag", backLeftModule.getMagDeg());
+    SmartDashboard.putNumber("back right mag", backRightModule.getMagDeg());
 
     SmartDashboard.putString("odometry pose", odometry.getPoseMeters().toString());
 

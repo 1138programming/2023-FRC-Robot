@@ -66,13 +66,14 @@ public final class Constants {
   public static final double KBaseDriveHighPercent = 0.7;
   
     // Offsets for absolute encoders, used to set up angle encoders
-  public static final double KFrontLeftOffset = 0.159;
+  // public static final double KFrontLeftOffset = 0.159;
+  public static final double KFrontLeftOffset = 5;
   public static final double KFrontRightOffset = 0.5047;
   public static final double KBackLeftOffset = 0.2044;
   public static final double KBackRightOffset = 0.192;
   
     // Absolute encoder port IDs
-  public static final int KFrontLeftMagEncoderID = 7;
+  public static final int KFrontLeftMagEncoderID = 8;
   public static final int KFrontRightMagEncoderID = 5;
   public static final int KBackLeftMagEncoderID = 2;
   public static final int KBackRightMagEncoderID = 0;

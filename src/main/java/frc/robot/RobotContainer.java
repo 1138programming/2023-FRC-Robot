@@ -43,11 +43,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   //Subsystems
   private final Base base = new Base();
-  private final Scoring scoring = new Scoring();
+  // private final Scoring scoring = new Scoring();
   private final Endgame endgame = new Endgame();
   private final Intake intake = new Intake();
   private final LEDs LEDs = new LEDs();
-  private final Orientation orientation = new Orientation();
+  // private final Orientation orientation = new Orientation();
 
   // Base 
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
@@ -65,8 +65,8 @@ public class RobotContainer {
   private final IntakeStop intakeStop = new IntakeStop(intake);
 
   //Orientation
-  private final OrientationMoveAllForward OrientationFoward1 = new OrientationMoveAllForward(orientation);
-  private final OrientationMoveAllReverse OrientationBackward1 = new OrientationMoveAllReverse(orientation);
+  // private final OrientationMoveAllForward OrientationFoward1 = new OrientationMoveAllForward(orientation);
+  // private final OrientationMoveAllReverse OrientationBackward1 = new OrientationMoveAllReverse(orientation);
 
   // Endgame
   private final MoveLinearServosOut moveLinearServosOut = new MoveLinearServosOut(endgame);
@@ -166,8 +166,8 @@ public class RobotContainer {
     xboxBtnA.onTrue(moveLinearServosOut);
     xboxBtnB.onTrue(moveLinearServosIn);
 
-    xboxBtnA.whileTrue(OrientationFoward1);
-    xboxBtnB.whileTrue(OrientationBackward1);
+    // xboxBtnA.whileTrue(OrientationFoward1);
+    // xboxBtnB.whileTrue(OrientationBackward1);
 
   }
 
