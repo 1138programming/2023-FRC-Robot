@@ -13,7 +13,7 @@ import edu.wpi.first.math.controller.PIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 /* 
- * 3 motors - 2 Neos or 775s & 1 Snow Blower - most likely TalonSRX, but can be VictorSPX or Jaguar
+ * 3 motors - 2 Neos or 775s & 1 Snow Blower - most likely TalonSRX, but can be VictorSPX or Jaguar (hopefully not that)
  * 1 encoder for extension
  * 3 sensors most likely
  */
