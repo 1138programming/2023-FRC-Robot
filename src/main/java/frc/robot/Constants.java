@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.introspect.AnnotationCollector.OneAnnotati
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.I2C.Port;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -166,4 +168,6 @@ public final class Constants {
     YELLOW,
     PURPLE
   };
+  // I2C
+  public static final I2C.Port KI2CPort = Port.kOnboard;
 }
