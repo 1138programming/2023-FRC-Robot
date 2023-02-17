@@ -7,20 +7,20 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DigitalInput; // Sensors
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; 
 import edu.wpi.first.math.controller.PIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 /* 
- * 3 motors - 2 Neos or 775s & 1 Snow Blower
+ * 3 motors - 2 Neos or 775s & 1 Snow Blower - most likely TalonSRX, but can be VictorSPX or Jaguar
  * 1 encoder for extension
  * 3 sensors most likely
  */
 public class Orientation extends SubsystemBase {
     private CANSparkMax orientationLeftMotor;
     private CANSparkMax orientationRightMotor;
-    private VictorSPX orientationMotorExtension;
+    private TalonSRX orientationMotorExtension;
 
     private PIDController extensionController;
     private double extensionControllerkP = 0.00001;
@@ -38,7 +38,7 @@ public class Orientation extends SubsystemBase {
         orientationLeftMotor = new CANSparkMax(KOrientationLeftMotorID, MotorType.kBrushless);
         orientationRightMotor = new CANSparkMax(KOrientationRightMotorID, MotorType.kBrushless);
 
-        orientationMotorExtension = new VictorSPX(KOrientationMotorExtensionID);
+        orientationMotorExtension = new TalonSRX(KOrientationMotorExtensionID);
         
         IRSensor1 = new DigitalInput (KOrientationIRSensor1ID);
         IRSensor2 = new DigitalInput (KOrientationIRSensor2ID);
