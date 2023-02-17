@@ -6,7 +6,6 @@ package frc.robot.commands.Communication;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.I2C.Port;
 import static frc.robot.Constants.*;
 
 public class I2CCommunication extends CommandBase {
@@ -17,7 +16,7 @@ public class I2CCommunication extends CommandBase {
   }
   public void sendData()
   {
-    //Wire.write(KBackLeftDriveID, KBackLeftAngleID)
+    Wire.write(KBackLeftDriveID, sizeof())
   }
   // Called when the command is initially scheduled.
   @Override
