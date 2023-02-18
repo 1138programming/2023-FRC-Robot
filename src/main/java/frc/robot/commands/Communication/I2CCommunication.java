@@ -36,13 +36,13 @@ public class I2CCommunication extends CommandBase {
       default:
       isSuccess = false;
     }
-    if (isSuccess != false)
+    if (isSuccess)
     {
       isSuccess = Wire.writeBulk(ByteBuffer.allocate(4).putInt(dataToSend).array());
       isSuccess = !isSuccess;
       return isSuccess;
     }
-    return isSuccess;
+    return false;
   }
 
   // Function most likely not nessecary, returns 404 if error
@@ -50,7 +50,7 @@ public class I2CCommunication extends CommandBase {
   {
     ByteBuffer readData = ByteBuffer.allocateDirect(4); // past tense, read, not read.
     int finalData = 0;
-    boolean isSuccess = Wire.read(KBackLeftDriveID, KBackLeftAngleID, readData);
+    boolean isSuccess = Wire.read(KI2CAddress, 4, readData);
     isSuccess = !isSuccess;
     try 
     {
