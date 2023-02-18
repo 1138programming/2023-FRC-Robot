@@ -97,9 +97,9 @@ public final class Constants {
   public static final boolean KBackRightDriveEncoderReversed = false; 
 
   //intake
-  public static final int KSpaghettiIntakeId = 12;
-  public static final int KKSwivelIntakeId = 0;
-  public static final int KFlewIntakeId= 13;
+  public static final int KSpaghettiIntakeId = 9;
+  public static final int KLeftIntakeId = 11;
+  public static final int KRightIntakeId = 10;
 
 
 
@@ -125,8 +125,8 @@ public final class Constants {
   public static final double KIntakeD = 0;
 
   // Endgame
-  public static final int KLimitSwitch = 0;
-  public static final int KLinearServoTop = 0;
+  public static final int KLimitSwitch = 27;
+  public static final int KLinearServoTop = 28;
 
   public static final int KLinearServoBottom = 3;
 
@@ -153,23 +153,19 @@ public final class Constants {
   public static final double KLiftRotToFoot = 0; //TBD
 
   //Orientation
-  public static final int KOrientationIRSensor1ID = 0;
-  public static final int KOrientationIRSensor2ID = 0;
-  public static final int KOrientationIRSensor3ID = 0;
-  public static final int KOrientationHallEffectSensor1ID = 0;
-  public static final int KOrientationHallEffectSensor2ID = 0;
+  public static final int KOrientationIRSensor1ID = 8;
+  public static final int KOrientationIRSensor2ID = 9;
+  public static final int KOrientationIRSensor3ID = 10;
+  public static final int KOrientationHallEffectSensor1ID = 8;
+  public static final int KOrientationHallEffectSensor2ID = 6;
   public static final int KOrientationLeftMotorID = 12;
   public static final int KOrientationRightMotorID = 13;
   public static final int KOrientationMotorExtensionID = 14;
+  public static final double KLeftandRightMotorSpeeds = 1;
+  public static final double KMotorExtensionSpeed = 0.5;
 
   public static final double KCubeLeftandRightMotorSpeeds = 18;
   public static final double KConeLeftandRightMotorSpeeds = 18;
-
-  public static final double KMotorExtensionSpeed = 20;
-  // public static final int KOrientationColorID = 5;
-  public static final double KMotor1Speed = 0.5;
-  public static final double KMotor2Speed = 0.5;
-
 
    //LED ports
    public static final int KLEDPort = 2;
@@ -179,8 +175,5 @@ public final class Constants {
      YELLOW,
      PURPLE
    };
-
-  
- 
 }
         

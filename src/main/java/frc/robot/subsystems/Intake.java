@@ -129,4 +129,10 @@ public class Intake extends SubsystemBase {
     swivel.set(ControlMode.PercentOutput, 0);
     spaghetti.set(ControlMode.PercentOutput, 0);
   }
+
+  public void intakeStop() {
+    spaghetti.set(ControlMode.PercentOutput, 0);
+    swivel.set(ControlMode.PercentOutput, 0);
+    flex.set(ControlMode.PercentOutput, 0);
+  }
 }

@@ -17,14 +17,24 @@ import frc.robot.commands.Base.ToggleGenerateOdometryLog;
 import frc.robot.commands.Base.WriteOdometryLog;
 import frc.robot.commands.Endgame.*;
 import frc.robot.commands.Intake.IntakeSpin;
+import frc.robot.commands.Intake.IntakeStop;
 import frc.robot.subsystems.Base;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Endgame;
 import frc.robot.subsystems.Scoring;
+import frc.robot.subsystems.Orientation;
+import frc.robot.commands.Orientation.OrientationMoveAllForward;
+import frc.robot.commands.Orientation.OrientationMoveAllReverse;
+import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightForward;
+import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
+import frc.robot.commands.Orientation.OrientationStopOnlyExtension;
+import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionForward;
+import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionReverse;
 import frc.robot.commands.Base.ToggleSpeed;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -38,6 +48,7 @@ public class RobotContainer {
   private final Scoring scoring = new Scoring();
   private final Endgame endgame = new Endgame();
   private final Intake intake = new Intake();
+  private final Orientation orientation = new Orientation();
 
   // Base 
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
@@ -49,6 +60,12 @@ public class RobotContainer {
 
   // Intake
   private final IntakeSpin StorageForward1 = new IntakeSpin(intake);
+  private final IntakeStop intakeStop = new IntakeStop(intake);
+
+  //Orientation
+  private final OrientationMoveOnlyExtensionForward OrientationFoward1 = new OrientationMoveOnlyExtensionForward(orientation);
+  private final OrientationMoveOnlyExtensionReverse OrientationBackward1 = new OrientationMoveOnlyExtensionReverse(orientation);
+  private final OrientationStopOnlyExtension OrientationStop = new OrientationStopOnlyExtension(orientation);
 
   // Endgame
   private final MoveLinearServosOut moveLinearServosOut = new MoveLinearServosOut(endgame);
@@ -56,7 +73,7 @@ public class RobotContainer {
 
   //Controller Ports (check in Driver Station, IDs may be different for each computer)
   private static final int KLogitechPort = 0;
-  private static final int KXboxPort = 0;  
+  private static final int KXboxPort = 1;  
 
   //Deadzone
   private static final double KDeadZone = 0.05;
@@ -100,7 +117,8 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     base.setDefaultCommand(driveWithJoysticks);
-    
+    intake.setDefaultCommand(intakeStop);
+
     //Game controllers
     logitech = new Joystick(KLogitechPort); //Logitech Dual Action
     xbox = new XboxController(KXboxPort);   //Xbox 360 for Windows
@@ -144,8 +162,14 @@ public class RobotContainer {
     logitechBtnLB.onFalse(toggleSlowSpeed);
     // logitechBtnX.onTrue(moveLinearServosOut.andThen(driveBaseOffEdge));
 
-    xboxBtnA.onTrue(moveLinearServosOut);
-    xboxBtnB.onTrue(moveLinearServosIn);
+    // xboxBtnA.onTrue(moveLinearServosOut);
+    // xboxBtnB.onTrue(moveLinearServosIn);
+
+    xboxBtnA.whileTrue(OrientationFoward1);
+    xboxBtnB.whileTrue(OrientationBackward1);
+    xboxBtnA.whileFalse(OrientationStop);
+    xboxBtnB.whileFalse(OrientationStop);
+
   }
 
   /**
