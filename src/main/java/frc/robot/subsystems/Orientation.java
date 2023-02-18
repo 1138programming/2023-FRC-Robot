@@ -51,7 +51,7 @@ public class Orientation extends SubsystemBase {
 
         orientationLeftMotor.setIdleMode(IdleMode.kBrake);
         // orientationMotorExtension.setIdleMode(IdleMode.kBrake);
-
+        
         orientationRightMotor.follow(orientationLeftMotor);
     }
 

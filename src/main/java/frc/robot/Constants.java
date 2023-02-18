@@ -97,9 +97,9 @@ public final class Constants {
   public static final boolean KBackRightDriveEncoderReversed = false; 
 
   //intake
-  public static final int KSpaghettiIntakeId = 12;
-  public static final int KLeftIntakeId = 0;
-  public static final int KRightIntakeId = 13;
+  public static final int KSpaghettiIntakeId = 9;
+  public static final int KLeftIntakeId = 11;
+  public static final int KRightIntakeId = 10;
 
   public static final double KIntakeSpaghettitSpeed = 0.35;
   public static final double KIntakeRollerSpeed = 0.35;
@@ -117,7 +117,7 @@ public final class Constants {
 
   // Endgame
   public static final int KLimitSwitch = 27;
-  public static final int KLinearServoTop = 12;
+  public static final int KLinearServoTop = 28;
 
   public static final int KLinearServoBottom = 3;
 
@@ -145,8 +145,8 @@ public final class Constants {
   public static final int KOrientationHallEffectSensor2ID = 6;
   public static final int KOrientationLeftMotorID = 12;
   public static final int KOrientationRightMotorID = 13;
-  public static final int KOrientationMotorExtensionID = 15;
-  public static final double KLeftandRightMotorSpeeds = 18;
+  public static final int KOrientationMotorExtensionID = 14;
+  public static final double KLeftandRightMotorSpeeds = 1;
   public static final double KMotorExtensionSpeed = 0.5;
 
  
