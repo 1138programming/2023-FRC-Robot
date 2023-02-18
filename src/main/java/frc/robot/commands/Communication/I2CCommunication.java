@@ -60,7 +60,7 @@ public class I2CCommunication extends CommandBase {
     {
       isSuccess = false;
     }
-    if (isSuccess == false)
+    if (!isSuccess)
     {
       return 404;
     }

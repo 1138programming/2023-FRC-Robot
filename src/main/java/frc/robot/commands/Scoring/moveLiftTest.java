@@ -6,6 +6,7 @@ package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Scoring;
+
 public class moveLiftTest extends CommandBase {
   Scoring scoring;
   double speed;
@@ -25,6 +26,7 @@ public class moveLiftTest extends CommandBase {
     scoring.moveLift(speed);
   }
 
+  
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
