@@ -8,15 +8,66 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.I2C;
 import static frc.robot.Constants.*;
 
+import java.nio.ByteBuffer;
+
 public class I2CCommunication extends CommandBase {
   private static I2C Wire = new I2C(KI2CPort, 4);
   /** Creates a new I2CCommunication. */
   public I2CCommunication() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
-  public void sendData()
+
+  // Returns true if success. Can ignore.
+  public boolean sendData(KLEDSTATE desiredState)
   {
-    Wire.write(KBackLeftDriveID, sizeof())
+    int dataToSend = 0;
+    boolean isSuccess = true;
+    switch (desiredState)
+    {
+      case OFF:
+      dataToSend = 0;
+      break;
+      case YELLOW:
+      dataToSend = 1;
+      break;
+      case PURPLE:
+      dataToSend = 2;
+      break;
+      default:
+      isSuccess = false;
+    }
+    if (isSuccess != false)
+    {
+      isSuccess = Wire.writeBulk(ByteBuffer.allocate(4).putInt(dataToSend).array());
+      isSuccess = !isSuccess;
+      return isSuccess;
+    }
+    return isSuccess;
+  }
+
+  // Function most likely not nessecary, returns 404 if error
+  public int readData()
+  {
+    ByteBuffer readData = ByteBuffer.allocateDirect(4); // past tense, read, not read.
+    int finalData = 0;
+    boolean isSuccess = Wire.read(KBackLeftDriveID, KBackLeftAngleID, readData);
+    isSuccess = !isSuccess;
+    try 
+    {
+      finalData = readData.getInt();
+    }
+    catch(Exception e)
+    {
+      isSuccess = false;
+    }
+    if (isSuccess == false)
+    {
+      return 404;
+    }
+    else
+    {
+      return finalData;
+    }
   }
   // Called when the command is initially scheduled.
   @Override

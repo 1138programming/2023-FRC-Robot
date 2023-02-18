@@ -166,7 +166,7 @@ public final class Constants {
   public static enum KLEDSTATE {
     OFF,
     YELLOW,
-    PURPLE
+    PURPLE 
   };
   // I2C
   public static final I2C.Port KI2CPort = Port.kOnboard;
