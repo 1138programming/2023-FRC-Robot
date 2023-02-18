@@ -33,8 +33,8 @@ public class Intake extends SubsystemBase {
 
   public Intake() {
     spaghetti = new TalonSRX(KSpaghettiIntakeId);
-    swivel = new TalonSRX(KKSwivelIntakeId);
-    flex = new TalonSRX(KFlewIntakeId);
+    swivel = new TalonSRX(KSwivelIntakeId);
+    flex = new TalonSRX(KFlexIntakeId);
 
     intakeController = new PIDController(KIntakeP, KIntakeI, KIntakeD);
 
@@ -128,11 +128,5 @@ public class Intake extends SubsystemBase {
     flex.set(ControlMode.PercentOutput, 0);
     swivel.set(ControlMode.PercentOutput, 0);
     spaghetti.set(ControlMode.PercentOutput, 0);
-  }
-
-  public void intakeStop() {
-    spaghetti.set(ControlMode.PercentOutput, 0);
-    swivel.set(ControlMode.PercentOutput, 0);
-    flex.set(ControlMode.PercentOutput, 0);
   }
 }

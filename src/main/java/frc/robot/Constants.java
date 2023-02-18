@@ -98,8 +98,8 @@ public final class Constants {
 
   //intake
   public static final int KSpaghettiIntakeId = 9;
-  public static final int KLeftIntakeId = 11;
-  public static final int KRightIntakeId = 10;
+  public static final int KFlexIntakeId = 11;
+  public static final int KSwivelIntakeId = 10;
 
 
 
