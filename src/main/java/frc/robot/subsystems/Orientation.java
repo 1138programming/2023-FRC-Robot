@@ -19,6 +19,8 @@ public class Orientation extends SubsystemBase {
     private DigitalInput Sensor1;
     private DigitalInput Sensor2;
     private DigitalInput Sensor3;
+    private DigitalInput HallEffectSensor1;
+    private DigitalInput HallEffectSensor2;
     
     
     public Orientation() {
@@ -28,6 +30,8 @@ public class Orientation extends SubsystemBase {
         Sensor1 = new DigitalInput (KOrientationSensor1ID);
         Sensor2 = new DigitalInput (KOrientationSensor2ID);
         Sensor3 = new DigitalInput (KOrientationSensor3ID);
+        HallEffectSensor1 = new DigitalInput(KOrientationHallEffectSensor1ID);
+        HallEffectSensor2 = new DigitalInput(KOrientationHallEffectSensor2ID);
 
         orientationRightMotor.follow(orientationLeftMotor);
     }

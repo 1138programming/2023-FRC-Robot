@@ -108,10 +108,11 @@ public final class Constants {
   public static final double KIntakeSpaghettitSpeed = 0.35;
   public static final double KIntakeRollerSpeed = 0.35;
 
-  public static final double KIntakeSwivelTopPos = 1;
-  public static final double KIntakeSwivelBottumPos = 1;
+  public static final double KIntakeSwivelTopPos = 11;
+  public static final double KIntakeSwivelBottumPos = 12;
 
-  public static final int KIntakeLimitId = 1; 
+  public static final int KIntakeLimitId = 11;
+  public static final int KIntakeEncoderID = 12; 
 
   //Pid
   public static final double KIntakeP = 0;
@@ -119,7 +120,8 @@ public final class Constants {
   public static final double KIntakeD = 0;
 
   // Endgame
-  public static final int KLimitSwitch = 0;
+  public static final int KLimitSwitch = 8; 
+  public static final int KEndgameEncoderID = 9; //name can be switched later
   public static final int KLinearServoTop = 0;
 
   public static final int KLinearServoBottom = 3;
@@ -131,6 +133,9 @@ public final class Constants {
   public static final int KWristMotor = 16;
   public static final int KLiftMotor = 17;
   public static final int KFlipperMotor = 18;
+
+  public static final int KScoringEncoder1ID = 6; //name can be changed later
+  public static final int KScoringEncoder2ID = 7; //name can be changed later
 
   public static final double KClawMotorSpeed = 0; //TBD
   public static final double KAngleMotorSpeed = 0; //TBD
@@ -147,9 +152,11 @@ public final class Constants {
     public static final double KLiftRotToFoot = 0; //TBD
 
   // Orientation
-  public static final int KOrientationSensor1ID = 0;
-  public static final int KOrientationSensor2ID = 0;
-  public static final int KOrientationSensor3ID = 0;
+  public static final int KOrientationSensor1ID = 1;
+  public static final int KOrientationSensor2ID = 2;
+  public static final int KOrientationSensor3ID = 3;
+  public static final int KOrientationHallEffectSensor1ID = 4;
+  public static final int KOrientationHallEffectSensor2ID = 5;
 
   public static final int KOrientationLeftMotorID = 12;
   public static final int KOrientationRightMotorID = 13;
