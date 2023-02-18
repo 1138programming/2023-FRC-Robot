@@ -170,4 +170,5 @@ public final class Constants {
   };
   // I2C
   public static final I2C.Port KI2CPort = Port.kOnboard;
+  public static final int KI2CAddress = 4;
 }

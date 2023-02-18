@@ -11,7 +11,7 @@ import static frc.robot.Constants.*;
 import java.nio.ByteBuffer;
 
 public class I2CCommunication extends CommandBase {
-  private static I2C Wire = new I2C(KI2CPort, 4);
+  private static I2C Wire = new I2C(KI2CPort, KI2CAddress);
   /** Creates a new I2CCommunication. */
   public I2CCommunication() {
     // Use addRequirements() here to declare subsystem dependencies.
