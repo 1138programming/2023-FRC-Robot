@@ -32,6 +32,7 @@ import frc.robot.commands.Orientation.OrientationMoveAllForward;
 import frc.robot.commands.Orientation.OrientationMoveAllReverse;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightForward;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
+import frc.robot.commands.Orientation.OrientationStopOnlyExtension;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionForward;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionReverse;
 import frc.robot.commands.Base.ToggleSpeed;
@@ -71,8 +72,9 @@ public class RobotContainer {
   private final IntakeStop intakeStop = new IntakeStop(intake);
 
   //Orientation
-  private final OrientationMoveAllForward OrientationFoward1 = new OrientationMoveAllForward(orientation);
-  private final OrientationMoveAllReverse OrientationBackward1 = new OrientationMoveAllReverse(orientation);
+  private final OrientationMoveOnlyExtensionForward OrientationFoward1 = new OrientationMoveOnlyExtensionForward(orientation);
+  private final OrientationMoveOnlyExtensionReverse OrientationBackward1 = new OrientationMoveOnlyExtensionReverse(orientation);
+  private final OrientationStopOnlyExtension OrientationStop = new OrientationStopOnlyExtension(orientation);
 
   // Endgame
   private final MoveLinearServosOut moveLinearServosOut = new MoveLinearServosOut(endgame);
@@ -169,11 +171,13 @@ public class RobotContainer {
     logitechBtnLB.onFalse(toggleSlowSpeed);
     // logitechBtnX.onTrue(moveLinearServosOut.andThen(driveBaseOffEdge));
 
-    xboxBtnA.onTrue(moveLinearServosOut);
-    xboxBtnB.onTrue(moveLinearServosIn);
+    // xboxBtnA.onTrue(moveLinearServosOut);
+    // xboxBtnB.onTrue(moveLinearServosIn);
 
     xboxBtnA.whileTrue(OrientationFoward1);
     xboxBtnB.whileTrue(OrientationBackward1);
+    xboxBtnA.whileFalse(OrientationStop);
+    xboxBtnB.whileFalse(OrientationStop);
 
   }
 

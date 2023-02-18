@@ -40,6 +40,12 @@ public class IntakeSwivelBottum extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false; // needs to change
+    
+    if (intake.getIntakeEncoder() <= KIntakeSwivelBottumPos + KIntakeSwiveBottumOffset && intake.getIntakeEncoder() <= KIntakeSwivelBottumPos - KIntakeSwiveBottumOffset) {
+      return true;
+     }
+     else {
+   return false;
+ }
   }
 }

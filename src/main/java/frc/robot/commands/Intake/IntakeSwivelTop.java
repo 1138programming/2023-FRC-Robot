@@ -40,6 +40,11 @@ public class IntakeSwivelTop extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if (intake.getIntakeEncoder() <= KIntakeSwivelTopPos + KIntakeSwiveTopOffset && intake.getIntakeEncoder() <= KIntakeSwivelTopPos - KIntakeSwiveTopOffset) {
+       return true;
+      }
+      else {
     return false;
+  }
   }
 }

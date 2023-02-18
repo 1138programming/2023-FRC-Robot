@@ -11,7 +11,7 @@ import static frc.robot.Constants.*;
 public class OrientationMoveOnlyExtensionForward extends CommandBase {
   /** Creates a new OrientationMove. */
 
-  private Orientation orientation; 
+  private Orientation orientation;  
 
   public OrientationMoveOnlyExtensionForward(Orientation orientation) {
     this.orientation = orientation;

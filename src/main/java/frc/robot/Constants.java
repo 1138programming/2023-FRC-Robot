@@ -101,15 +101,22 @@ public final class Constants {
   public static final boolean KBackRightDriveEncoderReversed = false; 
 
   //intake
-  public static final int KSpaghettiIntakeId = 12;
-  public static final int KLeftIntakeId = 0;
-  public static final int KRightIntakeId = 13;
+  public static final int KSpaghettiIntakeId = 9;
+  public static final int KFlexIntakeId = 11;
+  public static final int KSwivelIntakeId = 10;
 
-  public static final double KIntakeSpaghettitSpeed = 0.35;
-  public static final double KIntakeRollerSpeed = 0.35;
 
   public static final double KIntakeSwivelTopPos = 11;
   public static final double KIntakeSwivelBottumPos = 12;
+
+  public static final double KIntakeConeSpaghettitSpeed = 0.35;
+  public static final double KIntakeConeFlexSpeed = 0.35;
+
+  public static final double KIntakeCubeSpaghettitSpeed = 0.35;
+  public static final double KIntakeCubeFlexSpeed = 0.35;
+
+  public static final double KIntakeSwiveTopOffset = 2; 
+  public static final double KIntakeSwiveBottumOffset = 2;  
 
   public static final int KIntakeLimitId = 11;
   public static final int KIntakeEncoderID = 12; 
@@ -127,7 +134,6 @@ public final class Constants {
   public static final int KLinearServoBottom = 3;
 
   public static final double KEndgameServoPos = 1;
-
   // Scoring
   public static final int KClawMotor = 15;
   public static final int KWristMotor = 16;
@@ -145,32 +151,34 @@ public final class Constants {
   public static final double KFlipperI = 0;
   public static final double KFlipperD = 0;
   public static final double KScoringFlipPos = 0;
-    //lift PID
-    public static final double KLiftP = 0; //TBD
-    public static final double KLiftI = 0; //TBD
-    public static final double KLiftD = 0; //TBD
-    public static final double KLiftRotToFoot = 0; //TBD
+  
+  //lift PID
+  public static final double KLiftP = 0; //TBD
+  public static final double KLiftI = 0; //TBD
+  public static final double KLiftD = 0; //TBD
+  public static final double KLiftRotToFoot = 0; //TBD
 
-  // Orientation
-  public static final int KOrientationSensor1ID = 1;
-  public static final int KOrientationSensor2ID = 2;
-  public static final int KOrientationSensor3ID = 3;
-  public static final int KOrientationHallEffectSensor1ID = 4;
-  public static final int KOrientationHallEffectSensor2ID = 5;
-
+  //Orientation
+  public static final int KOrientationIRSensor1ID = 8;
+  public static final int KOrientationIRSensor2ID = 9;
+  public static final int KOrientationIRSensor3ID = 10;
+  public static final int KOrientationHallEffectSensor1ID = 8;
+  public static final int KOrientationHallEffectSensor2ID = 6;
   public static final int KOrientationLeftMotorID = 12;
   public static final int KOrientationRightMotorID = 13;
   public static final int KOrientationMotorExtensionID = 14;
+  public static final double KLeftandRightMotorSpeeds = 1;
+  public static final double KMotorExtensionSpeed = 0.5;
 
-  public static final double KLeftandRightMotorSpeeds = 0.5; //TBD
-  public static final double KMotorExtensionSpeed = 0.5; //TBD
-          
-  //LED ports
-  public static final int KLEDPort = 2;
-  public static final int KLEDBuffer = 20;
-  public static enum KLEDSTATE {
-    OFF,
-    YELLOW,
-    PURPLE
-  };
+  public static final double KCubeLeftandRightMotorSpeeds = 18;
+  public static final double KConeLeftandRightMotorSpeeds = 18;
+
+   //LED ports
+   public static final int KLEDPort = 2;
+   public static final int KLEDBuffer = 20;
+   public static enum KLEDSTATE {
+     OFF,
+     YELLOW,
+     PURPLE
+   };
 }

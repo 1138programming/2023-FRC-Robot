@@ -4,36 +4,67 @@ import static frc.robot.Constants.*;
 import com.revrobotics.CANSparkMax; // Covers Neo's
 import com.revrobotics.CANSparkMaxLowLevel.MotorType; // Cover's Neo's
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.DigitalInput; // Proximity Sensors
+import edu.wpi.first.wpilibj.DigitalInput; // Sensors
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; 
+import edu.wpi.first.math.controller.PIDController;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 /* 
- * 3 motors: Undecided: Neos or 775's
+ * 3 motors - 2 Neos or 775s & 1 Snow Blower - most likely TalonSRX, but can be VictorSPX or Jaguar (hopefully not that)
+ * 1 encoder for extension
  * 3 sensors most likely
  */
 public class Orientation extends SubsystemBase {
     private CANSparkMax orientationLeftMotor;
     private CANSparkMax orientationRightMotor;
-    private CANSparkMax orientationMotorExtension;
+    private TalonSRX orientationMotorExtension;
+
+    private PIDController extensionController;
+    private double extensionControllerkP = 0.00001;
+    private double extensionControllerkI = 0;
+    private double extensionControllerkD = 0;
     
-    private DigitalInput Sensor1;
-    private DigitalInput Sensor2;
-    private DigitalInput Sensor3;
+    private DigitalInput IRSensor1;
+    private DigitalInput IRSensor2;
+    private DigitalInput IRSensor3;
     private DigitalInput HallEffectSensor1;
     private DigitalInput HallEffectSensor2;
+
+    private boolean OrientationMode;
+
     
     
     public Orientation() {
         orientationLeftMotor = new CANSparkMax(KOrientationLeftMotorID, MotorType.kBrushless);
         orientationRightMotor = new CANSparkMax(KOrientationRightMotorID, MotorType.kBrushless);
-        orientationMotorExtension = new CANSparkMax(KOrientationMotorExtensionID, MotorType.kBrushless);
-        Sensor1 = new DigitalInput (KOrientationSensor1ID);
-        Sensor2 = new DigitalInput (KOrientationSensor2ID);
-        Sensor3 = new DigitalInput (KOrientationSensor3ID);
+
+        orientationMotorExtension = new TalonSRX(KOrientationMotorExtensionID);
+        
+        IRSensor1 = new DigitalInput (KOrientationIRSensor1ID);
+        IRSensor2 = new DigitalInput (KOrientationIRSensor2ID);
+        IRSensor3 = new DigitalInput (KOrientationIRSensor3ID);
         HallEffectSensor1 = new DigitalInput(KOrientationHallEffectSensor1ID);
         HallEffectSensor2 = new DigitalInput(KOrientationHallEffectSensor2ID);
 
+        extensionController = new PIDController(extensionControllerkP, extensionControllerkI, extensionControllerkD);
+        //orientationMotorExtension.getSelectedSensorPosition();
+
+        orientationLeftMotor.setIdleMode(IdleMode.kBrake);
+        // orientationMotorExtension.setIdleMode(IdleMode.kBrake);
+        
         orientationRightMotor.follow(orientationLeftMotor);
+    }
+
+    public void moveOrientationLeftandRightMotors() {
+        if (OrientationMode) {
+            orientationLeftMotor.set(KCubeLeftandRightMotorSpeeds);
+        }
+        else if (!OrientationMode) {
+            orientationLeftMotor.set(KConeLeftandRightMotorSpeeds);
+        }
     }
 
     public void moveOrientationLeftandRightMotors(double speed) {
@@ -41,7 +72,19 @@ public class Orientation extends SubsystemBase {
     }
 
     public void moveOrientationMotorExtension(double speed) {
-        orientationMotorExtension.set(speed);
+        orientationMotorExtension.set(ControlMode.PercentOutput, speed);
+    }
+
+    public void setCubeMode() {
+        OrientationMode = false;
+    }
+
+    public void setConeMode() {
+        OrientationMode = true; 
+    }
+
+    public boolean getMode() {
+            return OrientationMode;
     }
 
     public void stopOrientationLeftandRightMotors() {
@@ -49,19 +92,27 @@ public class Orientation extends SubsystemBase {
     }
 
     public void stopOrientationMotorExtension() {
-        orientationMotorExtension.set(0);
+        orientationMotorExtension.set(ControlMode.PercentOutput, 0);
     }
 
     public Boolean getSensor1() {
-        return Sensor1.get();
+        return IRSensor1.get();
     }
 
     public Boolean getSensor2() {
-        return Sensor2.get();
+        return IRSensor2.get();
     }
 
     public Boolean getSensor3() {
-        return Sensor3.get();
+        return IRSensor3.get();
+    }
+
+    public Boolean getHallEffectSensor1() {
+        return HallEffectSensor1.get();
+    }
+
+    public Boolean getHallEffectSensor2(){
+        return HallEffectSensor2.get();
     }
 
 }

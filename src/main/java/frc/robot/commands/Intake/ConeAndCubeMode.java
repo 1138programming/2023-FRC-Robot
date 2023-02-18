@@ -5,26 +5,47 @@
 package frc.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
 import static frc.robot.Constants.*;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Scoring;
+import frc.robot.subsystems.Orientation;
 
-public class IntakeSwivelUpAndStop extends CommandBase {
-  /** Creates a new IntakeSwivelUpAndStop. */
-  Intake intake; 
-  public IntakeSwivelUpAndStop(Intake intake) {
+public class ConeAndCubeMode extends CommandBase {
+  /** Creates a new ConeAndCubeMode. */
+  Intake intake;
+  Orientation orientation;
+
+  public ConeAndCubeMode(Intake intake, Orientation orientation) {
     this.intake = intake;
-    addRequirements(intake);
+    this.orientation = orientation;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    
+    if (intake.getMode()) {
+      intake.setCubeMode();
+    }
+    else if (!intake.getMode()) {
+      intake.setConeMode();
+    }
+
+    if (orientation.getMode()) {
+      orientation.setCubeMode();
+    }
+    else if (!orientation.getMode()) {
+      orientation.setConeMode();
+    }
+
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.intakeStop();
-    intake.swivelSpinToPos(KIntakeSwivelTopPos);
+    
+   
+
   }
 
   // Called once the command ends or is interrupted.
