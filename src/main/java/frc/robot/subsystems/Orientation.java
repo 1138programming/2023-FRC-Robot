@@ -43,9 +43,9 @@ public class Orientation extends SubsystemBase {
 
         orientationMotorExtension = new TalonSRX(KOrientationMotorExtensionID);
         
-        IRSensor1 = new DigitalInput (KOrientationIRSensor1ID);
-        IRSensor2 = new DigitalInput (KOrientationIRSensor2ID);
-        IRSensor3 = new DigitalInput (KOrientationIRSensor3ID);
+        IRSensor1 = new DigitalInput (KOrientationIRSensorLeftID);
+        IRSensor2 = new DigitalInput (KOrientationIRSensorMiddleID);
+        IRSensor3 = new DigitalInput (KOrientationIRSensorRightID);
         HallEffectSensor1 = new DigitalInput(KOrientationHallEffectSensor1ID);
         HallEffectSensor2 = new DigitalInput(KOrientationHallEffectSensor2ID);
 
