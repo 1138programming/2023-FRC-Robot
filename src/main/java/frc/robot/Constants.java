@@ -107,7 +107,7 @@ public final class Constants {
   public static final double KIntakeSwivelTopPos = 1;
   public static final double KIntakeSwivelBottumPos = 1;
 
-  public static final int KIntakeLimitId = 1; 
+  public static final int KIntakeLimitId = 23; 
 
 
   //Pid
@@ -121,7 +121,7 @@ public final class Constants {
 
   public static final int KLinearServoBottom = 3;
 
-  public static final double KEndgameServoPos = 1;
+  public static final double KEndgameServoPos = 24;
   // Scoring (old)
   public static final int KClawMotor1 = 19;
   public static final int KClawMotor2 = 20;
@@ -141,7 +141,7 @@ public final class Constants {
   public static final int KOrientationIRSensor1ID = 8;
   public static final int KOrientationIRSensor2ID = 9;
   public static final int KOrientationIRSensor3ID = 10;
-  public static final int KOrientationHallEffectSensor1ID = 8;
+  public static final int KOrientationHallEffectSensor1ID = 1;
   public static final int KOrientationHallEffectSensor2ID = 6;
   public static final int KOrientationLeftMotorID = 12;
   public static final int KOrientationRightMotorID = 13;
