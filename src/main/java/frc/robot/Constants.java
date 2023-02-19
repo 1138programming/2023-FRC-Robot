@@ -78,6 +78,9 @@ public final class Constants {
   public static final int KClawMotor = 15;
   public static final int KWristMotor = 16;
   public static final int KLiftMotor = 17;
+  private static final double KLiftMotorGearRatio = 1/1; //TBD
+  private static final double KLiftGearDiameterInches = 0; //TBD
+  public static final double KLiftConversionFactor = KLiftMotorGearRatio * KLiftGearDiameterInches * Math.PI;
   public static final int KFlipperMotor = 18;
   
 
@@ -169,10 +172,10 @@ public final class Constants {
   public static final int KScoringEncoder1ID = 6; //name can be changed later
   public static final int KScoringEncoder2ID = 7; //name can be changed later
     // Flipper PID
-  public static final double KFlipperP = 0;
-  public static final double KFlipperI = 0;
-  public static final double KFlipperD = 0;
-  public static final double KScoringFlipPos = 0;
+  public static final double KFlipperP = 0; //TBD
+  public static final double KFlipperI = 0; //TBD
+  public static final double KFlipperD = 0; //TBD
+  public static final double KScoringFlipPos = 0; //TBD
     // lift PID
   public static final double KLiftP = 0; //TBD
   public static final double KLiftI = 0; //TBD

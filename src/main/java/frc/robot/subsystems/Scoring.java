@@ -28,10 +28,10 @@ public class Scoring extends SubsystemBase{
         wrist = new CANSparkMax(KWristMotor, MotorType.kBrushless);
         flipper = new CANSparkMax(KFlipperMotor, MotorType.kBrushless);
         lift = new CANSparkMax(KLiftMotor, MotorType.kBrushless);
-
-        flipperEncoder = flipper.getEncoder();
-
+        
         flipperController = new PIDController(KFlipperP, KFlipperI, KFlipperD);
+        flipperEncoder = flipper.getEncoder();
+        
         liftControl = new PIDController(KLiftP, KLiftI, KLiftD);
         relativeEncoder = lift.getEncoder();
     }
@@ -47,6 +47,10 @@ public class Scoring extends SubsystemBase{
     }
     public void moveLift(double setPoint) {
         lift.set(liftControl.calculate(relativeEncoder.getPosition(),setPoint));
+    }
+
+    public double getliftEncoder() {
+        return relativeEncoder.getPosition() * KLiftConversionFactor; //in inches
     }
 
     public double getFlipperPos(){
