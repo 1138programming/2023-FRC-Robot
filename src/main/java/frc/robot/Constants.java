@@ -125,8 +125,8 @@ public final class Constants {
 
   
   public static final int KEndgameIRSensor = 5;
-    public static final int KEndgameUltrasonicPing = 4;
-    public static final int KEndgameUltrasonicEcho = 6;
+    public static final int KEndgameUltrasonicPing = 0;
+    public static final int KEndgameUltrasonicEcho = 1;
   
 
   
