@@ -22,11 +22,7 @@ import frc.robot.subsystems.Base;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Endgame;
 import frc.robot.subsystems.Scoring;
-import frc.robot.commands.LED.LEDOff;
-import frc.robot.commands.LED.LEDPurple;
-import frc.robot.commands.LED.LEDYellow;
 import frc.robot.subsystems.Base;
-import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Orientation;
 import frc.robot.commands.Orientation.OrientationMoveAllForward;
 import frc.robot.commands.Orientation.OrientationMoveAllReverse;
@@ -53,7 +49,6 @@ public class RobotContainer {
   private final Scoring scoring = new Scoring();
   private final Endgame endgame = new Endgame();
   private final Intake intake = new Intake();
-  private final LEDs LEDs = new LEDs();
   private final Orientation orientation = new Orientation();
 
   // Base 
@@ -63,9 +58,9 @@ public class RobotContainer {
   private final ToggleSpeed toggleFastSpeed = new ToggleSpeed(base, 1);
   private final ToggleSpeed toggleMidSpeed = new ToggleSpeed(base, KBaseDriveHighPercent);
   private final ToggleSpeed toggleSlowSpeed = new ToggleSpeed(base, KBaseDriveLowPercent);
-  private final LEDOff ledOff = new LEDOff(LEDs);
-  private final LEDPurple ledPurple = new LEDPurple(LEDs);
-  private final LEDYellow ledYellow = new LEDYellow(LEDs);
+  // private final LEDOff ledOff = new LEDOff(LEDs);
+  // private final LEDPurple ledPurple = new LEDPurple(LEDs);
+  // private final LEDYellow ledYellow = new LEDYellow(LEDs);
 
   // Intake
   private final IntakeSpin StorageForward1 = new IntakeSpin(intake);
