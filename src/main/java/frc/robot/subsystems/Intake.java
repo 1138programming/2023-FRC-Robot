@@ -104,14 +104,6 @@ public class Intake extends SubsystemBase {
 
 
 
-  public void flexSpin() {
-    if (intakeMode) {
-      flex.set(ControlMode.PercentOutput, KIntakeConeFlexSpeed);
-    }
-    else if(!intakeMode) {
-      flex.set(ControlMode.PercentOutput, KIntakeCubeFlexSpeed);
-    }
-  }
 
 
 
@@ -125,7 +117,7 @@ public class Intake extends SubsystemBase {
   } 
   
   public void intakeStop() {
-    flex.set(ControlMode.PercentOutput, 0);
+
     swivel.set(ControlMode.PercentOutput, 0);
     spaghetti.set(ControlMode.PercentOutput, 0);
   }

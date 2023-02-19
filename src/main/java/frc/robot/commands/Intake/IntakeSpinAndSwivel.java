@@ -17,7 +17,7 @@ public class IntakeSpinAndSwivel extends CommandBase {
   public void execute() {
     intake.swivelSpinToPos(KIntakeSwivelTopPos);
     intake.spaghettiSpin();
-    intake.flexSpin();
+
   }
 
   // Called once the command ends or is interrupted.
