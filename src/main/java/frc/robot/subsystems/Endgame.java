@@ -2,12 +2,16 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.*;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.filter.MedianFilter;
 import edu.wpi.first.wpilibj.DigitalInput;
 //import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Endgame extends SubsystemBase {
@@ -20,7 +24,11 @@ public class Endgame extends SubsystemBase {
     private Ultrasonic endgameUltrasonic;
     private double ultrasonicMeasurement;
 
+    private VictorSP vex = new VictorSP(6);
+     
+
     public Endgame() {
+        
         //endgameBottomIRSensor = new DigitalInput(KEndgameIRSensor);
         endgameLinearServoTop = new Servo(KLinearServoTop);
         endgameLinearServoBottom = new Servo(KLinearServoBottom);
@@ -69,6 +77,11 @@ public class Endgame extends SubsystemBase {
             pos = -1;
         }
         endgameLinearServoBottom.setPosition(pos);
+    }
+
+    public void moveVex(double speed) {
+        vex.set(speed);
+        SmartDashboard.putBoolean("pwm", vex.isAlive());
     }
     // public boolean isBottomIRSensorPressed()
     // {

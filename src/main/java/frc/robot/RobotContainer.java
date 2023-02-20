@@ -40,6 +40,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // Subsystems
   private Endgame endgame = new Endgame();
+  
 
   // Endgame
   private final MoveLinearServosIn moveLinearServosIn = new MoveLinearServosIn(endgame);
@@ -137,6 +138,8 @@ public class RobotContainer {
 
     xboxBtnA.whileTrue(moveLinearServosOut);
     xboxBtnB.whileTrue(moveLinearServosIn);
+
+    xboxBtnX.whileTrue(new MoveVex(endgame));
   }
 
   /**
