@@ -121,7 +121,8 @@ public final class Constants {
 
   // Endgame
   public static final int KLinearServoTop = 0;
-  public static final int KLinearServoBottom = 1;
+  public static final int KLinearServoBottom = 9;
+  public static final double KLinearServoNeutral = 0.74;
 
   
   public static final int KEndgameIRSensor = 5;

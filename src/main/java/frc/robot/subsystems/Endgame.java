@@ -16,6 +16,7 @@ public class Endgame extends SubsystemBase {
     private Servo endgameLinearServoBottom;
     //private DigitalInput endgameBottomIRSensor;
     private final MedianFilter ultrasonicFilter = new MedianFilter(5);
+    private double pos;
     private Ultrasonic endgameUltrasonic;
     private double ultrasonicMeasurement;
 
@@ -28,19 +29,46 @@ public class Endgame extends SubsystemBase {
         // Bounds copied from 2022 FRC robot.. the values are most likely wrong. Check with Patrick for values possibly
         endgameLinearServoTop.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
         endgameLinearServoBottom.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
+        Ultrasonic.setAutomaticMode(true);
     }
-
+    
     @Override
     public void periodic()
     {
-        ultrasonicMeasurement = endgameUltrasonic.getRangeMM();
-        SmartDashboard.putNumber("Ultrasonic in.", ultrasonicMeasurement);
-        System.out.println(ultrasonicMeasurement);
+        ultrasonicMeasurement = endgameUltrasonic.getRangeInches();
+        ultrasonicMeasurement = ultrasonicFilter.calculate(ultrasonicMeasurement);
+        if (ultrasonicMeasurement < 249) {
+            SmartDashboard.putNumber("Ultrasonic in.", ultrasonicMeasurement);
+        }
+        else
+        {
+            SmartDashboard.putString("Ultrasonic in.", "invalid");
+        }
+        // endgameUltrasonic.ping();
     }
 
-    public void moveServo(double pos) {
-        endgameLinearServoTop.set(pos);
-        endgameLinearServoBottom.set(pos);
+    public void moveServo(boolean negative) {
+        //endgameLinearServoTop.set(pos);
+        pos = endgameLinearServoBottom.get();
+
+        SmartDashboard.putNumber("servopos", pos);
+        if (negative)
+        {
+            pos -= 0.02;
+        }
+        else if (!negative) 
+        {
+            pos += 0.02;
+        }
+        if (pos > 1)
+        {
+            pos = 1;
+        }
+        if (pos < 0)
+        {
+            pos = -1;
+        }
+        endgameLinearServoBottom.setPosition(pos);
     }
     // public boolean isBottomIRSensorPressed()
     // {

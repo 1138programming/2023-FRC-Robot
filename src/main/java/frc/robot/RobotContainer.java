@@ -42,8 +42,8 @@ public class RobotContainer {
   private Endgame endgame = new Endgame();
 
   // Endgame
-  private final MoveLinearServosOut moveLinearServosOut = new MoveLinearServosOut(endgame);
   private final MoveLinearServosIn moveLinearServosIn = new MoveLinearServosIn(endgame);
+  private final MoveLinearServosOut moveLinearServosOut = new MoveLinearServosOut(endgame);
 
   // Controller Ports (check in Driver Station, IDs may be different for each
   // computer)
@@ -135,8 +135,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // logitechBtnX.onTrue(moveLinearServosOut.andThen(driveBaseOffEdge));
 
-    xboxBtnA.onTrue(moveLinearServosOut);
-    xboxBtnB.onTrue(moveLinearServosIn);
+    xboxBtnA.whileTrue(moveLinearServosOut);
+    xboxBtnB.whileTrue(moveLinearServosIn);
   }
 
   /**
