@@ -27,9 +27,9 @@ public final class Constants {
     // Orientation
   public static final int KOrientationHallEffectSensor1ID = 1;
   public static final int KOrientationHallEffectSensor2ID = 2;
-  public static final int KOrientationIRSensorLeftID = 3;
-  public static final int KOrientationIRSensorMiddleID = 4;
-  public static final int KOrientationIRSensorRightID = 5;
+  public static final int KOrientationkDoorControlID = 3;
+  public static final int KOrientationkBaseCheckerID = 4;
+  public static final int KOrientationkTipCheckerID = 5;
     // Scoring
   public static final int KScoringTopLimitSwitch = 6;
   public static final int KScoringBottomLimitSwitch = 7;
