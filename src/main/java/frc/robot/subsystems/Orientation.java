@@ -95,15 +95,15 @@ public class Orientation extends SubsystemBase {
         orientationMotorExtension.set(ControlMode.PercentOutput, 0);
     }
 
-    public Boolean getSensor1() {
+    public Boolean getDoorSensor() {
         return DoorControl.get();
     }
 
-    public Boolean getSensor2() {
+    public Boolean getBaseSensor() {
         return BaseChecker.get();
     }
 
-    public Boolean getSensor3() {
+    public Boolean getTipSensor() {
         return TipChecker.get();
     }
 
