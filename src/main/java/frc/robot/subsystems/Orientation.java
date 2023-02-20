@@ -35,6 +35,8 @@ public class Orientation extends SubsystemBase {
 
     private boolean OrientationMode;
 
+
+    private KORIENTATIONSTATE ORIENTATION;
     
     
     public Orientation() {
