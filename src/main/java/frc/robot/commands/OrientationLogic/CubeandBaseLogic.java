@@ -9,18 +9,18 @@ import frc.robot.subsystems.Orientation;
 import frc.robot.subsystems.Scoring;
 import static frc.robot.Constants.*;
 
-public class CubeLogic extends CommandBase {
+public class CubeandBaseLogic extends CommandBase {
   /** Creates a new OrientationMove. */
 
   private Orientation orientation; 
   private Scoring scoring;
 
-  public CubeLogic(Orientation orientation) {
+  public CubeandBaseLogic(Orientation orientation) {
     this.orientation = orientation;
     addRequirements(orientation);
   }
 
-  public CubeLogic(Scoring scoring){
+  public CubeandBaseLogic(Scoring scoring){
     this.scoring = scoring;
     addRequirements(scoring);
   }
