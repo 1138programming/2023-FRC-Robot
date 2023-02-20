@@ -54,7 +54,7 @@ public class Scoring extends SubsystemBase{
     }
 
     public double getFlipperPos(){
-        return flipperEncoder.getPosition();
+        return flipperEncoder.getPosition() * KFlipperConversionFactor; //in inches
     }
     public void flipToPos(double setPoint) {
         moveFlipper(flipperController.calculate(getFlipperPos(), setPoint));

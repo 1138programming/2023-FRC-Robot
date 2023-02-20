@@ -82,6 +82,9 @@ public final class Constants {
   private static final double KLiftGearDiameterInches = 0; //TBD
   public static final double KLiftConversionFactor = KLiftMotorGearRatio * KLiftGearDiameterInches * Math.PI;
   public static final int KFlipperMotor = 18;
+  private static final double KFlipperMotorGearRatio = 1/1; //TBD
+  private static final double KFlipperGearDiameterInches = 0; //TBD
+  public static final double KFlipperConversionFactor = KFlipperMotorGearRatio * KLiftGearDiameterInches * Math.PI;
   
 
   // Math and other Constants
