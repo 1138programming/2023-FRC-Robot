@@ -34,12 +34,11 @@ public class Orientation extends SubsystemBase {
     private DigitalInput HallEffectSensor2;
 
     private boolean OrientationMode;
-
-
-    private KORIENTATIONSTATE ORIENTATION;
     
-    
+    orientationState = KORIENTATIONSTATE.CUBE;
+
     public Orientation() {
+       
         orientationLeftMotor = new CANSparkMax(KOrientationLeftMotorID, MotorType.kBrushless);
         orientationRightMotor = new CANSparkMax(KOrientationRightMotorID, MotorType.kBrushless);
 

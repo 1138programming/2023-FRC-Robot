@@ -15,7 +15,7 @@ import edu.wpi.first.math.geometry.Translation2d;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  
+
   // Sensor Ports
     // BASE
     // Values will be changed for CANCoders (which will not use DIO)
@@ -31,11 +31,12 @@ public final class Constants {
   public static final int KOrientationkBaseCheckerID = 4;
   public static final int KOrientationkTipCheckerID = 5;
 
-  public static enum KORIENTATIONSTATE {
+  static enum KORIENTATIONSTATE {
     CUBE,
     CONEBASE,
     CONETIP
   };
+  public static KORIENTATIONSTATE orientationState = null;
     // Scoring
   public static final int KScoringTopLimitSwitch = 6;
   public static final int KScoringBottomLimitSwitch = 7;
