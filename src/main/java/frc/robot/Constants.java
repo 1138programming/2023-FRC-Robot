@@ -34,7 +34,8 @@ public final class Constants {
   public static enum KORIENTATIONSTATE {
     CUBE,
     CONEBASE,
-    CONETIP
+    CONETIP,
+    NOTHING
   };
 
     // Scoring

@@ -24,17 +24,17 @@ public class ConeAndCubeMode extends CommandBase {
   @Override
   public void initialize() {
     
-    if (intake.getMode()) {
+    if (intake.isConeMode()) {
       intake.setCubeMode();
     }
-    else if (!intake.getMode()) {
+    else if (!intake.isConeMode()) {
       intake.setConeMode();
     }
 
-    if (orientation.getMode()) {
+    if (orientation.isConeMode()) {
       orientation.setCubeMode();
     }
-    else if (!orientation.getMode()) {
+    else if (!orientation.isConeMode()) {
       orientation.setConeMode();
     }
 

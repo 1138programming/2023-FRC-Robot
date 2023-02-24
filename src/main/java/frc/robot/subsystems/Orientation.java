@@ -59,12 +59,6 @@ public class Orientation extends SubsystemBase {
         orientationRightMotor.follow(orientationLeftMotor);
     }
 
-    public void coneMode() {
-        if (coneMode) {
-            
-        }
-    }
-
     public void moveOrientationLeftandRightMotors() {
         if (coneMode) {
             orientationLeftMotor.set(KCubeLeftandRightMotorSpeeds);
@@ -91,7 +85,7 @@ public class Orientation extends SubsystemBase {
     }
 
     public boolean isConeMode() {
-            return coneMode;
+        return coneMode;
     }
 
     public void stopOrientationLeftandRightMotors() {

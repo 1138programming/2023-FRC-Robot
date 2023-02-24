@@ -6,6 +6,8 @@ package frc.robot.commands.OrientationLogic;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Orientation;
+import frc.robot.commands.Intake.ConeAndCubeMode;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Scoring;
 import static frc.robot.Constants.*;
 
@@ -14,15 +16,11 @@ public class CubeandBaseLogic extends CommandBase {
 
   private Orientation orientation; 
   private Scoring scoring;
+  private Intake intake;
 
   public CubeandBaseLogic(Orientation orientation) {
     this.orientation = orientation;
     addRequirements(orientation);
-  }
-
-  public CubeandBaseLogic(Scoring scoring){
-    this.scoring = scoring;
-    addRequirements(scoring);
   }
 
   // Called when the command is initially scheduled.
@@ -32,8 +30,9 @@ public class CubeandBaseLogic extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    orientation.moveOrientationLeftandRightMotors();
-    orientation.moveOrientationMotorExtension(KMotorExtensionSpeed);
+   if (intake.isConeMode()) {
+      
+   }
 
   }
 

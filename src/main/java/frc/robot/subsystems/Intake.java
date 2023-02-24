@@ -86,7 +86,7 @@ public class Intake extends SubsystemBase {
   }
   
   // get the operating mode of the intake
-  public boolean getMode() {
+  public boolean isConeMode() {
     return intakeMode; 
   }
 
