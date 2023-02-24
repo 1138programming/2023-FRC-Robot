@@ -33,11 +33,12 @@ public class Orientation extends SubsystemBase {
     private DigitalInput HallEffectSensor1;
     private DigitalInput HallEffectSensor2;
 
-    private boolean OrientationMode;
-    public KORIENTATIONSTATE OrientationState;
+    private boolean coneMode;
+    
+    public KORIENTATIONSTATE OrientationState = KORIENTATIONSTATE.CUBE;
 
     public Orientation() {
-       
+
         orientationLeftMotor = new CANSparkMax(KOrientationLeftMotorID, MotorType.kBrushless);
         orientationRightMotor = new CANSparkMax(KOrientationRightMotorID, MotorType.kBrushless);
 
@@ -58,17 +59,17 @@ public class Orientation extends SubsystemBase {
         orientationRightMotor.follow(orientationLeftMotor);
     }
 
-    public void orientationMode() {
-        if (OrientationMode) {
+    public void coneMode() {
+        if (coneMode) {
             
         }
     }
 
     public void moveOrientationLeftandRightMotors() {
-        if (OrientationMode) {
+        if (coneMode) {
             orientationLeftMotor.set(KCubeLeftandRightMotorSpeeds);
         }
-        else if (!OrientationMode) {
+        else if (!coneMode) {
             orientationLeftMotor.set(KConeLeftandRightMotorSpeeds);
         }
     }
@@ -82,15 +83,15 @@ public class Orientation extends SubsystemBase {
     }
 
     public void setCubeMode() {
-        OrientationMode = false;
+        coneMode = false;
     }
 
     public void setConeMode() {
-        OrientationMode = true; 
+        coneMode = true; 
     }
 
-    public boolean getMode() {
-            return OrientationMode;
+    public boolean isConeMode() {
+            return coneMode;
     }
 
     public void stopOrientationLeftandRightMotors() {
