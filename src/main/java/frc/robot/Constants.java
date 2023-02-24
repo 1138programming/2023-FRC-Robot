@@ -19,10 +19,10 @@ public final class Constants {
   // Sensor Ports
     // BASE
     // Values will be changed for CANCoders (which will not use DIO)
-  public static final int KFrontLeftMagEncoderID = 13;
-  public static final int KFrontRightMagEncoderID = 18;
-  public static final int KBackLeftMagEncoderID = 19;
-  public static final int KBackRightMagEncoderID = 20;
+  public static final int KFrontLeftMagEncoderID = 1;
+  public static final int KFrontRightMagEncoderID = 2;
+  public static final int KBackLeftMagEncoderID = 3;
+  public static final int KBackRightMagEncoderID = 4;
   // DIO
     // Orientation
   public static final int KOrientationHallEffectSensor1ID = 1;
@@ -41,8 +41,8 @@ public final class Constants {
   public static final int KIntakeEncoderID = 11; //NavX port number: 1
   
     // PWM
-  public static final int KLinearServoTop = 0;
-  public static final int KLinearServoBottom = 1;
+  public static final int KLinearServoFront = 0;
+  public static final int KLinearServoBack = 1;
 
     // LED ports: (setup undetermined)
   public static final int KLEDPort = 2;
@@ -111,15 +111,20 @@ public final class Constants {
   
   
     // Low and high percent: sets max speed of drivetrain for driver
-  public static final double KBaseDriveLowPercent = 0.5;
+  public static final double KBaseDriveLowPercent = 0.3;
   public static final double KBaseDriveHighPercent = 0.7;
+  public static final double KBaseDriveMaxPercent = 1;
   
     // Offsets for absolute encoders, used to set up angle encoders
   // public static final double KFrontLeftOffset = 0.159;
-  public static final double KFrontLeftOffset = 5;
-  public static final double KFrontRightOffset = 0.5047;
-  public static final double KBackLeftOffset = 0.2044;
-  public static final double KBackRightOffset = 0.192;
+  public static final double KFrontLeftOffset = -40.166;
+  public static final double KFrontRightOffset = -50.144;
+  public static final double KBackLeftOffset = -143.613;
+  public static final double KBackRightOffset = -342.773;
+  // public static final double KFrontLeftOffset = 224.375;
+  // public static final double KFrontRightOffset = 231.744;
+  // public static final double KBackLeftOffset = 323.993;
+  // public static final double KBackRightOffset = 161.998640625;
   
   
     // Describes the locations of the swerve modules relative to the center of the robot
@@ -174,7 +179,9 @@ public final class Constants {
   public static final double KIntakeD = 0;
   
   // Endgame
-  public static final double KEndgameServoPos = 1;
+  public static final double KEndgameServoReadyPos = 1;
+  public static final double KEndgameServoNeutralPos = 0.74;
+  public static final double KEndgameServoDeployPos = 0.41;
   
   // Scoring
   public static final int KScoringEncoder1ID = 6; //name can be changed later

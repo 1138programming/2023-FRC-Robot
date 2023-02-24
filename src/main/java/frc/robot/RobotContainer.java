@@ -49,12 +49,8 @@ public class RobotContainer {
 
   // Base 
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
-  private final ToggleSpeed toggleFastSpeed = new ToggleSpeed(base, 1);
-  private final ToggleSpeed toggleMidSpeed = new ToggleSpeed(base, KBaseDriveHighPercent);
+  private final ToggleSpeed toggleFastSpeed = new ToggleSpeed(base, KBaseDriveMaxPercent);
   private final ToggleSpeed toggleSlowSpeed = new ToggleSpeed(base, KBaseDriveLowPercent);
-  // private final LEDOff ledOff = new LEDOff(LEDs);
-  // private final LEDPurple ledPurple = new LEDPurple(LEDs);
-  // private final LEDYellow ledYellow = new LEDYellow(LEDs);
 
   // Intake
   private final IntakeSpin StorageForward1 = new IntakeSpin(intake);
@@ -66,8 +62,10 @@ public class RobotContainer {
   private final OrientationStopOnlyExtension OrientationStop = new OrientationStopOnlyExtension(orientation);
 
   // Endgame
-  private final MoveLinearServosOut moveLinearServosOut = new MoveLinearServosOut(endgame);
-  private final MoveLinearServosIn moveLinearServosIn = new MoveLinearServosIn(endgame);
+  private final MoveEndgameShuffleboard moveEndgameShuffleboard = new MoveEndgameShuffleboard(endgame);
+  private final DeployEndgame deployEndgame = new DeployEndgame(endgame);
+  private final EndgameReadyUp endgameReadyUp = new EndgameReadyUp(endgame);
+  private final EndgameToCenter endgameToCenter = new EndgameToCenter(endgame);
 
   //Controller Ports (check in Driver Station, IDs may be different for each computer)
   private static final int KLogitechPort = 0;
@@ -157,11 +155,10 @@ public class RobotContainer {
     logitechBtnLB.onTrue(toggleFastSpeed);
     logitechBtnLB.onFalse(toggleSlowSpeed);
 
-    xboxBtnA.whileTrue(OrientationFoward1);
-    xboxBtnB.whileTrue(OrientationBackward1);
-    xboxBtnA.whileFalse(OrientationStop);
-    xboxBtnB.whileFalse(OrientationStop);
-
+    
+    xboxBtnA.onTrue(endgameReadyUp);
+    xboxBtnB.onTrue(deployEndgame);
+    xboxBtnY.onTrue(endgameToCenter);
   }
 
   /**

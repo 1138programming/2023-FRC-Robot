@@ -9,10 +9,10 @@ import frc.robot.subsystems.Endgame;
 import static frc.robot.Constants.*;
 
 
-public class MoveLinearServosOut extends CommandBase {
+public class MoveEndgameShuffleboard extends CommandBase {
   Endgame endgame;
   /** Creates a new MoveLinearServosOut. */
-  public MoveLinearServosOut(Endgame endgame) {
+  public MoveEndgameShuffleboard(Endgame endgame) {
     this.endgame = endgame;
     addRequirements(endgame);
   }
@@ -26,7 +26,7 @@ public class MoveLinearServosOut extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    endgame.moveServo(KEndgameServoPos);
+    endgame.moveServo(KEndgameServoReadyPos);
   }
 
   // Called once the command ends or is interrupted.

@@ -91,9 +91,9 @@ public class Base extends SubsystemBase {
 
     //setting module states, aka moving the motors
     frontLeftModule.setDesiredState(states[0]);
-    // frontRightModule.setDesiredState(states[1]);
-    // backLeftModule.setDesiredState(states[2]);
-    // backRightModule.setDesiredState(states[3]);
+    frontRightModule.setDesiredState(states[1]);
+    backLeftModule.setDesiredState(states[2]);
+    backRightModule.setDesiredState(states[3]);
 }
 
   // recalibrates gyro offset
