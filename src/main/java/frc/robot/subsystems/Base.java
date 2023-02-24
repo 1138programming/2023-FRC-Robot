@@ -2,15 +2,6 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.*;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import java.util.ArrayList;
-
-import com.fasterxml.jackson.databind.node.POJONode;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 
@@ -24,7 +15,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -133,10 +123,6 @@ public class Base extends SubsystemBase {
   public SwerveModulePosition[] getPositions() {
     SwerveModulePosition[] positions = new SwerveModulePosition[4];
 
-    // positions[0] = new SwerveModulePosition(frontLeftModule.getDriveEncoderPos(), frontLeftModule.getAngleR2D());
-    // positions[1] = new SwerveModulePosition(frontRightModule.getDriveEncoderPos(), frontRightModule.getAngleR2D());
-    // positions[2] = new SwerveModulePosition(backLeftModule.getDriveEncoderPos(), backLeftModule.getAngleR2D());
-    // positions[3] = new SwerveModulePosition(backRightModule.getDriveEncoderPos(), backRightModule.getAngleR2D());
     positions[0] = frontLeftModule.getPosition();
     positions[1] = frontRightModule.getPosition();
     positions[2] = backLeftModule.getPosition();
