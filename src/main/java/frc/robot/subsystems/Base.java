@@ -3,9 +3,6 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.*;
 
 import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.CANSparkMax;
-
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -14,7 +11,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -25,50 +21,47 @@ public class Base extends SubsystemBase {
   private SwerveModule backLeftModule;
   private SwerveModule backRightModule;
 
-  private SwerveDriveKinematics kinematics;
-  private SwerveDriveOdometry odometry;
   private AHRS gyro;
 
+  private SwerveDriveKinematics kinematics;
+  private SwerveDriveOdometry odometry;
   private Pose2d pose;
+
   
   private double driveSpeedFactor;
   
   public Base() {
     frontLeftModule = new SwerveModule(
-      new CANSparkMax(KFrontLeftAngleID, MotorType.kBrushless),
-      new CANSparkMax(KFrontLeftDriveID, MotorType.kBrushless),
-      new DutyCycleEncoder(KFrontLeftMagEncoderID),
+      KFrontLeftAngleID,
+      KFrontLeftDriveID,
+      KFrontLeftMagEncoderID,
       KFrontLeftOffset,
       KFrontLeftDriveReversed,
-      KFrontLeftAngleReversed,
-      KFrontLeftDriveEncoderReversed
+      KFrontLeftAngleReversed
     );
     frontRightModule = new SwerveModule(
-        new CANSparkMax(KFrontRightAngleID, MotorType.kBrushless), 
-      new CANSparkMax(KFrontRightDriveID, MotorType.kBrushless), 
-      new DutyCycleEncoder(KFrontRightMagEncoderID), 
+      KFrontRightAngleID,
+      KFrontRightDriveID,
+      KFrontRightMagEncoderID, 
       KFrontRightOffset,
       KFrontRightDriveReversed,
-      KFrontRightAngleReversed,
-      KFrontRightDriveEncoderReversed
+      KFrontRightAngleReversed
     );
     backLeftModule = new SwerveModule(
-      new CANSparkMax(KBackLeftAngleID, MotorType.kBrushless), 
-      new CANSparkMax(KBackLeftDriveID, MotorType.kBrushless), 
-      new DutyCycleEncoder(KBackLeftMagEncoderID), 
+      KBackLeftAngleID,
+      KBackLeftDriveID,
+      KBackLeftMagEncoderID, 
       KBackLeftOffset,
       KBackLeftDriveReversed,
-      KBackLeftAngleReversed,
-      KBackLeftDriveEncoderReversed
+      KBackLeftAngleReversed
     );
     backRightModule = new SwerveModule(
-      new CANSparkMax(KBackRightAngleID, MotorType.kBrushless), 
-      new CANSparkMax(KBackRightDriveID, MotorType.kBrushless), 
-      new DutyCycleEncoder(KBackRightMagEncoderID), 
+      KBackRightAngleID,
+      KBackRightDriveID,
+      KBackRightMagEncoderID, 
       KBackRightOffset,
       KBackRightDriveReversed,
-      KBackRightAngleReversed,
-      KBackRightDriveEncoderReversed
+      KBackRightAngleReversed
     );
 
     gyro = new AHRS(SPI.Port.kMXP);
@@ -93,19 +86,15 @@ public class Base extends SubsystemBase {
         fieldRelative
           ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, getHeading())
           : new ChassisSpeeds(xSpeed, ySpeed, rot));
-    SwerveDriveKinematics.desaturateWheelSpeeds(states, KPhysicalMaxDriveSpeedMPS * driveSpeedFactor);
+    SwerveDriveKinematics.desaturateWheelSpeeds(states, KPhysicalMaxDriveSpeedMPS);
     SmartDashboard.putNumber("speedFactor", driveSpeedFactor);
 
     //setting module states, aka moving the motors
     frontLeftModule.setDesiredState(states[0]);
-    frontRightModule.setDesiredState(states[1]);
-    backLeftModule.setDesiredState(states[2]);
-    backRightModule.setDesiredState(states[3]);
+    // frontRightModule.setDesiredState(states[1]);
+    // backLeftModule.setDesiredState(states[2]);
+    // backRightModule.setDesiredState(states[3]);
 }
-
-  public void calibrateGyro() {
-    gyro.calibrate();
-  }
 
   // recalibrates gyro offset
   public void resetGyro() {
@@ -155,15 +144,10 @@ public class Base extends SubsystemBase {
     SmartDashboard.putNumber("Back left module", backLeftModule.getAngleDeg());
     SmartDashboard.putNumber("Back right module", backRightModule.getAngleDeg());
 
-    SmartDashboard.putNumber("front left mag", frontLeftModule.getMagRotations());
-    SmartDashboard.putNumber("front right mag", frontRightModule.getMagRotations());
-    SmartDashboard.putNumber("back left mag", backLeftModule.getMagRotations());
-    SmartDashboard.putNumber("back right mag", backRightModule.getMagRotations());
-
-    SmartDashboard.putNumber("front left big", frontLeftModule.getAbsoluteOffset());
-    SmartDashboard.putNumber("front right big", frontRightModule.getAbsoluteOffset());
-    SmartDashboard.putNumber("back left big", backLeftModule.getAbsoluteOffset());
-    SmartDashboard.putNumber("back right big", backRightModule.getAbsoluteOffset());
+    SmartDashboard.putNumber("front left mag", frontLeftModule.getMagDeg());
+    SmartDashboard.putNumber("front right mag", frontRightModule.getMagDeg());
+    SmartDashboard.putNumber("back left mag", backLeftModule.getMagDeg());
+    SmartDashboard.putNumber("back right mag", backRightModule.getMagDeg());
 
     SmartDashboard.putString("odometry pose", odometry.getPoseMeters().toString());
 

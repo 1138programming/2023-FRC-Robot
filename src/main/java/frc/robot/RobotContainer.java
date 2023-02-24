@@ -42,7 +42,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   //Subsystems
   private final Base base = new Base();
-  private final Scoring scoring = new Scoring();
+  // private final Scoring scoring = new Scoring();
   private final Endgame endgame = new Endgame();
   private final Intake intake = new Intake();
   private final Orientation orientation = new Orientation();
@@ -156,10 +156,6 @@ public class RobotContainer {
     logitechBtnY.onTrue(new ResetEncoders(base));
     logitechBtnLB.onTrue(toggleFastSpeed);
     logitechBtnLB.onFalse(toggleSlowSpeed);
-    // logitechBtnX.onTrue(moveLinearServosOut.andThen(driveBaseOffEdge));
-
-    // xboxBtnA.onTrue(moveLinearServosOut);
-    // xboxBtnB.onTrue(moveLinearServosIn);
 
     xboxBtnA.whileTrue(OrientationFoward1);
     xboxBtnB.whileTrue(OrientationBackward1);
