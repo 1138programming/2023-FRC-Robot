@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.DigitalInput; // Sensors
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; 
-import edu.wpi.first.math.controller.PIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 /* 
@@ -21,11 +20,6 @@ public class Orientation extends SubsystemBase {
     private CANSparkMax orientationLeftMotor;
     private CANSparkMax orientationRightMotor;
     private TalonSRX orientationMotorExtension;
-
-    private PIDController extensionController;
-    private double extensionControllerkP = 0.00001;
-    private double extensionControllerkI = 0;
-    private double extensionControllerkD = 0;
     
     private DigitalInput DoorControl;
     private DigitalInput BaseChecker;
@@ -50,9 +44,6 @@ public class Orientation extends SubsystemBase {
         HallEffectSensor1 = new DigitalInput(KOrientationHallEffectSensor1ID);
         HallEffectSensor2 = new DigitalInput(KOrientationHallEffectSensor2ID);
 
-        extensionController = new PIDController(extensionControllerkP, extensionControllerkI, extensionControllerkD);
-        //orientationMotorExtension.getSelectedSensorPosition();
-
         orientationLeftMotor.setIdleMode(IdleMode.kBrake);
         // orientationMotorExtension.setIdleMode(IdleMode.kBrake);
         
@@ -61,10 +52,10 @@ public class Orientation extends SubsystemBase {
 
     public void moveOrientationLeftandRightMotors() {
         if (orientationMode) {
-            orientationLeftMotor.set(KCubeLeftandRightMotorSpeeds);
+            orientationLeftMotor.set(KConeLeftandRightMotorSpeeds);
         }
         else if (!orientationMode) {
-            orientationLeftMotor.set(KConeLeftandRightMotorSpeeds);
+            orientationLeftMotor.set(KCubeLeftandRightMotorSpeeds);
         }
     }
 
