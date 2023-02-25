@@ -31,7 +31,7 @@ public final class Constants {
   public static final int KOrientationkBaseCheckerID = 4;
   public static final int KOrientationkTipCheckerID = 5;
 
-  public static enum KORIENTATIONSTATE {
+  public static enum ORIENTATIONSTATE {
     CUBE,
     CONEBASE,
     CONETIP,
