@@ -26,6 +26,7 @@ public class MoveExtensionToInPosition extends CommandBase {
   @Override
   public void execute() {
       orientation.moveOrientationMotorExtension(KMotorExtensionSpeed);
+      orientation.moveOrientationLeftandRightMotors();
     }
   
 
@@ -33,6 +34,7 @@ public class MoveExtensionToInPosition extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     orientation.moveOrientationMotorExtension(0);
+    orientation.moveOrientationLeftandRightMotors(0);
   }
 
   // Returns true when the command should end.
