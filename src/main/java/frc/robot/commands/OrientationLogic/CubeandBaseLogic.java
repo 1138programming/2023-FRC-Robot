@@ -5,6 +5,7 @@
 package frc.robot.commands.OrientationLogic;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.commands.Orientation.*;
 import frc.robot.subsystems.Orientation;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Scoring;
@@ -16,16 +17,26 @@ public class CubeandBaseLogic extends CommandBase {
   private Orientation orientation; 
   private Scoring scoring;
   private Intake intake;
-  private CommandBase commandbase;
+  private Orientation commands;
 
   public CubeandBaseLogic(Orientation orientation) {
     this.orientation = orientation;
+    this.scoring = scoring;
+    this.intake = intake;
+    this.commands = commands;
     addRequirements(orientation);
+    addRequirements(intake);
+    addRequirements(scoring);
+    addRequirements(commands);
+
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+
+  }
+
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
