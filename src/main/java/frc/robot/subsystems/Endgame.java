@@ -12,15 +12,18 @@ public class Endgame extends SubsystemBase {
 
     private Servo endgameLinearServoFront;
     private Servo endgameLinearServoBack;
-    private DigitalInput endgameLimitSwitch;
+
+    private DigitalInput endgameLeftIR;
+    private DigitalInput endgameRightIR;
 
     private double newPos;
 
     public Endgame() {
-       
         endgameLinearServoFront = new Servo(KLinearServoFront);
         endgameLinearServoBack = new Servo(KLinearServoBack);
-         
+
+        endgameRightIR = new DigitalInput(KEndgameRightIR);
+        endgameLeftIR = new DigitalInput(KEndgameLeftIR);
         
         // Bounds copied from 2022 FRC robot.. the values are most likely wrong. Check with Patrick for values possibly
         endgameLinearServoFront.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
@@ -31,12 +34,11 @@ public class Endgame extends SubsystemBase {
     @Override
     public void periodic() {
         // SmartDashboard.putNumber("servopos", newPos);
-        newPos = SmartDashboard.getNumber("servopos", 0);
-        // newPos = endgameLinearServoBottom.get();
-        
+        newPos = SmartDashboard.getNumber("set servo pos", 0);
         SmartDashboard.putNumber("actual servo pos", endgameLinearServoFront.get());
         // SmartDashboard.putNumber("", KAngleD)
-        SmartDashboard.putBoolean("limitswitch", isLimitSwitchPressed());
+        SmartDashboard.putBoolean("leftIR", getLeftIR());
+        SmartDashboard.putBoolean("rightIR", getRightIR());
     }
     
     public void moveServo(double pos) {
@@ -49,7 +51,10 @@ public class Endgame extends SubsystemBase {
         endgameLinearServoBack.set(newPos);
     }
 
-    public boolean isLimitSwitchPressed() {
-        return endgameLimitSwitch.get();
+    public boolean getLeftIR() {
+        return endgameLeftIR.get();
+    }
+    public boolean getRightIR() {
+        return endgameRightIR.get();
     }
 }
