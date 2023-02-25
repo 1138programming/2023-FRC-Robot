@@ -33,7 +33,7 @@ public class Orientation extends SubsystemBase {
     private DigitalInput HallEffectSensor1;
     private DigitalInput HallEffectSensor2;
 
-    private boolean coneMode;
+    private boolean orientationMode;
     
     public KORIENTATIONSTATE OrientationState = KORIENTATIONSTATE.CUBE;
 
@@ -60,10 +60,10 @@ public class Orientation extends SubsystemBase {
     }
 
     public void moveOrientationLeftandRightMotors() {
-        if (coneMode) {
+        if (orientationMode) {
             orientationLeftMotor.set(KCubeLeftandRightMotorSpeeds);
         }
-        else if (!coneMode) {
+        else if (!orientationMode) {
             orientationLeftMotor.set(KConeLeftandRightMotorSpeeds);
         }
     }
@@ -77,15 +77,15 @@ public class Orientation extends SubsystemBase {
     }
 
     public void setCubeMode() {
-        coneMode = false;
+        orientationMode = false;
     }
 
     public void setConeMode() {
-        coneMode = true; 
+        orientationMode = true; 
     }
 
     public boolean isConeMode() {
-        return coneMode;
+        return orientationMode;
     }
 
     public void stopOrientationLeftandRightMotors() {

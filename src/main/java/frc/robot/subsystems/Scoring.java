@@ -23,6 +23,9 @@ public class Scoring extends SubsystemBase{
 
     private PIDController liftControl;
     private RelativeEncoder relativeEncoder;
+
+    private boolean scoringMode;
+
     public Scoring() {
         claw = new CANSparkMax(KClawMotor, MotorType.kBrushless);
         wrist = new CANSparkMax(KWristMotor, MotorType.kBrushless);
@@ -56,6 +59,18 @@ public class Scoring extends SubsystemBase{
         moveFlipper(flipperController.calculate(getFlipperPos(), setPoint));
     }
     
+    public void setCubeMode() {
+        scoringMode = false;
+    }
+
+    public void setConeMode() {
+        scoringMode = true; 
+    }
+
+    public boolean isConeMode() {
+        return scoringMode;
+    }
+
     public void stop() {
         claw.set(0);
         wrist.set(0);
