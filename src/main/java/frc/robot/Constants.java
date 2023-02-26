@@ -34,7 +34,7 @@ public final class Constants {
   public static final int KScoringTopLimitSwitch = 6;
   public static final int KScoringBottomLimitSwitch = 7;
     // Endgame
-  public static final int KEndgameLeftIR = 8;
+  public static final int KEndgameLeftIR = 7;
   public static final int KEndgameRightIR = 9;
     // Intake
   public static final int KIntakeLimitId = 10;  //NavX port number: 0
@@ -55,17 +55,17 @@ public final class Constants {
 
   // Motor IDs
     // Base
-  public static final int KFrontLeftAngleID = 5;
-  public static final int KFrontLeftDriveID = 4;
+  public static final int KFrontLeftAngleID = 2;
+  public static final int KFrontLeftDriveID = 3;
   
-  public static final int KFrontRightAngleID = 7;
-  public static final int KFrontRightDriveID = 6;
+  public static final int KFrontRightAngleID = 5;
+  public static final int KFrontRightDriveID = 4;
   
-  public static final int KBackLeftAngleID = 2;
-  public static final int KBackLeftDriveID = 3;
+  public static final int KBackLeftAngleID = 1;
+  public static final int KBackLeftDriveID = 8;
   
-  public static final int KBackRightAngleID = 1;
-  public static final int KBackRightDriveID = 8;
+  public static final int KBackRightAngleID = 7;
+  public static final int KBackRightDriveID = 6;
     // Intake
   public static final int KSpaghettiIntakeId = 9;
   public static final int KFlexIntakeId = 11;
@@ -117,14 +117,10 @@ public final class Constants {
   
     // Offsets for absolute encoders, used to set up angle encoders
   // public static final double KFrontLeftOffset = 0.159;
-  public static final double KFrontLeftOffset = -40.166;
-  public static final double KFrontRightOffset = -50.144;
-  public static final double KBackLeftOffset = -143.613;
-  public static final double KBackRightOffset = -342.773;
-  // public static final double KFrontLeftOffset = 224.375;
-  // public static final double KFrontRightOffset = 231.744;
-  // public static final double KBackLeftOffset = 323.993;
-  // public static final double KBackRightOffset = 161.998640625;
+  public static final double KFrontLeftOffset = -147.22;
+  public static final double KFrontRightOffset = -36.56;
+  public static final double KBackLeftOffset = -340.14;
+  public static final double KBackRightOffset = -47.37;
   
   
     // Describes the locations of the swerve modules relative to the center of the robot
@@ -207,4 +203,38 @@ public final class Constants {
   public static final double KClawMotorSpeed = 0; //TBD
   public static final double KAngleMotorSpeed = 0; //TBD
   public static final double KExtensionMotorSpeed = 0; //TBD
+  
+  //Limelight
+  public static final double KLimelightHeight = 16; // inches
+  public static final double KMidPoleHeight = 30.5; // inches
+  public static final double KHighPoleHeight = 0; // inches
+  public static final double KHeightDifference = KMidPoleHeight - KLimelightHeight; // inches
+  public static final double KLimelightAngle = 0;
+  public static final double KLimelightRange = 29.8;
+  public static final double kDistanceWhenNoTarget = 0;
+  public static final double kHorizDistanceWhenNoTarget = 0;
+  public static final double kDesiredYOffset = 1;
+  public static final double kDesiredXOffset = 1;
+  public static final double kLimelightXOffsetDeadzone = 0.05;
+  public static final double KDistanceOffset = 0;
+  public static final double KHorizDistanceOffset = 8;
+  public static final double KGoalWidth = 15;
+
+  public static final double KDistanceMoveOffset = 1;
+
+  public static final double KXCoordinateoOfTag = 7.90832;
+  public static final double KYCoordinateoOfTag = 2.74161;
+
+
+  public static final double KLimelightRotateP = 0.05;
+  public static final double KLimelightRotateI = 0;
+  public static final double KLimelightRotateD = 0;
+  public static final double KLimelightMoveDeadzone = 0.01;
+
+  
+  public static final double KLimelightMoveP = 0.02;
+  public static final double KLimelightMoveI = 0;
+  public static final double KLimelightMoveD = 0;
+
+
 }

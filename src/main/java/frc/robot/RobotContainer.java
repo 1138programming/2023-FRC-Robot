@@ -24,6 +24,8 @@ import frc.robot.commands.Orientation.OrientationMoveAllForward;
 import frc.robot.commands.Orientation.OrientationMoveAllReverse;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightForward;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
+import frc.robot.subsystems.Limelight;
+import frc.robot.commands.Limelight.LimelightMoveToAprilTag;
 import frc.robot.commands.Orientation.OrientationStopOnlyExtension;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionForward;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionReverse;
@@ -46,6 +48,7 @@ public class RobotContainer {
   private final Endgame endgame = new Endgame();
   private final Intake intake = new Intake();
   private final Orientation orientation = new Orientation();
+  private final Limelight limelight = new Limelight();
 
   // Base 
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
@@ -66,6 +69,9 @@ public class RobotContainer {
   private final DeployEndgame deployEndgame = new DeployEndgame(endgame);
   private final EndgameReadyUp endgameReadyUp = new EndgameReadyUp(endgame);
   private final EndgameToCenter endgameToCenter = new EndgameToCenter(endgame);
+
+  // Limelight
+  private final LimelightMoveToAprilTag target = new LimelightMoveToAprilTag(base, limelight);
 
   //Controller Ports (check in Driver Station, IDs may be different for each computer)
   private static final int KLogitechPort = 0;
@@ -155,6 +161,7 @@ public class RobotContainer {
     logitechBtnLB.onTrue(toggleFastSpeed);
     logitechBtnLB.onFalse(toggleSlowSpeed);
 
+    logitechBtnX.whileTrue(target);
     
     xboxBtnA.onTrue(endgameReadyUp);
     xboxBtnB.onTrue(deployEndgame);

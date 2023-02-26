@@ -20,7 +20,8 @@ public class EndgameReadyUp extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    endgame.moveServo(KEndgameServoReadyPos);
+    // endgame.moveServo(KEndgameServoReadyPos);
+    endgame.moveServo(0);
   }
   
   // Called every time the scheduler runs while the command is scheduled.
