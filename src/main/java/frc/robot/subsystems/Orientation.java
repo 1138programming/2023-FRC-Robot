@@ -60,7 +60,7 @@ public class Orientation extends SubsystemBase {
     }
 
     public void moveOrientationMotorExtension(double speed) {
-        orientationMotorExtension.set(ControlMode.PercentOutput, speed);
+        orientationMotorExtension.set(ControlMode.PercentOutput, KMotorExtensionSpeed);
     }
 
     public void stopOrientationLeftandRightMotors() {
