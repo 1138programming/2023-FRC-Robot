@@ -37,6 +37,7 @@ public class Orientation extends SubsystemBase {
     public Orientation() {
         orientationLeftMotor = new CANSparkMax(KOrientationLeftMotorID, MotorType.kBrushless);
         orientationRightMotor = new CANSparkMax(KOrientationRightMotorID, MotorType.kBrushless);
+        //orientationRightMotor.setInverted(true);
 
         orientationMotorExtension = new TalonSRX(KOrientationMotorExtensionID);
         

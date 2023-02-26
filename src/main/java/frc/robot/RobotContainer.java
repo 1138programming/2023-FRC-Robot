@@ -28,6 +28,7 @@ import frc.robot.commands.Orientation.OrientationMoveAllReverse;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightForward;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
 import frc.robot.commands.Orientation.OrientationStopOnlyExtension;
+import frc.robot.commands.Orientation.OrientationStopOnlyLeftandRight;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionForward;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionReverse;
 import frc.robot.commands.Base.ToggleSpeed;
@@ -63,9 +64,9 @@ public class RobotContainer {
   private final IntakeStop intakeStop = new IntakeStop(intake);
 
   //Orientation
-  private final OrientationMoveOnlyExtensionForward OrientationFoward1 = new OrientationMoveOnlyExtensionForward(orientation);
-  private final OrientationMoveOnlyExtensionReverse OrientationBackward1 = new OrientationMoveOnlyExtensionReverse(orientation);
-  private final OrientationStopOnlyExtension OrientationStop = new OrientationStopOnlyExtension(orientation);
+  private final OrientationSpinOnlyLeftandRightForward OrientationFoward1 = new OrientationSpinOnlyLeftandRightForward(orientation);
+  private final OrientationSpinOnlyLeftandRightReverse OrientationBackward1 = new OrientationSpinOnlyLeftandRightReverse(orientation);
+  private final OrientationStopOnlyLeftandRight OrientationStop = new OrientationStopOnlyLeftandRight(orientation);
 
   // Endgame
   private final MoveLinearServosOut moveLinearServosOut = new MoveLinearServosOut(endgame);
