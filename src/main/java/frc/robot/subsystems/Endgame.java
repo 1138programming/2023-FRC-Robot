@@ -21,6 +21,7 @@ public class Endgame extends SubsystemBase {
     public Endgame() {
         endgameLinearServoFront = new Servo(KLinearServoFront);
         endgameLinearServoBack = new Servo(KLinearServoBack);
+        // endgameLinearServoBack.
 
         endgameRightIR = new DigitalInput(KEndgameRightIR);
         endgameLeftIR = new DigitalInput(KEndgameLeftIR);
@@ -28,12 +29,11 @@ public class Endgame extends SubsystemBase {
         // Bounds copied from 2022 FRC robot.. the values are most likely wrong. Check with Patrick for values possibly
         endgameLinearServoFront.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
         endgameLinearServoBack.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
-        SmartDashboard.putNumber("servopos", 0.5);
     }
     
     @Override
     public void periodic() {
-        // SmartDashboard.putNumber("servopos", newPos);
+        // SmartDashboard.putNumber("sservopos", newPos);
         newPos = SmartDashboard.getNumber("set servo pos", 0);
         SmartDashboard.putNumber("actual servo pos", endgameLinearServoFront.get());
         // SmartDashboard.putNumber("", KAngleD)

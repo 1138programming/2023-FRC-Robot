@@ -35,7 +35,7 @@ public final class Constants {
   public static final int KScoringBottomLimitSwitch = 7;
     // Endgame
   public static final int KEndgameLeftIR = 7;
-  public static final int KEndgameRightIR = 9;
+  public static final int KEndgameRightIR = 8;
     // Intake
   public static final int KIntakeLimitId = 10;  //NavX port number: 0
   public static final int KIntakeEncoderID = 11; //NavX port number: 1
@@ -205,9 +205,9 @@ public final class Constants {
   public static final double KExtensionMotorSpeed = 0; //TBD
   
   //Limelight
-  public static final double KLimelightHeight = 16; // inches
-  public static final double KMidPoleHeight = 30.5; // inches
-  public static final double KHighPoleHeight = 0; // inches
+  public static final double KLimelightHeight = 20; // inches
+  public static final double KMidPoleHeight = 24; // inches
+  // public static final double KHighPoleHeight = 0; // inches
   public static final double KHeightDifference = KMidPoleHeight - KLimelightHeight; // inches
   public static final double KLimelightAngle = 0;
   public static final double KLimelightRange = 29.8;
@@ -222,19 +222,45 @@ public final class Constants {
 
   public static final double KDistanceMoveOffset = 1;
 
-  public static final double KXCoordinateoOfTag = 7.90832;
-  public static final double KYCoordinateoOfTag = 2.74161;
 
 
-  public static final double KLimelightRotateP = 0.05;
+  public static final double KOffsetFromAprilTag = 1;
+
+  public static final double[] KXCoordinateOfTag = { 
+    7.24310,
+    7.24310,
+    7.24310,
+    7.90832,
+    -7.90832,
+    -7.24310,
+    -7.24310,
+    -7.24310,
+  };
+
+  public static final double[] KYCoordinateOfTag = { 
+    -2.93659,
+    -1.26019,
+    0.41621,
+    2.74161,
+    2.74161,
+    0.41621,
+    -1.26019,
+    -2.93659
+  };
+
+  public static final double KLimelightRotateP = 0.01;
   public static final double KLimelightRotateI = 0;
   public static final double KLimelightRotateD = 0;
   public static final double KLimelightMoveDeadzone = 0.01;
 
   
-  public static final double KLimelightMoveP = 0.02;
-  public static final double KLimelightMoveI = 0;
-  public static final double KLimelightMoveD = 0;
+  public static final double KTagLimelightMoveP = 0.08;
+  public static final double KTagLimelightMoveI = 0;
+  public static final double KTagLimelightMoveD = 0;
+
+  public static final double KTapeLimelightMoveP = 0.005;
+  public static final double KTapeLimelightMoveI = 0;
+  public static final double KTapeLimelightMoveD = 0;
 
 
 }

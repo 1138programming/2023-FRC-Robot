@@ -13,8 +13,12 @@ import static frc.robot.Constants.*;
 import java.util.Arrays;
 
 public class Limelight extends SubsystemBase {
-  private NetworkTable table;
-  private String name = "limelight";
+  private NetworkTable aprilTagsTable;
+  private NetworkTable tapeTable;
+  private NetworkTable defaultTable;
+  private String aprilTagsPipeline = "AprilTags";
+  private String tapePipeline = "Tape";
+  private String defaultPipeline = "limelight";
   
   private double targetFound;
   private double x;
@@ -30,7 +34,8 @@ public class Limelight extends SubsystemBase {
 
 
   public Limelight() {
-    table = NetworkTableInstance.getDefault().getTable(name);
+    aprilTagsTable = NetworkTableInstance.getDefault().getTable(defaultPipeline);
+    tapeTable = NetworkTableInstance.getDefault().getTable(defaultPipeline);
     targetFound = 0;
     x = 0;
     y = 0;
@@ -47,17 +52,24 @@ public class Limelight extends SubsystemBase {
   @Override
   public void periodic() {
     // getting limelight networktable values
+    if (pipeline == 0) {
+      targetFound = aprilTagsTable.getEntry("tv").getDouble(0);
+      x = aprilTagsTable.getEntry("tx").getDouble(0);
+      y = aprilTagsTable.getEntry("ty").getDouble(0);
+      z = aprilTagsTable.getEntry("tz").getDouble(0);
+      area = aprilTagsTable.getEntry("ta").getDouble(0);
+      id = aprilTagsTable.getEntry("tid").getDouble(0);
+      botPose = aprilTagsTable.getEntry("botpose").getDoubleArray(new double[6]);
 
+    }
+    else if (pipeline == 1) {
+      targetFound = tapeTable.getEntry("tv").getDouble(0);
+      x = tapeTable.getEntry("tx").getDouble(0);
+      y = tapeTable.getEntry("ty").getDouble(0);
+      z = tapeTable.getEntry("tz").getDouble(0);
+      area = tapeTable.getEntry("ta").getDouble(0);  
+    }
     
-    targetFound = table.getEntry("tv").getDouble(0);
-    x = table.getEntry("tx").getDouble(0);
-    y = table.getEntry("ty").getDouble(0);
-    z = table.getEntry("tz").getDouble(0);
-    area = table.getEntry("ta").getDouble(0);
-    id = table.getEntry("tid").getDouble(0);
-    skew = table.getEntry("ts").getDouble(0);
-    botPose = table.getEntry("botpose").getDoubleArray(new double[6]);
-
     if (botPose.length != 0) {
       botPoseX = botPose[0];
       botPoseY = botPose[1];
@@ -66,7 +78,6 @@ public class Limelight extends SubsystemBase {
     
     String botPosString = Arrays.toString(botPose);
     SmartDashboard.putString("Botpose", botPosString);
-    SmartDashboard.putNumber("Tid", skew);
     
     SmartDashboard.putNumber("BotposeX", botPoseX);
     SmartDashboard.putNumber("BotposeY", botPoseY);
@@ -79,16 +90,16 @@ public class Limelight extends SubsystemBase {
 
   public void LEDOn() {
     // Eye Protection
-    table.getEntry("ledMode").setNumber(3); // (turns limelight on)
+    getTable().getEntry("ledMode").setNumber(3); // (turns limelight on)
   }
 
   public void LEDOff() {
     // Eye Protection
-    table.getEntry("ledMode").setNumber(1); // (turns limelight off)
+    getTable().getEntry("ledMode").setNumber(1); // (turns limelight off)
   }
 
   public void LEDBlink() {
-    table.getEntry("ledMode").setNumber(2); // (blinks limelight)
+    getTable().getEntry("ledMode").setNumber(2); // (blinks limelight)
   }
 
   
@@ -103,16 +114,42 @@ public class Limelight extends SubsystemBase {
     }
   }
 
-  public double getYOffset() {
+  public double getTagYOffset() {
     return botPoseY;
   }
 
-  public double getXOffset() {
+  public double getTagXOffset() {
     return botPoseX;
   }
 
-  public double getAngle() {
+  public double getXAngle() {
     return x;
+  }
+  public double getYAngle() {
+    return x;
+  }
+
+  public NetworkTable getTable() {
+    return defaultTable;
+    // if (pipeline == 0) {
+    //   return aprilTagsTable;
+    // }
+    // return tapeTable;
+  }
+
+  public String getTableString() {
+    if (pipeline == 0) {
+      return "AprilTags";
+    }
+    return "Tape";
+  }
+
+  public double getPipeline() {
+    return pipeline;
+  }
+  public void setPipeline(int pipeline) {
+    this.pipeline = pipeline;
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(pipeline); //(turns limelight on)
   }
 
 
@@ -123,13 +160,6 @@ public class Limelight extends SubsystemBase {
   public double getSkew() {
     return skew; 
   }
-
-  // public double getYDistanceToPole() {
-  // if (!getTargetFound()) return kDistanceWhenNoTarget;
-  // double distanceToPole = getDistance();
-  // // double angle = Rotation2d.getDe(base.getHeading());
-  // double yDistance = distanceToPole;
-  // }
 
   public double getDistance() {
     // default value to return when limelight does not see target
@@ -145,7 +175,7 @@ public class Limelight extends SubsystemBase {
       return kHorizDistanceWhenNoTarget;
     }
 
-    double distance = getDistance() / Math.tan(Math.toRadians(KLimelightAngle + x));
+    double distance = getDistance() / Math.tan(Math.toRadians(x));
     return distance + KHorizDistanceOffset; // constant offset for this specific bot
   }
 }

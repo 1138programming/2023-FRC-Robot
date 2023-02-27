@@ -18,6 +18,7 @@ public class Scoring extends SubsystemBase{
     private CANSparkMax flipper;
     private CANSparkMax lift;
 
+
     private RelativeEncoder flipperEncoder;
     private PIDController flipperController;
 

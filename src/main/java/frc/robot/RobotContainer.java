@@ -26,6 +26,8 @@ import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightForward;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
 import frc.robot.subsystems.Limelight;
 import frc.robot.commands.Limelight.LimelightMoveToAprilTag;
+import frc.robot.commands.Limelight.LimelightMoveToConeNode;
+import frc.robot.commands.Limelight.ToggleLimelightPipeline;
 import frc.robot.commands.Orientation.OrientationStopOnlyExtension;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionForward;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionReverse;
@@ -72,6 +74,7 @@ public class RobotContainer {
 
   // Limelight
   private final LimelightMoveToAprilTag target = new LimelightMoveToAprilTag(base, limelight);
+  private final LimelightMoveToConeNode targetTape = new LimelightMoveToConeNode(base, limelight);
 
   //Controller Ports (check in Driver Station, IDs may be different for each computer)
   private static final int KLogitechPort = 0;
@@ -160,8 +163,10 @@ public class RobotContainer {
     logitechBtnY.onTrue(new ResetEncoders(base));
     logitechBtnLB.onTrue(toggleFastSpeed);
     logitechBtnLB.onFalse(toggleSlowSpeed);
+    logitechBtnA.onTrue(new ToggleLimelightPipeline(limelight));
 
     logitechBtnX.whileTrue(target);
+    logitechBtnB.whileTrue(targetTape);
     
     xboxBtnA.onTrue(endgameReadyUp);
     xboxBtnB.onTrue(deployEndgame);
