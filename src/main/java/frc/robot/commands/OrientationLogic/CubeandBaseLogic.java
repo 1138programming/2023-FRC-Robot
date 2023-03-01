@@ -17,18 +17,15 @@ public class CubeandBaseLogic extends CommandBase {
   private Orientation orientation; 
   private Scoring scoring;
   private Intake intake;
-  private Orientation commands;
 
-  public CubeandBaseLogic(Orientation orientation) {
+  public CubeandBaseLogic(Orientation orientation, Scoring scoring, Intake intake) {
     this.orientation = orientation;
     this.scoring = scoring;
     this.intake = intake;
-    this.commands = commands;
+    
     addRequirements(orientation);
     addRequirements(intake);
     addRequirements(scoring);
-    addRequirements(commands);
-
   }
 
   // Called when the command is initially scheduled.

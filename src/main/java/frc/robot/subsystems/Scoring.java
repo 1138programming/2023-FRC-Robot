@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.*;
 import com.revrobotics.CANSparkMax; // Neos and 775
 import com.revrobotics.RelativeEncoder;
+import edu.wpi.first.wpilibj.DigitalInput;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType; // Covers Neos and 775 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
@@ -24,6 +25,11 @@ public class Scoring extends SubsystemBase{
     private PIDController liftControl;
     private RelativeEncoder relativeEncoder;
 
+    private DigitalInput BaseChecker;
+    private DigitalInput TipChecker;
+
+    
+
     private boolean scoringMode;
 
     public Scoring() {
@@ -37,6 +43,9 @@ public class Scoring extends SubsystemBase{
         flipperController = new PIDController(KFlipperP, KFlipperI, KFlipperD);
         liftControl = new PIDController(KLiftP, KLiftI, KLiftD);
         relativeEncoder = lift.getEncoder();
+
+        BaseChecker = new DigitalInput (KOrientationkBaseCheckerID);
+        TipChecker = new DigitalInput (KOrientationkTipCheckerID);
     }
 
     public void moveClaw(double speed) {
@@ -69,6 +78,14 @@ public class Scoring extends SubsystemBase{
 
     public boolean isConeMode() {
         return scoringMode;
+    }
+
+    public boolean getBaseSensor() {
+        return BaseChecker.get();
+    }
+
+    public boolean getTipSensor() {
+        return TipChecker.get();
     }
 
     public void stop() {
