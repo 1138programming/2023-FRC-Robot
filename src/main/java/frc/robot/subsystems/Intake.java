@@ -77,7 +77,8 @@ public class Intake extends SubsystemBase {
 
   public void setConeMode() {
     intakeMode = true; 
-
+    
+    // yellow
     ledStrip.start();
         for (int i = 0; i < ledBuffer.getLength(); i++) {
           ledBuffer.setRGB(i, 230, 232, 44);
@@ -86,7 +87,7 @@ public class Intake extends SubsystemBase {
   }
   
   // get the operating mode of the intake
-  public boolean getMode() {
+  public boolean isConeMode() {
     return intakeMode; 
   }
 

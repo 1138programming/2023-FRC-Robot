@@ -15,7 +15,7 @@ import edu.wpi.first.math.geometry.Translation2d;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  
+
   // Sensor Ports
     // BASE
     // Values will be changed for CANCoders (which will not use DIO)
@@ -27,9 +27,17 @@ public final class Constants {
     // Orientation
   public static final int KOrientationHallEffectSensor1ID = 1;
   public static final int KOrientationHallEffectSensor2ID = 2;
-  public static final int KOrientationIRSensorLeftID = 3;
-  public static final int KOrientationIRSensorMiddleID = 4;
-  public static final int KOrientationIRSensorRightID = 5;
+  public static final int KOrientationkDoorControlID = 3;
+  public static final int KOrientationkBaseCheckerID = 4;
+  public static final int KOrientationkTipCheckerID = 5;
+
+  public static enum ORIENTATIONSTATE {
+    CUBE,
+    CONEBASE,
+    CONETIP,
+    NOTHING
+  };
+
     // Scoring
   public static final int KScoringTopLimitSwitch = 6;
   public static final int KScoringBottomLimitSwitch = 7;
@@ -194,12 +202,12 @@ public final class Constants {
   public static final double KLiftRotToFoot = 0; //TBD
   
   // Orientation
-  public static final double KLeftandRightMotorSpeeds = 1;
   public static final double KMotorExtensionSpeed = 0.5;
-  
+  public static final double KMotorExtensionTime = 0.5;
   public static final double KCubeLeftandRightMotorSpeeds = 18;
   public static final double KConeLeftandRightMotorSpeeds = 18;
   
+  // Scoring
   public static final double KClawMotorSpeed = 0; //TBD
   public static final double KAngleMotorSpeed = 0; //TBD
   public static final double KExtensionMotorSpeed = 0; //TBD
