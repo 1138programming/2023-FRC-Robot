@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType; // Covers Neos and 775
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
 import com.revrobotics.RelativeEncoder;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid; // Pnuematics
 import edu.wpi.first.wpilibj.PneumaticsModuleType; // Pnuematics
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*; // Pnuematics
@@ -17,7 +18,9 @@ public class Scoring extends SubsystemBase{
     private CANSparkMax wrist;
     private CANSparkMax flipper;
     private CANSparkMax lift;
-
+    
+    private DigitalInput BaseChecker;
+    private DigitalInput TipChecker;
 
     private RelativeEncoder flipperEncoder;
     private PIDController flipperController;
@@ -38,6 +41,9 @@ public class Scoring extends SubsystemBase{
         flipperController = new PIDController(KFlipperP, KFlipperI, KFlipperD);
         liftControl = new PIDController(KLiftP, KLiftI, KLiftD);
         relativeEncoder = lift.getEncoder();
+
+        BaseChecker = new DigitalInput (KOrientationkBaseCheckerID);
+        TipChecker = new DigitalInput (KOrientationkTipCheckerID);
     }
 
     public void moveClaw(double speed) {
@@ -70,6 +76,14 @@ public class Scoring extends SubsystemBase{
 
     public boolean isConeMode() {
         return scoringMode;
+    }
+
+    public boolean getBaseSensor() {
+        return BaseChecker.get();
+    }
+
+    public boolean getTipSensor() {
+        return TipChecker.get();
     }
 
     public void stop() {
