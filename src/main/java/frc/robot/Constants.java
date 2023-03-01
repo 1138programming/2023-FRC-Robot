@@ -205,11 +205,11 @@ public final class Constants {
   public static final double KExtensionMotorSpeed = 0; //TBD
   
   //Limelight
-  public static final double KLimelightHeight = 20; // inches
-  public static final double KMidPoleHeight = 24; // inches
+  public static final double KLimelightHeight = 19.5; // inches
+  public static final double KMidPoleHeight = 25; // inches
   // public static final double KHighPoleHeight = 0; // inches
   public static final double KHeightDifference = KMidPoleHeight - KLimelightHeight; // inches
-  public static final double KLimelightAngle = 0;
+  public static final double KLimelightAngle = -5;
   public static final double KLimelightRange = 29.8;
   public static final double kDistanceWhenNoTarget = 0;
   public static final double kHorizDistanceWhenNoTarget = 0;
@@ -217,12 +217,10 @@ public final class Constants {
   public static final double kDesiredXOffset = 1;
   public static final double kLimelightXOffsetDeadzone = 0.05;
   public static final double KDistanceOffset = 0;
-  public static final double KHorizDistanceOffset = 8;
+  public static final double KHorizDistanceOffset = 0;
   public static final double KGoalWidth = 15;
 
   public static final double KDistanceMoveOffset = 1;
-
-
 
   public static final double KOffsetFromAprilTag = 1;
 

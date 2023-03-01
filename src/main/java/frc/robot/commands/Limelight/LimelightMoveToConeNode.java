@@ -48,19 +48,24 @@ public class LimelightMoveToConeNode extends CommandBase {
     double rotSpeed = rotControlTape.calculate(margin, 0);
 
     Ydistance = limelight.getDistance(); 
-    Xdistance = limelight.getHorizontinalDistance();
+    Xdistance = limelight.getHorizontinalDistance(base);
     
-    double XSpeed = BaseControllerTape.calculate(Xdistance, 0);  // swapped for testing
-    double YSpeed = -BaseControllerTape.calculate(Ydistance, 0);
+    double XSpeed = -BaseControllerTape.calculate(Xdistance, 0);  // swapped for testing
+    double YSpeed = BaseControllerTape.calculate(Ydistance, 0);
 
     SmartDashboard.putNumber("xTapedist", Xdistance);
     SmartDashboard.putNumber("yTapedist", Ydistance);
 
+    SmartDashboard.putNumber("Area", limelight.getArea());
+
     SmartDashboard.putNumber("XSpeed", XSpeed);
     SmartDashboard.putNumber("YSpeed", YSpeed);
 
-    // base.drive(XSpeed, YSpeed, rotSpeed, false, KPhysicalMaxDriveSpeedMPS);
+    // base.drive(XSpeed, YSpeed, 0, false, KPhysicalMaxDriveSpeedMPS);
   }
+   
+
+
 
   // Called once the command ends or is interrupted.
   @Override

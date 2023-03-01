@@ -6,8 +6,9 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import frc.robot.subsystems.Base;
 
-import frc.robot.subsystems.Base.*;
+import frc.robot.subsystems.Base;
 import static frc.robot.Constants.*;
 
 import java.util.Arrays;
@@ -19,6 +20,8 @@ public class Limelight extends SubsystemBase {
   private String aprilTagsPipeline = "AprilTags";
   private String tapePipeline = "Tape";
   private String defaultPipeline = "limelight";
+
+  
   
   private double targetFound;
   private double x;
@@ -33,6 +36,7 @@ public class Limelight extends SubsystemBase {
   private double botPoseY;
 
 
+
   public Limelight() {
     aprilTagsTable = NetworkTableInstance.getDefault().getTable(defaultPipeline);
     tapeTable = NetworkTableInstance.getDefault().getTable(defaultPipeline);
@@ -40,11 +44,15 @@ public class Limelight extends SubsystemBase {
     x = 0;
     y = 0;
     z = 0; 
+ 
     id = 0;
     area = 0;
     skew = 0;
     botPoseX = 1;
     botPoseY = 1;
+    
+   
+    
 
     botPose = new double[6];
   }
@@ -60,6 +68,8 @@ public class Limelight extends SubsystemBase {
       area = aprilTagsTable.getEntry("ta").getDouble(0);
       id = aprilTagsTable.getEntry("tid").getDouble(0);
       botPose = aprilTagsTable.getEntry("botpose").getDoubleArray(new double[6]);
+
+     
 
     }
     else if (pipeline == 1) {
@@ -129,6 +139,10 @@ public class Limelight extends SubsystemBase {
     return x;
   }
 
+  public double getArea() {
+    return area;
+  }
+
   public NetworkTable getTable() {
     return defaultTable;
     // if (pipeline == 0) {
@@ -169,13 +183,16 @@ public class Limelight extends SubsystemBase {
     double distance = Math.abs(KHeightDifference) / Math.tan(Math.toRadians(KLimelightAngle + Math.abs(y)));
     return distance + KDistanceOffset; // constant offset for this specific bot
   }
+  
 
-  public double getHorizontinalDistance() {
+  public double getHorizontinalDistance(Base base) {
     if (!getTargetFound()) {
       return kHorizDistanceWhenNoTarget;
     }
 
-    double distance = getDistance() / Math.tan(Math.toRadians(x));
+    double distance = Math.abs(getDistance()) / Math.tan(Math.toRadians(90-(base.getHeadingDeg() % 90) + x));
     return distance + KHorizDistanceOffset; // constant offset for this specific bot
+    
+   
   }
 }
