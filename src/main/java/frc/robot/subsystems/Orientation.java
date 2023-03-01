@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.DigitalInput; // Sensors
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; 
-import edu.wpi.first.math.controller.PIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 /* 
@@ -21,36 +20,29 @@ public class Orientation extends SubsystemBase {
     private CANSparkMax orientationLeftMotor;
     private CANSparkMax orientationRightMotor;
     private TalonSRX orientationMotorExtension;
-
-    private PIDController extensionController;
-    private double extensionControllerkP = 0.00001;
-    private double extensionControllerkI = 0;
-    private double extensionControllerkD = 0;
     
-    private DigitalInput IRSensor1;
-    private DigitalInput IRSensor2;
-    private DigitalInput IRSensor3;
+    private DigitalInput DoorControl;
+    private DigitalInput BaseChecker;
+    private DigitalInput TipChecker;
     private DigitalInput HallEffectSensor1;
     private DigitalInput HallEffectSensor2;
 
-    private boolean OrientationMode;
+    private boolean orientationMode;
+    
+    public ORIENTATIONSTATE OrientationState = ORIENTATIONSTATE.CUBE;
 
-    
-    
     public Orientation() {
+
         orientationLeftMotor = new CANSparkMax(KOrientationLeftMotorID, MotorType.kBrushless);
         orientationRightMotor = new CANSparkMax(KOrientationRightMotorID, MotorType.kBrushless);
 
         orientationMotorExtension = new TalonSRX(KOrientationMotorExtensionID);
         
-        IRSensor1 = new DigitalInput (KOrientationIRSensorLeftID);
-        IRSensor2 = new DigitalInput (KOrientationIRSensorMiddleID);
-        IRSensor3 = new DigitalInput (KOrientationIRSensorRightID);
+        DoorControl = new DigitalInput (KOrientationkDoorControlID);
+        BaseChecker = new DigitalInput (KOrientationkBaseCheckerID);
+        TipChecker = new DigitalInput (KOrientationkTipCheckerID);
         HallEffectSensor1 = new DigitalInput(KOrientationHallEffectSensor1ID);
         HallEffectSensor2 = new DigitalInput(KOrientationHallEffectSensor2ID);
-
-        extensionController = new PIDController(extensionControllerkP, extensionControllerkI, extensionControllerkD);
-        //orientationMotorExtension.getSelectedSensorPosition();
 
         orientationLeftMotor.setIdleMode(IdleMode.kBrake);
         // orientationMotorExtension.setIdleMode(IdleMode.kBrake);
@@ -59,11 +51,11 @@ public class Orientation extends SubsystemBase {
     }
 
     public void moveOrientationLeftandRightMotors() {
-        if (OrientationMode) {
-            orientationLeftMotor.set(KCubeLeftandRightMotorSpeeds);
-        }
-        else if (!OrientationMode) {
+        if (orientationMode) {
             orientationLeftMotor.set(KConeLeftandRightMotorSpeeds);
+        }
+        else if (!orientationMode) {
+            orientationLeftMotor.set(KCubeLeftandRightMotorSpeeds);
         }
     }
 
@@ -76,15 +68,15 @@ public class Orientation extends SubsystemBase {
     }
 
     public void setCubeMode() {
-        OrientationMode = false;
+        orientationMode = false;
     }
 
     public void setConeMode() {
-        OrientationMode = true; 
+        orientationMode = true; 
     }
 
-    public boolean getMode() {
-            return OrientationMode;
+    public boolean isConeMode() {
+        return orientationMode;
     }
 
     public void stopOrientationLeftandRightMotors() {
@@ -95,23 +87,23 @@ public class Orientation extends SubsystemBase {
         orientationMotorExtension.set(ControlMode.PercentOutput, 0);
     }
 
-    public Boolean getSensor1() {
-        return IRSensor1.get();
+    public boolean getDoorSensor() {
+        return DoorControl.get();
     }
 
-    public Boolean getSensor2() {
-        return IRSensor2.get();
+    public boolean getBaseSensor() {
+        return BaseChecker.get();
     }
 
-    public Boolean getSensor3() {
-        return IRSensor3.get();
+    public boolean getTipSensor() {
+        return TipChecker.get();
     }
 
-    public Boolean getHallEffectSensor1() {
+    public boolean getHallEffectSensor1() {
         return HallEffectSensor1.get();
     }
 
-    public Boolean getHallEffectSensor2(){
+    public boolean getHallEffectSensor2(){
         return HallEffectSensor2.get();
     }
 
