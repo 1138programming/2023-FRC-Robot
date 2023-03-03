@@ -168,7 +168,7 @@ public final class Constants {
 
 
   //Speeds and stuff
-  public static final double KIntakeConeSpaghettitSpeed = 0.5;
+  public static final double KIntakeConeSpaghettitSpeed = 0.75;
 
   
   public static final double KIntakeCubeSpaghettitSpeed = 0.5;

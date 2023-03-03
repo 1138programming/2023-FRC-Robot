@@ -9,6 +9,7 @@ import static frc.robot.Constants.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -48,6 +49,11 @@ public class Intake extends SubsystemBase {
     ledStrip.setData(ledBuffer);
     ledStrip.start();
 
+  }
+
+  @Override 
+  public void periodic() {
+    SmartDashboard.putBoolean("Mode", intakeMode);
   }
 
   public void spaghettiSpin() {
