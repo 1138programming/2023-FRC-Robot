@@ -17,12 +17,14 @@ public class SetCubeMode extends CommandBase {
   private Scoring scoring;
   private Intake intake;
 
-  public SetCubeMode(Orientation orientation, Intake intake) {
+  public SetCubeMode(Orientation orientation, Intake intake, Scoring scoring) {
     this.orientation = orientation;
     this.intake = intake;
+    this.scoring = scoring;
 
     addRequirements(orientation);
     addRequirements(intake);
+    addRequirements(scoring);
   }
 
   // Called when the command is initially scheduled.

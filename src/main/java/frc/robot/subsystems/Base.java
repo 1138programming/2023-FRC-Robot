@@ -94,7 +94,7 @@ public class Base extends SubsystemBase {
     frontRightModule.setDesiredState(states[1]);
     backLeftModule.setDesiredState(states[2]);
     backRightModule.setDesiredState(states[3]);
-}
+  }
 
   // recalibrates gyro offset
   public void resetGyro() {
