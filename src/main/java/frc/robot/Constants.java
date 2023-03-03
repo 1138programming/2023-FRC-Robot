@@ -166,10 +166,12 @@ public final class Constants {
   public static final double KIntakeSwivelTopPos = 11;
   public static final double KIntakeSwivelBottumPos = 12;
 
-  public static final double KIntakeConeSpaghettitSpeed = 0.35;
+
+  //Speeds and stuff
+  public static final double KIntakeConeSpaghettitSpeed = 0.5;
 
   
-  public static final double KIntakeCubeSpaghettitSpeed = 0.35;
+  public static final double KIntakeCubeSpaghettitSpeed = 0.5;
 
   
   public static final double KIntakeSwiveTopOffset = 2; 

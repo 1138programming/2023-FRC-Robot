@@ -168,9 +168,8 @@ public class RobotContainer {
     logitechBtnX.whileTrue(target);
     logitechBtnB.whileTrue(targetTape);
     
-    xboxBtnA.onTrue(endgameReadyUp);
-    xboxBtnB.onTrue(deployEndgame);
-    xboxBtnY.onTrue(endgameToCenter);
+    xboxBtnA.onTrue(StorageForward1);
+  ;
   }
 
   /**
