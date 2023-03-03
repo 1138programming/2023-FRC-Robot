@@ -94,16 +94,16 @@ public class RobotContainer {
   public static final int KLogitechButtonA = 2;
   public static final int KLogitechButtonB = 3;
   public static final int KLogitechButtonY = 4;
-  public static final int KLogitechLeftBumper = 5; 
+  public static final int KLogitechLeftBumper = 5;
   public static final int KLogitechRightBumper = 6;
   public static final int KLogitechLeftTrigger = 7;
   public static final int KLogitechRightTrigger = 8;
 
   //Xbox Button Constants
-  public static final int KXboxButtonA = 1; 
+  public static final int KXboxButtonA = 1;
   public static final int KXboxButtonB = 2;
-  public static final int KXboxButtonX = 3;  
-  public static final int KXboxButtonY = 4; 
+  public static final int KXboxButtonX = 3;
+  public static final int KXboxButtonY = 4;
   public static final int KXboxLeftBumper = 5; 
   public static final int KXboxRightBumper = 6; 
   public static final int KXboxSelectButton = 7; 
@@ -168,9 +168,8 @@ public class RobotContainer {
     logitechBtnX.whileTrue(target);
     logitechBtnB.whileTrue(targetTape);
     
-    xboxBtnA.onTrue(endgameReadyUp);
-    xboxBtnB.onTrue(deployEndgame);
-    xboxBtnY.onTrue(endgameToCenter);
+    xboxBtnA.onTrue(StorageForward1);
+  ;
   }
 
   /**

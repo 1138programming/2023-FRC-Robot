@@ -17,12 +17,14 @@ public class SetConeMode extends CommandBase {
   private Scoring scoring;
   private Intake intake;
 
-  public SetConeMode(Orientation orientation, Intake intake) {
+  public SetConeMode(Orientation orientation, Intake intake, Scoring scoring) {
     this.orientation = orientation;
     this.intake = intake;
+    this.scoring = scoring;
 
     addRequirements(orientation);
     addRequirements(intake);
+    addRequirements(scoring);
   }
 
   // Called when the command is initially scheduled.

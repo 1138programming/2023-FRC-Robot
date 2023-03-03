@@ -83,10 +83,12 @@ public final class Constants {
   public static final int KOrientationRightMotorID = 13;
   public static final int KOrientationMotorExtensionID = 14;
     // Scoring
-  public static final int KClawMotor = 15;
-  public static final int KWristMotor = 16;
+  // public static final int KClawMotor = 15;
+  // public static final int KWristMotor = 16;
   public static final int KLiftMotor = 17;
   public static final int KFlipperMotor = 18;
+  public static final int KClawServo = 2;
+  public static final int KWristServo = 3;
   
 
   // Math and other Constants
@@ -166,10 +168,12 @@ public final class Constants {
   public static final double KIntakeSwivelTopPos = 11;
   public static final double KIntakeSwivelBottumPos = 12;
 
-  public static final double KIntakeConeSpaghettitSpeed = 0.35;
+
+  //Speeds and stuff
+  public static final double KIntakeConeSpaghettitSpeed = 0.75;
 
   
-  public static final double KIntakeCubeSpaghettitSpeed = 0.35;
+  public static final double KIntakeCubeSpaghettitSpeed = 0.5;
 
   
   public static final double KIntakeSwiveTopOffset = 2; 
@@ -211,6 +215,9 @@ public final class Constants {
   public static final double KClawMotorSpeed = 0; //TBD
   public static final double KAngleMotorSpeed = 0; //TBD
   public static final double KExtensionMotorSpeed = 0; //TBD
+  public static final double KCloseClawCone = 0; //TBD
+  public static final double KCloseClawCube = 0; //TBD
+  public static final double KLiftReadyPos = 0; //TBD
   
   //Limelight
   public static final double KLimelightHeight = 19.5; // inches

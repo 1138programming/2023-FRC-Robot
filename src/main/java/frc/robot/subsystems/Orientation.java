@@ -22,8 +22,6 @@ public class Orientation extends SubsystemBase {
     private TalonSRX orientationMotorExtension;
     
     private DigitalInput DoorControl;
-    private DigitalInput BaseChecker;
-    private DigitalInput TipChecker;
     private DigitalInput HallEffectSensor1;
     private DigitalInput HallEffectSensor2;
 
@@ -39,8 +37,6 @@ public class Orientation extends SubsystemBase {
         orientationMotorExtension = new TalonSRX(KOrientationMotorExtensionID);
         
         DoorControl = new DigitalInput (KOrientationkDoorControlID);
-        BaseChecker = new DigitalInput (KOrientationkBaseCheckerID);
-        TipChecker = new DigitalInput (KOrientationkTipCheckerID);
         HallEffectSensor1 = new DigitalInput(KOrientationHallEffectSensor1ID);
         HallEffectSensor2 = new DigitalInput(KOrientationHallEffectSensor2ID);
 
@@ -91,14 +87,6 @@ public class Orientation extends SubsystemBase {
         return DoorControl.get();
     }
 
-    public boolean getBaseSensor() {
-        return BaseChecker.get();
-    }
-
-    public boolean getTipSensor() {
-        return TipChecker.get();
-    }
-
     public boolean getHallEffectSensor1() {
         return HallEffectSensor1.get();
     }
@@ -106,5 +94,4 @@ public class Orientation extends SubsystemBase {
     public boolean getHallEffectSensor2(){
         return HallEffectSensor2.get();
     }
-
 }

@@ -10,8 +10,7 @@ import static frc.robot.Constants.*;
 
 public class OrientationMoveAllReverse extends CommandBase {
   /** Creates a new OrientationMove. */
-
-  private Orientation orientation; 
+  private Orientation orientation;
 
   public OrientationMoveAllReverse(Orientation orientation) {
     this.orientation = orientation;
