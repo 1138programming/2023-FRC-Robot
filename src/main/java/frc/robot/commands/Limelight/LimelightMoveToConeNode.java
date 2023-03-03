@@ -61,7 +61,7 @@ public class LimelightMoveToConeNode extends CommandBase {
     SmartDashboard.putNumber("XSpeed", XSpeed);
     SmartDashboard.putNumber("YSpeed", YSpeed);
 
-    // base.drive(XSpeed, YSpeed, 0, false, KPhysicalMaxDriveSpeedMPS);
+    // base.drive(0, YSpeed, rotSpeed, false, KPhysicalMaxDriveSpeedMPS);
   }
    
 

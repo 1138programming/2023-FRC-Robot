@@ -125,7 +125,7 @@ public class Base extends SubsystemBase {
   }
 
   public double getHeadingDeg() {
-    return -gyro.getAngle();
+    return -gyro.getAngle() % 360;
   }
 
   public void resetOdometry() {

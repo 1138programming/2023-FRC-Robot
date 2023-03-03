@@ -271,7 +271,7 @@ public final class Constants {
   public static final double KTagLimelightMoveI = 0;
   public static final double KTagLimelightMoveD = 0;
 
-  public static final double KTapeLimelightMoveP = 0.005;
+  public static final double KTapeLimelightMoveP = 0.0015;
   public static final double KTapeLimelightMoveI = 0;
   public static final double KTapeLimelightMoveD = 0;
 

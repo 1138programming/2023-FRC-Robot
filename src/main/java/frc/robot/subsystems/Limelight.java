@@ -180,7 +180,7 @@ public class Limelight extends SubsystemBase {
     if (!getTargetFound()) {
       return kDistanceWhenNoTarget;
     }
-    double distance = Math.abs(KHeightDifference) / Math.tan(Math.toRadians(KLimelightAngle + Math.abs(y)));
+    double distance = (135.95 * (Math.pow((Math.E), (-4.75 *area))));
     return distance + KDistanceOffset; // constant offset for this specific bot
   }
   
@@ -189,8 +189,14 @@ public class Limelight extends SubsystemBase {
     if (!getTargetFound()) {
       return kHorizDistanceWhenNoTarget;
     }
-
-    double distance = Math.abs(getDistance()) / Math.tan(Math.toRadians(90-(base.getHeadingDeg() % 90) + x));
+    double distance = 0; 
+    if (Math.abs(base.getHeadingDeg()) <= 90) {
+      distance = Math.abs(getDistance()) / Math.tan(Math.toRadians(Math.abs(base.getHeadingDeg()) % 90) + x);
+    }
+    else {
+      distance = Math.abs(getDistance()) / Math.tan(Math.toRadians(90-Math.abs(base.getHeadingDeg()) % 90) + x);
+    }
+    
     return distance + KHorizDistanceOffset; // constant offset for this specific bot
     
    
