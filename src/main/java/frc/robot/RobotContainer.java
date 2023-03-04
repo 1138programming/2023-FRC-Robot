@@ -6,6 +6,8 @@ package frc.robot;
 
 import static frc.robot.Constants.*;
 
+import javax.xml.stream.events.EndDocument;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -45,7 +47,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   //Subsystems
-  private final Base base = new Base();
+  // private final Base base = new Base();
   // private final Scoring scoring = new Scoring();
   private final Endgame endgame = new Endgame();
   private final Intake intake = new Intake();
@@ -53,12 +55,16 @@ public class RobotContainer {
   private final Limelight limelight = new Limelight();
 
   // Base 
-  private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
-  private final ToggleSpeed toggleFastSpeed = new ToggleSpeed(base, KBaseDriveMaxPercent);
-  private final ToggleSpeed toggleSlowSpeed = new ToggleSpeed(base, KBaseDriveLowPercent);
+  // private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
+  // private final ToggleSpeed toggleFastSpeed = new ToggleSpeed(base, KBaseDriveMaxPercent);
+  // private final ToggleSpeed toggleSlowSpeed = new ToggleSpeed(base, KBaseDriveLowPercent);
 
   // Intake
+<<<<<<< Updated upstream
   private final IntakeSpin intakeForward = new IntakeSpin(intake);
+=======
+  private final IntakeSpin intakeSpin = new IntakeSpin(intake);
+>>>>>>> Stashed changes
   private final IntakeStop intakeStop = new IntakeStop(intake);
 
   //Orientation
@@ -73,8 +79,13 @@ public class RobotContainer {
   private final EndgameToCenter endgameToCenter = new EndgameToCenter(endgame);
 
   // Limelight
+<<<<<<< Updated upstream
   private final LimelightMoveToAprilTag goToTarget = new LimelightMoveToAprilTag(base, limelight);
   private final LimelightMoveToConeNode goToTargetTape = new LimelightMoveToConeNode(base, limelight);
+=======
+  // private final LimelightMoveToAprilTag target = new LimelightMoveToAprilTag(base, limelight);
+  // private final LimelightMoveToConeNode targetTape = new LimelightMoveToConeNode(base, limelight);
+>>>>>>> Stashed changes
 
   //Controller Ports (check in Driver Station, IDs may be different for each computer)
   private static final int KLogitechPort = 0;
@@ -121,7 +132,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    base.setDefaultCommand(driveWithJoysticks);
+    // base.setDefaultCommand(driveWithJoysticks);
     intake.setDefaultCommand(intakeStop);
 
     //Game controllers
@@ -160,16 +171,29 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    logitechBtnY.onTrue(new ResetEncoders(base));
-    logitechBtnLB.onTrue(toggleFastSpeed);
-    logitechBtnLB.onFalse(toggleSlowSpeed);
-    logitechBtnA.onTrue(new ToggleLimelightPipeline(limelight));
+    // logitechBtnY.onTrue(new ResetEncoders(base));
+    // logitechBtnLB.onTrue(toggleFastSpeed);
+    // logitechBtnLB.onFalse(toggleSlowSpeed);
+    // logitechBtnA.onTrue(new ToggleLimelightPipeline(limelight));
 
+<<<<<<< Updated upstream
     logitechBtnX.whileTrue(goToTarget);
     logitechBtnB.whileTrue(goToTargetTape);
     
     xboxBtnA.onTrue(intakeForward);
   ;
+=======
+    // logitechBtnX.whileTrue(target);
+    // logitechBtnB.whileTrue(targetTape);
+    
+    // logitechBtnA.onTrue(endgameReadyUp);
+    // logitechBtnB.onTrue(endgameToCenter);
+    // logitechBtnX.onTrue(deployEndgame);
+
+    xboxBtnA.onTrue(intakeSpin);
+
+  
+>>>>>>> Stashed changes
   }
 
   /**

@@ -26,8 +26,8 @@ public class Endgame extends SubsystemBase {
         endgameLeftIR = new DigitalInput(KEndgameLeftIR);
         
         // Bounds copied from 2022 FRC robot.. the values are most likely wrong. Check with Patrick for values possibly
-        endgameLinearServoFront.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
-        endgameLinearServoBack.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
+        // endgameLinearServoFront.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
+        // endgameLinearServoBack.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
     }
     
     @Override
