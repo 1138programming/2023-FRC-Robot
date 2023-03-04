@@ -26,23 +26,23 @@ public class MoveExtensionToOutPosition extends CommandBase {
   @Override
   public void execute() {
     orientation.moveOrientationMotorExtension(KMotorExtensionSpeed);
-    orientation.moveOrientationLeftandRightMotors();
+    //orientation.moveOrientationLeftandRightMotors();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     orientation.moveOrientationMotorExtension(0);
-    orientation.moveOrientationLeftandRightMotors(0);
+    //orientation.moveOrientationLeftandRightMotors(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return orientation.getHallEffectSensor1();
-  //   if (!orientation.getHallEffectSensor1()) {
-  //       return false;
+  // if (!orientation.getHallEffectSensor1()) {
+  //     return false;
   //   }
-  //   return true;
+  //  return true;
   }
 }

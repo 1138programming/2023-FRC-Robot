@@ -24,6 +24,7 @@ import frc.robot.subsystems.Endgame;
 import frc.robot.subsystems.Scoring;
 import frc.robot.subsystems.Base;
 import frc.robot.subsystems.Orientation;
+import frc.robot.commands.Orientation.MoveExtensionToInPosition;
 import frc.robot.commands.Orientation.OrientationMoveAllForward;
 import frc.robot.commands.Orientation.OrientationMoveAllReverse;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightForward;
@@ -31,6 +32,7 @@ import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
 import frc.robot.commands.Orientation.OrientationStopOnlyExtension;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionForward;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionReverse;
+import frc.robot.commands.Orientation.MoveExtensionToOutPosition;
 import frc.robot.commands.Base.ToggleSpeed;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -67,8 +69,8 @@ public class RobotContainer {
   private final IntakeStop intakeStop = new IntakeStop(intake);
 
   //Orientation
-  private final OrientationMoveOnlyExtensionForward OrientationFoward1 = new OrientationMoveOnlyExtensionForward(orientation);
-  private final OrientationMoveOnlyExtensionReverse OrientationBackward1 = new OrientationMoveOnlyExtensionReverse(orientation);
+  private final MoveExtensionToOutPosition OrientationFoward1 = new MoveExtensionToOutPosition(orientation);
+  private final OrientationMoveOnlyExtensionForward OrientationBackward1 = new OrientationMoveOnlyExtensionForward(orientation);
   private final OrientationStopOnlyExtension OrientationStop = new OrientationStopOnlyExtension(orientation);
 
   // Endgame
@@ -169,9 +171,9 @@ public class RobotContainer {
     // xboxBtnA.onTrue(moveLinearServosOut);
     // xboxBtnB.onTrue(moveLinearServosIn);
 
-    xboxBtnA.whileTrue(OrientationFoward1);
+    xboxBtnA.onTrue(OrientationFoward1);
     xboxBtnB.whileTrue(OrientationBackward1);
-    xboxBtnA.whileFalse(OrientationStop);
+    // xboxBtnA.whileFalse(OrientationStop);
     xboxBtnB.whileFalse(OrientationStop);
 
   }

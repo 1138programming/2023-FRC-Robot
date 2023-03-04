@@ -88,11 +88,17 @@ public class Orientation extends SubsystemBase {
     }
 
     public boolean getHallEffectSensor1() {
-        return HallEffectSensor1.get();
+        return !HallEffectSensor1.get();
     }
 
     public boolean getHallEffectSensor2(){
-        return HallEffectSensor2.get();
+        return !HallEffectSensor2.get();
+    }
+
+    @Override
+    public void periodic()
+    {
+        SmartDashboard.putBoolean("Magnetic Limit", getHallEffectSensor1());
     }
 
 }
