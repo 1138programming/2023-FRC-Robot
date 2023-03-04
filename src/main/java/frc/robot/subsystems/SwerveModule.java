@@ -105,6 +105,14 @@ public class SwerveModule extends SubsystemBase {
     driveMotor.setVoltage(driveMotorOutput);
   }
 
+  public void lockWheel() {
+    double angleMotorOutput;
+    angleMotorOutput = angleController.calculate(getAngleDeg(), -45);
+
+    angleMotor.set(angleMotorOutput);
+    driveMotor.set(0);
+  }
+
   public SwerveModulePosition getPosition() {
     SwerveModulePosition position = new SwerveModulePosition(getDriveEncoderPos(), getAngleR2D());
     SmartDashboard.putString("posistion " + driveMotor.getDeviceId(), position.toString());

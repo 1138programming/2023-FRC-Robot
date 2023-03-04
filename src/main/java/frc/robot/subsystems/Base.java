@@ -101,6 +101,13 @@ public class Base extends SubsystemBase {
     backLeftModule.setDesiredState(states[2]);
     backRightModule.setDesiredState(states[3]);
   }
+
+  public void lockWheels() {
+    frontLeftModule.lockWheel();
+    frontRightModule.lockWheel();
+    backLeftModule.lockWheel();
+    backRightModule.lockWheel();
+  }
   
   public void resetOdometry(Pose2d pose) {
     resetAllRelEncoders();
@@ -172,6 +179,13 @@ public class Base extends SubsystemBase {
 
   public double getHeadingDeg() {
     return -gyro.getAngle();
+  }
+
+  public double getRoll() {
+    return gyro.getRoll();
+  }
+  public double getPitch() {
+    return gyro.getPitch();
   }
 
   public void resetOdometry() {
