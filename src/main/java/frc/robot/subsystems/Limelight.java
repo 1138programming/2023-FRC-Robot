@@ -8,7 +8,8 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.subsystems.Base;
 
-import frc.robot.subsystems.Base;
+import edu.wpi.first.math.filter.LinearFilter;
+
 import static frc.robot.Constants.*;
 
 import java.util.Arrays;
@@ -51,7 +52,7 @@ public class Limelight extends SubsystemBase {
     botPoseX = 1;
     botPoseY = 1;
     
-   
+    LinearFilter distanceFilter = LinearFilter.singlePoleIIR(0.1, 0.02);
     
 
     botPose = new double[6];
@@ -180,7 +181,8 @@ public class Limelight extends SubsystemBase {
     if (!getTargetFound()) {
       return kDistanceWhenNoTarget;
     }
-    double distance = (135.95 * (Math.pow((Math.E), (-4.75 *area))));
+   
+
     return distance + KDistanceOffset; // constant offset for this specific bot
   }
   
