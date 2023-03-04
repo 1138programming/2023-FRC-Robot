@@ -32,6 +32,8 @@ public class Scoring extends SubsystemBase{
 
     private boolean scoringMode;
 
+    private boolean toFlipOrNotToFlip; 
+
     public Scoring() {
         flipper = new CANSparkMax(KFlipperMotor, MotorType.kBrushless);
         lift = new CANSparkMax(KLiftMotor, MotorType.kBrushless);
@@ -47,6 +49,12 @@ public class Scoring extends SubsystemBase{
         BaseChecker = new DigitalInput (KOrientationkBaseCheckerID);
         TipChecker = new DigitalInput (KOrientationkTipCheckerID);
     }
+
+    @Override
+    public void periodic () {
+
+    }
+
 
     public void moveFlipper(double speed) {
         flipper.set(speed);
@@ -82,6 +90,24 @@ public class Scoring extends SubsystemBase{
 
     public void flipToPos(double setPoint) {
         moveFlipper(flipperController.calculate(getFlipperPos(), setPoint));
+    }
+
+    public void updateScoringFlipperStatus() {
+        if (scoringMode) {
+            if (getTipSensor()) {
+              toFlipOrNotToFlip = true;
+            }
+            else  if (getBaseSensor()) {
+                toFlipOrNotToFlip = false;
+            }
+        }
+        else {
+            toFlipOrNotToFlip = false;
+        }
+    }
+
+    public boolean getFlipperStatus() {
+        return toFlipOrNotToFlip;
     }
     
     public boolean getBaseSensor() {

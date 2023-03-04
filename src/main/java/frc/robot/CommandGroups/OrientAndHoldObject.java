@@ -5,6 +5,7 @@
 package frc.robot.CommandGroups;
 
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Orientation.MoveExtensionToInPosition;
@@ -25,12 +26,17 @@ public class OrientAndHoldObject extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     this.scoring = scoring;
     this.orientation = orientation;
+
+
+
     addCommands(
-      new ParallelRaceGroup(  
+      new ParallelCommandGroup(  
         new MoveExtensionToInPosition(orientation),
         new MoveLiftToReadyPos(scoring)
       ),
-      new CloseClaw(scoring)
+      new CloseClaw(scoring) 
+
+      
     );
   }
 }

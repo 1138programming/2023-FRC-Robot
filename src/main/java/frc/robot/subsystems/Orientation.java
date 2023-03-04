@@ -27,7 +27,7 @@ public class Orientation extends SubsystemBase {
 
     private boolean orientationMode;
     
-    public ORIENTATIONSTATE OrientationState = ORIENTATIONSTATE.CUBE;
+ 
 
     public Orientation() {
 

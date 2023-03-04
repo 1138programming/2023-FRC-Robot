@@ -40,8 +40,10 @@ public class MoveExtensionToInPosition extends CommandBase {
   @Override
   public boolean isFinished() {
     if (!orientation.getHallEffectSensor2()) {
+      
       return false;
-  }
+    
+    }
     return true;
   }
 }

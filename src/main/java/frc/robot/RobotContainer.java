@@ -58,7 +58,7 @@ public class RobotContainer {
   private final ToggleSpeed toggleSlowSpeed = new ToggleSpeed(base, KBaseDriveLowPercent);
 
   // Intake
-  private final IntakeSpin StorageForward1 = new IntakeSpin(intake);
+  private final IntakeSpin intakeForward = new IntakeSpin(intake);
   private final IntakeStop intakeStop = new IntakeStop(intake);
 
   //Orientation
@@ -73,8 +73,8 @@ public class RobotContainer {
   private final EndgameToCenter endgameToCenter = new EndgameToCenter(endgame);
 
   // Limelight
-  private final LimelightMoveToAprilTag target = new LimelightMoveToAprilTag(base, limelight);
-  private final LimelightMoveToConeNode targetTape = new LimelightMoveToConeNode(base, limelight);
+  private final LimelightMoveToAprilTag goToTarget = new LimelightMoveToAprilTag(base, limelight);
+  private final LimelightMoveToConeNode goToTargetTape = new LimelightMoveToConeNode(base, limelight);
 
   //Controller Ports (check in Driver Station, IDs may be different for each computer)
   private static final int KLogitechPort = 0;
@@ -165,10 +165,10 @@ public class RobotContainer {
     logitechBtnLB.onFalse(toggleSlowSpeed);
     logitechBtnA.onTrue(new ToggleLimelightPipeline(limelight));
 
-    logitechBtnX.whileTrue(target);
-    logitechBtnB.whileTrue(targetTape);
+    logitechBtnX.whileTrue(goToTarget);
+    logitechBtnB.whileTrue(goToTargetTape);
     
-    xboxBtnA.onTrue(StorageForward1);
+    xboxBtnA.onTrue(intakeForward);
   ;
   }
 

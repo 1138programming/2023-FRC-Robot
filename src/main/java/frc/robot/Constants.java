@@ -31,12 +31,7 @@ public final class Constants {
   public static final int KOrientationkBaseCheckerID = 4;
   public static final int KOrientationkTipCheckerID = 5;
 
-  public static enum ORIENTATIONSTATE {
-    CUBE,
-    CONEBASE,
-    CONETIP,
-    NOTHING
-  };
+
 
     // Scoring
   public static final int KScoringTopLimitSwitch = 6;
