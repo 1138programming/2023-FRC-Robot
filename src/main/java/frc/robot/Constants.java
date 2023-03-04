@@ -189,7 +189,7 @@ public final class Constants {
   
   // Orientation
   public static final double KMotorExtensionSpeed = 0.5;
-  public static final double KMotorExtensionTime = 0.5;
+  public static final double KMotorExtensionTime = 0.2;
   public static final double KCubeLeftandRightMotorSpeeds = 18;
   public static final double KConeLeftandRightMotorSpeeds = 18;
   

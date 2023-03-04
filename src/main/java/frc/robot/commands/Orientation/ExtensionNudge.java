@@ -13,7 +13,7 @@ public class ExtensionNudge extends CommandBase {
   /** Creates a new OrientationMove. */
 
   private Orientation orientation; 
-  public Timer timer;
+  private Timer timer = new Timer();
 
   public ExtensionNudge(Orientation orientation) {
     this.orientation = orientation;
@@ -25,31 +25,30 @@ public class ExtensionNudge extends CommandBase {
   public void initialize() {
     timer.reset();
     timer.start();
-    
   }
   
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
       orientation.moveOrientationMotorExtension(KMotorExtensionSpeed);
-      orientation.moveOrientationLeftandRightMotors();
+      //orientation.moveOrientationLeftandRightMotors();
     }
   
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if (timer.hasElapsed(KMotorExtensionTime)) {
-    orientation.moveOrientationMotorExtension(0);
-    orientation.moveOrientationLeftandRightMotors(0);
     timer.stop();
-    }
-
+    orientation.moveOrientationMotorExtension(0);
+    //orientation.moveOrientationLeftandRightMotors(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-      return false;
+    if (timer.hasElapsed(KMotorExtensionTime)){
+      return true;
+  }
+  return false;
   }
 }

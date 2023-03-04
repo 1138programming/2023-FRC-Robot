@@ -99,6 +99,6 @@ public class Orientation extends SubsystemBase {
     public void periodic()
     {
         SmartDashboard.putBoolean("Magnetic Limit", getHallEffectSensor1());
+        SmartDashboard.putBoolean("Magnetic Limit!", getHallEffectSensor2());
     }
-
 }

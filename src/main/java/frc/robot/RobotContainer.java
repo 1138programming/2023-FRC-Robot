@@ -175,7 +175,7 @@ public class RobotContainer {
     xboxBtnA.onTrue(OrientationFoward1);
     xboxBtnB.onTrue(OrientationBackward1);
     // xboxBtnA.whileFalse(OrientationStop);
-    xboxBtnX.onTrue(OrientationStop);
+    xboxBtnY.onTrue(OrientationStop);
 
   }
 
