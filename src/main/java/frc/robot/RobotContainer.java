@@ -24,6 +24,7 @@ import frc.robot.subsystems.Endgame;
 import frc.robot.subsystems.Scoring;
 import frc.robot.subsystems.Base;
 import frc.robot.subsystems.Orientation;
+import frc.robot.commands.Orientation.ExtensionNudge;
 import frc.robot.commands.Orientation.MoveExtensionToInPosition;
 import frc.robot.commands.Orientation.OrientationMoveAllForward;
 import frc.robot.commands.Orientation.OrientationMoveAllReverse;
@@ -70,8 +71,8 @@ public class RobotContainer {
 
   //Orientation
   private final MoveExtensionToOutPosition OrientationFoward1 = new MoveExtensionToOutPosition(orientation);
-  private final OrientationMoveOnlyExtensionForward OrientationBackward1 = new OrientationMoveOnlyExtensionForward(orientation);
-  private final OrientationStopOnlyExtension OrientationStop = new OrientationStopOnlyExtension(orientation);
+  private final MoveExtensionToInPosition OrientationBackward1 = new MoveExtensionToInPosition(orientation);
+  private final ExtensionNudge OrientationStop = new ExtensionNudge(orientation);
 
   // Endgame
   private final MoveLinearServosOut moveLinearServosOut = new MoveLinearServosOut(endgame);
@@ -172,9 +173,9 @@ public class RobotContainer {
     // xboxBtnB.onTrue(moveLinearServosIn);
 
     xboxBtnA.onTrue(OrientationFoward1);
-    xboxBtnB.whileTrue(OrientationBackward1);
+    xboxBtnB.onTrue(OrientationBackward1);
     // xboxBtnA.whileFalse(OrientationStop);
-    xboxBtnB.whileFalse(OrientationStop);
+    xboxBtnX.onTrue(OrientationStop);
 
   }
 
