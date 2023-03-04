@@ -63,6 +63,15 @@ public class Intake extends SubsystemBase {
     else if (!intakeMode) {
       spaghetti.set(ControlMode.PercentOutput, KIntakeCubeSpaghettitSpeed);
     }
+  }
+  
+  public void spaghettiSpinOut() {
+    if (intakeMode) {
+      spaghetti.set(ControlMode.PercentOutput, -KIntakeConeSpaghettitSpeed);
+    }
+    else if (!intakeMode) {
+      spaghetti.set(ControlMode.PercentOutput, -KIntakeCubeSpaghettitSpeed);
+    }
     
   }
 
@@ -71,7 +80,6 @@ public class Intake extends SubsystemBase {
   }
 
   public void setCubeMode() {
-    
     intakeMode = false;
 
     // set the led strip to purple
@@ -110,22 +118,15 @@ public class Intake extends SubsystemBase {
     }
   }
 
-
-
-
-
-
   public double getIntakeEncoder() {
     return swivel.getSelectedSensorPosition();
   }
-
 
   public boolean getIntakeLimitSwitch() {
     return intakeLimit.get();
   } 
   
   public void intakeStop() {
-
     swivel.set(ControlMode.PercentOutput, 0);
     spaghetti.set(ControlMode.PercentOutput, 0);
   }

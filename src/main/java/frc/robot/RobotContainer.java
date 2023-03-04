@@ -47,8 +47,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   //Subsystems
-  // private final Base base = new Base();
-  // private final Scoring scoring = new Scoring();
+  private final Base base = new Base();
+  private final Scoring scoring = new Scoring();
   private final Endgame endgame = new Endgame();
   private final Intake intake = new Intake();
   private final Orientation orientation = new Orientation();
@@ -60,11 +60,7 @@ public class RobotContainer {
   // private final ToggleSpeed toggleSlowSpeed = new ToggleSpeed(base, KBaseDriveLowPercent);
 
   // Intake
-<<<<<<< Updated upstream
   private final IntakeSpin intakeForward = new IntakeSpin(intake);
-=======
-  private final IntakeSpin intakeSpin = new IntakeSpin(intake);
->>>>>>> Stashed changes
   private final IntakeStop intakeStop = new IntakeStop(intake);
 
   //Orientation
@@ -79,13 +75,8 @@ public class RobotContainer {
   private final EndgameToCenter endgameToCenter = new EndgameToCenter(endgame);
 
   // Limelight
-<<<<<<< Updated upstream
   private final LimelightMoveToAprilTag goToTarget = new LimelightMoveToAprilTag(base, limelight);
   private final LimelightMoveToConeNode goToTargetTape = new LimelightMoveToConeNode(base, limelight);
-=======
-  // private final LimelightMoveToAprilTag target = new LimelightMoveToAprilTag(base, limelight);
-  // private final LimelightMoveToConeNode targetTape = new LimelightMoveToConeNode(base, limelight);
->>>>>>> Stashed changes
 
   //Controller Ports (check in Driver Station, IDs may be different for each computer)
   private static final int KLogitechPort = 0;
@@ -176,24 +167,11 @@ public class RobotContainer {
     // logitechBtnLB.onFalse(toggleSlowSpeed);
     // logitechBtnA.onTrue(new ToggleLimelightPipeline(limelight));
 
-<<<<<<< Updated upstream
     logitechBtnX.whileTrue(goToTarget);
     logitechBtnB.whileTrue(goToTargetTape);
     
     xboxBtnA.onTrue(intakeForward);
   ;
-=======
-    // logitechBtnX.whileTrue(target);
-    // logitechBtnB.whileTrue(targetTape);
-    
-    // logitechBtnA.onTrue(endgameReadyUp);
-    // logitechBtnB.onTrue(endgameToCenter);
-    // logitechBtnX.onTrue(deployEndgame);
-
-    xboxBtnA.onTrue(intakeSpin);
-
-  
->>>>>>> Stashed changes
   }
 
   /**
