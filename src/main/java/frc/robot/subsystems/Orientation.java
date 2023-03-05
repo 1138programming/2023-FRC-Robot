@@ -27,7 +27,7 @@ public class Orientation extends SubsystemBase {
 
     private boolean orientationMode;
     
- 
+    public ORIENTATIONSTATE OrientationState = ORIENTATIONSTATE.CUBE;
 
     public Orientation() {
 
@@ -64,11 +64,11 @@ public class Orientation extends SubsystemBase {
     }
 
     public void setCubeMode() {
-        orientationMode = false;
+        orientationMode = KCubeMode;
     }
 
     public void setConeMode() {
-        orientationMode = true; 
+        orientationMode = KConeMode; 
     }
 
     public boolean isConeMode() {
@@ -88,10 +88,17 @@ public class Orientation extends SubsystemBase {
     }
 
     public boolean getHallEffectSensor1() {
-        return HallEffectSensor1.get();
+        return !HallEffectSensor1.get();
     }
 
     public boolean getHallEffectSensor2(){
-        return HallEffectSensor2.get();
+        return !HallEffectSensor2.get();
+    }
+
+    @Override
+    public void periodic()
+    {
+        SmartDashboard.putBoolean("Magnetic Limit", getHallEffectSensor1());
+        SmartDashboard.putBoolean("Magnetic Limit!", getHallEffectSensor2());
     }
 }

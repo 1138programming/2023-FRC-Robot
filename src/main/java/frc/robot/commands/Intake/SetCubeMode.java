@@ -30,17 +30,9 @@ public class SetCubeMode extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (!intake.isConeMode()) {
-      intake.setConeMode();
-    }
-  
-    if (!orientation.isConeMode()) {
-      orientation.setConeMode();
-    }
-  
-    if (!scoring.isConeMode()) {
-      scoring.setConeMode();
-    }
+    intake.setCubeMode();
+    orientation.setCubeMode();
+    scoring.setCubeMode();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -54,6 +46,6 @@ public class SetCubeMode extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

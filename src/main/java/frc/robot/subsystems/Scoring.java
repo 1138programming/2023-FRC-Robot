@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.*;
 import com.revrobotics.CANSparkMax; // Neos and 775
 import com.revrobotics.RelativeEncoder;
+import edu.wpi.first.wpilibj.DigitalInput;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType; // Covers Neos and 775 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
@@ -110,24 +111,24 @@ public class Scoring extends SubsystemBase{
         return toFlipOrNotToFlip;
     }
     
+    public void setCubeMode() {
+        scoringMode = KCubeMode;
+    }
+
+    public void setConeMode() {
+        scoringMode = KConeMode; 
+    }
+
+    public boolean isConeMode() {
+        return scoringMode;
+    }
+
     public boolean getBaseSensor() {
         return BaseChecker.get();
     }
 
     public boolean getTipSensor() {
         return TipChecker.get();
-    }
-
-    public void setCubeMode() {
-        scoringMode = false;
-    }
-
-    public void setConeMode() {
-        scoringMode = true; 
-    }
-
-    public boolean isConeMode() {
-        return scoringMode;
     }
 
     public void stop() {

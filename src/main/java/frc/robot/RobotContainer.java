@@ -27,6 +27,9 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Endgame;
 import frc.robot.subsystems.Scoring;
 import frc.robot.subsystems.Orientation;
+import frc.robot.commands.Orientation.ExtensionNudge;
+import frc.robot.commands.Orientation.MoveExtensionToInPosition;
+import frc.robot.commands.Orientation.MoveExtensionToOutPosition;
 import frc.robot.commands.Orientation.OrientationMoveAllForward;
 import frc.robot.commands.Orientation.OrientationMoveAllReverse;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightForward;
@@ -36,8 +39,10 @@ import frc.robot.commands.Limelight.LimelightMoveToAprilTag;
 import frc.robot.commands.Limelight.LimelightMoveToConeNode;
 import frc.robot.commands.Limelight.ToggleLimelightPipeline;
 import frc.robot.commands.Orientation.OrientationStopOnlyExtension;
+import frc.robot.commands.Orientation.ExtensionNudge;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionForward;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionReverse;
+
 import frc.robot.commands.Base.ToggleSpeed;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -76,9 +81,9 @@ public class RobotContainer {
   private final IntakeMoveSwivelUp moveSwivelUp = new IntakeMoveSwivelUp(intake);
 
   //Orientation
-  private final OrientationMoveOnlyExtensionForward OrientationFoward1 = new OrientationMoveOnlyExtensionForward(orientation);
-  private final OrientationMoveOnlyExtensionReverse OrientationBackward1 = new OrientationMoveOnlyExtensionReverse(orientation);
-  private final OrientationStopOnlyExtension OrientationStop = new OrientationStopOnlyExtension(orientation);
+  private final MoveExtensionToOutPosition OrientationMoveOut = new MoveExtensionToOutPosition(orientation);
+  private final MoveExtensionToInPosition OrientationMoveIn = new MoveExtensionToInPosition(orientation);
+  private final ExtensionNudge OrientationNudge = new ExtensionNudge(orientation);
 
   // Endgame
   private final MoveEndgameShuffleboard moveEndgameShuffleboard = new MoveEndgameShuffleboard(endgame);
@@ -157,6 +162,7 @@ public class RobotContainer {
   public RobotContainer() {
     // base.setDefaultCommand(driveWithJoysticks);
     intake.setDefaultCommand(intakeStop);
+    orientation.setDefaultCommand(OrientationMoveOut);
 
     //Game controllers
     logitech = new Joystick(KLogitechPort); //Logitech Dual Action
@@ -210,21 +216,12 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // logitechBtnY.onTrue(new ResetEncoders(base));
-    // logitechBtnLB.onTrue(toggleFastSpeed);
-    // logitechBtnLB.onFalse(toggleSlowSpeed);
-    // logitechBtnA.onTrue(new ToggleLimelightPipeline(limelight));
-
     logitechBtnX.whileTrue(goToTarget);
     logitechBtnB.whileTrue(goToTargetTape);
-    
     
     coneModeButton.onTrue(setConeMode);
     cubeModeButton.onTrue(setCubeMode);
     xboxBtnA.onTrue(intakeForward);
-    
-    
-
   }
 
   /**

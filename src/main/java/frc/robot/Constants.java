@@ -30,8 +30,15 @@ public final class Constants {
   public static final int KOrientationkDoorControlID = 3;
   public static final int KOrientationkBaseCheckerID = 4;
   public static final int KOrientationkTipCheckerID = 5;
-  
-  // Scoring
+
+  public static enum ORIENTATIONSTATE {
+    CUBE,
+    CONEBASE,
+    CONETIP,
+    NOTHING
+  };
+
+    // Scoring
   public static final int KScoringTopLimitSwitch = 6;
   public static final int KScoringBottomLimitSwitch = 7;
   // Endgame
@@ -198,9 +205,11 @@ public final class Constants {
   
   // Orientation
   public static final double KMotorExtensionSpeed = 0.5;
-  public static final double KMotorExtensionTime = 0.5;
+  public static final double KMotorExtensionTime = 0.2;
   public static final double KCubeLeftandRightMotorSpeeds = 18;
   public static final double KConeLeftandRightMotorSpeeds = 18;
+  public static final boolean KCubeMode = false;
+  public static final boolean KConeMode = true;
   
   // Scoring
   public static final double KClawMotorSpeed = 0; //TBD
