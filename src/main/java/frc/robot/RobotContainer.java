@@ -15,8 +15,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.Base.DriveWithJoysticks;
 import frc.robot.commands.Base.ResetEncoders;
 import frc.robot.commands.Endgame.*;
+import frc.robot.commands.Intake.IntakeMoveSwivelDown;
+import frc.robot.commands.Intake.IntakeMoveSwivelUp;
 import frc.robot.commands.Intake.IntakeSpin;
+import frc.robot.commands.Intake.IntakeSpinReverse;
 import frc.robot.commands.Intake.IntakeStop;
+import frc.robot.commands.Intake.SetConeMode;
+import frc.robot.commands.Intake.SetCubeMode;
 import frc.robot.subsystems.Base;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Endgame;
@@ -54,14 +59,21 @@ public class RobotContainer {
   private final Orientation orientation = new Orientation();
   private final Limelight limelight = new Limelight();
 
+
   // Base 
-  // private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
-  // private final ToggleSpeed toggleFastSpeed = new ToggleSpeed(base, KBaseDriveMaxPercent);
-  // private final ToggleSpeed toggleSlowSpeed = new ToggleSpeed(base, KBaseDriveLowPercent);
+  private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
+  private final ToggleSpeed toggleFastSpeed = new ToggleSpeed(base, KBaseDriveMaxPercent);
+  private final ToggleSpeed toggleSlowSpeed = new ToggleSpeed(base, KBaseDriveLowPercent);
 
   // Intake
   private final IntakeSpin intakeForward = new IntakeSpin(intake);
+  private final IntakeSpinReverse intakeSpinReverse = new IntakeSpinReverse(intake);
+
   private final IntakeStop intakeStop = new IntakeStop(intake);
+  private final SetConeMode setConeMode = new SetConeMode(orientation, intake, scoring);
+  private final SetCubeMode setCubeMode = new SetCubeMode(orientation, intake, scoring);
+  private final IntakeMoveSwivelDown moveSwivelDown = new IntakeMoveSwivelDown(intake);
+  private final IntakeMoveSwivelUp moveSwivelUp = new IntakeMoveSwivelUp(intake);
 
   //Orientation
   private final OrientationMoveOnlyExtensionForward OrientationFoward1 = new OrientationMoveOnlyExtensionForward(orientation);
@@ -81,6 +93,7 @@ public class RobotContainer {
   //Controller Ports (check in Driver Station, IDs may be different for each computer)
   private static final int KLogitechPort = 0;
   private static final int KXboxPort = 1;  
+  private static final int KStreamDeckPort = 2;  
 
   //Deadzone
   private static final double KDeadZone = 0.05;
@@ -106,19 +119,38 @@ public class RobotContainer {
   public static final int KXboxButtonB = 2;
   public static final int KXboxButtonX = 3;
   public static final int KXboxButtonY = 4;
-  public static final int KXboxLeftBumper = 5; 
-  public static final int KXboxRightBumper = 6; 
-  public static final int KXboxSelectButton = 7; 
-  public static final int KXboxStartButton = 8; 
-  public static final int KXboxLeftTrigger = 2; 
-  public static final int KXboxRightTrigger = 3; 
+  public static final int KXboxLeftBumper = 5;
+  public static final int KXboxRightBumper = 6;
+  public static final int KXboxSelectButton = 7;
+  public static final int KXboxStartButton = 8;
+  public static final int KXboxLeftTrigger = 2;
+  public static final int KXboxRightTrigger = 3;
+
+  //Stream Deck Constants
+  public static final int KConeModeButton = 1;
+  public static final int KCubeModeButton = 2;
+  public static final int KLiftLowSetpoint = 3;
+  public static final int KLiftMidSetpoint = 4;
+  public static final int KLiftHighSetpoint = 5;
+  public static final int KCloseClawButton = 6;
+  public static final int KOpenClawButton = 7;
+  public static final int KMoveLiftUp = 8;
+  public static final int KMoveLiftDown = 9;
+  public static final int KLiftToWaitingPos = 10;
+
+  public static final int KIntakeDown = 11;
+  public static final int KIntakeUp = 12;
+  public static final int KDefenseModeButton = 15;
 
   //Game Controllers
   public static Joystick logitech;
+  public static Joystick streamDeck;
   public static XboxController xbox; 
   //Controller Buttons/Triggers
   public JoystickButton logitechBtnX, logitechBtnA, logitechBtnB, logitechBtnY, logitechBtnLB, logitechBtnRB, logitechBtnLT, logitechBtnRT; //Logitech Button
   public JoystickButton xboxBtnA, xboxBtnB, xboxBtnX, xboxBtnY, xboxBtnLB, xboxBtnRB, xboxBtnStrt, xboxBtnSelect;
+  public JoystickButton coneModeButton, cubeModeButton, liftLowSetpointButton, liftMidSetpointButton, liftHighSetpointButton, closeClawButton,
+    openClawButton, moveLiftUpButton, moveLiftDownButton, liftToWaitingPosButton, intakeUpButton, intakeDownButton, defenseModeButton;
   public Trigger xboxBtnRT, xboxBtnLT;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -129,6 +161,7 @@ public class RobotContainer {
     //Game controllers
     logitech = new Joystick(KLogitechPort); //Logitech Dual Action
     xbox = new XboxController(KXboxPort);   //Xbox 360 for Windows
+    streamDeck = new Joystick(KStreamDeckPort);   //Stream Deck + vjoy
 
     // Logitch Buttons 
     logitechBtnX = new JoystickButton(logitech, KLogitechButtonX);
@@ -151,6 +184,21 @@ public class RobotContainer {
 		xboxBtnStrt = new JoystickButton(xbox, KXboxStartButton);
     xboxBtnLT = new Trigger(() -> (joystickThreshold(xbox.getRawAxis(KXboxLeftTrigger))));
     xboxBtnRT = new Trigger(() -> (joystickThreshold(xbox.getRawAxis(KXboxRightTrigger))));
+
+    coneModeButton = new JoystickButton(streamDeck, KConeModeButton);
+    cubeModeButton = new JoystickButton(streamDeck, KCubeModeButton);
+    liftLowSetpointButton = new JoystickButton(streamDeck, KLiftLowSetpoint);
+    liftMidSetpointButton = new JoystickButton(streamDeck, KLiftMidSetpoint);
+    liftHighSetpointButton = new JoystickButton(streamDeck, KLiftHighSetpoint);
+    closeClawButton = new JoystickButton(streamDeck, KCloseClawButton);
+    openClawButton = new JoystickButton(streamDeck, KOpenClawButton);
+    moveLiftUpButton = new JoystickButton(streamDeck, KMoveLiftUp);
+    moveLiftDownButton = new JoystickButton(streamDeck, KMoveLiftDown);
+    liftToWaitingPosButton = new JoystickButton(streamDeck, KLiftToWaitingPos);
+    intakeDownButton = new JoystickButton(streamDeck, KIntakeDown);
+    intakeUpButton = new JoystickButton(streamDeck, KIntakeUp);
+    defenseModeButton = new JoystickButton(streamDeck, KDefenseModeButton);
+  	
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -170,8 +218,13 @@ public class RobotContainer {
     logitechBtnX.whileTrue(goToTarget);
     logitechBtnB.whileTrue(goToTargetTape);
     
+    
+    coneModeButton.onTrue(setConeMode);
+    cubeModeButton.onTrue(setCubeMode);
     xboxBtnA.onTrue(intakeForward);
-  ;
+    
+    
+
   }
 
   /**

@@ -30,23 +30,26 @@ public final class Constants {
   public static final int KOrientationkDoorControlID = 3;
   public static final int KOrientationkBaseCheckerID = 4;
   public static final int KOrientationkTipCheckerID = 5;
-
-    // Scoring
+  
+  // Scoring
   public static final int KScoringTopLimitSwitch = 6;
   public static final int KScoringBottomLimitSwitch = 7;
-    // Endgame
-  public static final int KEndgameLeftIR = 9;
+  // Endgame
   public static final int KEndgameRightIR = 8;
-    // Intake
-  public static final int KIntakeLimitId = 10;  //NavX port number: 0
+  public static final int KEndgameLeftIR = 9;
+  // Intake
+  public static final int KIntakeTopLimitId = 10;  //NavX port number: 0
   public static final int KIntakeEncoderID = 11; //NavX port number: 1
+  public static final int KIntakeBottomLimitId = 12;  //NavX port number: 2
   
-    // PWM
+  // PWM
   public static final int KLinearServoFront = 0;
   public static final int KLinearServoBack = 1;
-
-    // LED ports: (setup undetermined)
-  public static final int KLEDPort = 6;
+  public static final int KClawServo = 2;
+  public static final int KWristServo = 3;
+  public static final int KLEDPort = 4;
+  
+  // Additional LED info:
   public static final int KLEDBuffer = 20;
   public static enum KLEDSTATE {
     OFF,
@@ -80,8 +83,6 @@ public final class Constants {
   // public static final int KWristMotor = 16;
   public static final int KLiftMotor = 17;
   public static final int KFlipperMotor = 18;
-  public static final int KClawServo = 2;
-  public static final int KWristServo = 3;
   
 
   // Math and other Constants
@@ -163,8 +164,9 @@ public final class Constants {
 
   //Speeds and stuff
   public static final double KIntakeConeSpaghettitSpeed = 0.6;
-  
   public static final double KIntakeCubeSpaghettitSpeed = 0.6;
+
+  public static final double KIntakeSwivelSpeed = 0.3;  
   
   public static final double KIntakeSwiveTopOffset = 2; 
   public static final double KIntakeSwiveBottumOffset = 2;  

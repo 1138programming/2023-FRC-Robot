@@ -25,7 +25,8 @@ public class Intake extends SubsystemBase {
 
   private PIDController intakeController;
 
-  private DigitalInput intakeLimit;
+  private DigitalInput intakeTopLimit;
+  private DigitalInput intakeBottomLimit;
 
   AddressableLED ledStrip;
   AddressableLEDBuffer ledBuffer;
@@ -40,7 +41,8 @@ public class Intake extends SubsystemBase {
 
     intakeController = new PIDController(KIntakeP, KIntakeI, KIntakeD);
 
-    intakeLimit = new DigitalInput(KIntakeLimitId);
+    intakeBottomLimit = new DigitalInput(KIntakeTopLimitId);
+    intakeTopLimit = new DigitalInput(KIntakeBottomLimitId);
 
     ledStrip = new AddressableLED(KLEDPort);
     ledBuffer = new AddressableLEDBuffer(KLEDBuffer);
@@ -65,14 +67,13 @@ public class Intake extends SubsystemBase {
     }
   }
   
-  public void spaghettiSpinOut() {
+  public void spaghettiSpinReverse() {
     if (intakeMode) {
       spaghetti.set(ControlMode.PercentOutput, -KIntakeConeSpaghettitSpeed);
     }
     else if (!intakeMode) {
       spaghetti.set(ControlMode.PercentOutput, -KIntakeCubeSpaghettitSpeed);
     }
-    
   }
 
   public void ledsOff() {
@@ -111,9 +112,13 @@ public class Intake extends SubsystemBase {
   }
 
   public void moveSwivel(double speed) {
-    if (!getIntakeLimitSwitch()) {
+    if (speed > 0 && !getTopLimitSwitch()) {
       swivel.set(ControlMode.PercentOutput, speed);
-    } else {
+    }
+    else if (speed < 0 && !getBottomLimitSwitch()) {
+      swivel.set(ControlMode.PercentOutput, -speed);
+    }
+    else {
       swivel.set(ControlMode.PercentOutput, 0);
     }
   }
@@ -122,8 +127,11 @@ public class Intake extends SubsystemBase {
     return swivel.getSelectedSensorPosition();
   }
 
-  public boolean getIntakeLimitSwitch() {
-    return intakeLimit.get();
+  public boolean getTopLimitSwitch() {
+    return intakeTopLimit.get();
+  } 
+  public boolean getBottomLimitSwitch() {
+    return intakeBottomLimit.get();
   } 
   
   public void intakeStop() {
