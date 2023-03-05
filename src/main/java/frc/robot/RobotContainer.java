@@ -26,14 +26,15 @@ import frc.robot.subsystems.Base;
 import frc.robot.subsystems.Orientation;
 import frc.robot.commands.Orientation.ExtensionNudge;
 import frc.robot.commands.Orientation.MoveExtensionToInPosition;
+import frc.robot.commands.Orientation.MoveExtensionToOutPosition;
 import frc.robot.commands.Orientation.OrientationMoveAllForward;
 import frc.robot.commands.Orientation.OrientationMoveAllReverse;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightForward;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
-import frc.robot.commands.Orientation.OrientationStopOnlyExtension;
+import frc.robot.commands.Orientation.ExtensionNudge;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionForward;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionReverse;
-import frc.robot.commands.Orientation.MoveExtensionToOutPosition;
+
 import frc.robot.commands.Base.ToggleSpeed;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -70,9 +71,9 @@ public class RobotContainer {
   private final IntakeStop intakeStop = new IntakeStop(intake);
 
   //Orientation
-  private final MoveExtensionToOutPosition OrientationFoward1 = new MoveExtensionToOutPosition(orientation);
-  private final MoveExtensionToInPosition OrientationBackward1 = new MoveExtensionToInPosition(orientation);
-  private final ExtensionNudge OrientationStop = new ExtensionNudge(orientation);
+  private final MoveExtensionToOutPosition OrientationMoveOut = new MoveExtensionToOutPosition(orientation);
+  private final MoveExtensionToInPosition OrientationMoveIn = new MoveExtensionToInPosition(orientation);
+  private final ExtensionNudge OrientationNudge = new ExtensionNudge(orientation);
 
   // Endgame
   private final MoveLinearServosOut moveLinearServosOut = new MoveLinearServosOut(endgame);
@@ -125,6 +126,7 @@ public class RobotContainer {
   public RobotContainer() {
     base.setDefaultCommand(driveWithJoysticks);
     intake.setDefaultCommand(intakeStop);
+    orientation.setDefaultCommand(OrientationMoveOut);
 
     //Game controllers
     logitech = new Joystick(KLogitechPort); //Logitech Dual Action
@@ -172,10 +174,10 @@ public class RobotContainer {
     // xboxBtnA.onTrue(moveLinearServosOut);
     // xboxBtnB.onTrue(moveLinearServosIn);
 
-    xboxBtnA.onTrue(OrientationFoward1);
-    xboxBtnB.onTrue(OrientationBackward1);
-    // xboxBtnA.whileFalse(OrientationStop);
-    xboxBtnY.onTrue(OrientationStop);
+    xboxBtnA.onTrue(OrientationMoveOut);
+    xboxBtnB.onTrue(OrientationMoveIn);
+    // xboxBtnA.whileFalse(OrientationNudge);
+    xboxBtnY.onTrue(OrientationNudge);
 
   }
 
