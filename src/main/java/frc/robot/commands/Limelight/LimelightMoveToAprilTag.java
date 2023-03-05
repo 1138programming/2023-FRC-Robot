@@ -63,7 +63,7 @@ public class LimelightMoveToAprilTag extends CommandBase {
     SmartDashboard.putNumber("ydist", Ydistance);
     
     if (id >= 0 && id < 8)
-      base.drive(XSpeed, YSpeed, rotSpeed, false, KPhysicalMaxDriveSpeedMPS);
+      base.drive(XSpeed, 0, rotSpeed, false, KPhysicalMaxDriveSpeedMPS);
     
   }
 

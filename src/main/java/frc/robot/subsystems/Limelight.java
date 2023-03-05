@@ -22,7 +22,7 @@ public class Limelight extends SubsystemBase {
   private String tapePipeline = "Tape";
   private String defaultPipeline = "limelight";
 
-  
+  private LinearFilter distanceFilter;
   
   private double targetFound;
   private double x;
@@ -52,7 +52,7 @@ public class Limelight extends SubsystemBase {
     botPoseX = 1;
     botPoseY = 1;
     
-    LinearFilter distanceFilter = LinearFilter.singlePoleIIR(0.1, 0.02);
+    distanceFilter = LinearFilter.movingAverage(51);
     
 
     botPose = new double[6];
@@ -176,13 +176,16 @@ public class Limelight extends SubsystemBase {
     return skew; 
   }
 
+  
+
   public double getDistance() {
     // default value to return when limelight does not see target
     if (!getTargetFound()) {
       return kDistanceWhenNoTarget;
     }
    
-
+    double distanceRaw = (88.263 * (Math.pow((Math.E), (-2.191 *area))));
+    double distance = distanceFilter.calculate(distanceRaw);
     return distance + KDistanceOffset; // constant offset for this specific bot
   }
   
@@ -191,13 +194,17 @@ public class Limelight extends SubsystemBase {
     if (!getTargetFound()) {
       return kHorizDistanceWhenNoTarget;
     }
-    double distance = 0; 
-    if (Math.abs(base.getHeadingDeg()) <= 90) {
-      distance = Math.abs(getDistance()) / Math.tan(Math.toRadians(Math.abs(base.getHeadingDeg()) % 90) + x);
+    double distance = 0;
+    double theta = Math.abs(base.getHeadingDeg()) % 90;
+    if (theta <= 45) {
+      theta += x;
     }
     else {
-      distance = Math.abs(getDistance()) / Math.tan(Math.toRadians(90-Math.abs(base.getHeadingDeg()) % 90) + x);
+      theta = 90 - theta + x;
     }
+    SmartDashboard.putNumber("theta", theta);
+    
+    distance = Math.abs(getDistance()) * Math.cos(Math.toRadians(theta));
     
     return distance + KHorizDistanceOffset; // constant offset for this specific bot
     

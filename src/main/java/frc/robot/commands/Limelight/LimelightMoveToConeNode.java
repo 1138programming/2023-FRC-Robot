@@ -45,12 +45,12 @@ public class LimelightMoveToConeNode extends CommandBase {
 
     margin = limelight.getXAngle();
     
-    double rotSpeed = rotControlTape.calculate(margin, 0);
+    double rotSpeed = rotControlTape.calculate(base.getHeadingDeg(), -90); // on real bot will be 180
 
     Ydistance = limelight.getDistance(); 
     Xdistance = limelight.getHorizontinalDistance(base);
     
-    double XSpeed = -BaseControllerTape.calculate(Xdistance, 0);  // swapped for testing
+    double XSpeed = BaseControllerTape.calculate(margin, 0);  // swapped for testing
     double YSpeed = BaseControllerTape.calculate(Ydistance, 0);
 
     SmartDashboard.putNumber("xTapedist", Xdistance);
@@ -61,7 +61,7 @@ public class LimelightMoveToConeNode extends CommandBase {
     SmartDashboard.putNumber("XSpeed", XSpeed);
     SmartDashboard.putNumber("YSpeed", YSpeed);
 
-    // base.drive(0, YSpeed, rotSpeed, false, KPhysicalMaxDriveSpeedMPS);
+    base.drive(XSpeed, 0, rotSpeed, false, KPhysicalMaxDriveSpeedMPS);
   }
    
 
