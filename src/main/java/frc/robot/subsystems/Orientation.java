@@ -26,8 +26,6 @@ public class Orientation extends SubsystemBase {
     private DigitalInput HallEffectSensor2;
 
     private boolean orientationMode;
-    
-    public ORIENTATIONSTATE OrientationState = ORIENTATIONSTATE.CUBE;
 
     public Orientation() {
 
@@ -43,7 +41,7 @@ public class Orientation extends SubsystemBase {
         orientationLeftMotor.setIdleMode(IdleMode.kBrake);
         // orientationMotorExtension.setIdleMode(IdleMode.kBrake);
         
-        orientationRightMotor.follow(orientationLeftMotor);
+        orientationRightMotor.follow(orientationLeftMotor, KOrientationRightMotorReversed);
     }
 
     public void moveOrientationLeftandRightMotors() {
