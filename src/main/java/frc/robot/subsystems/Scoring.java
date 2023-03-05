@@ -69,11 +69,11 @@ public class Scoring extends SubsystemBase{
     }
     
     public void setCubeMode() {
-        scoringMode = false;
+        scoringMode = KCubeMode;
     }
 
     public void setConeMode() {
-        scoringMode = true; 
+        scoringMode = KConeMode; 
     }
 
     public boolean isConeMode() {

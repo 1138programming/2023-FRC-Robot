@@ -65,7 +65,7 @@ public class Intake extends SubsystemBase {
 
   public void setCubeMode() {
     
-    intakeMode = false;
+    intakeMode = KCubeMode;
 
     // set the led strip to purple
     ledStrip.start();
@@ -76,7 +76,7 @@ public class Intake extends SubsystemBase {
   }
 
   public void setConeMode() {
-    intakeMode = true; 
+    intakeMode = KConeMode; 
     
     // yellow
     ledStrip.start();

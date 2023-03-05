@@ -192,6 +192,8 @@ public final class Constants {
   public static final double KMotorExtensionTime = 0.2;
   public static final double KCubeLeftandRightMotorSpeeds = 18;
   public static final double KConeLeftandRightMotorSpeeds = 18;
+  public static final boolean KCubeMode = false;
+  public static final boolean KConeMode = true;
   
   // Scoring
   public static final double KClawMotorSpeed = 0; //TBD

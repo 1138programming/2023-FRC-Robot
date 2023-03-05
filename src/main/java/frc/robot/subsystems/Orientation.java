@@ -64,11 +64,11 @@ public class Orientation extends SubsystemBase {
     }
 
     public void setCubeMode() {
-        orientationMode = false;
+        orientationMode = KCubeMode;
     }
 
     public void setConeMode() {
-        orientationMode = true; 
+        orientationMode = KConeMode; 
     }
 
     public boolean isConeMode() {
