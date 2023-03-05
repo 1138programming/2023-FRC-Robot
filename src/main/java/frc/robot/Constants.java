@@ -162,6 +162,8 @@ public final class Constants {
   public static final double KIntakeSwivelTopPos = 11;
   public static final double KIntakeSwivelBottumPos = 12;
 
+  public static final boolean KOrientationRightMotorReversed = true;
+
   //Speeds and stuff
   public static final double KIntakeConeSpaghettitSpeed = 0.6;
   public static final double KIntakeCubeSpaghettitSpeed = 0.6;
