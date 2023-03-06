@@ -238,6 +238,9 @@ public final class Constants {
   public static final double KHorizDistanceOffset = 0;
   public static final double KGoalWidth = 15;
 
+  public static final int KAprilTagPipeline = 0;
+  public static final int KReflectiveTapePipeline = 1;
+
   public static final double KDistanceMoveOffset = 1;
 
   public static final double KOffsetFromAprilTag = 1;

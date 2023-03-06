@@ -81,8 +81,8 @@ public class RobotContainer {
   private final IntakeSpinReverse intakeSpinReverse = new IntakeSpinReverse(intake);
 
   private final IntakeStop intakeStop = new IntakeStop(intake);
-  private final SetConeMode setConeMode = new SetConeMode(orientation, intake, scoring);
-  private final SetCubeMode setCubeMode = new SetCubeMode(orientation, intake, scoring);
+  private final SetConeMode setConeMode = new SetConeMode(orientation, intake, scoring, limelight);
+  private final SetCubeMode setCubeMode = new SetCubeMode(orientation, intake, scoring, limelight);
   private final IntakeMoveSwivelDown moveSwivelDown = new IntakeMoveSwivelDown(intake);
   private final IntakeMoveSwivelUp moveSwivelUp = new IntakeMoveSwivelUp(intake);
 
@@ -90,6 +90,8 @@ public class RobotContainer {
   private final MoveExtensionToOutPosition OrientationMoveOut = new MoveExtensionToOutPosition(orientation);
   private final MoveExtensionToInPosition OrientationMoveIn = new MoveExtensionToInPosition(orientation);
   private final ExtensionNudge OrientationNudge = new ExtensionNudge(orientation);
+  private final OrientationSpinOnlyLeftandRightReverse orientationSpinInwards = new OrientationSpinOnlyLeftandRightReverse(orientation);
+  private final OrientationSpinOnlyLeftandRightForward orientationSpinOutwards = new OrientationSpinOnlyLeftandRightForward(orientation);
 
   // Endgame
   private final MoveEndgameShuffleboard moveEndgameShuffleboard = new MoveEndgameShuffleboard(endgame);
@@ -254,11 +256,19 @@ public class RobotContainer {
     coneModeButton.onTrue(setConeMode);
     cubeModeButton.onTrue(setCubeMode);
     defenseModeButton.onTrue(new ToggleDefenseMode(intake));
+    
 
-    // streamDeck1.whileTrue(intakeSpinForward);
-    // streamDeck2.whileTrue(intakeSpinReverse);
-    // streamDeck3.whileTrue(moveSwivel);
-    // streamDeck2.whileTrue();
+    streamDeck1.whileTrue(intakeSpinForward);
+    streamDeck2.whileTrue(intakeSpinReverse);
+    streamDeck3.whileTrue(moveSwivelUp);
+    streamDeck4.whileTrue(moveSwivelDown);
+    streamDeck6.whileTrue(OrientationMoveOut);
+    streamDeck7.whileTrue(OrientationMoveIn);
+    streamDeck8.whileTrue(orientationSpinOutwards);
+    streamDeck8.whileTrue(orientationSpinInwards);
+    streamDeck13.whileTrue(setCubeMode);
+    streamDeck14.whileTrue(setConeMode);
+
   }
 
   /**
