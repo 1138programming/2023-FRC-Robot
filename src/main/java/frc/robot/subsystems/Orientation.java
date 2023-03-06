@@ -22,8 +22,8 @@ public class Orientation extends SubsystemBase {
     private TalonSRX orientationMotorExtension;
     
     private DigitalInput DoorControl;
-    private DigitalInput HallEffectSensor1;
-    private DigitalInput HallEffectSensor2;
+    private DigitalInput HallEffectSensor1; // CHANGE NAME AS SOON AS YOU CAN
+    private DigitalInput HallEffectSensor2; // CHANGE NAME AS SOON AS YOU CAN
 
     private boolean orientationMode;//needs to be revised so it's not true for cone and false for cube
 
@@ -41,7 +41,7 @@ public class Orientation extends SubsystemBase {
         orientationLeftMotor.setIdleMode(IdleMode.kBrake);
         // orientationMotorExtension.setIdleMode(IdleMode.kBrake);
         
-        orientationRightMotor.follow(orientationLeftMotor);
+        orientationRightMotor.follow(orientationLeftMotor, KOrientationRightMotorReversed);
     }
 
     public void moveOrientationLeftandRightMotors() {
@@ -63,7 +63,7 @@ public class Orientation extends SubsystemBase {
 
     //Changes between speeds for cones and cubes
     public void setCubeMode() {
-        orientationMode = false;
+        orientationMode = false; 
     }
 
     public void setConeMode() {
