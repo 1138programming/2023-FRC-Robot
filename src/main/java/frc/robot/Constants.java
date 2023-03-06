@@ -266,5 +266,6 @@ public final class Constants {
   public static final double KTapeLimelightMoveI = 0;
   public static final double KTapeLimelightMoveD = 0;
 
-
+  //XBox Controller
+  public static final double KXBoxTriggerTreshold = 0.09;
 }

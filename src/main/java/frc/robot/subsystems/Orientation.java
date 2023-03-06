@@ -25,9 +25,7 @@ public class Orientation extends SubsystemBase {
     private DigitalInput HallEffectSensor1;
     private DigitalInput HallEffectSensor2;
 
-    private boolean orientationMode;
-    
- 
+    private boolean orientationMode;//needs to be revised so it's not true for cone and false for cube
 
     public Orientation() {
 
@@ -63,6 +61,7 @@ public class Orientation extends SubsystemBase {
         orientationMotorExtension.set(ControlMode.PercentOutput, speed);
     }
 
+    //Changes between speeds for cones and cubes
     public void setCubeMode() {
         orientationMode = false;
     }
@@ -71,6 +70,7 @@ public class Orientation extends SubsystemBase {
         orientationMode = true; 
     }
 
+    // get the operating mode of the orientation (name may need to be revised)
     public boolean isConeMode() {
         return orientationMode;
     }

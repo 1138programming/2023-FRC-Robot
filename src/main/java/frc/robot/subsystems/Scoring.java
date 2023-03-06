@@ -30,9 +30,9 @@ public class Scoring extends SubsystemBase{
     private PIDController liftControl;
     private RelativeEncoder liftEncoder;
 
-    private boolean scoringMode;
+    private boolean scoringMode;//needs to be revised so it's not true for cone and false for cube
 
-    private boolean toFlipOrNotToFlip; 
+    private boolean toFlipOrNotToFlip;//maybe revise variable name?
 
     public Scoring() {
         flipper = new CANSparkMax(KFlipperMotor, MotorType.kBrushless);
@@ -40,9 +40,9 @@ public class Scoring extends SubsystemBase{
         claw = new Servo(KClawServo);
         wrist = new Servo (KWristServo);
 
-        flipperEncoder = flipper.getEncoder();
-
         flipperController = new PIDController(KFlipperP, KFlipperI, KFlipperD);
+        flipperEncoder = flipper.getEncoder();
+        
         liftControl = new PIDController(KLiftP, KLiftI, KLiftD);
         liftEncoder = lift.getEncoder();
 
@@ -51,21 +51,23 @@ public class Scoring extends SubsystemBase{
     }
 
     @Override
-    public void periodic () {
-
-    }
-
+    public void periodic () {}
 
     public void moveFlipper(double speed) {
         flipper.set(speed);
     }
+
     public void moveLift(double setPoint) {
         lift.set(liftControl.calculate(liftEncoder.getPosition(),setPoint));
     }
+
+    //converts from degrees of servo to the percent movement
     public void moveClaw(double setpoint) {
         setpoint *= 1/135;
         claw.set(setpoint);
     }
+
+    //converts from degrees of servo to the percent movement
     public void moveWrist(double setpoint) {
         setpoint *= 1/300;
         wrist.set(setpoint);
@@ -92,12 +94,13 @@ public class Scoring extends SubsystemBase{
         moveFlipper(flipperController.calculate(getFlipperPos(), setPoint));
     }
 
+    //sets variable to track whether or not to flip the claw on the way up
     public void updateScoringFlipperStatus() {
         if (scoringMode) {
             if (getTipSensor()) {
               toFlipOrNotToFlip = true;
             }
-            else  if (getBaseSensor()) {
+            else if (getBaseSensor()) {
                 toFlipOrNotToFlip = false;
             }
         }
@@ -126,6 +129,7 @@ public class Scoring extends SubsystemBase{
         scoringMode = true; 
     }
 
+    // get the operating mode of scoring (name may need to be revised)
     public boolean isConeMode() {
         return scoringMode;
     }

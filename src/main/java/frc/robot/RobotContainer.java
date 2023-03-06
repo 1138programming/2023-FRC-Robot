@@ -4,45 +4,54 @@
 
 package frc.robot;
 
+//Imports constants
 import static frc.robot.Constants.*;
 
 import javax.xml.stream.events.EndDocument;
-
+//Imports various 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.Base.DriveWithJoysticks;
-import frc.robot.commands.Base.ResetEncoders;
-import frc.robot.commands.Endgame.*;
-import frc.robot.commands.Intake.IntakeMoveSwivelDown;
-import frc.robot.commands.Intake.IntakeMoveSwivelUp;
-import frc.robot.commands.Intake.IntakeSpin;
-import frc.robot.commands.Intake.IntakeSpinReverse;
-import frc.robot.commands.Intake.IntakeStop;
-import frc.robot.commands.Intake.SetConeMode;
-import frc.robot.commands.Intake.SetCubeMode;
+//Imports all subsystems
 import frc.robot.subsystems.Base;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Endgame;
 import frc.robot.subsystems.Scoring;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Orientation;
+//Commands for the Base
+import frc.robot.commands.Base.ToggleSpeed;
+import frc.robot.commands.Base.ResetEncoders;
+import frc.robot.commands.Base.DriveWithJoysticks;
+//Commands for the Intake
+import frc.robot.commands.Intake.IntakeSpin;
+import frc.robot.commands.Intake.IntakeStop;
+import frc.robot.commands.Intake.SetConeMode;
+import frc.robot.commands.Intake.SetCubeMode;
+import frc.robot.commands.Intake.IntakeSpinReverse;
+import frc.robot.commands.Intake.IntakeMoveSwivelUp;
+import frc.robot.commands.Intake.IntakeMoveSwivelDown;
+//Commands for the Orientation
 import frc.robot.commands.Orientation.OrientationMoveAllForward;
 import frc.robot.commands.Orientation.OrientationMoveAllReverse;
-import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightForward;
-import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
-import frc.robot.subsystems.Limelight;
-import frc.robot.commands.Limelight.LimelightMoveToAprilTag;
-import frc.robot.commands.Limelight.LimelightMoveToConeNode;
-import frc.robot.commands.Limelight.ToggleLimelightPipeline;
 import frc.robot.commands.Orientation.OrientationStopOnlyExtension;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionForward;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionReverse;
-import frc.robot.commands.Base.ToggleSpeed;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-
+import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightForward;
+import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
+//Commands for the Endgame
+import frc.robot.commands.Endgame.DeployEndgame;
+import frc.robot.commands.Endgame.EndgameReadyUp;
+import frc.robot.commands.Endgame.EndgameToCenter;
+import frc.robot.commands.Endgame.MoveEndgameShuffleboard;
+//Commands for the Limelight
+import frc.robot.commands.Limelight.LimelightMoveToAprilTag;
+import frc.robot.commands.Limelight.LimelightMoveToConeNode;
+import frc.robot.commands.Limelight.ToggleLimelightPipeline;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -59,7 +68,6 @@ public class RobotContainer {
   private final Orientation orientation = new Orientation();
   private final Limelight limelight = new Limelight();
 
-
   // Base 
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
   private final ToggleSpeed toggleFastSpeed = new ToggleSpeed(base, KBaseDriveMaxPercent);
@@ -68,7 +76,6 @@ public class RobotContainer {
   // Intake
   private final IntakeSpin intakeForward = new IntakeSpin(intake);
   private final IntakeSpinReverse intakeSpinReverse = new IntakeSpinReverse(intake);
-
   private final IntakeStop intakeStop = new IntakeStop(intake);
   private final SetConeMode setConeMode = new SetConeMode(orientation, intake, scoring);
   private final SetCubeMode setCubeMode = new SetCubeMode(orientation, intake, scoring);
@@ -137,7 +144,6 @@ public class RobotContainer {
   public static final int KMoveLiftUp = 8;
   public static final int KMoveLiftDown = 9;
   public static final int KLiftToWaitingPos = 10;
-
   public static final int KIntakeDown = 11;
   public static final int KIntakeUp = 12;
   public static final int KDefenseModeButton = 15;
@@ -146,13 +152,17 @@ public class RobotContainer {
   public static Joystick logitech;
   public static Joystick streamDeck;
   public static XboxController xbox; 
+
   //Controller Buttons/Triggers
-  public JoystickButton logitechBtnX, logitechBtnA, logitechBtnB, logitechBtnY, logitechBtnLB, logitechBtnRB, logitechBtnLT, logitechBtnRT; //Logitech Button
+   //Logitech Button
+  public JoystickButton logitechBtnX, logitechBtnA, logitechBtnB, logitechBtnY, logitechBtnLB, logitechBtnRB, logitechBtnLT, logitechBtnRT; 
+   //Xbox Buttons
   public JoystickButton xboxBtnA, xboxBtnB, xboxBtnX, xboxBtnY, xboxBtnLB, xboxBtnRB, xboxBtnStrt, xboxBtnSelect;
+  public Trigger xboxBtnRT, xboxBtnLT;
+   //Stream Deck Buttons
   public JoystickButton coneModeButton, cubeModeButton, liftLowSetpointButton, liftMidSetpointButton, liftHighSetpointButton, closeClawButton,
     openClawButton, moveLiftUpButton, moveLiftDownButton, liftToWaitingPosButton, intakeUpButton, intakeDownButton, defenseModeButton;
-  public Trigger xboxBtnRT, xboxBtnLT;
-
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // base.setDefaultCommand(driveWithJoysticks);
@@ -182,9 +192,10 @@ public class RobotContainer {
     xboxBtnRB = new JoystickButton(xbox, KXboxRightBumper);
     xboxBtnSelect = new JoystickButton(xbox, KXboxSelectButton);
 		xboxBtnStrt = new JoystickButton(xbox, KXboxStartButton);
-    xboxBtnLT = new Trigger(() -> (joystickThreshold(xbox.getRawAxis(KXboxLeftTrigger))));
-    xboxBtnRT = new Trigger(() -> (joystickThreshold(xbox.getRawAxis(KXboxRightTrigger))));
+    xboxBtnLT = new Trigger(() -> (joystickThreshold(xbox.getRawAxis(KXboxLeftTrigger), KXBoxTriggerTreshold)));
+    xboxBtnRT = new Trigger(() -> (joystickThreshold(xbox.getRawAxis(KXboxRightTrigger), KXBoxTriggerTreshold)));
 
+    // Stream Deck Buttons
     coneModeButton = new JoystickButton(streamDeck, KConeModeButton);
     cubeModeButton = new JoystickButton(streamDeck, KCubeModeButton);
     liftLowSetpointButton = new JoystickButton(streamDeck, KLiftLowSetpoint);
@@ -218,13 +229,9 @@ public class RobotContainer {
     logitechBtnX.whileTrue(goToTarget);
     logitechBtnB.whileTrue(goToTargetTape);
     
-    
     coneModeButton.onTrue(setConeMode);
     cubeModeButton.onTrue(setCubeMode);
     xboxBtnA.onTrue(intakeForward);
-    
-    
-
   }
 
   /**
@@ -241,28 +248,11 @@ public class RobotContainer {
     return (maxAllowed - minAllowed) * (unscaledNum - min) / (max - min) + minAllowed;
   }
        
-  public double getLogiRightYAxis() {
-    final double Y = logitech.getRawAxis(KRightYAxis);
-    SmartDashboard.putNumber("getLogiRightYAxis", -Y);
-    if (Y > KDeadZone || Y < -KDeadZone)
-      return -Y;
-    else
-      return 0;
-  }
-
-  public double getLogiLeftYAxis() {
-    final double Y = logitech.getY();
-    SmartDashboard.putNumber("getLogiLeftYAxis", -Y);
-    if(Y > KDeadZone || Y < -KDeadZone)
-      return -Y;
-    else 
-      return 0; 
-  }
-
+  //Sets deadzone for Logitech Controller
   public double getLogiRightXAxis() {
     double X = logitech.getZ();
     SmartDashboard.putNumber("getLogiRightXAxis", -X);
-    if (X > KDeadZone || X < -KDeadZone) {
+    if (joystickThreshold(X, KDeadZone)) {
       return -X;
     } else {
       return 0; 
@@ -272,54 +262,65 @@ public class RobotContainer {
   public double getLogiLeftXAxis() {
     double X = logitech.getX();
     SmartDashboard.putNumber("getLogiLeftXAxis", -X);
-    if (X > KDeadZone || X < -KDeadZone) {
+    if (joystickThreshold(X, KDeadZone)) {
       return -X;
     } else {
       return 0;
     }
   }
+  
+  public double getLogiRightYAxis() {
+    double Y = logitech.getRawAxis(KRightYAxis);
+    SmartDashboard.putNumber("getLogiRightYAxis", -Y);
+    if (joystickThreshold(Y, KDeadZone))
+      return -Y;
+    else
+      return 0;
+  }
 
-  public double getXboxLeftAxis() {
-    final double Y = xbox.getRawAxis(KLeftYAxis);
-    if(Y > KDeadZone || Y < -KDeadZone)
+  public double getLogiLeftYAxis() {
+    double Y = logitech.getY();
+    SmartDashboard.putNumber("getLogiLeftYAxis", -Y);
+    if(joystickThreshold(Y, KDeadZone))
       return -Y;
     else 
-      return 0;
+      return 0; 
   }
 
-  public double getXboxLeftXAxis() {
-    final double X = xbox.getRawAxis(KRightXAxis);
-    if(X > KDeadZone || X < -KDeadZone)
-      return X;
-    else 
-      return 0;
-  }
-
+  //Sets deadzone for XBox controller
   public double getXboxRightXAxis() {
     final double X = xbox.getRawAxis(KRightXAxis);
-    if (X > KDeadZone || X < -KDeadZone)
+    if (joystickThreshold(X, KDeadZone))
       return -X;
     else
       return 0;
   }
 
+  public double getXboxLeftXAxis() {
+    final double X = xbox.getRawAxis(KLeftXAxis);
+    if(joystickThreshold(X, KDeadZone))
+      return X;
+    else 
+      return 0;
+  }
+  public double getXboxRightYAxis() {
+    final double Y = xbox.getRawAxis(KRightYAxis);
+    if (joystickThreshold(Y, KDeadZone))
+      return -Y;
+    else
+    return 0;
+  }
+
   public double getXboxLeftYAxis() {
     final double Y = xbox.getRawAxis(KLeftYAxis);
-    if(Y > KDeadZone || Y < -KDeadZone)
+    if(joystickThreshold(Y, KDeadZone))
       return -Y;
     else 
       return 0;
   }
 
-  public double getXboxRightYAxis() {
-    final double Y = xbox.getRawAxis(KRightYAxis);
-    if (Y > KDeadZone || Y < -KDeadZone)
-      return -Y;
-    else
-      return 0;
-  }
-public boolean joystickThreshold(double triggerValue) {
-    if (Math.abs(triggerValue) < .09) 
+  public boolean joystickThreshold(double triggerValue, double joystickThreshold) {
+    if (Math.abs(triggerValue) < joystickThreshold) 
       return false;
     else 
       return true;
