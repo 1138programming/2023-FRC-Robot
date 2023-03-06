@@ -76,10 +76,9 @@ public final class Constants {
   public static final int KBackRightDriveID = 8;
     // Intake
   public static final int KSpaghettiIntakeId = 9;
-  public static final int KFlexIntakeId = 11;
   public static final int KSwivelIntakeId = 10;
     // Storage
-  public static final int KOrientationLeftMotorID = 12;
+  public static final int KOrientationLeftMotorID = 11;
   public static final int KOrientationRightMotorID = 13;
   public static final int KOrientationMotorExtensionID = 14;
     // Scoring
@@ -188,10 +187,10 @@ public final class Constants {
   public static final double KLiftRotToFoot = 0; //TBD
   
   // Orientation
-  public static final double KMotorExtensionSpeed = 0.5;
+  public static final double KMotorExtensionSpeed = 0.7;
   public static final double KMotorExtensionTime = 0.2;
-  public static final double KCubeLeftandRightMotorSpeeds = 18;
-  public static final double KConeLeftandRightMotorSpeeds = 18;
+  public static final double KCubeLeftandRightMotorSpeeds = 0.5;
+  public static final double KConeLeftandRightMotorSpeeds = 0.7;
   public static final boolean KCubeMode = false;
   public static final boolean KConeMode = true;
   public static final boolean KOrientationRightMotorReversed = true;

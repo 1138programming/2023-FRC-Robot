@@ -34,7 +34,7 @@ public class Intake extends SubsystemBase {
   public Intake() {
     spaghetti = new TalonSRX(KSpaghettiIntakeId);
     swivel = new TalonSRX(KSwivelIntakeId);
-    flex = new TalonSRX(KFlexIntakeId);
+    //flex = new TalonSRX(KFlexIntakeId);
 
     intakeController = new PIDController(KIntakeP, KIntakeI, KIntakeD);
 

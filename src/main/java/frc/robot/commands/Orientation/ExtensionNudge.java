@@ -31,7 +31,7 @@ public class ExtensionNudge extends CommandBase {
   @Override
   public void execute() {
       orientation.moveOrientationMotorExtension(KMotorExtensionSpeed);
-      //orientation.moveOrientationLeftandRightMotors();
+      orientation.moveOrientationLeftandRightMotors(KCubeLeftandRightMotorSpeeds);
     }
   
 
@@ -40,7 +40,7 @@ public class ExtensionNudge extends CommandBase {
   public void end(boolean interrupted) {
     timer.stop();
     orientation.moveOrientationMotorExtension(0);
-    //orientation.moveOrientationLeftandRightMotors(0);
+    orientation.moveOrientationLeftandRightMotors(0);
   }
 
   // Returns true when the command should end.

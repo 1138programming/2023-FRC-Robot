@@ -28,13 +28,13 @@ public class MoveExtensionToInPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (orientation.getDoorSensor()) {
-      extensionpos = true;
-    }
-    if (extensionpos) {
+    //if (orientation.getDoorSensor()) {
+      //extensionpos = true;
+    //}
+    //if (extensionpos) {
     orientation.moveOrientationMotorExtension(KMotorExtensionSpeed);
-    }
-    orientation.moveOrientationLeftandRightMotors();
+    //}
+  orientation.moveOrientationLeftandRightMotors(KCubeLeftandRightMotorSpeeds);
   }
 
   // Called once the command ends or is interrupted.
@@ -47,7 +47,7 @@ public class MoveExtensionToInPosition extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return orientation.getHallEffectSensor2();
+    return orientation.getHallEffectSensor1();
 
   }
 }
