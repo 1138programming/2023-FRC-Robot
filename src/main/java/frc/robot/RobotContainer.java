@@ -6,15 +6,11 @@ package frc.robot;
 
 import static frc.robot.Constants.*;
 
-import javax.xml.stream.events.EndDocument;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.Base.DriveWithJoysticks;
-import frc.robot.commands.Base.ResetEncoders;
-import frc.robot.commands.Endgame.*;
 import frc.robot.commands.Intake.IntakeMoveSwivelDown;
 import frc.robot.commands.Intake.IntakeMoveSwivelUp;
 import frc.robot.commands.Intake.IntakeSpin;
@@ -22,11 +18,15 @@ import frc.robot.commands.Intake.IntakeSpinReverse;
 import frc.robot.commands.Intake.IntakeStop;
 import frc.robot.commands.Intake.SetConeMode;
 import frc.robot.commands.Intake.SetCubeMode;
+import frc.robot.commands.Intake.ToggleDefenseMode;
 import frc.robot.subsystems.Base;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Endgame;
 import frc.robot.subsystems.Scoring;
 import frc.robot.subsystems.Orientation;
+import frc.robot.subsystems.Limelight;
+
+// Commands
 import frc.robot.commands.Orientation.ExtensionNudge;
 import frc.robot.commands.Orientation.MoveExtensionToInPosition;
 import frc.robot.commands.Orientation.MoveExtensionToOutPosition;
@@ -34,16 +34,23 @@ import frc.robot.commands.Orientation.OrientationMoveAllForward;
 import frc.robot.commands.Orientation.OrientationMoveAllReverse;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightForward;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
-import frc.robot.subsystems.Limelight;
-import frc.robot.commands.Limelight.LimelightMoveToAprilTag;
-import frc.robot.commands.Limelight.LimelightMoveToConeNode;
-import frc.robot.commands.Limelight.ToggleLimelightPipeline;
 import frc.robot.commands.Orientation.OrientationStopOnlyExtension;
 import frc.robot.commands.Orientation.ExtensionNudge;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionForward;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionReverse;
 
+import frc.robot.commands.Limelight.LimelightMoveToAprilTag;
+import frc.robot.commands.Limelight.LimelightMoveToConeNode;
+import frc.robot.commands.Limelight.ToggleLimelightPipeline;
+
+// import frc.robot.commands.Endgame.*;
+
+
 import frc.robot.commands.Base.ToggleSpeed;
+import frc.robot.commands.Endgame.DeployEndgame;
+import frc.robot.commands.Endgame.EndgameReadyUp;
+import frc.robot.commands.Endgame.EndgameToCenter;
+import frc.robot.commands.Endgame.MoveEndgameShuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -64,14 +71,13 @@ public class RobotContainer {
   private final Orientation orientation = new Orientation();
   private final Limelight limelight = new Limelight();
 
-
   // Base 
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
   private final ToggleSpeed toggleFastSpeed = new ToggleSpeed(base, KBaseDriveMaxPercent);
   private final ToggleSpeed toggleSlowSpeed = new ToggleSpeed(base, KBaseDriveLowPercent);
 
   // Intake
-  private final IntakeSpin intakeForward = new IntakeSpin(intake);
+  private final IntakeSpin intakeSpinForward = new IntakeSpin(intake);
   private final IntakeSpinReverse intakeSpinReverse = new IntakeSpinReverse(intake);
 
   private final IntakeStop intakeStop = new IntakeStop(intake);
@@ -98,7 +104,8 @@ public class RobotContainer {
   //Controller Ports (check in Driver Station, IDs may be different for each computer)
   private static final int KLogitechPort = 0;
   private static final int KXboxPort = 1;  
-  private static final int KStreamDeckPort = 2;  
+  private static final int KStreamDeckPort = 2;
+  private static final int KTestingStreamDeckPort = 3;
 
   //Deadzone
   private static final double KDeadZone = 0.05;
@@ -150,13 +157,21 @@ public class RobotContainer {
   //Game Controllers
   public static Joystick logitech;
   public static Joystick streamDeck;
+  public static Joystick testStreamDeck;
   public static XboxController xbox; 
   //Controller Buttons/Triggers
   public JoystickButton logitechBtnX, logitechBtnA, logitechBtnB, logitechBtnY, logitechBtnLB, logitechBtnRB, logitechBtnLT, logitechBtnRT; //Logitech Button
+
   public JoystickButton xboxBtnA, xboxBtnB, xboxBtnX, xboxBtnY, xboxBtnLB, xboxBtnRB, xboxBtnStrt, xboxBtnSelect;
-  public JoystickButton coneModeButton, cubeModeButton, liftLowSetpointButton, liftMidSetpointButton, liftHighSetpointButton, closeClawButton,
-    openClawButton, moveLiftUpButton, moveLiftDownButton, liftToWaitingPosButton, intakeUpButton, intakeDownButton, defenseModeButton;
+
   public Trigger xboxBtnRT, xboxBtnLT;
+
+  public JoystickButton coneModeButton, cubeModeButton, liftLowSetpointButton, liftMidSetpointButton, liftHighSetpointButton, closeClawButton, // Vjoy 1
+    openClawButton, moveLiftUpButton, moveLiftDownButton, liftToWaitingPosButton, intakeUpButton, intakeDownButton, defenseModeButton;
+
+  // Top Left SD = 1, numbered from left to right
+  public JoystickButton streamDeck1, streamDeck2, streamDeck3, streamDeck4, streamDeck5, streamDeck6, streamDeck7, streamDeck8, streamDeck9, // Vjoy 2
+    streamDeck10, streamDeck11, streamDeck12, streamDeck13, streamDeck14, streamDeck15;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -168,6 +183,7 @@ public class RobotContainer {
     logitech = new Joystick(KLogitechPort); //Logitech Dual Action
     xbox = new XboxController(KXboxPort);   //Xbox 360 for Windows
     streamDeck = new Joystick(KStreamDeckPort);   //Stream Deck + vjoy
+    testStreamDeck = new Joystick(KStreamDeckPort);   //Stream Deck + vjoy
 
     // Logitch Buttons 
     logitechBtnX = new JoystickButton(logitech, KLogitechButtonX);
@@ -204,6 +220,22 @@ public class RobotContainer {
     intakeDownButton = new JoystickButton(streamDeck, KIntakeDown);
     intakeUpButton = new JoystickButton(streamDeck, KIntakeUp);
     defenseModeButton = new JoystickButton(streamDeck, KDefenseModeButton);
+
+    streamDeck1 = new JoystickButton(testStreamDeck, 1);
+    streamDeck2 = new JoystickButton(testStreamDeck, 2);
+    streamDeck3 = new JoystickButton(testStreamDeck, 3);
+    streamDeck4 = new JoystickButton(testStreamDeck, 4);
+    streamDeck5 = new JoystickButton(testStreamDeck, 5);
+    streamDeck6 = new JoystickButton(testStreamDeck, 6);
+    streamDeck7 = new JoystickButton(testStreamDeck, 7);
+    streamDeck8 = new JoystickButton(testStreamDeck, 8);
+    streamDeck9 = new JoystickButton(testStreamDeck, 9);
+    streamDeck10 = new JoystickButton(testStreamDeck, 10);
+    streamDeck11 = new JoystickButton(testStreamDeck, 11);
+    streamDeck12 = new JoystickButton(testStreamDeck, 12);
+    streamDeck13 = new JoystickButton(testStreamDeck, 13);
+    streamDeck14 = new JoystickButton(testStreamDeck, 14);
+    streamDeck15 = new JoystickButton(testStreamDeck, 15);
   	
     // Configure the button bindings
     configureButtonBindings();
@@ -216,12 +248,17 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    logitechBtnX.whileTrue(goToTarget);
-    logitechBtnB.whileTrue(goToTargetTape);
+    // logitechBtnX.whileTrue(goToTarget);
+    // logitechBtnB.whileTrue(goToTargetTape);
     
     coneModeButton.onTrue(setConeMode);
     cubeModeButton.onTrue(setCubeMode);
-    xboxBtnA.onTrue(intakeForward);
+    defenseModeButton.onTrue(new ToggleDefenseMode(intake));
+
+    // streamDeck1.whileTrue(intakeSpinForward);
+    // streamDeck2.whileTrue(intakeSpinReverse);
+    // streamDeck3.whileTrue(moveSwivel);
+    // streamDeck2.whileTrue();
   }
 
   /**

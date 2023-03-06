@@ -32,6 +32,7 @@ public class Intake extends SubsystemBase {
   AddressableLEDBuffer ledBuffer;
 
   private boolean intakeMode;
+  private boolean defenseMode = false;
 
   public Intake() {
     spaghetti = new TalonSRX(KSpaghettiIntakeId);
@@ -79,10 +80,10 @@ public class Intake extends SubsystemBase {
   public void ledsOff() {
     ledStrip.stop();
   }
-
+  
   public void setCubeMode() {
-    
     intakeMode = KCubeMode;
+    defenseMode = false; 
 
     // set the led strip to purple
     ledStrip.start();
@@ -93,14 +94,35 @@ public class Intake extends SubsystemBase {
   }
 
   public void setConeMode() {
-    intakeMode = KConeMode; 
+    intakeMode = KConeMode;
+    defenseMode = false; 
     
     // yellow
     ledStrip.start();
         for (int i = 0; i < ledBuffer.getLength(); i++) {
-          ledBuffer.setRGB(i, 230, 232, 44);
+          ledBuffer.setRGB(i, 150, 150, 0);
         }
         ledStrip.setData(ledBuffer);
+  }
+
+  public void toggleDefenseMode() {
+    if (!defenseMode) {
+      defenseMode = true;
+      ledStrip.start();
+          for (int i = 0; i < ledBuffer.getLength(); i++) {
+            ledBuffer.setRGB(i, 200, 0, 0);
+          }
+          ledStrip.setData(ledBuffer);
+    }
+    else {
+      defenseMode = false;
+      if (intakeMode == KConeMode) {
+        setConeMode();
+      }
+      else {
+        setCubeMode();
+      }
+    }
   }
   
   // get the operating mode of the intake

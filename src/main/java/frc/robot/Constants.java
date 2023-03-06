@@ -51,7 +51,6 @@ public final class Constants {
   public static final int KClawServo = 2;
   public static final int KWristServo = 3;
   public static final int KLEDPort = 4;
-  
 
 // Motor IDs
   // Base
@@ -269,7 +268,7 @@ public final class Constants {
   public static final double KTapeLimelightMoveD = 0;
 
   // Additional LED info:
-  public static final int KLEDBuffer = 20;
+  public static final int KLEDBuffer = 60;
   public static enum KLEDSTATE {
     OFF,
     YELLOW,
