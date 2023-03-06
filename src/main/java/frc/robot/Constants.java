@@ -16,68 +16,79 @@ import edu.wpi.first.math.geometry.Translation2d;
  */
 public final class Constants {
 
-  // Sensor Ports
-    // BASE
-    // Values will be changed for CANCoders (which will not use DIO)
+  // Sensing - CANBUS -------------------------------------------------------------
+  
+    // BASE - Values will be changed for CANCoders (which will not use DIO)
   public static final int KFrontLeftMagEncoderID = 1;
   public static final int KFrontRightMagEncoderID = 2;
   public static final int KBackLeftMagEncoderID = 3;
   public static final int KBackRightMagEncoderID = 4;
 
-  // DIO
-    // Orientation
+  // End of Sensing - CANBUS **************************************************
+
+  // Sensing - DIO ----------------------------------------------------------------
+
+    // Orientation - 5 in total
   public static final int KOrientationHallEffectSensor1ID = 1;
   public static final int KOrientationHallEffectSensor2ID = 2;
   public static final int KOrientationkDoorControlID = 3;
   public static final int KOrientationkBaseCheckerID = 4;
   public static final int KOrientationkTipCheckerID = 5;
 
-    // Scoring
+    // Scoring - 2 in total
   public static final int KScoringTopLimitSwitch = 6;
   public static final int KScoringBottomLimitSwitch = 7;
 
-  // Endgame
+  // Endgame - 2 in total
   public static final int KEndgameRightIR = 8;
   public static final int KEndgameLeftIR = 9;
 
-  // Intake
+  // Intake - 3 in total
   public static final int KIntakeTopLimitId = 10;  //NavX port number: 0
   public static final int KIntakeEncoderID = 11; //NavX port number: 1
   public static final int KIntakeBottomLimitId = 12;  //NavX port number: 2
   
-  // PWM
+  // End of Sensing - DIO *****************************************************
+
+  // Servos - PWM ----------------------------------------------------------------
+
   public static final int KLinearServoFront = 0;
   public static final int KLinearServoBack = 1;
   public static final int KClawServo = 2;
   public static final int KWristServo = 3;
   public static final int KLEDPort = 4;
 
-// Motor IDs
-  // Base
-  public static final int KFrontLeftAngleID = 2;
-  public static final int KFrontLeftDriveID = 3;
+  // End Servo Section ********************************************************
+
+  // Motor IDs by Subsystem ------------------------------------------------------
+
+    // Base
+  public static final int KFrontLeftAngleID = 2;  	// SparkMax + NEO
+  public static final int KFrontLeftDriveID = 3;  	// SparkMax + NEO
   
-  public static final int KFrontRightAngleID = 5;
-  public static final int KFrontRightDriveID = 4;
+  public static final int KFrontRightAngleID = 5;  	// SparkMax + NEO
+  public static final int KFrontRightDriveID = 4;  	// SparkMax + NEO
   
-  public static final int KBackLeftAngleID = 1;
-  public static final int KBackLeftDriveID = 8;
+  public static final int KBackLeftAngleID = 1;  	  // SparkMax + NEO
+  public static final int KBackLeftDriveID = 8;  	  // SparkMax + NEO
   
-  public static final int KBackRightAngleID = 7;
-  public static final int KBackRightDriveID = 6;
+  public static final int KBackRightAngleID = 7;  	// SparkMax + NEO
+  public static final int KBackRightDriveID = 6;  	// SparkMax + NEO
 
     // Intake
-  public static final int KSpaghettiIntakeId = 9;
-  public static final int KSwivelIntakeId = 10;
+  public static final int KSpaghettiIntakeId = 9;   // Talon + 775
+  public static final int KSwivelIntakeId = 10;     // Talon + 775
 
     // Storage
-  public static final int KOrientationLeftMotorID = 11;
-  public static final int KOrientationRightMotorID = 12;
-  public static final int KOrientationMotorExtensionID = 13;
+  public static final int KOrientationLeftMotorID = 11;		    // SparkMax + NEO550
+  public static final int KOrientationRightMotorID = 12;	    // SparkMax + NEO550
+  public static final int KOrientationMotorExtensionID = 13;	// SnowBlower + Talon
 
     // Scoring
-  public static final int KLiftMotor = 14;
-  public static final int KFlipperMotor = 15;
+  public static final int KLiftMotor = 14;		// SparkMax + NEO
+  public static final int KFlipperMotor = 15;	// Talon + 775
+
+  // End of Motor Section *****************************************************
 
 
 // Math and other Constants
