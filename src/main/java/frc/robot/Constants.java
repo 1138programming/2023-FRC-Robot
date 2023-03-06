@@ -180,6 +180,8 @@ public final class Constants {
   public static final double KIntakeSwiveBottumOffset = 2;  
   
   // Intake
+    // Swivel Encoder
+  public static final double KSwivelBottomPosition = 1000;
     // Swivel PID
   public static final double KIntakeP = 0; // TBD
   public static final double KIntakeI = 0; // TBD

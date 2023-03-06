@@ -51,12 +51,18 @@ public class Intake extends SubsystemBase {
     ledStrip.setLength(ledBuffer.getLength());
     ledStrip.setData(ledBuffer);
     ledStrip.start();
-
   }
 
   @Override 
   public void periodic() {
     SmartDashboard.putBoolean("Mode", intakeMode);
+    SmartDashboard.putNumber("Intake Encoder", getIntakeEncoder());
+    if (getTopLimitSwitch()) {
+      setIntakeEncoder(0);
+    }
+    if (getBottomLimitSwitch()) {
+      setIntakeEncoder(KSwivelBottomPosition);
+    }
   }
 
   public void spaghettiSpin() {
@@ -146,6 +152,9 @@ public class Intake extends SubsystemBase {
     }
   }
 
+  public void setIntakeEncoder(double position) {
+    swivel.setSelectedSensorPosition(position);
+  }
   public double getIntakeEncoder() {
     return swivel.getSelectedSensorPosition();
   }

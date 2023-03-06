@@ -25,17 +25,29 @@ import frc.robot.subsystems.Endgame;
 import frc.robot.subsystems.Scoring;
 import frc.robot.subsystems.Orientation;
 import frc.robot.subsystems.Limelight;
-
-// Commands
-import frc.robot.commands.Orientation.ExtensionNudge;
-import frc.robot.commands.Orientation.MoveExtensionToInPosition;
-import frc.robot.commands.Orientation.MoveExtensionToOutPosition;
+//Commands for the Base
+import frc.robot.commands.Base.ToggleSpeed;
+import frc.robot.commands.Base.ResetEncoders;
+import frc.robot.commands.Base.DriveWithJoysticks;
+//Commands for the Intake
+import frc.robot.commands.Intake.IntakeSpin;
+import frc.robot.commands.Intake.IntakeStop;
+import frc.robot.commands.Intake.IntakeSwivelBottum;
+import frc.robot.commands.Intake.IntakeSwivelTop;
+import frc.robot.commands.Intake.SetConeMode;
+import frc.robot.commands.Intake.SetCubeMode;
+import frc.robot.commands.Intake.IntakeSpinReverse;
+import frc.robot.commands.Intake.IntakeMoveSwivelUp;
+import frc.robot.commands.Intake.IntakeMoveSwivelDown;
+//Commands for the Orientation
 import frc.robot.commands.Orientation.OrientationMoveAllForward;
 import frc.robot.commands.Orientation.OrientationMoveAllReverse;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightForward;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
 import frc.robot.commands.Orientation.OrientationStopOnlyExtension;
 import frc.robot.commands.Orientation.ExtensionNudge;
+import frc.robot.commands.Orientation.MoveExtensionToInPosition;
+import frc.robot.commands.Orientation.MoveExtensionToOutPosition;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionForward;
 import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionReverse;
 
@@ -85,6 +97,8 @@ public class RobotContainer {
   private final SetCubeMode setCubeMode = new SetCubeMode(orientation, intake, scoring, limelight);
   private final IntakeMoveSwivelDown moveSwivelDown = new IntakeMoveSwivelDown(intake);
   private final IntakeMoveSwivelUp moveSwivelUp = new IntakeMoveSwivelUp(intake);
+  private final IntakeSwivelTop intakeSwivelTop = new IntakeSwivelTop(intake);
+  private final IntakeSwivelBottum intakeSwivelBottom = new IntakeSwivelBottum(intake);
 
   //Orientation
   private final MoveExtensionToOutPosition OrientationMoveOut = new MoveExtensionToOutPosition(orientation);
@@ -266,6 +280,8 @@ public class RobotContainer {
     streamDeck7.whileTrue(OrientationMoveIn);
     streamDeck8.whileTrue(orientationSpinOutwards);
     streamDeck8.whileTrue(orientationSpinInwards);
+    streamDeck11.whileTrue(intakeSwivelTop);
+    streamDeck11.whileTrue(intakeSwivelBottom);
     streamDeck13.whileTrue(setCubeMode);
     streamDeck14.whileTrue(setConeMode);
 
