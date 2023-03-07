@@ -95,10 +95,10 @@ public class Scoring extends SubsystemBase{
     public void updateScoringFlipperStatus() {
         if (scoringMode) {
             if (getTipSensor()) {
-              toFlipOrNotToFlip = true;
+              toFlipOrNotToFlip = false;
             }
             else  if (getBaseSensor()) {
-                toFlipOrNotToFlip = false;
+                toFlipOrNotToFlip = true;
             }
         }
         else {

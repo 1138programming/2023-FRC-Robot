@@ -207,6 +207,12 @@ public final class Constants {
   public static final double KCloseClawCone = 0; //TBD
   public static final double KCloseClawCube = 0; //TBD
   public static final double KLiftReadyPos = 0; //TBD
+
+  public static final boolean KFlip = true; 
+  
+  public static final double KWristFlipPos = 0;
+  public static final double KWristNoFlipPos = 0;
+
   
   //Limelight
   public static final double KLimelightHeight = 19.5; // inches
