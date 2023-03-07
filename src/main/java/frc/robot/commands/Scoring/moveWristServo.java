@@ -24,7 +24,7 @@ public class moveWristServo extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (scoring.getFlipperStatus() == KFlip) {
+    if (scoring.getFlipperStatus() == KWristFlip) {
       scoring.moveWrist(KWristFlipPos);
     }
     else {

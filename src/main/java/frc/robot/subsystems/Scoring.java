@@ -80,6 +80,13 @@ public class Scoring extends SubsystemBase{
         }
     }
 
+    public void openClaw() {
+        if (scoringMode) {
+            claw.set(KOpenClaw);
+        }
+     
+    }
+
     public double getFlipperPos(){
         return flipperEncoder.getPosition();
     }

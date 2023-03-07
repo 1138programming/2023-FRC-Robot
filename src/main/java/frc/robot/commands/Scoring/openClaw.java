@@ -4,14 +4,17 @@
 
 package frc.robot.commands.Scoring;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Scoring;
-public class moveLift extends CommandBase {
+
+
+import edu.wpi.first.wpilibj2.command.CommandBase;
+
+public class openClaw extends CommandBase {
+  /** Creates a new openClaw. */
   Scoring scoring;
-  private double setPoint;
-  public moveLift(Scoring scoring, double setPoint) {
+  public openClaw(Scoring scoring) {
     this.scoring = scoring;
-    this.setPoint = setPoint;
+    addRequirements(scoring);
   }
 
   // Called when the command is initially scheduled.
@@ -20,10 +23,7 @@ public class moveLift extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute()
-  {
-    scoring.moveLift(setPoint);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
@@ -32,6 +32,6 @@ public class moveLift extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

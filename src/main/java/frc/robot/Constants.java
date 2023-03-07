@@ -206,9 +206,13 @@ public final class Constants {
   public static final double KExtensionMotorSpeed = 0; //TBD
   public static final double KCloseClawCone = 0; //TBD
   public static final double KCloseClawCube = 0; //TBD
+  public static final double KOpenClaw = 0;
   public static final double KLiftReadyPos = 0; //TBD
+  public static final double KLiftLowPos = 0; //TBD
+  public static final double KLiftMediumPos = 0; //TBD
+  public static final double KLiftHighPos = 0; //TBD
 
-  public static final boolean KFlip = true; 
+  public static final boolean KWristFlip = true; 
   
   public static final double KWristFlipPos = 0;
   public static final double KWristNoFlipPos = 0;
