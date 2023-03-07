@@ -47,7 +47,7 @@ public final class Constants {
 
     // LED ports: (setup undetermined)
   public static final int KLEDPort = 6;
-  public static final int KLEDBuffer = 20;
+  public static final int KLEDBuffer = 60;
   public static enum KLEDSTATE {
     OFF,
     YELLOW,
