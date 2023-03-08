@@ -12,6 +12,7 @@ public class MoveClaw extends CommandBase {
   public MoveClaw(Scoring scoring, double position) {
     this.scoring = scoring;
     this.position = position;
+    addRequirements(scoring);
   }
 
   

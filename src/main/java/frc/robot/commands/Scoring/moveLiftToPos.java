@@ -12,6 +12,7 @@ public class MoveLiftToPos extends CommandBase {
   public MoveLiftToPos(Scoring scoring, double setPoint) {
     this.scoring = scoring;
     this.setPoint = setPoint;
+    addRequirements(scoring);
   }
 
   // Called when the command is initially scheduled.

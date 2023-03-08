@@ -45,6 +45,11 @@ import frc.robot.commands.Orientation.OrientationMoveAllReverse;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightForward;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
 import frc.robot.commands.Orientation.OrientationStopOnlyExtension;
+import frc.robot.commands.Scoring.FlipperOut;
+import frc.robot.commands.Scoring.MoveWrist;
+import frc.robot.commands.Scoring.RotateWrist;
+import frc.robot.commands.Scoring.RotateWristToReady;
+import frc.robot.commands.Scoring.StopScoring;
 import frc.robot.commands.Orientation.ExtensionNudge;
 import frc.robot.commands.Orientation.MoveExtensionToInPosition;
 import frc.robot.commands.Orientation.MoveExtensionToOutPosition;
@@ -112,6 +117,12 @@ public class RobotContainer {
   private final DeployEndgame deployEndgame = new DeployEndgame(endgame);
   private final EndgameReadyUp endgameReadyUp = new EndgameReadyUp(endgame);
   private final EndgameToCenter endgameToCenter = new EndgameToCenter(endgame);
+
+  // Scoring
+  private final StopScoring scoringStop = new StopScoring(scoring);
+  private final RotateWrist rotateWrist = new RotateWrist(scoring);
+  private final FlipperOut flipperOut = new FlipperOut(scoring);
+  private final RotateWristToReady rotateWristToReady = new RotateWristToReady(scoring);  
 
   // Limelight
   private final LimelightMoveToAprilTag goToTarget = new LimelightMoveToAprilTag(base, limelight);
@@ -191,9 +202,10 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // base.setDefaultCommand(driveWithJoysticks);
+    base.setDefaultCommand(driveWithJoysticks);
     intake.setDefaultCommand(intakeStop);
     orientation.setDefaultCommand(OrientationMoveOut);
+    scoring.setDefaultCommand(scoringStop);
 
     //Game controllers
     logitech = new Joystick(KLogitechPort); //Logitech Dual Action
@@ -266,11 +278,12 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // logitechBtnX.whileTrue(goToTarget);
     // logitechBtnB.whileTrue(goToTargetTape);
+    logitechBtnLB.onTrue(toggleFastSpeed);
+    logitechBtnLB.onFalse(toggleSlowSpeed);
     
     coneModeButton.onTrue(setConeMode);
     cubeModeButton.onTrue(setCubeMode);
     defenseModeButton.onTrue(new ToggleDefenseMode(intake));
-    
 
     streamDeck1.whileTrue(intakeSpinForward);
     streamDeck2.whileTrue(intakeSpinReverse);
@@ -280,6 +293,8 @@ public class RobotContainer {
     streamDeck7.whileTrue(OrientationMoveIn);
     streamDeck8.whileTrue(orientationSpinOutwards);
     streamDeck8.whileTrue(orientationSpinInwards);
+    streamDeck9.onTrue(rotateWrist);
+    streamDeck10.whileTrue(flipperOut);
     streamDeck11.whileTrue(intakeSwivelTop);
     streamDeck11.whileTrue(intakeSwivelBottom);
     streamDeck13.whileTrue(setCubeMode);

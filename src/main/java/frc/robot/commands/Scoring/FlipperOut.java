@@ -6,12 +6,13 @@ package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Scoring;
-public class MoveFlipper extends CommandBase {
-  Scoring scoring;
-  double speed;
-  public MoveFlipper(Scoring scoring, double speed) {
+import static frc.robot.Constants.*;
+
+public class FlipperOut extends CommandBase {
+  private Scoring scoring;
+  /** Creates a new FlipperToReadyPos. */
+  public FlipperOut(Scoring scoring) {
     this.scoring = scoring;
-    this.speed = speed;
     addRequirements(scoring);
   }
 
@@ -21,9 +22,8 @@ public class MoveFlipper extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute()
-  {
-    scoring.moveFlipper(speed);
+  public void execute() {
+    scoring.flipToPos(KWristFlipPos);
   }
 
   // Called once the command ends or is interrupted.

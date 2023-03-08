@@ -4,15 +4,14 @@
 
 package frc.robot.commands.Scoring;
 
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Scoring;
 import static frc.robot.Constants.*;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-
-public class MoveWristServo extends CommandBase {
-  /** Creates a new flipWrist. */
-  Scoring scoring;
-  public MoveWristServo(Scoring scoring) {
+public class FlipperToReadyPos extends CommandBase {
+  private Scoring scoring;
+  /** Creates a new FlipperToReadyPos. */
+  public FlipperToReadyPos(Scoring scoring) {
     this.scoring = scoring;
     addRequirements(scoring);
   }
@@ -24,12 +23,7 @@ public class MoveWristServo extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (scoring.getFlipperStatus() == KWristFlip) {
-      scoring.moveWrist(KWristFlipPos);
-    }
-    else {
-      scoring.moveWrist(KWristNoFlipPos);
-    }
+    scoring.flipToPos(0);
   }
 
   // Called once the command ends or is interrupted.

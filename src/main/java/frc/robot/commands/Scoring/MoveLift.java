@@ -12,6 +12,7 @@ public class MoveLift extends CommandBase {
   public MoveLift(Scoring scoring, double speed) {
     this.scoring = scoring;
     this.speed = speed;
+    addRequirements(scoring);
   }
 
   // Called when the command is initially scheduled.

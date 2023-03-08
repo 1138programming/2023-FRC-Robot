@@ -7,7 +7,7 @@ package frc.robot.CommandGroups;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Scoring;
-import frc.robot.commands.Scoring.MoveWristServo;
+import frc.robot.commands.Scoring.RotateWrist;
 import frc.robot.commands.Scoring.FlipToPos;
 import frc.robot.commands.Scoring.MoveLiftToPos;
 import static frc.robot.Constants.*;
@@ -27,7 +27,7 @@ public class AutoScoreMidAndFlipWrist extends SequentialCommandGroup {
         new MoveLiftToPos(scoring, KLiftMediumPos),
         new FlipToPos(scoring, KScoringFlipPos)
       ),
-      new MoveWristServo(scoring)
+      new RotateWrist(scoring)
     );
   }
 }
