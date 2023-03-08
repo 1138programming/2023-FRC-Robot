@@ -7,12 +7,12 @@ package frc.robot.commands.Scoring;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Scoring;
 
-public class flipToPos extends CommandBase {
+public class FlipToPos extends CommandBase {
   /** Creates a new flipToPos. */
   private Scoring scoring;
   private double scoringPos;
 
-  public flipToPos(Scoring scoring, double scoringPos) {
+  public FlipToPos(Scoring scoring, double scoringPos) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.scoring = scoring;
     this.scoringPos = scoringPos;

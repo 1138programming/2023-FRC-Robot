@@ -9,10 +9,10 @@ import static frc.robot.Constants.*;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class moveWristServo extends CommandBase {
+public class MoveWristServo extends CommandBase {
   /** Creates a new flipWrist. */
   Scoring scoring;
-  public moveWristServo(Scoring scoring) {
+  public MoveWristServo(Scoring scoring) {
     this.scoring = scoring;
     addRequirements(scoring);
   }

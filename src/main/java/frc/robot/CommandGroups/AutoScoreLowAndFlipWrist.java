@@ -6,11 +6,10 @@ package frc.robot.CommandGroups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Scoring;
-import frc.robot.commands.Scoring.moveWristServo;
-import frc.robot.commands.Scoring.flipToPos;
-import frc.robot.commands.Scoring.moveLiftToPos;
+import frc.robot.commands.Scoring.MoveWristServo;
+import frc.robot.commands.Scoring.FlipToPos;
+import frc.robot.commands.Scoring.MoveLiftToPos;
 import static frc.robot.Constants.*;
 
 
@@ -25,10 +24,10 @@ public class AutoScoreLowAndFlipWrist extends SequentialCommandGroup {
     
     addCommands(
       new ParallelCommandGroup( 
-        new moveLiftToPos(scoring, KLiftLowPos),
-        new flipToPos(scoring, KScoringFlipPos)
+        new MoveLiftToPos(scoring, KLiftLowPos),
+        new FlipToPos(scoring, KScoringFlipPos)
       ),
-      new moveWristServo(scoring)
+      new MoveWristServo(scoring)
     );
   }
 }
