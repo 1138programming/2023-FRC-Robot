@@ -9,10 +9,10 @@ import frc.robot.subsystems.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class openClaw extends CommandBase {
+public class OpenClaw extends CommandBase {
   /** Creates a new openClaw. */
   Scoring scoring;
-  public openClaw(Scoring scoring) {
+  public OpenClaw(Scoring scoring) {
     this.scoring = scoring;
     addRequirements(scoring);
   }
@@ -24,7 +24,7 @@ public class openClaw extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    scoring.openClaw;
+    scoring.openClaw();
   }
 
   // Called once the command ends or is interrupted.
