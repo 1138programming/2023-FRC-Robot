@@ -4,25 +4,28 @@
 
 package frc.robot.commands.Scoring;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Scoring;
 
-public class CloseClaw extends CommandBase {
+
+import edu.wpi.first.wpilibj2.command.CommandBase;
+
+public class openClaw extends CommandBase {
+  /** Creates a new openClaw. */
   Scoring scoring;
-  public CloseClaw(Scoring scoring) {
+  public openClaw(Scoring scoring) {
     this.scoring = scoring;
     addRequirements(scoring);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    scoring.closeClaw();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    scoring.openClaw;
+  }
 
   // Called once the command ends or is interrupted.
   @Override

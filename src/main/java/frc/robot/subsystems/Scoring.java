@@ -81,6 +81,13 @@ public class Scoring extends SubsystemBase{
         }
     }
 
+    public void openClaw() {
+        if (scoringMode) {
+            claw.set(KOpenClaw);
+        }
+     
+    }
+
     public double getFlipperPos(){
         return flipperEncoder.getPosition();
     }
@@ -96,10 +103,10 @@ public class Scoring extends SubsystemBase{
     public void updateScoringFlipperStatus() {
         if (scoringMode) {
             if (getTipSensor()) {
-              toFlipOrNotToFlip = true;
+              toFlipOrNotToFlip = false;
             }
             else  if (getBaseSensor()) {
-                toFlipOrNotToFlip = false;
+                toFlipOrNotToFlip = true;
             }
         }
         else {

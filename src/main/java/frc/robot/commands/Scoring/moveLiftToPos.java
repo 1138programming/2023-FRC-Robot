@@ -6,10 +6,10 @@ package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Scoring;
-public class moveLift extends CommandBase {
+public class moveLiftToPos extends CommandBase {
   Scoring scoring;
   private double setPoint;
-  public moveLift(Scoring scoring, double setPoint) {
+  public moveLiftToPos(Scoring scoring, double setPoint) {
     this.scoring = scoring;
     this.setPoint = setPoint;
   }

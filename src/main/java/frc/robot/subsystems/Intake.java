@@ -65,6 +65,9 @@ public class Intake extends SubsystemBase {
     }
   }
 
+  /**
+   * Spins the "spaghetti" motors (the spinners in the intake)
+   */
   public void spaghettiSpin() {
     if (intakeMode) {
       spaghetti.set(ControlMode.PercentOutput, KIntakeConeSpaghettitSpeed);
@@ -83,6 +86,16 @@ public class Intake extends SubsystemBase {
     }
   }
 
+public void setLEDToColor(int R, int G, int B) {
+  ledStrip.start();
+  for (int i = 0; i < ledBuffer.getLength(); i++) {
+    ledBuffer.setRGB(i, R, G, B);
+  }
+  ledStrip.setData(ledBuffer);
+}
+
+
+
   public void ledsOff() {
     ledStrip.stop();
   }
@@ -92,11 +105,7 @@ public class Intake extends SubsystemBase {
     defenseMode = false; 
 
     // set the led strip to purple
-    ledStrip.start();
-    for (int i = 0; i < ledBuffer.getLength(); i++) {
-      ledBuffer.setRGB(i, 119, 11, 219);
-    }
-    ledStrip.setData(ledBuffer);
+    setLEDToColor(119, 11, 219);
   }
 
   public void setConeMode() {
@@ -131,6 +140,11 @@ public class Intake extends SubsystemBase {
     }
   }
   
+  // Possible mode
+public void setDefenseMode() {
+  setLEDToColor(255, 0, 0);
+}
+
   // get the operating mode of the intake
   public boolean isConeMode() {
     return intakeMode; 
@@ -140,6 +154,11 @@ public class Intake extends SubsystemBase {
     moveSwivel(intakeController.calculate(getIntakeEncoder(), setPoint));
   }
 
+
+  /**
+   * Moves the swivel at a certain speed
+   * @param speed
+   */
   public void moveSwivel(double speed) {
     if (speed > 0 && !getTopLimitSwitch()) {
       swivel.set(ControlMode.PercentOutput, speed);

@@ -44,6 +44,9 @@ public class Orientation extends SubsystemBase {
         orientationRightMotor.follow(orientationLeftMotor, KOrientationRightMotorReversed);
     }
 
+    /**
+     * This command makes both motors move, because although it looks like only one moves, the follow() command is used on the right motor earlier.
+     */
     public void moveOrientationLeftandRightMotors() {
         if (orientationMode) {
             orientationLeftMotor.set(KConeLeftandRightMotorSpeeds);
@@ -53,6 +56,9 @@ public class Orientation extends SubsystemBase {
         }
     }
 
+    /**
+     * This command makes both motors move, because although it looks like only one moves, the follow() command is used on the right motor earlier.
+     */
     public void moveOrientationLeftandRightMotors(double speed) {
         orientationLeftMotor.set(speed);
     }
