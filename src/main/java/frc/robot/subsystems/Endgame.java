@@ -12,18 +12,17 @@ public class Endgame extends SubsystemBase {
     private Servo endgameLinearServoFront;
     private Servo endgameLinearServoBack;
 
-    private DigitalInput endgameLeftIR;
-    private DigitalInput endgameRightIR;
+    private DigitalInput endgameBackIR;
+    private DigitalInput endgameFrontIR;
 
     private double newPos;
 
     public Endgame() {
         endgameLinearServoFront = new Servo(KLinearServoFront);
         endgameLinearServoBack = new Servo(KLinearServoBack);
-        // endgameLinearServoBack.
 
-        endgameRightIR = new DigitalInput(KEndgameRightIR);
-        endgameLeftIR = new DigitalInput(KEndgameLeftIR);
+        endgameFrontIR = new DigitalInput(KEndgameFrontIR);
+        endgameBackIR = new DigitalInput(KEndgameBackIR);
         
         // Bounds copied from 2022 FRC robot.. the values are most likely wrong. Check with Patrick for values possibly
         endgameLinearServoFront.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
@@ -36,8 +35,8 @@ public class Endgame extends SubsystemBase {
         newPos = SmartDashboard.getNumber("set servo pos", 0);
         SmartDashboard.putNumber("actual servo pos", endgameLinearServoFront.get());
         // SmartDashboard.putNumber("", KAngleD)
-        SmartDashboard.putBoolean("leftIR", getLeftIR());
-        SmartDashboard.putBoolean("rightIR", getRightIR());
+        SmartDashboard.putBoolean("leftIR", getBackIR());
+        SmartDashboard.putBoolean("rightIR", getFrontIR());
     }
     
     public void moveServo(double pos) {
@@ -49,11 +48,12 @@ public class Endgame extends SubsystemBase {
         endgameLinearServoFront.set(newPos);
         endgameLinearServoBack.set(newPos);
     }
-
-    public boolean getLeftIR() {
-        return endgameLeftIR.get();
+    
+    public boolean getFrontIR() {
+        return endgameFrontIR.get();
     }
-    public boolean getRightIR() {
-        return endgameRightIR.get();
+
+    public boolean getBackIR() {
+        return endgameBackIR.get();
     }
 }

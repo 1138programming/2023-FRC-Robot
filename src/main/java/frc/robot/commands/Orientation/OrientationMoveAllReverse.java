@@ -25,7 +25,7 @@ public class OrientationMoveAllReverse extends CommandBase {
   @Override
   public void execute() {
     orientation.moveOrientationLeftandRightMotors();
-    orientation.moveOrientationMotorExtension(-KMotorExtensionSpeed);
+    orientation.moveOrientationMotorExtension(-KExtensionMotorSpeed);
   }
 
   // Called once the command ends or is interrupted.

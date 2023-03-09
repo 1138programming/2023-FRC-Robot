@@ -28,6 +28,7 @@ import frc.robot.subsystems.Limelight;
 //Commands for the Base
 import frc.robot.commands.Base.ToggleSpeed;
 import frc.robot.commands.Base.ResetEncoders;
+import frc.robot.commands.Base.ResetGyro;
 import frc.robot.commands.Base.DriveWithJoysticks;
 //Commands for the Intake
 import frc.robot.commands.Intake.IntakeSpin;
@@ -45,8 +46,10 @@ import frc.robot.commands.Orientation.OrientationMoveAllReverse;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightForward;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
 import frc.robot.commands.Orientation.OrientationStopOnlyExtension;
+import frc.robot.commands.Scoring.CloseClaw;
 import frc.robot.commands.Scoring.FlipperOut;
 import frc.robot.commands.Scoring.MoveWrist;
+import frc.robot.commands.Scoring.OpenClaw;
 import frc.robot.commands.Scoring.RotateWrist;
 import frc.robot.commands.Scoring.RotateWristToReady;
 import frc.robot.commands.Scoring.StopScoring;
@@ -92,6 +95,7 @@ public class RobotContainer {
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
   private final ToggleSpeed toggleFastSpeed = new ToggleSpeed(base, KBaseDriveMaxPercent);
   private final ToggleSpeed toggleSlowSpeed = new ToggleSpeed(base, KBaseDriveLowPercent);
+  private final ResetGyro resetGyro = new ResetGyro(base);
 
   // Intake
   private final IntakeSpin intakeSpinForward = new IntakeSpin(intake);
@@ -122,7 +126,9 @@ public class RobotContainer {
   private final StopScoring scoringStop = new StopScoring(scoring);
   private final RotateWrist rotateWrist = new RotateWrist(scoring);
   private final FlipperOut flipperOut = new FlipperOut(scoring);
-  private final RotateWristToReady rotateWristToReady = new RotateWristToReady(scoring);  
+  private final RotateWristToReady rotateWristToReady = new RotateWristToReady(scoring);
+  private final CloseClaw closeClaw = new CloseClaw(scoring);
+  private final OpenClaw openClaw = new OpenClaw(scoring);
 
   // Limelight
   private final LimelightMoveToAprilTag goToTarget = new LimelightMoveToAprilTag(base, limelight);
@@ -280,6 +286,8 @@ public class RobotContainer {
     // logitechBtnB.whileTrue(goToTargetTape);
     logitechBtnLB.onTrue(toggleFastSpeed);
     logitechBtnLB.onFalse(toggleSlowSpeed);
+
+    logitechBtnY.onTrue(resetGyro);
     
     coneModeButton.onTrue(setConeMode);
     cubeModeButton.onTrue(setCubeMode);
@@ -289,14 +297,14 @@ public class RobotContainer {
     streamDeck2.whileTrue(intakeSpinReverse);
     streamDeck3.whileTrue(moveSwivelUp);
     streamDeck4.whileTrue(moveSwivelDown);
-    streamDeck6.whileTrue(OrientationMoveOut);
-    streamDeck7.whileTrue(OrientationMoveIn);
-    streamDeck8.whileTrue(orientationSpinOutwards);
+    streamDeck5.whileTrue(OrientationMoveOut);
+    streamDeck6.whileTrue(OrientationMoveIn);
+    streamDeck7.whileTrue(orientationSpinOutwards);
     streamDeck8.whileTrue(orientationSpinInwards);
     streamDeck9.onTrue(rotateWrist);
     streamDeck10.whileTrue(flipperOut);
-    streamDeck11.whileTrue(intakeSwivelTop);
-    streamDeck11.whileTrue(intakeSwivelBottom);
+    streamDeck11.onTrue(openClaw);
+    streamDeck12.onTrue(closeClaw);
     streamDeck13.whileTrue(setCubeMode);
     streamDeck14.whileTrue(setConeMode);
 

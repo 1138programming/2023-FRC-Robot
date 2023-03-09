@@ -32,7 +32,7 @@ public class MoveExtensionToInPosition extends CommandBase {
       extensionpos = true;
     }
     if (extensionpos) {
-      orientation.moveOrientationMotorExtension(KMotorExtensionSpeed);
+      orientation.moveOrientationMotorExtension(KExtensionMotorSpeed);
     }
     orientation.moveOrientationLeftandRightMotors();
   }

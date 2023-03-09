@@ -40,8 +40,8 @@ public final class Constants {
   public static final int KScoringBottomLimitSwitch = 7;
 
   // Endgame - 2 in total
-  public static final int KEndgameRightIR = 8;
-  public static final int KEndgameLeftIR = 9;
+  public static final int KEndgameFrontIR = 8;
+  public static final int KEndgameBackIR = 9;
 
   // Intake - 3 in total
   public static final int KIntakeTopLimitId = 10;  //NavX port number: 0
@@ -209,7 +209,7 @@ public final class Constants {
   public static final double KLiftRotToFoot = 0; //TBD
   
   // Orientation
-  public static final double KMotorExtensionSpeed = 0.5;
+  public static final double KExtensionMotorSpeed = 0.5;
   public static final double KMotorExtensionTime = 0.2;
   public static final double KCubeLeftandRightMotorSpeeds = 18;
   public static final double KConeLeftandRightMotorSpeeds = 18;
@@ -219,10 +219,12 @@ public final class Constants {
   // Scoring
   public static final double KClawMotorSpeed = 0; //TBD
   public static final double KAngleMotorSpeed = 0; //TBD
-  public static final double KExtensionMotorSpeed = 0; //TBD
-  public static final double KCloseClawCone = 0; //TBD
-  public static final double KCloseClawCube = 0; //TBD
-  public static final double KOpenClaw = 0;
+  public static final double KElevatorSpeed = 0; //TBD
+
+  public static final double KCloseClawCone = 0.5; //TBD
+  public static final double KCloseClawCube = 0.5; //TBD
+  public static final double KOpenClaw = 0; // TBD
+
   public static final double KLiftReadyPos = 0; //TBD
   public static final double KLiftLowPos = 0; //TBD
   public static final double KLiftMediumPos = 0; //TBD

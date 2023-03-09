@@ -16,7 +16,6 @@ public class IntakeSwivelBottum extends CommandBase {
   public IntakeSwivelBottum(Intake intake) {
     this.intake = intake;
     addRequirements(intake);
-  
   }
 
   // Called when the command is initially scheduled.
