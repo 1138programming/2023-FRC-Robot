@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+
 import edu.wpi.first.math.geometry.Translation2d;
 
 /**
@@ -264,5 +268,36 @@ public final class Constants {
   public static final double KTapeLimelightMoveI = 0;
   public static final double KTapeLimelightMoveD = 0;
 
-
+  public static final double KPPMaxVelocity = 4;
+  public static final double KPPMaxAcceleration = 3;
+  
+  public static final double KXControllerP = 1;
+  public static final double KXControllerI = 0;
+  public static final double KXControllerD = 0;
+  
+  public static final double KYControllerP = 1;
+  public static final double KYControllerI = 0;
+  public static final double KYControllerD = 0;
+  
+  public static final double KRotControllerP = 1;
+  public static final double KRotControllerI = 0;
+  public static final double KRotControllerD = 0;
+  
+  public static final double KRotMaxVelocity = 6.28;
+  public static final double KRotMaxAcceleration = 3.14;
+  
+  // Auto balance PID
+  public static final double KBalanceP = 0.0055;
+  public static final double KBalanceI = 0;
+  public static final double KBalanceD = 0.001;
+  
+  // Pathplanner trajectories
+  public static final PathPlannerTrajectory KBlue1 = PathPlanner.loadPath("Blue1", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
+  public static final PathPlannerTrajectory KBlue1Part2 = PathPlanner.loadPath("Blue1 Part 2", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
+  // public static final PathPlannerTrajectory KLeftSideLeaveCommunity = PathPlanner.loadPath("blue1", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
+  
+  //sys id config numbers 
+  public static final double ks = 0.20309;
+  public static final double kv = 2.5574;
+  public static final double ka = 0.38422;
 }
