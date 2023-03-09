@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -33,6 +34,8 @@ public class SwerveModule extends SubsystemBase {
   private PIDController angleController;
 
   private double offset;
+
+  private SimpleMotorFeedforward feedforward;
     
   public SwerveModule(int angleMotorID, int driveMotorID, int encoderPort, double offset, 
                       boolean driveMotorReversed, boolean angleMotorReversed) {
@@ -73,6 +76,8 @@ public class SwerveModule extends SubsystemBase {
     angleController.enableContinuousInput(-180, 180); // Tells PIDController that 180 deg is same in both directions
 
     setAbsoluteOffset(offset);
+
+    feedforward = new SimpleMotorFeedforward(ks, kv, ka);
   }
 
   public void setDesiredState(SwerveModuleState desiredState) {
@@ -95,9 +100,17 @@ public class SwerveModule extends SubsystemBase {
     angleMotor.set(angleMotorOutput);
 
     // Drive calculation
-    driveMotorOutput = desiredState.speedMetersPerSecond / KPhysicalMaxDriveSpeedMPS;
+    driveMotorOutput = feedforward.calculate(desiredState.speedMetersPerSecond);
 
-    driveMotor.set(driveMotorOutput);
+    driveMotor.setVoltage(driveMotorOutput);
+  }
+
+  public void lockWheel() {
+    double angleMotorOutput;
+    angleMotorOutput = angleController.calculate(getAngleDeg(), -45);
+
+    angleMotor.set(angleMotorOutput);
+    driveMotor.set(0);
   }
 
   public SwerveModulePosition getPosition() {
