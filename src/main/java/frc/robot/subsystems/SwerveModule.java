@@ -100,9 +100,11 @@ public class SwerveModule extends SubsystemBase {
     angleMotor.set(angleMotorOutput);
 
     // Drive calculation
-    driveMotorOutput = feedforward.calculate(desiredState.speedMetersPerSecond);
+    driveMotorOutput = desiredState.speedMetersPerSecond / KPhysicalMaxDriveSpeedMPS;
+    driveMotor.set(driveMotorOutput);
 
-    driveMotor.setVoltage(driveMotorOutput);
+    // driveMotorOutput = feedforward.calculate(desiredState.speedMetersPerSecond); // IF SYSID WORKS
+    // driveMotor.setVoltage(driveMotorOutput);
   }
 
   public void lockWheel() {
