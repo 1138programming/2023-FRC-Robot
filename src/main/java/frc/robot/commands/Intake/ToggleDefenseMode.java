@@ -5,21 +5,26 @@
 package frc.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LEDs;
 
 public class ToggleDefenseMode extends CommandBase {
-  private Intake intake;
-  /** Creates a new ToggleDefenseMode. */
-  public ToggleDefenseMode(Intake intake) {
-    this.intake = intake;
-    addRequirements(intake);
+  private LEDs leds;
+  /** Creates a new SetDefenseMode. */
+  public ToggleDefenseMode(LEDs leds) {
+    this.leds = leds;
+    addRequirements(leds);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.toggleDefenseMode();
+    if (leds.getDefenseMode()) {
+      leds.setDefenseMode(false);
+    }
+    else {
+      leds.setDefenseMode(true);
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.

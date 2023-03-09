@@ -68,9 +68,6 @@ public class Limelight extends SubsystemBase {
       area = aprilTagsTable.getEntry("ta").getDouble(0);
       id = aprilTagsTable.getEntry("tid").getDouble(0);
       botPose = aprilTagsTable.getEntry("botpose").getDoubleArray(new double[6]);
-
-     
-
     }
     else if (pipeline == 1) {
       targetFound = tapeTable.getEntry("tv").getDouble(0);

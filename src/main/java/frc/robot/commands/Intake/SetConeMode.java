@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Orientation;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Scoring;
 import static frc.robot.Constants.*;
 
@@ -17,18 +18,17 @@ public class SetConeMode extends CommandBase {
   private Orientation orientation; 
   private Scoring scoring;
   private Intake intake;
+  private LEDs leds;
   private Limelight limelight;
 
-  public SetConeMode(Orientation orientation, Intake intake, Scoring scoring, Limelight limelight) {
+  public SetConeMode(Orientation orientation, Intake intake, Scoring scoring, Limelight limelight, LEDs leds) {
     this.orientation = orientation;
     this.intake = intake;
     this.scoring = scoring;
+    this.leds = leds;
     this.limelight = limelight;
 
-    addRequirements(orientation);
-    addRequirements(intake);
-    addRequirements(scoring);
-    addRequirements(limelight);
+    addRequirements(orientation, intake, scoring, leds, limelight);
   }
 
   // Called when the command is initially scheduled.
@@ -38,6 +38,8 @@ public class SetConeMode extends CommandBase {
     orientation.setConeMode();
     scoring.setConeMode();
     limelight.setPipeline(KReflectiveTapePipeline);
+    leds.setDefenseMode(false);
+    leds.setConeMode();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

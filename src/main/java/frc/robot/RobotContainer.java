@@ -19,8 +19,10 @@ import frc.robot.commands.Intake.IntakeStop;
 import frc.robot.commands.Intake.SetConeMode;
 import frc.robot.commands.Intake.SetCubeMode;
 import frc.robot.commands.Intake.ToggleDefenseMode;
+import frc.robot.commands.Intake.ToggleDefenseMode;
 import frc.robot.subsystems.Base;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Endgame;
 import frc.robot.subsystems.Scoring;
 import frc.robot.subsystems.Orientation;
@@ -45,8 +47,10 @@ import frc.robot.commands.Orientation.OrientationMoveAllReverse;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightForward;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
 import frc.robot.commands.Orientation.OrientationStopOnlyExtension;
+import frc.robot.commands.Scoring.CloseClaw;
 import frc.robot.commands.Scoring.FlipperOut;
 import frc.robot.commands.Scoring.MoveWrist;
+import frc.robot.commands.Scoring.OpenClaw;
 import frc.robot.commands.Scoring.RotateWrist;
 import frc.robot.commands.Scoring.RotateWristToReady;
 import frc.robot.commands.Scoring.StopScoring;
@@ -87,6 +91,7 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   private final Orientation orientation = new Orientation();
   private final Limelight limelight = new Limelight();
+  private final LEDs leds = new LEDs();
 
   // Base 
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
@@ -98,12 +103,13 @@ public class RobotContainer {
   private final IntakeSpinReverse intakeSpinReverse = new IntakeSpinReverse(intake);
 
   private final IntakeStop intakeStop = new IntakeStop(intake);
-  private final SetConeMode setConeMode = new SetConeMode(orientation, intake, scoring, limelight);
-  private final SetCubeMode setCubeMode = new SetCubeMode(orientation, intake, scoring, limelight);
+  private final SetConeMode setConeMode = new SetConeMode(orientation, intake, scoring, limelight, leds);
+  private final SetCubeMode setCubeMode = new SetCubeMode(orientation, intake, scoring, limelight, leds);
   private final IntakeMoveSwivelDown moveSwivelDown = new IntakeMoveSwivelDown(intake);
   private final IntakeMoveSwivelUp moveSwivelUp = new IntakeMoveSwivelUp(intake);
   private final IntakeSwivelTop intakeSwivelTop = new IntakeSwivelTop(intake);
   private final IntakeSwivelBottum intakeSwivelBottom = new IntakeSwivelBottum(intake);
+  private final ToggleDefenseMode setDefenseMode = new ToggleDefenseMode(leds);
 
   //Orientation
   private final MoveExtensionToOutPosition OrientationMoveOut = new MoveExtensionToOutPosition(orientation);
@@ -122,6 +128,8 @@ public class RobotContainer {
   private final StopScoring scoringStop = new StopScoring(scoring);
   private final RotateWrist rotateWrist = new RotateWrist(scoring);
   private final FlipperOut flipperOut = new FlipperOut(scoring);
+  private final CloseClaw closeClaw = new CloseClaw(scoring);
+  private final OpenClaw openClaw = new OpenClaw(scoring);
   private final RotateWristToReady rotateWristToReady = new RotateWristToReady(scoring);  
 
   // Limelight
@@ -283,7 +291,7 @@ public class RobotContainer {
     
     coneModeButton.onTrue(setConeMode);
     cubeModeButton.onTrue(setCubeMode);
-    defenseModeButton.onTrue(new ToggleDefenseMode(intake));
+    defenseModeButton.onTrue(new ToggleDefenseMode(leds));
 
     streamDeck1.whileTrue(intakeSpinForward);
     streamDeck2.whileTrue(intakeSpinReverse);
@@ -296,7 +304,8 @@ public class RobotContainer {
     streamDeck9.onTrue(rotateWrist);
     streamDeck10.whileTrue(flipperOut);
     streamDeck11.whileTrue(intakeSwivelTop);
-    streamDeck11.whileTrue(intakeSwivelBottom);
+    streamDeck11.whileTrue(openClaw);
+    streamDeck11.whileTrue(closeClaw);
     streamDeck13.whileTrue(setCubeMode);
     streamDeck14.whileTrue(setConeMode);
 

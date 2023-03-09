@@ -28,9 +28,6 @@ public class Intake extends SubsystemBase {
   private DigitalInput intakeTopLimit;
   private DigitalInput intakeBottomLimit;
 
-  AddressableLED ledStrip;
-  AddressableLEDBuffer ledBuffer;
-
   private boolean intakeMode;
   private boolean defenseMode = false;
 
@@ -44,13 +41,6 @@ public class Intake extends SubsystemBase {
 
     intakeBottomLimit = new DigitalInput(KIntakeTopLimitId);
     intakeTopLimit = new DigitalInput(KIntakeBottomLimitId);
-
-    ledStrip = new AddressableLED(KLEDPort);
-    ledBuffer = new AddressableLEDBuffer(KLEDBuffer);
-
-    ledStrip.setLength(ledBuffer.getLength());
-    ledStrip.setData(ledBuffer);
-    ledStrip.start();
   }
 
   @Override 
@@ -86,64 +76,13 @@ public class Intake extends SubsystemBase {
     }
   }
 
-public void setLEDToColor(int R, int G, int B) {
-  ledStrip.start();
-  for (int i = 0; i < ledBuffer.getLength(); i++) {
-    ledBuffer.setRGB(i, R, G, B);
-  }
-  ledStrip.setData(ledBuffer);
-}
-
-
-
-  public void ledsOff() {
-    ledStrip.stop();
-  }
-  
   public void setCubeMode() {
-    intakeMode = KCubeMode;
-    defenseMode = false; 
-
-    // set the led strip to purple
-    setLEDToColor(119, 11, 219);
+    intakeMode = false;
   }
 
   public void setConeMode() {
-    intakeMode = KConeMode;
-    defenseMode = false; 
-    
-    // yellow
-    ledStrip.start();
-        for (int i = 0; i < ledBuffer.getLength(); i++) {
-          ledBuffer.setRGB(i, 150, 150, 0);
-        }
-        ledStrip.setData(ledBuffer);
+    intakeMode = true; 
   }
-
-  public void toggleDefenseMode() {
-    if (!defenseMode) {
-      defenseMode = true;
-      ledStrip.start();
-          for (int i = 0; i < ledBuffer.getLength(); i++) {
-            ledBuffer.setRGB(i, 200, 0, 0);
-          }
-          ledStrip.setData(ledBuffer);
-    }
-    else {
-      defenseMode = false;
-      if (intakeMode == KConeMode) {
-        setConeMode();
-      }
-      else {
-        setCubeMode();
-      }
-    }
-  }
-  
-  // Possible mode
-public void setDefenseMode() {
-  setLEDToColor(255, 0, 0);
-}
 
   // get the operating mode of the intake
   public boolean isConeMode() {

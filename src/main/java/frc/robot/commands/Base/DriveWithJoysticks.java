@@ -6,13 +6,15 @@ package frc.robot.commands.Base;
 
 import frc.robot.Robot;
 import frc.robot.subsystems.Base;
+import frc.robot.subsystems.LEDs;
+
 import static frc.robot.Constants.*;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class DriveWithJoysticks extends CommandBase {
-
   private final Base base;
 
   private double fbSpeed; //Speed of the robot in the x direction (forward).
@@ -27,6 +29,8 @@ public class DriveWithJoysticks extends CommandBase {
   // private double kRotationD = 0;
   
   private double maxDriveSpeed = KPhysicalMaxDriveSpeedMPS;
+
+  private Timer timer;
 
   /** Creates a new DriveWithJoysticks. */
   public DriveWithJoysticks(Base base) {
@@ -51,16 +55,8 @@ public class DriveWithJoysticks extends CommandBase {
     lrSpeed = Robot.m_robotContainer.getLogiLeftXAxis();
     
     rot = Robot.m_robotContainer.getLogiRightXAxis();
-    
-    // if (Math.abs(rot) <= 0.01 && (Math.abs(fbSpeed) >= 0.01 || Math.abs(lrSpeed) >= 0.01)) {
-    //   rot = rotationCorrectionPID.calculate(base.getHeadingDeg(), initHeading);
-    // }
-    // else {
-    //   initHeading = base.getHeadingDeg();
-    // }
-    base.drive(fbSpeed, lrSpeed, rot, true, maxDriveSpeed * base.getDriveSpeedFactor());
 
-    // SmartDashboard.putNumber(getName(), KAngleD)
+    base.drive(fbSpeed, lrSpeed, rot, true, maxDriveSpeed * base.getDriveSpeedFactor());
   }
 
   // Called once the command ends or is interrupted.

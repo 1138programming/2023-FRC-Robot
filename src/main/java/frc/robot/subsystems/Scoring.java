@@ -85,7 +85,6 @@ public class Scoring extends SubsystemBase{
         if (scoringMode) {
             claw.set(KOpenClaw);
         }
-     
     }
 
     public double getFlipperPos(){

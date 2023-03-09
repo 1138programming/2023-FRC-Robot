@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Orientation;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Scoring;
 import static frc.robot.Constants.*;
 
@@ -17,18 +18,17 @@ public class SetCubeMode extends CommandBase {
   private Orientation orientation; 
   private Scoring scoring;
   private Intake intake;
+  private LEDs leds;
   private Limelight limelight;
 
-  public SetCubeMode(Orientation orientation, Intake intake, Scoring scoring, Limelight limelight) {
+  public SetCubeMode(Orientation orientation, Intake intake, Scoring scoring, Limelight limelight, LEDs leds) {
     this.orientation = orientation;
     this.intake = intake;
     this.scoring = scoring;
     this.limelight = limelight;
+    this.leds = leds;
 
-    addRequirements(orientation);
-    addRequirements(intake);
-    addRequirements(scoring);
-    addRequirements(limelight);
+    addRequirements(orientation, intake, scoring, limelight, leds);
   }
 
   // Called when the command is initially scheduled.
@@ -38,6 +38,8 @@ public class SetCubeMode extends CommandBase {
     orientation.setCubeMode();
     scoring.setCubeMode();
     limelight.setPipeline(KAprilTagPipeline);
+    leds.setDefenseMode(false);
+    leds.setCubeMode();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
