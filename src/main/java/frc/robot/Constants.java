@@ -68,17 +68,17 @@ public final class Constants {
   // Motor IDs by Subsystem ------------------------------------------------------
 
     // Base
-  public static final int KFrontLeftAngleID = 2;  	// SparkMax + NEO
-  public static final int KFrontLeftDriveID = 3;  	// SparkMax + NEO
+  public static final int KFrontLeftAngleID = 1;  	// SparkMax + NEO
+  public static final int KFrontLeftDriveID = 2;  	// SparkMax + NEO
   
-  public static final int KFrontRightAngleID = 5;  	// SparkMax + NEO
+  public static final int KFrontRightAngleID = 3;  	// SparkMax + NEO
   public static final int KFrontRightDriveID = 4;  	// SparkMax + NEO
   
-  public static final int KBackLeftAngleID = 1;  	  // SparkMax + NEO
-  public static final int KBackLeftDriveID = 8;  	  // SparkMax + NEO
+  public static final int KBackLeftAngleID = 5;  	  // SparkMax + NEO
+  public static final int KBackLeftDriveID = 6;  	  // SparkMax + NEO
   
   public static final int KBackRightAngleID = 7;  	// SparkMax + NEO
-  public static final int KBackRightDriveID = 6;  	// SparkMax + NEO
+  public static final int KBackRightDriveID = 8;  	// SparkMax + NEO
 
     // Intake
   public static final int KSpaghettiIntakeId = 9;   // Talon + 775

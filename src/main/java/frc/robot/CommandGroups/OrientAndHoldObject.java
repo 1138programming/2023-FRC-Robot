@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Orientation.MoveExtensionToInPosition;
 import frc.robot.commands.Scoring.CloseClaw;
-import frc.robot.commands.Scoring.MoveLiftToReadyPos;
+import frc.robot.commands.Scoring.MoveLiftToLowPos;
 import frc.robot.subsystems.Orientation;
 import frc.robot.subsystems.Scoring;
 
@@ -30,7 +30,7 @@ public class OrientAndHoldObject extends SequentialCommandGroup {
     addCommands(
       new ParallelCommandGroup(  
         new MoveExtensionToInPosition(orientation),
-        new MoveLiftToReadyPos(scoring)
+        new MoveLiftToLowPos(scoring)
       ),
       new CloseClaw(scoring) 
 

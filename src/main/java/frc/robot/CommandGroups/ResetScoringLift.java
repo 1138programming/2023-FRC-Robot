@@ -10,6 +10,8 @@ import frc.robot.commands.Scoring.CloseClaw;
 import frc.robot.commands.Scoring.MoveLiftToReadyPos;
 import frc.robot.commands.Scoring.FlipperToReadyPos;
 import frc.robot.commands.Scoring.openClaw;
+import frc.robot.commands.Scoring.MoveLiftToLowPos;
+// import frc.robot.commands.Scoring.OpenClaw;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:

@@ -48,10 +48,16 @@ import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
 import frc.robot.commands.Orientation.OrientationStopOnlyExtension;
 import frc.robot.commands.Scoring.CloseClaw;
 import frc.robot.commands.Scoring.FlipperOut;
-import frc.robot.commands.Scoring.moveWrist;
-import frc.robot.commands.Scoring.openClaw;
+import frc.robot.commands.Scoring.MoveLift;
+import frc.robot.commands.Scoring.MoveLiftToHighPos;
+import frc.robot.commands.Scoring.MoveLiftToMidPos;
+import frc.robot.commands.Scoring.MoveLiftToLowPos;
+import frc.robot.commands.Scoring.MoveLiftToReadyPos;
+// import frc.robot.commands.Scoring.MoveWrist;
+// import frc.robot.commands.Scoring.OpenClaw;
 import frc.robot.commands.Scoring.RotateWrist;
 import frc.robot.commands.Scoring.RotateWristToReady;
+import frc.robot.commands.Scoring.openClaw;
 import frc.robot.commands.Scoring.stopScoring;
 import frc.robot.commands.Orientation.ExtensionNudge;
 import frc.robot.commands.Orientation.MoveExtensionToInPosition;
@@ -129,6 +135,12 @@ public class RobotContainer {
   private final RotateWristToReady rotateWristToReady = new RotateWristToReady(scoring);
   private final CloseClaw closeClaw = new CloseClaw(scoring);
   private final openClaw openClaw = new openClaw(scoring);
+  private final MoveLift moveLiftup = new MoveLift(scoring, 0.5);
+  private final MoveLift moveLiftdown = new MoveLift(scoring, -0.5);
+  private final MoveLiftToHighPos moveLiftToHighPos = new MoveLiftToHighPos(scoring);
+  private final MoveLiftToMidPos moveLiftToMidPos = new MoveLiftToMidPos(scoring);
+  private final MoveLiftToLowPos moveLiftToLowPos = new MoveLiftToLowPos(scoring);
+  private final MoveLiftToReadyPos moveLiftToReadyPos = new MoveLiftToReadyPos(scoring);
 
   // Limelight
   private final LimelightMoveToAprilTag goToTarget = new LimelightMoveToAprilTag(base, limelight);
@@ -291,7 +303,30 @@ public class RobotContainer {
     
     coneModeButton.onTrue(setConeMode);
     cubeModeButton.onTrue(setCubeMode);
+    liftLowSetpointButton.onTrue(moveLiftToLowPos);
+    liftMidSetpointButton.onTrue(moveLiftToMidPos);
+    liftHighSetpointButton.onTrue(moveLiftToHighPos);
+    closeClawButton.onTrue(closeClaw);
+    openClawButton.onTrue(openClaw);
+    moveLiftUpButton.onTrue(moveLiftup);
+    moveLiftDownButton.onTrue(moveLiftdown);
+    liftToWaitingPosButton.onTrue(moveLiftToReadyPos);
+    intakeDownButton.onTrue(intakeSwivelBottom);
+    intakeUpButton.onTrue(intakeSwivelTop);
     defenseModeButton.onTrue(new ToggleDefenseMode(intake));
+
+
+    xboxBtnA.onTrue(setConeMode);
+  	xboxBtnB.onTrue(setCubeMode);
+		xboxBtnX.onTrue(closeClaw);
+		xboxBtnY.onTrue(openClaw);
+		xboxBtnLB.onTrue(moveLiftToLowPos);
+    xboxBtnRB.onTrue(moveLiftToMidPos);
+    xboxBtnSelect.onTrue(moveLiftup);
+		xboxBtnStrt.onTrue(moveLiftdown);
+    xboxBtnLT.onTrue(moveLiftToHighPos);
+    xboxBtnRT.onTrue(moveLiftToHighPos);
+
 
     streamDeck1.whileTrue(intakeSpinForward);
     streamDeck2.whileTrue(intakeSpinReverse);
