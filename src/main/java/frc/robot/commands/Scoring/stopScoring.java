@@ -6,9 +6,9 @@ package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Scoring;
-public class StopScoring extends CommandBase {
+public class stopScoring extends CommandBase {
   Scoring scoring;
-  public StopScoring(Scoring scoring) {
+  public stopScoring(Scoring scoring) {
     this.scoring = scoring;
     addRequirements(scoring);
   }

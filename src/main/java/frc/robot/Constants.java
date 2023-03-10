@@ -332,10 +332,14 @@ public final class Constants {
   public static final double KBalanceD = 0.001;
   
   // Pathplanner trajectories
-  public static final PathPlannerTrajectory KBlue1 = PathPlanner.loadPath("Blue1", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
-  public static final PathPlannerTrajectory KBlue1Part2 = PathPlanner.loadPath("Blue1 Part 2", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
-  // public static final PathPlannerTrajectory KLeftSideLeaveCommunity = PathPlanner.loadPath("blue1", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
+  //left
+  public static final PathPlannerTrajectory KLeftSideLeaveCommunity = PathPlanner.loadPath("LeftSideLeaveCommunity", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
+  public static final PathPlannerTrajectory KLeftLeaveCommunityAndGoAway = PathPlanner.loadPath("LeftLeaveAndGoAway", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
+  //Right
+  public static final PathPlannerTrajectory KRightSideLeaveCommunity = PathPlanner.loadPath("LeftSideLeaveCommunity", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
+  public static final PathPlannerTrajectory KRightSideLeaveAndGoToStation = PathPlanner.loadPath("RightSideLeaveAndGoToStation", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
   
+
   //sys id config numbers 
   public static final double ks = 0.20309;
   public static final double kv = 2.5574;

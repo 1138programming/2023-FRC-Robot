@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Scoring;
 import frc.robot.commands.Scoring.RotateWrist;
-import frc.robot.commands.Scoring.FlipToPos;
-import frc.robot.commands.Scoring.MoveLiftToPos;
+import frc.robot.commands.Scoring.flipToPos;
+import frc.robot.commands.Scoring.moveLiftToPos;
 import static frc.robot.Constants.*;
 
 
@@ -24,8 +24,8 @@ public class AutoScoreHighAndFlipWrist extends SequentialCommandGroup {
     
     addCommands(
       new ParallelCommandGroup( 
-        new MoveLiftToPos(scoring, KLiftHighPos),
-        new FlipToPos(scoring, KScoringFlipPos)
+        new moveLiftToPos(scoring, KLiftHighPos),
+        new flipToPos(scoring, KScoringFlipPos)
       ),
       new RotateWrist(scoring)
     );

@@ -6,10 +6,10 @@ package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Scoring;
-public class MoveWrist extends CommandBase {
+public class moveWrist extends CommandBase {
   Scoring scoring;
   double position;
-  public MoveWrist(Scoring scoring, double position) {
+  public moveWrist(Scoring scoring, double position) {
     this.scoring = scoring;
     this.position = position;
     addRequirements(scoring);

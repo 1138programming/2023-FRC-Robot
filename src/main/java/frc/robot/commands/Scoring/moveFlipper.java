@@ -6,10 +6,10 @@ package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Scoring;
-public class MoveFlipper extends CommandBase {
+public class moveFlipper extends CommandBase {
   Scoring scoring;
   double speed;
-  public MoveFlipper(Scoring scoring, double speed) {
+  public moveFlipper(Scoring scoring, double speed) {
     this.scoring = scoring;
     this.speed = speed;
     addRequirements(scoring);

@@ -48,11 +48,11 @@ import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
 import frc.robot.commands.Orientation.OrientationStopOnlyExtension;
 import frc.robot.commands.Scoring.CloseClaw;
 import frc.robot.commands.Scoring.FlipperOut;
-import frc.robot.commands.Scoring.MoveWrist;
-import frc.robot.commands.Scoring.OpenClaw;
+import frc.robot.commands.Scoring.moveWrist;
+import frc.robot.commands.Scoring.openClaw;
 import frc.robot.commands.Scoring.RotateWrist;
 import frc.robot.commands.Scoring.RotateWristToReady;
-import frc.robot.commands.Scoring.StopScoring;
+import frc.robot.commands.Scoring.stopScoring;
 import frc.robot.commands.Orientation.ExtensionNudge;
 import frc.robot.commands.Orientation.MoveExtensionToInPosition;
 import frc.robot.commands.Orientation.MoveExtensionToOutPosition;
@@ -123,12 +123,12 @@ public class RobotContainer {
   private final EndgameToCenter endgameToCenter = new EndgameToCenter(endgame);
 
   // Scoring
-  private final StopScoring scoringStop = new StopScoring(scoring);
+  private final stopScoring scoringStop = new stopScoring(scoring);
   private final RotateWrist rotateWrist = new RotateWrist(scoring);
   private final FlipperOut flipperOut = new FlipperOut(scoring);
   private final RotateWristToReady rotateWristToReady = new RotateWristToReady(scoring);
   private final CloseClaw closeClaw = new CloseClaw(scoring);
-  private final OpenClaw openClaw = new OpenClaw(scoring);
+  private final openClaw openClaw = new openClaw(scoring);
 
   // Limelight
   private final LimelightMoveToAprilTag goToTarget = new LimelightMoveToAprilTag(base, limelight);

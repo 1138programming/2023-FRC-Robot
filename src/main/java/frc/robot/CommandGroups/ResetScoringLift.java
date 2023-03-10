@@ -9,7 +9,7 @@ import frc.robot.subsystems.Scoring;
 import frc.robot.commands.Scoring.CloseClaw;
 import frc.robot.commands.Scoring.MoveLiftToReadyPos;
 import frc.robot.commands.Scoring.FlipperToReadyPos;
-import frc.robot.commands.Scoring.OpenClaw;
+import frc.robot.commands.Scoring.openClaw;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -25,7 +25,7 @@ public class ResetScoringLift extends SequentialCommandGroup {
       new CloseClaw(scoring),
       new FlipperToReadyPos(scoring),
       new MoveLiftToReadyPos(scoring),
-      new OpenClaw(scoring)
+      new openClaw(scoring)
     );
   }
 }

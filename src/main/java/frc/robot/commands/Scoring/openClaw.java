@@ -9,10 +9,10 @@ import frc.robot.subsystems.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class OpenClaw extends CommandBase {
+public class openClaw extends CommandBase {
   /** Creates a new openClaw. */
   Scoring scoring;
-  public OpenClaw(Scoring scoring) {
+  public openClaw(Scoring scoring) {
     this.scoring = scoring;
     addRequirements(scoring);
   }
