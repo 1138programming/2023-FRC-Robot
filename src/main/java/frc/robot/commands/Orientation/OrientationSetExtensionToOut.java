@@ -4,16 +4,15 @@
 
 package frc.robot.commands.Orientation;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Orientation;
 import static frc.robot.Constants.*;
 
-public class MoveExtensionToOutPosition extends CommandBase {
-  /** Creates a new OrientationMove. */
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-  private Orientation orientation; 
-
-  public MoveExtensionToOutPosition(Orientation orientation) {
+public class OrientationSetExtensionToOut extends CommandBase {
+  /** Creates a new OrientationSetExtensionToOut. */
+  Orientation orientation;
+  public OrientationSetExtensionToOut(Orientation orientation) {
     this.orientation = orientation;
     addRequirements(orientation);
   }
@@ -21,20 +20,16 @@ public class MoveExtensionToOutPosition extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
-  
+
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     orientation.moveOrientationMotorExtension(KExtensionMotorSpeed);
-    orientation.moveOrientationLeftandRightMotors();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    orientation.moveOrientationMotorExtension(0);
-    orientation.moveOrientationLeftandRightMotors(0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

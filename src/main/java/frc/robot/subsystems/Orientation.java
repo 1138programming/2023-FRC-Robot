@@ -22,8 +22,8 @@ public class Orientation extends SubsystemBase {
     private TalonSRX orientationMotorExtension;
     
     private DigitalInput DoorControl;
-    private DigitalInput HallEffectSensor1;
-    private DigitalInput HallEffectSensor2;
+    private DigitalInput HallEffectSensorIn;
+    private DigitalInput HallEffectSensorOut;
 
     private boolean orientationMode;
 
@@ -35,8 +35,8 @@ public class Orientation extends SubsystemBase {
         orientationMotorExtension = new TalonSRX(KOrientationMotorExtensionID);
         
         DoorControl = new DigitalInput (KOrientationkDoorControlID);
-        HallEffectSensor1 = new DigitalInput(KOrientationHallEffectSensor1ID);
-        HallEffectSensor2 = new DigitalInput(KOrientationHallEffectSensor2ID);
+        HallEffectSensorIn = new DigitalInput(KOrientationMagSensorInID);
+        HallEffectSensorOut = new DigitalInput(KOrientationMagSensorOutID);
 
         orientationLeftMotor.setIdleMode(IdleMode.kBrake);
         // orientationMotorExtension.setIdleMode(IdleMode.kBrake);
@@ -91,18 +91,18 @@ public class Orientation extends SubsystemBase {
         return DoorControl.get();
     }
 
-    public boolean getHallEffectSensor1() {
-        return !HallEffectSensor1.get();
+    public boolean getMagSensorOut() {
+        return !HallEffectSensorOut.get();
     }
 
-    public boolean getHallEffectSensor2(){
-        return !HallEffectSensor2.get();
+    public boolean getMagSensorIn(){
+        return !HallEffectSensorIn.get();
     }
 
     @Override
     public void periodic()
     {
-        SmartDashboard.putBoolean("Magnetic Limit", getHallEffectSensor1());
-        SmartDashboard.putBoolean("Magnetic Limit!", getHallEffectSensor2());
+        SmartDashboard.putBoolean("Magnetic Limit", getMagSensorOut());
+        SmartDashboard.putBoolean("Magnetic Limit!", getMagSensorIn());
     }
 }

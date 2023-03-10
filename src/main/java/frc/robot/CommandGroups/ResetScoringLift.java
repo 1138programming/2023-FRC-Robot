@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Scoring;
 import frc.robot.commands.Scoring.CloseClaw;
 import frc.robot.commands.Scoring.MoveLiftToReadyPos;
+import frc.robot.commands.Scoring.FlipperToReadyPos;
 import frc.robot.commands.Scoring.OpenClaw;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -22,6 +23,7 @@ public class ResetScoringLift extends SequentialCommandGroup {
     this.scoring = scoring;
     addCommands(
       new CloseClaw(scoring),
+      new FlipperToReadyPos(scoring),
       new MoveLiftToReadyPos(scoring),
       new OpenClaw(scoring)
     );

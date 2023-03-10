@@ -33,8 +33,8 @@ public final class Constants {
   // Sensing - DIO ----------------------------------------------------------------
 
     // Orientation - 5 in total
-  public static final int KOrientationHallEffectSensor1ID = 1;
-  public static final int KOrientationHallEffectSensor2ID = 2;
+  public static final int KOrientationMagSensorOutID = 1;
+  public static final int KOrientationMagSensorInID = 2;
   public static final int KOrientationkDoorControlID = 3;
   public static final int KOrientationkBaseCheckerID = 4;
   public static final int KOrientationkTipCheckerID = 5;
@@ -195,6 +195,8 @@ public final class Constants {
   public static final double KEndgameServoReadyPos = 1;
   public static final double KEndgameServoNeutralPos = 0.74;
   public static final double KEndgameServoDeployPos = 0.41;
+
+  public static final double KEndgameDriveSpeed = 0.2;
   
   // Scoring
   public static final int KScoringEncoder1ID = 6; //name can be changed later

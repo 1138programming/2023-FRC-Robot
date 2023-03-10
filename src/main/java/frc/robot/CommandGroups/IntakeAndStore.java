@@ -23,9 +23,9 @@ public class IntakeAndStore extends SequentialCommandGroup {
     addCommands(
       new ParallelCommandGroup(
         new IntakeSpinAndSwivel(intake),
-        new OrientationSpinOnlyLeftandRightForward(orientation)
-      ),
-      new MoveExtensionToInPosition(orientation)
+        new MoveExtensionToInPosition(orientation)
+      )
+      
     );
   }
 }
