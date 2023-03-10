@@ -60,7 +60,8 @@ public final class Constants {
   public static final int KLinearServoBack = 1;
   public static final int KClawServo = 2;
   public static final int KWristServo = 3;
-  public static final int KLEDPort = 4;
+  public static final int KLEDPort1 = 4;
+  public static final int KLEDPort2 = 5;
 
   // End Servo Section ********************************************************
 
@@ -302,7 +303,7 @@ public final class Constants {
   public static final double KTapeLimelightMoveD = 0;
 
   // Additional LED info:
-  public static final int KLEDBuffer = 60;
+  public static final int KLEDBuffer = 30;
   public static enum KLEDSTATE {
     OFF,
     YELLOW,

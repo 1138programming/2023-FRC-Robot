@@ -28,7 +28,8 @@ public class Intake extends SubsystemBase {
   private DigitalInput intakeTopLimit;
   private DigitalInput intakeBottomLimit;
 
-  AddressableLED ledStrip;
+  AddressableLED ledStrip1;
+  AddressableLED ledStrip2;
   AddressableLEDBuffer ledBuffer;
 
   private boolean intakeMode;
@@ -45,12 +46,16 @@ public class Intake extends SubsystemBase {
     intakeBottomLimit = new DigitalInput(KIntakeTopLimitId);
     intakeTopLimit = new DigitalInput(KIntakeBottomLimitId);
 
-    ledStrip = new AddressableLED(KLEDPort);
+    ledStrip1 = new AddressableLED(KLEDPort1);
+    ledStrip2 = new AddressableLED(KLEDPort2);
     ledBuffer = new AddressableLEDBuffer(KLEDBuffer);
 
-    ledStrip.setLength(ledBuffer.getLength());
-    ledStrip.setData(ledBuffer);
-    ledStrip.start();
+    ledStrip1.setLength(ledBuffer.getLength());
+    ledStrip1.setData(ledBuffer);
+    ledStrip1.start();
+    ledStrip2.setLength(ledBuffer.getLength());
+    ledStrip2.setData(ledBuffer);
+    ledStrip2.start();
   }
 
   @Override 
@@ -87,17 +92,20 @@ public class Intake extends SubsystemBase {
   }
 
 public void setLEDToColor(int R, int G, int B) {
-  ledStrip.start();
+  ledStrip1.start();
+  ledStrip2.start();
   for (int i = 0; i < ledBuffer.getLength(); i++) {
     ledBuffer.setRGB(i, R, G, B);
   }
-  ledStrip.setData(ledBuffer);
+  ledStrip1.setData(ledBuffer);
+  ledStrip2.setData(ledBuffer);
 }
 
 
 
   public void ledsOff() {
-    ledStrip.stop();
+    ledStrip1.stop();
+    ledStrip2.stop();
   }
   
   public void setCubeMode() {
@@ -113,21 +121,25 @@ public void setLEDToColor(int R, int G, int B) {
     defenseMode = false; 
     
     // yellow
-    ledStrip.start();
+    ledStrip1.start();
+    ledStrip2.start();
         for (int i = 0; i < ledBuffer.getLength(); i++) {
           ledBuffer.setRGB(i, 150, 150, 0);
         }
-        ledStrip.setData(ledBuffer);
+        ledStrip1.setData(ledBuffer);
+        ledStrip2.setData(ledBuffer);
   }
 
   public void toggleDefenseMode() {
     if (!defenseMode) {
       defenseMode = true;
-      ledStrip.start();
+      ledStrip1.start();
+      ledStrip2.start();
           for (int i = 0; i < ledBuffer.getLength(); i++) {
             ledBuffer.setRGB(i, 200, 0, 0);
           }
-          ledStrip.setData(ledBuffer);
+          ledStrip1.setData(ledBuffer);
+          ledStrip2.setData(ledBuffer);
     }
     else {
       defenseMode = false;
