@@ -178,7 +178,10 @@ public class Base extends SubsystemBase {
   }
 
   public double getHeadingDeg() {
+    // return -gyro.getRoll();
+    // return -gyro.getPitch();
     return -gyro.getAngle();
+    // return 0;
   }
 
   public double getRoll() {
@@ -212,6 +215,8 @@ public class Base extends SubsystemBase {
     SmartDashboard.putString("odometry pose", odometry.getPoseMeters().toString());
 
     SmartDashboard.putBoolean("isCalibrating", gyro.isCalibrating());
+
+    // SmartDashboard.putNumber(, KAngleD)
 
     odometry.update(getHeading(), getPositions());
     pose = odometry.getPoseMeters();

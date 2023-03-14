@@ -26,7 +26,7 @@ public class MoveExtensionToOutPosition extends CommandBase {
   @Override
   public void execute() {
     orientation.moveOrientationMotorExtension(KExtensionMotorSpeed);
-    orientation.moveOrientationLeftandRightMotors();
+    orientation.moveOrientationLeftandRightMotors(-0.5);
   }
 
   // Called once the command ends or is interrupted.
@@ -39,6 +39,7 @@ public class MoveExtensionToOutPosition extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return orientation.getMagSensorOut();
+    return false;
+    // return orientation.getMagSensorOut();
   }
 }

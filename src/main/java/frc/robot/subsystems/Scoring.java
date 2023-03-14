@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.*;
+
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax; // Neos and 775
 import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -9,8 +11,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
 import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid; // Pnuematics
-import edu.wpi.first.wpilibj.PneumaticsModuleType; // Pnuematics
 import edu.wpi.first.wpilibj.Servo;
 
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*; // Pnuematics
@@ -19,6 +19,7 @@ import edu.wpi.first.math.controller.PIDController;
 public class Scoring extends SubsystemBase{
     private CANSparkMax flipper;
     private CANSparkMax lift;
+    private TalonSRX lift2;
     private Servo claw;
     private Servo wrist;
 
@@ -64,7 +65,7 @@ public class Scoring extends SubsystemBase{
         lift.set(liftControl.calculate(liftEncoder.getPosition(),setPoint));
     }
     public void moveClaw(double setpoint) {
-        setpoint *= 1/135;
+        setpoint *= 1/135; // converts from degrees (135 max)
         claw.set(setpoint);
     }
     public void moveWrist(double setpoint) {
@@ -74,7 +75,7 @@ public class Scoring extends SubsystemBase{
     
     public void closeClaw() {
         if (scoringMode) {
-            claw.set(KCloseClawCone);
+            claw.set(KCloseClawCone);  
         }
         else {
             claw.set(KCloseClawCube);
@@ -85,7 +86,6 @@ public class Scoring extends SubsystemBase{
         if (scoringMode) {
             claw.set(KOpenClaw);
         }
-     
     }
 
     public double getFlipperPos(){

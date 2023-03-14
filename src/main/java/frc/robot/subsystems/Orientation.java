@@ -17,9 +17,9 @@ import com.revrobotics.CANSparkMax.IdleMode;
  * 3 sensors most likely
  */
 public class Orientation extends SubsystemBase {
-    private CANSparkMax orientationLeftMotor;
-    private CANSparkMax orientationRightMotor;
-    private TalonSRX orientationMotorExtension;
+    private CANSparkMax leftSpin;
+    private CANSparkMax rightSpin;
+    private TalonSRX extension;
     
     private DigitalInput DoorControl;
     private DigitalInput HallEffectSensorIn;
@@ -29,19 +29,19 @@ public class Orientation extends SubsystemBase {
 
     public Orientation() {
 
-        orientationLeftMotor = new CANSparkMax(KOrientationLeftMotorID, MotorType.kBrushless);
-        orientationRightMotor = new CANSparkMax(KOrientationRightMotorID, MotorType.kBrushless);
+        leftSpin = new CANSparkMax(KOrientationLeftMotorID, MotorType.kBrushless);
+        rightSpin = new CANSparkMax(KOrientationRightMotorID, MotorType.kBrushless);
 
-        orientationMotorExtension = new TalonSRX(KOrientationMotorExtensionID);
+        extension = new TalonSRX(KOrientationMotorExtensionID);
         
         DoorControl = new DigitalInput (KOrientationkDoorControlID);
         HallEffectSensorIn = new DigitalInput(KOrientationMagSensorInID);
         HallEffectSensorOut = new DigitalInput(KOrientationMagSensorOutID);
 
-        orientationLeftMotor.setIdleMode(IdleMode.kBrake);
-        // orientationMotorExtension.setIdleMode(IdleMode.kBrake);
+        leftSpin.setIdleMode(IdleMode.kBrake);
+        // extension.setIdleMode(IdleMode.kBrake);
         
-        orientationRightMotor.follow(orientationLeftMotor, KOrientationRightMotorReversed);
+        rightSpin.follow(leftSpin, KOrientationRightMotorReversed);
     }
 
     /**
@@ -49,10 +49,10 @@ public class Orientation extends SubsystemBase {
      */
     public void moveOrientationLeftandRightMotors() {
         if (orientationMode) {
-            orientationLeftMotor.set(KConeLeftandRightMotorSpeeds);
+            leftSpin.set(0.5);
         }
         else if (!orientationMode) {
-            orientationLeftMotor.set(KCubeLeftandRightMotorSpeeds);
+            leftSpin.set(0.5);
         }
     }
 
@@ -60,11 +60,11 @@ public class Orientation extends SubsystemBase {
      * This command makes both motors move, because although it looks like only one moves, the follow() command is used on the right motor earlier.
      */
     public void moveOrientationLeftandRightMotors(double speed) {
-        orientationLeftMotor.set(speed);
+        leftSpin.set(speed);
     }
 
     public void moveOrientationMotorExtension(double speed) {
-        orientationMotorExtension.set(ControlMode.PercentOutput, speed);
+        extension.set(ControlMode.PercentOutput, speed);
     }
 
     public void setCubeMode() {
@@ -80,11 +80,11 @@ public class Orientation extends SubsystemBase {
     }
 
     public void stopOrientationLeftandRightMotors() {
-        orientationLeftMotor.set(0);
+        leftSpin.set(0);
     }
 
     public void stopOrientationMotorExtension() {
-        orientationMotorExtension.set(ControlMode.PercentOutput, 0);
+        extension.set(ControlMode.PercentOutput, 0);
     }
 
     public boolean getDoorSensor() {
@@ -102,7 +102,7 @@ public class Orientation extends SubsystemBase {
     @Override
     public void periodic()
     {
-        SmartDashboard.putBoolean("Magnetic Limit", getMagSensorOut());
-        SmartDashboard.putBoolean("Magnetic Limit!", getMagSensorIn());
+        // SmartDashboard.putBoolean("Magnetic Limit", getMagSensorOut());
+        // SmartDashboard.putBoolean("Magnetic Limit!", getMagSensorIn());
     }
 }

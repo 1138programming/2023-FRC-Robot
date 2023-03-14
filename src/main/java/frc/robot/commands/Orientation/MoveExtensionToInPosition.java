@@ -12,7 +12,7 @@ public class MoveExtensionToInPosition extends CommandBase {
   /** Creates a new OrientationMove. */
 
   private Orientation orientation; 
-  private boolean extensionpos;
+  // private boolean extensionpos;
 
   public MoveExtensionToInPosition(Orientation orientation) {
     this.orientation = orientation;
@@ -22,32 +22,26 @@ public class MoveExtensionToInPosition extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    extensionpos = false;
+    // extensionpos = false;
   }
   
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (orientation.getDoorSensor()) {
-      extensionpos = true;
-    }
-    if (extensionpos) {
+    // if (orientation.getDoorSensor()) {
+    //   extensionpos = true;
+    // }
+    // if (extensionpos) {
       orientation.moveOrientationMotorExtension(KExtensionMotorSpeed);
-    }
-    orientation.moveOrientationLeftandRightMotors();
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    orientation.moveOrientationMotorExtension(0);
-    orientation.moveOrientationLeftandRightMotors(0);
+    // }
+    orientation.moveOrientationLeftandRightMotors(-0.5);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return orientation.getMagSensorIn();
+    return false;
+    // return orientation.getMagSensorIn();
 
   }
 }

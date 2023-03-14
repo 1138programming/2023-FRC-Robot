@@ -9,14 +9,18 @@ import static frc.robot.Constants.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.hal.AddressableLEDJNI;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
 
@@ -28,8 +32,7 @@ public class Intake extends SubsystemBase {
   private DigitalInput intakeTopLimit;
   private DigitalInput intakeBottomLimit;
 
-  AddressableLED ledStrip1;
-  AddressableLED ledStrip2;
+  AddressableLED ledStrip;
   AddressableLEDBuffer ledBuffer;
 
   private boolean intakeMode;
@@ -38,35 +41,38 @@ public class Intake extends SubsystemBase {
   public Intake() {
     spaghetti = new TalonSRX(KSpaghettiIntakeId);
     swivel = new TalonSRX(KSwivelIntakeId);
+
+    swivel.setNeutralMode(NeutralMode.Coast);
+    // SmartDashboard.putString("sensor!!", swivel.configSelectedFeedbackSensor(FeedbackDevice.).toString()); 
+    // SmartDashboard.putString("sensor!!", swivel.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder).toString()); 
+    swivel.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    spaghetti.setNeutralMode(NeutralMode.Brake);
+    // spaghetti.setNeutralMode(NeutralMode.Coast);
     
     spaghetti.setInverted(true); 
 
     intakeController = new PIDController(KIntakeP, KIntakeI, KIntakeD);
 
-    intakeBottomLimit = new DigitalInput(KIntakeTopLimitId);
-    intakeTopLimit = new DigitalInput(KIntakeBottomLimitId);
+    intakeBottomLimit = new DigitalInput(KIntakeBottomLimitId);
+    intakeTopLimit = new DigitalInput(KIntakeTopLimitId);
 
-    ledStrip1 = new AddressableLED(KLEDPort1);
-    ledStrip2 = new AddressableLED(KLEDPort2);
+    ledStrip = new AddressableLED(KLEDPort1);
     ledBuffer = new AddressableLEDBuffer(KLEDBuffer);
 
-    ledStrip1.setLength(ledBuffer.getLength());
-    ledStrip1.setData(ledBuffer);
-    ledStrip1.start();
-    ledStrip2.setLength(ledBuffer.getLength());
-    ledStrip2.setData(ledBuffer);
-    ledStrip2.start();
+    ledStrip.setLength(ledBuffer.getLength());
+    ledStrip.setData(ledBuffer);
+    // ledStrip.start();
   }
 
   @Override 
   public void periodic() {
-    SmartDashboard.putBoolean("Mode", intakeMode);
+    // SmartDashboard.putBoolean("Mode", intakeMode);
     SmartDashboard.putNumber("Intake Encoder", getIntakeEncoder());
+    SmartDashboard.putBoolean("limit INTAKE", getTopLimitSwitch());
+    // SmartDashboard.putNumber("intake drain", swivel.getStatorCurrent());
+    // SmartDashboard.putNumber("intake drain", spaghetti.getStatorCurrent());
     if (getTopLimitSwitch()) {
       setIntakeEncoder(0);
-    }
-    if (getBottomLimitSwitch()) {
-      setIntakeEncoder(KSwivelBottomPosition);
     }
   }
 
@@ -74,38 +80,39 @@ public class Intake extends SubsystemBase {
    * Spins the "spaghetti" motors (the spinners in the intake)
    */
   public void spaghettiSpin() {
-    if (intakeMode) {
-      spaghetti.set(ControlMode.PercentOutput, KIntakeConeSpaghettitSpeed);
-    }
-    else if (!intakeMode) {
-      spaghetti.set(ControlMode.PercentOutput, KIntakeCubeSpaghettitSpeed);
-    }
+    spaghetti.set(ControlMode.PercentOutput, KIntakeCubeSpaghettitSpeed);
+    
+    // if (intakeMode) {
+    //   spaghetti.set(ControlMode.PercentOutput, KIntakeConeSpaghettitSpeed);
+    // }
+    // else if (!intakeMode) {
+    //   spaghetti.set(ControlMode.PercentOutput, KIntakeCubeSpaghettitSpeed);
+    // }
   }
   
   public void spaghettiSpinReverse() {
-    if (intakeMode) {
-      spaghetti.set(ControlMode.PercentOutput, -KIntakeConeSpaghettitSpeed);
-    }
-    else if (!intakeMode) {
-      spaghetti.set(ControlMode.PercentOutput, -KIntakeCubeSpaghettitSpeed);
-    }
+    spaghetti.set(ControlMode.PercentOutput, -KIntakeCubeSpaghettitSpeed);
+    // if (intakeMode) {
+    //   spaghetti.set(ControlMode.PercentOutput, -KIntakeConeSpaghettitSpeed);
+    // }
+    // else if (!intakeMode) {
+    //   spaghetti.set(ControlMode.PercentOutput, -KIntakeCubeSpaghettitSpeed);
+    // }
   }
 
 public void setLEDToColor(int R, int G, int B) {
-  ledStrip1.start();
-  ledStrip2.start();
+  // ledStrip.start();
   for (int i = 0; i < ledBuffer.getLength(); i++) {
-    ledBuffer.setRGB(i, R, G, B);
-  }
-  ledStrip1.setData(ledBuffer);
-  ledStrip2.setData(ledBuffer);
+      ledBuffer.setRGB(i, R, G, B);
+    }
+    ledStrip.start();
+    ledStrip.setData(ledBuffer);
 }
 
 
 
   public void ledsOff() {
-    ledStrip1.stop();
-    ledStrip2.stop();
+    ledStrip.stop();
   }
   
   public void setCubeMode() {
@@ -121,25 +128,23 @@ public void setLEDToColor(int R, int G, int B) {
     defenseMode = false; 
     
     // yellow
-    ledStrip1.start();
-    ledStrip2.start();
-        for (int i = 0; i < ledBuffer.getLength(); i++) {
-          ledBuffer.setRGB(i, 150, 150, 0);
-        }
-        ledStrip1.setData(ledBuffer);
-        ledStrip2.setData(ledBuffer);
+    // ledStrip.start();
+    for (int i = 0; i < ledBuffer.getLength(); i++) {
+      ledBuffer.setRGB(i, 150, 150, 0);
+    }
+    ledStrip.setData(ledBuffer);
+    ledStrip.start();
   }
 
   public void toggleDefenseMode() {
     if (!defenseMode) {
       defenseMode = true;
-      ledStrip1.start();
-      ledStrip2.start();
-          for (int i = 0; i < ledBuffer.getLength(); i++) {
-            ledBuffer.setRGB(i, 200, 0, 0);
-          }
-          ledStrip1.setData(ledBuffer);
-          ledStrip2.setData(ledBuffer);
+      // ledStrip.start();
+      for (int i = 0; i < ledBuffer.getLength(); i++) {
+        ledBuffer.setRGB(i, 200, 0, 0);
+      }
+      ledStrip.setData(ledBuffer);
+      ledStrip.start();
     }
     else {
       defenseMode = false;
@@ -153,9 +158,9 @@ public void setLEDToColor(int R, int G, int B) {
   }
   
   // Possible mode
-public void setDefenseMode() {
-  setLEDToColor(255, 0, 0);
-}
+  public void setDefenseMode() {
+    setLEDToColor(255, 0, 0);
+  }
 
   // get the operating mode of the intake
   public boolean isConeMode() {
@@ -166,21 +171,21 @@ public void setDefenseMode() {
     moveSwivel(intakeController.calculate(getIntakeEncoder(), setPoint));
   }
 
-
   /**
    * Moves the swivel at a certain speed
    * @param speed
    */
   public void moveSwivel(double speed) {
-    if (speed > 0 && !getTopLimitSwitch()) {
-      swivel.set(ControlMode.PercentOutput, speed);
-    }
-    else if (speed < 0 && !getBottomLimitSwitch()) {
-      swivel.set(ControlMode.PercentOutput, -speed);
-    }
-    else {
-      swivel.set(ControlMode.PercentOutput, 0);
-    }
+    swivel.set(ControlMode.PercentOutput, speed);
+    // if (speed < 0 && getTopLimitSwitch()) {
+    //   swivel.set(ControlMode.PercentOutput, speed);
+    // }
+    // else if (speed > 0) {
+    //   swivel.set(ControlMode.PercentOutput, speed);
+    // }
+    // else {
+    //   swivel.set(ControlMode.PercentOutput, 0);
+    // }
   }
 
   public void setIntakeEncoder(double position) {
@@ -191,7 +196,7 @@ public void setDefenseMode() {
   }
 
   public boolean getTopLimitSwitch() {
-    return intakeTopLimit.get();
+    return !intakeTopLimit.get();
   } 
   public boolean getBottomLimitSwitch() {
     return intakeBottomLimit.get();

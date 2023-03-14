@@ -4,10 +4,10 @@ import frc.robot.subsystems.Intake;
 import static frc.robot.Constants.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class IntakeSpinAndSwivel extends CommandBase {
+public class OuttakeAndSwivel extends CommandBase {
   Intake intake;
 
-  public IntakeSpinAndSwivel(Intake intake) {
+  public OuttakeAndSwivel(Intake intake) {
     this.intake = intake;
     addRequirements(intake);
   }
@@ -27,6 +27,5 @@ public class IntakeSpinAndSwivel extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
-    // return intake.getIntakeEncoder() < Math.abs() 
   }
 }

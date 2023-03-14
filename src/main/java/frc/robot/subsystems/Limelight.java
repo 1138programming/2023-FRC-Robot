@@ -84,18 +84,6 @@ public class Limelight extends SubsystemBase {
       botPoseX = botPose[0];
       botPoseY = botPose[1];
     }
-    
-    
-    String botPosString = Arrays.toString(botPose);
-    SmartDashboard.putString("Botpose", botPosString);
-    
-    SmartDashboard.putNumber("BotposeX", botPoseX);
-    SmartDashboard.putNumber("BotposeY", botPoseY);
-  
-
-    SmartDashboard.putNumber("pipeline", pipeline);
-    // SmartDashboard.putData("stream deck", table.getEntry(""));
-
   }
 
   public void LEDOn() {

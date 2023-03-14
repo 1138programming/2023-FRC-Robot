@@ -5,6 +5,7 @@
 package frc.robot.commands.Base;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Base;
 import static frc.robot.Constants.*;
@@ -13,6 +14,8 @@ public class AutoBalance extends CommandBase {
   private Base base;
   private PIDController balanceController;
   private boolean onStation = false;
+  private double onStationSpeed = 0.15;
+  private double offStationSpeed = 0.5;
 
   /** Creates a new AutoBalance. */
   public AutoBalance(Base base) {
@@ -23,23 +26,39 @@ public class AutoBalance extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    base.resetAllRelEncoders();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    SmartDashboard.putNumber("roll", base.getRoll());
+    SmartDashboard.putNumber("pitch", base.getPitch());
+    // SmartDashboard.putNumber("pitch", base.());
+    double roll = base.getPitch();
     if (onStation == false) {
-      base.drive(0, 0.3, 0, false, KPhysicalMaxDriveSpeedMPS);
-      if (base.getRoll() > 20) {
+      base.drive(-offStationSpeed, 0, 0, false, KPhysicalMaxDriveSpeedMPS);
+      if (Math.abs(roll) > 10) {
         onStation = true;
       }
     }
     else {
-      if (Math.abs(base.getRoll()) < 6) {
+      if (Math.abs(roll) < 2) {
         base.lockWheels();
+        // base.drive(0, 0, 0, false, KPhysicalMaxDriveSpeedMPS);
       }
-      double speed = balanceController.calculate(base.getRoll(), 0);
-      base.drive(0, speed, 0, false, KPhysicalMaxDriveSpeedMPS);
+      else {
+
+        // double speed = balanceController.calculate(roll, 0);
+        // base.drive(0, speed, 0, false, KPhysicalMaxDriveSpeedMPS);
+        if (roll < 0) {
+          base.drive(onStationSpeed, 0, 0, false, KPhysicalMaxDriveSpeedMPS);
+        }
+        else {
+          base.drive(-onStationSpeed, 0, 0, false, KPhysicalMaxDriveSpeedMPS);
+        }
+      }
     }
   }
 

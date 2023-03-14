@@ -31,12 +31,6 @@ public class Endgame extends SubsystemBase {
     
     @Override
     public void periodic() {
-        // SmartDashboard.putNumber("sservopos", newPos);
-        newPos = SmartDashboard.getNumber("set servo pos", 0);
-        SmartDashboard.putNumber("actual servo pos", endgameLinearServoFront.get());
-        // SmartDashboard.putNumber("", KAngleD)
-        SmartDashboard.putBoolean("leftIR", getBackIR());
-        SmartDashboard.putBoolean("rightIR", getFrontIR());
     }
     
     public void moveServo(double pos) {

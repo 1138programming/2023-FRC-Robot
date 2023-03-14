@@ -44,12 +44,12 @@ public final class Constants {
   public static final int KScoringBottomLimitSwitch = 7;
 
   // Endgame - 2 in total
-  public static final int KEndgameFrontIR = 8;
-  public static final int KEndgameBackIR = 9;
+  public static final int KEndgameFrontIR = 10;
+  public static final int KEndgameBackIR = 11;
 
   // Intake - 3 in total
-  public static final int KIntakeTopLimitId = 10;  //NavX port number: 0
-  public static final int KIntakeEncoderID = 11; //NavX port number: 1
+  public static final int KIntakeTopLimitId = 8;  //NavX port number: 0
+  public static final int KIntakeEncoderID = 9; //NavX port number: 1
   public static final int KIntakeBottomLimitId = 12;  //NavX port number: 2
   
   // End of Sensing - DIO *****************************************************
@@ -117,6 +117,7 @@ public final class Constants {
   
   public static final double KDriveMotorRPMToMetersPerSec = KDriveMotorRotToMeter / 60;
   
+
   public static final double KAngleMotorRotToDeg = 35;
   public static final double KPhysicalMaxDriveSpeedMPS = KNeoMaxRPM * KDriveMotorRPMToMetersPerSec;
   public static final double KMaxAngularSpeed = Math.PI; // MAY NEED CHANGING
@@ -132,14 +133,28 @@ public final class Constants {
   
     // Offsets for absolute encoders, used to set up angle encoders
   // public static final double KFrontLeftOffset = 0.159;
-  public static final double KFrontLeftOffset = -147.22;
-  public static final double KFrontRightOffset = -36.56;
-  public static final double KBackLeftOffset = -340.14;
-  public static final double KBackRightOffset = -47.37;
+  // public static final double KFrontLeftOffset = 191.04;
+  // public static final double KFrontRightOffset = 18.11;
+  // public static final double KBackLeftOffset = 13.97;
+  // public static final double KBackRightOffset = 285.82; 
+  // public static final double KFrontLeftOffset = 12.57;
+  // public static final double KFrontRightOffset = 9.14;
+  // public static final double KBackLeftOffset = 11.86;
+  // public static final double KBackRightOffset = 1.67; 
+  public static final double KFrontLeftOffset = -135;
+  public static final double KFrontRightOffset = -27.11;
+  public static final double KBackLeftOffset = -116.19;
+  public static final double KBackRightOffset = -285.82; 
+ 
+  
+  // public static final double KFrontLeftOffset = -147.22;
+  // public static final double KFrontRightOffset = -36.56;
+  // public static final double KBackLeftOffset = -340.14;
+  // public static final double KBackRightOffset = -47.37;
   
   
     // Describes the locations of the swerve modules relative to the center of the robot
-    // Important for kinematics
+  // Important for kinematics
   public static final double KWheelDistanceFromCenter = 0.29845;
   public static final Translation2d KFrontLeftLocation = new Translation2d(
     KWheelDistanceFromCenter, KWheelDistanceFromCenter
@@ -172,14 +187,14 @@ public final class Constants {
   
   public static final boolean KOrientationRightMotorReversed = true;
   
-  public static final double KIntakeSwivelTopPos = 11;
-  public static final double KIntakeSwivelBottumPos = 12;
+  public static final double KIntakeSwivelTopPos = 0;
+  public static final double KIntakeSwivelBottumPos = 500;
 
   //Speeds and stuff
-  public static final double KIntakeConeSpaghettitSpeed = 0.6;
+  public static final double KIntakeConeSpaghettitSpeed = 0.7;
   public static final double KIntakeCubeSpaghettitSpeed = 0.6;
 
-  public static final double KIntakeSwivelSpeed = 0.3;  
+  public static final double KIntakeSwivelSpeed = 0.45;  
   
   public static final double KIntakeSwiveTopOffset = 2; 
   public static final double KIntakeSwiveBottumOffset = 2;  
@@ -188,9 +203,10 @@ public final class Constants {
     // Swivel Encoder
   public static final double KSwivelBottomPosition = 1000;
     // Swivel PID
-  public static final double KIntakeP = 0; // TBD
-  public static final double KIntakeI = 0; // TBD
+  public static final double KIntakeP = 0.001; // TBD
+  public static final double KIntakeI = 0; // TBD 
   public static final double KIntakeD = 0; // TBD
+  
   
   // Endgame
   public static final double KEndgameServoReadyPos = 1;
@@ -340,6 +356,8 @@ public final class Constants {
   public static final PathPlannerTrajectory KRightSideLeaveCommunity = PathPlanner.loadPath("LeftSideLeaveCommunity", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
   public static final PathPlannerTrajectory KRightSideLeaveAndGoToStation = PathPlanner.loadPath("RightSideLeaveAndGoToStation", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
   
+  public static final PathPlannerTrajectory KPickUpLeftSide = PathPlanner.loadPath("PickUpLeftSide", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
+  public static final PathPlannerTrajectory KPickUpRightSide = PathPlanner.loadPath("PickUpRightSide", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
 
   //sys id config numbers 
   public static final double ks = 0.20309;
