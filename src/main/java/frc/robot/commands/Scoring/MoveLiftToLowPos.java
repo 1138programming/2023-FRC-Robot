@@ -6,12 +6,13 @@ package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Scoring;
-public class moveLiftTest extends CommandBase {
+import static frc.robot.Constants.*;
+
+public class MoveLiftToLowPos extends CommandBase {
   Scoring scoring;
-  double speed;
-  public moveLiftTest(Scoring scoring, double speed) {
+  public MoveLiftToLowPos(Scoring scoring) {
     this.scoring = scoring;
-    this.speed = speed;
+    addRequirements(scoring);
   }
 
   // Called when the command is initially scheduled.
@@ -20,9 +21,8 @@ public class moveLiftTest extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute()
-  {
-    scoring.moveLift(speed);
+  public void execute() {
+    scoring.moveLift(KLiftLowPos);
   }
 
   // Called once the command ends or is interrupted.
@@ -32,6 +32,9 @@ public class moveLiftTest extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    // if (KLiftReadyPos+? >=  scoring.getLiftPos() || KLiftReadyPos-? <=  scoring.getLiftPos()){
+    //   return true;
+    // }
     return false;
   }
 }

@@ -19,8 +19,6 @@ public class LimelightMoveToConeNode extends CommandBase {
   private double margin;
   private double Xdistance;
   private double Ydistance;
-  private double xCoordinateAprilTag;
-  private double yCoordinateAprilTag;
 
   /** Creates a new LimelightMoveToAprilTag. */
   public LimelightMoveToConeNode(Base base, Limelight limelight) {

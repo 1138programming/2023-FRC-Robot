@@ -12,6 +12,7 @@ public class moveFlipper extends CommandBase {
   public moveFlipper(Scoring scoring, double speed) {
     this.scoring = scoring;
     this.speed = speed;
+    addRequirements(scoring);
   }
 
   // Called when the command is initially scheduled.

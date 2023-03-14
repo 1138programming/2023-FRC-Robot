@@ -6,10 +6,13 @@ import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderConfiguration;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
+import com.fasterxml.jackson.databind.cfg.ConfigOverrides;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+// import com.revrobotics.CANSparkMaxLowLevel.FollowConfig.Config;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -36,7 +39,7 @@ public class SwerveModule extends SubsystemBase {
   private double offset;
 
   private SimpleMotorFeedforward feedforward;
-    
+   
   public SwerveModule(int angleMotorID, int driveMotorID, int encoderPort, double offset, 
                       boolean driveMotorReversed, boolean angleMotorReversed) {
     angleMotor = new CANSparkMax(angleMotorID, MotorType.kBrushless);
@@ -47,16 +50,13 @@ public class SwerveModule extends SubsystemBase {
 
     this.angleMotor.setInverted(angleMotorReversed);
     this.driveMotor.setInverted(driveMotorReversed);
-
-    // this.magEncoder = magEncoder;
+ 
     CANCoderConfiguration config = new CANCoderConfiguration();
 
     config.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
     config.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;
-    // config.enableOptimizations = false;
-    // config.
     config.sensorDirection = false;
-    // config.
+    config.magnetOffsetDegrees = offset;
 
 
     canCoder = new CANCoder(encoderPort);
@@ -78,6 +78,11 @@ public class SwerveModule extends SubsystemBase {
     setAbsoluteOffset(offset);
 
     feedforward = new SimpleMotorFeedforward(ks, kv, ka);
+  }
+  
+  @Override
+  public void periodic() {
+    SmartDashboard.putNumber("drive current" + driveMotor.getDeviceId(), driveMotor.getOutputCurrent());
   }
 
   public void setDesiredState(SwerveModuleState desiredState) {
@@ -101,9 +106,10 @@ public class SwerveModule extends SubsystemBase {
 
     // Drive calculation
     driveMotorOutput = desiredState.speedMetersPerSecond / KPhysicalMaxDriveSpeedMPS;
+    SmartDashboard.putNumber("desired speed " + driveMotor.getDeviceId(), driveMotorOutput);
     driveMotor.set(driveMotorOutput);
 
-    // driveMotorOutput = feedforward.calculate(desiredState.speedMetersPerSecond); // IF SYSID WORKS
+    // driveMotorOutput = feedforward.calculate(desiredState.speedMetersPerSecond);
     // driveMotor.setVoltage(driveMotorOutput);
   }
 
@@ -149,7 +155,7 @@ public class SwerveModule extends SubsystemBase {
 
   // Angle Encoder getters
   public double getMagDegRaw() {
-    double pos = canCoder.getPosition() + offset;
+    double pos = canCoder.getPosition();
     return pos;
   }
   public double getMagDeg() {

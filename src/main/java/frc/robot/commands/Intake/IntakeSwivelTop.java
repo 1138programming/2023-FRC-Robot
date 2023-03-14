@@ -14,7 +14,7 @@ public class IntakeSwivelTop extends CommandBase {
  /** Creates a new intakeSpaghettiSet. */
   private Intake intake;
   
-  public IntakeSwivelTop (Intake intake, double encoderTarget ) {
+  public IntakeSwivelTop (Intake intake) {
     this.intake = intake; 
     addRequirements(intake);
   }
@@ -40,11 +40,12 @@ public class IntakeSwivelTop extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (intake.getIntakeEncoder() <= KIntakeSwivelTopPos + KIntakeSwiveTopOffset && intake.getIntakeEncoder() <= KIntakeSwivelTopPos - KIntakeSwiveTopOffset) {
-       return true;
-      }
-      else {
-    return false;
-  }
+    return intake.getTopLimitSwitch();
+    // if (intake.getIntakeEncoder() <= KIntakeSwivelTopPos + KIntakeSwiveTopOffset && intake.getIntakeEncoder() <= KIntakeSwivelTopPos - KIntakeSwiveTopOffset) {
+    //   return true;
+    // }
+    // else {
+    //   return false;
+    // }
   }
 }

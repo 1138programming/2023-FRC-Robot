@@ -26,7 +26,7 @@ public class OrientationMoveAllForward extends CommandBase {
   @Override
   public void execute() {
     orientation.moveOrientationLeftandRightMotors();
-    orientation.moveOrientationMotorExtension(KMotorExtensionSpeed);
+    orientation.moveOrientationMotorExtension(KExtensionMotorSpeed);
 
   }
 

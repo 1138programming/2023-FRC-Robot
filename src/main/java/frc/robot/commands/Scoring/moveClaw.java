@@ -8,10 +8,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Scoring;
 public class moveClaw extends CommandBase {
   Scoring scoring;
-  double speed;
-  public moveClaw(Scoring scoring, double speed) {
+  double position;
+  public moveClaw(Scoring scoring, double position) {
     this.scoring = scoring;
-    this.speed = speed;
+    this.position = position;
+    addRequirements(scoring);
   }
 
   
@@ -22,7 +23,7 @@ public class moveClaw extends CommandBase {
   @Override
   public void execute() 
   {
-    scoring.moveClaw(speed);
+    scoring.moveClaw(position);
   }
 
   // Called once the command ends or is interrupted.

@@ -10,6 +10,7 @@ public class stopScoring extends CommandBase {
   Scoring scoring;
   public stopScoring(Scoring scoring) {
     this.scoring = scoring;
+    addRequirements(scoring);
   }
 
   // Called when the command is initially scheduled.

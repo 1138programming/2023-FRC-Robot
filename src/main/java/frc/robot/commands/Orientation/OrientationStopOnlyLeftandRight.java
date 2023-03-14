@@ -26,7 +26,6 @@ public class OrientationStopOnlyLeftandRight extends CommandBase {
   @Override
   public void execute() {
     orientation.stopOrientationLeftandRightMotors();
-
   }
 
   // Called once the command ends or is interrupted.

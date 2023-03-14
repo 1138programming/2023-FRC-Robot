@@ -19,12 +19,12 @@ public class DriveWithJoysticks extends CommandBase {
   private double lrSpeed; //Speed of the robot in the Y direction (sideways).
   private double rot;
 
-  private PIDController rotationCorrectionPID;
-  private double initHeading;
+  // private PIDController rotationCorrectionPID;
+  // private double initHeading;
 
-  private double kRotationP = 0.005;
-  private double kRotationI = 0;
-  private double kRotationD = 0;
+  // private double kRotationP = 0.005;
+  // private double kRotationI = 0;
+  // private double kRotationD = 0;
   
   private double maxDriveSpeed = KPhysicalMaxDriveSpeedMPS;
 
@@ -32,7 +32,7 @@ public class DriveWithJoysticks extends CommandBase {
   public DriveWithJoysticks(Base base) {
     this.base = base;
   
-    rotationCorrectionPID = new PIDController(kRotationP, kRotationI, kRotationD);
+    // rotationCorrectionPID = new PIDController(kRotationP, kRotationI, kRotationD);
 
     addRequirements(base);
   }

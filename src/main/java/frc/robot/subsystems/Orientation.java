@@ -17,33 +17,31 @@ import com.revrobotics.CANSparkMax.IdleMode;
  * 3 sensors most likely
  */
 public class Orientation extends SubsystemBase {
-    private CANSparkMax orientationLeftMotor;
-    private CANSparkMax orientationRightMotor;
-    private TalonSRX orientationMotorExtension;
+    private CANSparkMax leftSpin;
+    private CANSparkMax rightSpin;
+    private TalonSRX extension;
     
     private DigitalInput DoorControl;
-    private DigitalInput HallEffectSensor1;
-    private DigitalInput HallEffectSensor2;
+    private DigitalInput HallEffectSensorIn;
+    private DigitalInput HallEffectSensorOut;
 
     private boolean orientationMode;
-    
- 
 
     public Orientation() {
 
-        orientationLeftMotor = new CANSparkMax(KOrientationLeftMotorID, MotorType.kBrushless);
-        orientationRightMotor = new CANSparkMax(KOrientationRightMotorID, MotorType.kBrushless);
+        leftSpin = new CANSparkMax(KOrientationLeftMotorID, MotorType.kBrushless);
+        rightSpin = new CANSparkMax(KOrientationRightMotorID, MotorType.kBrushless);
 
-        orientationMotorExtension = new TalonSRX(KOrientationMotorExtensionID);
+        extension = new TalonSRX(KOrientationMotorExtensionID);
         
         DoorControl = new DigitalInput (KOrientationkDoorControlID);
-        HallEffectSensor1 = new DigitalInput(KOrientationHallEffectSensor1ID);
-        HallEffectSensor2 = new DigitalInput(KOrientationHallEffectSensor2ID);
+        HallEffectSensorIn = new DigitalInput(KOrientationMagSensorInID);
+        HallEffectSensorOut = new DigitalInput(KOrientationMagSensorOutID);
 
-        orientationLeftMotor.setIdleMode(IdleMode.kBrake);
-        // orientationMotorExtension.setIdleMode(IdleMode.kBrake);
+        leftSpin.setIdleMode(IdleMode.kBrake);
+        // extension.setIdleMode(IdleMode.kBrake);
         
-        orientationRightMotor.follow(orientationLeftMotor);
+        rightSpin.follow(leftSpin, KOrientationRightMotorReversed);
     }
 
     /**
@@ -51,10 +49,10 @@ public class Orientation extends SubsystemBase {
      */
     public void moveOrientationLeftandRightMotors() {
         if (orientationMode) {
-            orientationLeftMotor.set(KConeLeftandRightMotorSpeeds);
+            leftSpin.set(0.5);
         }
         else if (!orientationMode) {
-            orientationLeftMotor.set(KCubeLeftandRightMotorSpeeds);
+            leftSpin.set(0.5);
         }
     }
 
@@ -62,19 +60,19 @@ public class Orientation extends SubsystemBase {
      * This command makes both motors move, because although it looks like only one moves, the follow() command is used on the right motor earlier.
      */
     public void moveOrientationLeftandRightMotors(double speed) {
-        orientationLeftMotor.set(speed);
+        leftSpin.set(speed);
     }
 
     public void moveOrientationMotorExtension(double speed) {
-        orientationMotorExtension.set(ControlMode.PercentOutput, speed);
+        extension.set(ControlMode.PercentOutput, speed);
     }
 
     public void setCubeMode() {
-        orientationMode = false;
+        orientationMode = KCubeMode;
     }
 
     public void setConeMode() {
-        orientationMode = true; 
+        orientationMode = KConeMode; 
     }
 
     public boolean isConeMode() {
@@ -82,22 +80,29 @@ public class Orientation extends SubsystemBase {
     }
 
     public void stopOrientationLeftandRightMotors() {
-        orientationLeftMotor.set(0);
+        leftSpin.set(0);
     }
 
     public void stopOrientationMotorExtension() {
-        orientationMotorExtension.set(ControlMode.PercentOutput, 0);
+        extension.set(ControlMode.PercentOutput, 0);
     }
 
     public boolean getDoorSensor() {
         return DoorControl.get();
     }
 
-    public boolean getHallEffectSensor1() {
-        return HallEffectSensor1.get();
+    public boolean getMagSensorOut() {
+        return !HallEffectSensorOut.get();
     }
 
-    public boolean getHallEffectSensor2(){
-        return HallEffectSensor2.get();
+    public boolean getMagSensorIn(){
+        return !HallEffectSensorIn.get();
+    }
+
+    @Override
+    public void periodic()
+    {
+        // SmartDashboard.putBoolean("Magnetic Limit", getMagSensorOut());
+        // SmartDashboard.putBoolean("Magnetic Limit!", getMagSensorIn());
     }
 }

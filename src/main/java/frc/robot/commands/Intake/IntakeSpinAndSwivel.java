@@ -27,5 +27,6 @@ public class IntakeSpinAndSwivel extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
+    // return intake.getIntakeEncoder() < Math.abs() 
   }
 }
