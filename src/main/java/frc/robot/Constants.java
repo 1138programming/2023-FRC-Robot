@@ -118,7 +118,6 @@ public final class Constants {
   
   public static final double KDriveMotorRPMToMetersPerSec = KDriveMotorRotToMeter / 60;
   
-
   public static final double KAngleMotorRotToDeg = 35;
   public static final double KPhysicalMaxDriveSpeedMPS = KNeoMaxRPM * KDriveMotorRPMToMetersPerSec;
   public static final double KMaxAngularSpeed = Math.PI; // MAY NEED CHANGING

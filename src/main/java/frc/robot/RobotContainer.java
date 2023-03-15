@@ -115,7 +115,7 @@ public class RobotContainer {
   private final Orientation orientation = new Orientation();
   private final Limelight limelight = new Limelight();
 
-  // Base 
+  // Base
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
   private final ToggleSpeed toggleMaxSpeed = new ToggleSpeed(base, KBaseDriveMaxPercent);
   private final ToggleSpeed toggleMidSpeed = new ToggleSpeed(base, KBaseDriveHighPercent);

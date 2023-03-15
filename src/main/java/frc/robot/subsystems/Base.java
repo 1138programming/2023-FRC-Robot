@@ -7,6 +7,7 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -30,11 +31,17 @@ public class Base extends SubsystemBase {
   private AHRS gyro;
 
   private SwerveDriveKinematics kinematics;
+ 
   private SwerveDriveOdometry odometry;
   private Pose2d pose;
 
+  private boolean defenseMode = false;
   
   private double driveSpeedFactor;
+
+  private SlewRateLimiter xRateLimiter;
+  private SlewRateLimiter yRateLimiter;
+  private SlewRateLimiter rotRateLimiter;
   
   public Base() {
     frontLeftModule = new SwerveModule(
@@ -79,12 +86,20 @@ public class Base extends SubsystemBase {
     );
     odometry = new SwerveDriveOdometry(kinematics, getHeading(), getPositions());
     driveSpeedFactor = KBaseDriveLowPercent;
+
+    xRateLimiter = new SlewRateLimiter(3);
+    yRateLimiter = new SlewRateLimiter(3);
+    rotRateLimiter = new SlewRateLimiter(3);
   }
 
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, double maxDriveSpeedMPS) {
     xSpeed *= maxDriveSpeedMPS;
     ySpeed *= maxDriveSpeedMPS;
     rot *= KMaxAngularSpeed;
+
+    xSpeed = xRateLimiter.calculate(xSpeed);
+    ySpeed = yRateLimiter.calculate(ySpeed);
+    rot = rotRateLimiter.calculate(rot);
     
     //feeding parameter speeds into toSwerveModuleStates to get an array of SwerveModuleState objects
     SwerveModuleState[] states =
@@ -95,11 +110,16 @@ public class Base extends SubsystemBase {
     SwerveDriveKinematics.desaturateWheelSpeeds(states, KPhysicalMaxDriveSpeedMPS);
     SmartDashboard.putNumber("speedFactor", driveSpeedFactor);
 
-    //setting module states, aka moving the motors
-    frontLeftModule.setDesiredState(states[0]);
-    frontRightModule.setDesiredState(states[1]);
-    backLeftModule.setDesiredState(states[2]);
-    backRightModule.setDesiredState(states[3]);
+    if (defenseMode && xSpeed == 0 && ySpeed == 0 && rot == 0) {
+      lockWheels();
+    }
+    else {
+      //setting module states, aka moving the motors
+      frontLeftModule.setDesiredState(states[0]);
+      frontRightModule.setDesiredState(states[1]);
+      backLeftModule.setDesiredState(states[2]);
+      backRightModule.setDesiredState(states[3]);
+    }
   }
 
   public void lockWheels() {
@@ -229,6 +249,13 @@ public class Base extends SubsystemBase {
   public void setDriveSpeedFactor(double set)
   {
     driveSpeedFactor = set;
+  }
+
+  public boolean getDefenseMode() {
+    return defenseMode;
+  }
+  public void setDefenseMode(boolean defenseMode) {
+    this.defenseMode = defenseMode;
   }
 }
   

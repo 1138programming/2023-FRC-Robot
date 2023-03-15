@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Orientation.MoveExtensionToInPosition;
 import frc.robot.commands.Scoring.CloseClaw;
 import frc.robot.commands.Scoring.MoveLiftToLowPos;
+import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Orientation;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Claw;
