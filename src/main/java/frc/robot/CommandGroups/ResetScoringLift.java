@@ -5,7 +5,8 @@
 package frc.robot.CommandGroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.subsystems.Scoring;
+import frc.robot.subsystems.Lift;
+import frc.robot.subsystems.Claw;
 import frc.robot.commands.Scoring.CloseClaw;
 import frc.robot.commands.Scoring.MoveLiftToReadyPos;
 import frc.robot.commands.Scoring.FlipperToReadyPos;
@@ -18,16 +19,18 @@ import frc.robot.commands.Scoring.MoveLiftToLowPos;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ResetScoringLift extends SequentialCommandGroup {
   /** Creates a new ResetScoringLift. */
-  Scoring scoring; 
-  public ResetScoringLift(Scoring scoring) {
+  Lift lift;
+  Claw claw;
+  public ResetScoringLift(Lift lift, Claw claw) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    this.scoring = scoring;
+    this.claw = claw;
+    this.lift = lift;
     addCommands(
-      new CloseClaw(scoring),
-      new FlipperToReadyPos(scoring),
-      new MoveLiftToReadyPos(scoring),
-      new openClaw(scoring)
+      new CloseClaw(claw),
+      new FlipperToReadyPos(lift),
+      new MoveLiftToReadyPos(lift),
+      new openClaw(claw)
     );
   }
 }

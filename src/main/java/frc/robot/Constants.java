@@ -90,7 +90,8 @@ public final class Constants {
   public static final int KOrientationMotorExtensionID = 13;	// SnowBlower + Talon
 
     // Scoring
-  public static final int KLiftMotor = 14;		// SparkMax + NEO
+  public static final int KLiftMotor = 14;	
+  public static final int KInnerLiftMotor = 16;		// SparkMax + NEO
   public static final int KFlipperMotor = 15;	// Talon + 775
 
   // End of Motor Section *****************************************************
@@ -229,6 +230,10 @@ public final class Constants {
   public static final double KLiftP = 0; //TBD
   public static final double KLiftI = 0; //TBD
   public static final double KLiftD = 0; //TBD
+
+  public static final double KInnerLiftP = 0; //TBD
+  public static final double KInnerLiftI = 0; //TBD
+  public static final double KInnerLiftD = 0; //TBD
   public static final double KLiftRotToFoot = 0; //TBD
   
   // Orientation
@@ -249,9 +254,11 @@ public final class Constants {
   public static final double KOpenClaw = 0; // TBD
 
   public static final double KLiftReadyPos = 0; //TBD
-  public static final double KLiftLowPos = 0; //TBD
   public static final double KLiftMediumPos = 0; //TBD
   public static final double KLiftHighPos = 0; //TBD
+
+  public static final double KInnerLiftHighPos= 0;
+  public static final double KInnerLiftLowPos= 0;
 
   public static final boolean KWristFlip = true; 
   

@@ -22,7 +22,8 @@ public class MoveLiftToLowPos extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    lift.moveLift(KLiftLowPos);
+    lift.moveLift(KLiftReadyPos);
+    lift.moveInnerLift(KInnerLiftHighPos);
   }
 
   // Called once the command ends or is interrupted.

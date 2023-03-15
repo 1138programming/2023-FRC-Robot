@@ -33,8 +33,10 @@ import frc.robot.commands.Intake.SetCubeMode;
 import frc.robot.commands.Intake.ToggleDefenseMode;
 import frc.robot.subsystems.Base;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Endgame;
-import frc.robot.subsystems.Scoring;
+import frc.robot.subsystems.Lift;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Orientation;
 import frc.robot.subsystems.Limelight;
 //Commands for the Base
@@ -105,7 +107,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   //Subsystems
   private final Base base = new Base();
-  private final Scoring scoring = new Scoring();
+  private final Lift lift = new Lift();
+  private final Claw claw = new Claw();
   private final Endgame endgame = new Endgame();
   private final Intake intake = new Intake();
   private final Orientation orientation = new Orientation();
@@ -132,8 +135,8 @@ public class RobotContainer {
   private final OuttakeAndSwivel outtakeAndSwivel = new OuttakeAndSwivel(intake);
 
   private final IntakeStop intakeStop = new IntakeStop(intake);
-  private final SetConeMode setConeMode = new SetConeMode(orientation, intake, scoring, limelight);
-  private final SetCubeMode setCubeMode = new SetCubeMode(orientation, intake, scoring, limelight);
+  private final SetConeMode setConeMode = new SetConeMode(orientation, intake, claw, limelight);
+  private final SetCubeMode setCubeMode = new SetCubeMode(orientation, intake, claw, limelight);
   
 
   //Orientation
@@ -150,8 +153,8 @@ public class RobotContainer {
   private final EndgameToCenter endgameToCenter = new EndgameToCenter(endgame);
 
   // Scoring
-  private final stopScoring scoringStop = new stopScoring(scoring);
-  private final RotateWrist rotateWrist = new RotateWrist(scoring);
+  private final stopScoring scoringStop = new stopScoring(lift);
+  private final RotateWrist rotateWrist = new RotateWrist(claw);
   private final FlipperOut flipperOut = new FlipperOut(scoring);
   private final RotateWristToReady rotateWristToReady = new RotateWristToReady(scoring);
   private final CloseClaw closeClaw = new CloseClaw(scoring);

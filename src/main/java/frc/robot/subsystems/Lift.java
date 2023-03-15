@@ -10,9 +10,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Lift extends SubsystemBase {
   private CANSparkMax lift;
+  private CANSparkMax innerLift;
   private CANSparkMax flipper;
   private PIDController liftControl;
   private RelativeEncoder liftEncoder;
+  private PIDController innerLiftControl;
+  private RelativeEncoder innerLiftEncoder;
   private RelativeEncoder flipperEncoder;
   private PIDController flipperController;
   
@@ -21,6 +24,11 @@ public class Lift extends SubsystemBase {
     lift = new CANSparkMax(KLiftMotor, MotorType.kBrushless);
     liftControl = new PIDController(KLiftP, KLiftI, KLiftD);
     liftEncoder = lift.getEncoder();
+
+    innerLift = new CANSparkMax(KInnerLiftMotor, MotorType.kBrushless);
+    innerLiftControl = new PIDController(KInnerLiftP, KInnerLiftI, KInnerLiftD);
+    innerLiftEncoder = innerLift.getEncoder();
+
     flipper = new CANSparkMax(KFlipperMotor, MotorType.kBrushless);
     flipperEncoder = flipper.getEncoder();
     flipperController = new PIDController(KFlipperP, KFlipperI, KFlipperD);
@@ -39,6 +47,13 @@ public class Lift extends SubsystemBase {
   public double getLiftPos() {
       return liftEncoder.getPosition();
   }
+
+public void moveInnerLift(double setPoint) {
+    innerLift.set(innerLiftControl.calculate(innerLiftEncoder.getPosition(),setPoint));
+}
+public double getInnerLiftPos() {
+    return innerLiftEncoder.getPosition();
+}
   public double getFlipperPos(){
     return flipperEncoder.getPosition();
   }
