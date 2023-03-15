@@ -5,14 +5,14 @@
 package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Scoring;
+import frc.robot.subsystems.Claw;
 public class moveWrist extends CommandBase {
-  Scoring scoring;
+  Claw wrist;
   double position;
-  public moveWrist(Scoring scoring, double position) {
-    this.scoring = scoring;
+  public moveWrist(Claw wrist, double position) {
+    this.wrist = wrist;
     this.position = position;
-    addRequirements(scoring);
+    addRequirements(wrist);
   }
 
   // Called when the command is initially scheduled.
@@ -23,7 +23,7 @@ public class moveWrist extends CommandBase {
   @Override
   public void execute() 
   {
-    scoring.moveWrist(position);
+    wrist.moveWrist(position);
   }
 
   // Called once the command ends or is interrupted.

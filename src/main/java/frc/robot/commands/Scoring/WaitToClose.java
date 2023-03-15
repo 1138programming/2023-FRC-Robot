@@ -5,14 +5,14 @@
 package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Scoring;
+import frc.robot.subsystems.Claw;
 
 public class WaitToClose extends CommandBase {
-  public Scoring scoring;
+  public Claw claw;
 
-  public WaitToClose(Scoring scoring) {
-    this.scoring = scoring;
-    addRequirements(scoring);
+  public WaitToClose(Claw claw) {
+    this.claw = claw;
+    addRequirements(claw);
   }
 
   // Called when the command is initially scheduled.
@@ -26,13 +26,13 @@ public class WaitToClose extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    scoring.closeClaw();
+    claw.closeClaw();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (scoring.getBaseSensor() || scoring.getTipSensor()) {
+    if (claw.getBaseSensor() || claw.getTipSensor()) {
       return true;
     }
       return false;

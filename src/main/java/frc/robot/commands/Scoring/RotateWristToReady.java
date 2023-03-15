@@ -4,27 +4,27 @@
 
 package frc.robot.commands.Scoring;
 
-import frc.robot.subsystems.Scoring;
+import frc.robot.subsystems.Claw;
 import static frc.robot.Constants.*;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class RotateWristToReady extends CommandBase {
   /** Creates a new flipWrist. */
-  private Scoring scoring;
-  public RotateWristToReady(Scoring scoring) {
-    this.scoring = scoring;
-    addRequirements(scoring);
+  private Claw claw;
+  public RotateWristToReady(Claw claw) {
+    this.claw = claw;
+    addRequirements(claw);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (scoring.getFlipperStatus() == KWristFlip) {
-      scoring.moveWrist(KWristFlipPos);
+    if (claw.getWristStatus() == KWristFlip) {
+      claw.moveWrist(KWristFlipPos);
     }
     else {
-      scoring.moveWrist(KWristNoFlipPos);
+      claw.moveWrist(KWristNoFlipPos);
     }
   }
   

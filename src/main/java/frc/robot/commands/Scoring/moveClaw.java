@@ -5,14 +5,14 @@
 package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Scoring;
+import frc.robot.subsystems.Claw;
 public class moveClaw extends CommandBase {
-  Scoring scoring;
+  Claw claw;
   double position;
-  public moveClaw(Scoring scoring, double position) {
-    this.scoring = scoring;
+  public moveClaw(Claw claw, double position) {
+    this.claw = claw;
     this.position = position;
-    addRequirements(scoring);
+    addRequirements(claw);
   }
 
   
@@ -23,7 +23,7 @@ public class moveClaw extends CommandBase {
   @Override
   public void execute() 
   {
-    scoring.moveClaw(position);
+    claw.moveClaw(position);
   }
 
   // Called once the command ends or is interrupted.

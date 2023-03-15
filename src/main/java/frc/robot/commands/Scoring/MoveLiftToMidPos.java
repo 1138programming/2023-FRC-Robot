@@ -5,14 +5,14 @@
 package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Scoring;
+import frc.robot.subsystems.Lift;
 import static frc.robot.Constants.*;
 
 public class MoveLiftToMidPos extends CommandBase {
-  Scoring scoring;
-  public MoveLiftToMidPos(Scoring scoring) {
-    this.scoring = scoring;
-    addRequirements(scoring);
+  Lift lift;
+  public MoveLiftToMidPos(Lift lift) {
+    this.lift = lift;
+    addRequirements(lift);
   }
 
   // Called when the command is initially scheduled.
@@ -22,7 +22,7 @@ public class MoveLiftToMidPos extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    scoring.moveLift(KLiftMediumPos);
+    lift.moveLift(KLiftMediumPos);
   }
 
   // Called once the command ends or is interrupted.

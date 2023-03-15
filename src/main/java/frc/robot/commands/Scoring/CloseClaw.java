@@ -5,19 +5,19 @@
 package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Scoring;
+import frc.robot.subsystems.Claw;
 
 public class CloseClaw extends CommandBase {
-  Scoring scoring;
-  public CloseClaw(Scoring scoring) {
-    this.scoring = scoring;
-    addRequirements(scoring);
+  Claw claw;
+  public CloseClaw(Claw claw) {
+    this.claw = claw;
+    addRequirements(claw);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    scoring.closeClaw();
+    claw.closeClaw();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

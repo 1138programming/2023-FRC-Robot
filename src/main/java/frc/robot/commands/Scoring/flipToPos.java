@@ -5,18 +5,18 @@
 package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Scoring;
+import frc.robot.subsystems.Lift;
 
 public class flipToPos extends CommandBase {
   /** Creates a new flipToPos. */
-  private Scoring scoring;
+  private Lift flipper;
   private double scoringPos;
 
-  public flipToPos(Scoring scoring, double scoringPos) {
+  public flipToPos(Lift flipper, double scoringPos) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.scoring = scoring;
+    this.flipper = flipper;
     this.scoringPos = scoringPos;
-    addRequirements(scoring);
+    addRequirements(flipper);
   }
 
   // Called when the command is initially scheduled.
@@ -26,7 +26,7 @@ public class flipToPos extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    scoring.flipToPos(scoringPos);
+    flipper.flipToPos(scoringPos);
   }
 
   // Called once the command ends or is interrupted.
@@ -36,7 +36,7 @@ public class flipToPos extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (scoring.getFlipperPos() <  scoringPos+0.5 && scoring.getFlipperPos() > scoringPos-0.5) {
+    if (flipper.getFlipperPos() <  scoringPos + 0.5 && flipper.getFlipperPos() > scoringPos - 0.5) {
       return true;
     }
     else {

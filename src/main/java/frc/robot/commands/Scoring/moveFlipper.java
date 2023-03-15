@@ -5,14 +5,14 @@
 package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Scoring;
+import frc.robot.subsystems.Lift;
 public class moveFlipper extends CommandBase {
-  Scoring scoring;
+  Lift flipper;
   double speed;
-  public moveFlipper(Scoring scoring, double speed) {
-    this.scoring = scoring;
+  public moveFlipper(Lift flipper, double speed) {
+    this.flipper = flipper;
     this.speed = speed;
-    addRequirements(scoring);
+    addRequirements(flipper);
   }
 
   // Called when the command is initially scheduled.
@@ -23,7 +23,7 @@ public class moveFlipper extends CommandBase {
   @Override
   public void execute()
   {
-    scoring.moveFlipper(speed);
+    flipper.moveFlipper(speed);
   }
 
   // Called once the command ends or is interrupted.

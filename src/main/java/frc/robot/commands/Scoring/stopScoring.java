@@ -5,12 +5,16 @@
 package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Scoring;
+import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Lift;
 public class stopScoring extends CommandBase {
-  Scoring scoring;
-  public stopScoring(Scoring scoring) {
-    this.scoring = scoring;
-    addRequirements(scoring);
+  Claw claw;
+  Lift lift;
+  public stopScoring(Claw claw, Lift lift) {
+    this.claw = claw;
+    this.lift = lift;
+    addRequirements(claw);
+    addRequirements(lift);
   }
 
   // Called when the command is initially scheduled.
@@ -21,10 +25,8 @@ public class stopScoring extends CommandBase {
   @Override
   public void execute() 
   {
-    scoring.moveClaw(0);
-    scoring.moveFlipper(0);
-    scoring.moveLift(0);
-    scoring.moveWrist(0);
+    claw.stop();
+    lift.stop();
   }
 
   // Called once the command ends or is interrupted.

@@ -5,15 +5,15 @@
 package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Scoring;
+import frc.robot.subsystems.Lift;
 import static frc.robot.Constants.*;
 
 public class FlipperToReadyPos extends CommandBase {
-  private Scoring scoring;
+  private Lift flipper;
   /** Creates a new FlipperToReadyPos. */
-  public FlipperToReadyPos(Scoring scoring) {
-    this.scoring = scoring;
-    addRequirements(scoring);
+  public FlipperToReadyPos(Lift flipper) {
+    this.flipper = flipper;
+    addRequirements(flipper);
   }
 
   // Called when the command is initially scheduled.
@@ -23,7 +23,7 @@ public class FlipperToReadyPos extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    scoring.flipToPos(0);
+    flipper.flipToPos(0);
   }
 
   // Called once the command ends or is interrupted.
