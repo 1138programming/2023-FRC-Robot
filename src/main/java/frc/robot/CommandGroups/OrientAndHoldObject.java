@@ -10,19 +10,22 @@ import frc.robot.commands.Orientation.MoveExtensionToInPosition;
 import frc.robot.commands.Scoring.CloseClaw;
 import frc.robot.commands.Scoring.MoveLiftToLowPos;
 import frc.robot.subsystems.Orientation;
-import frc.robot.subsystems.Scoring;
+import frc.robot.subsystems.Lift;
+import frc.robot.subsystems.Claw;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class OrientAndHoldObject extends SequentialCommandGroup {
   /** Creates a new OrientAndHoldObject. */
-  Scoring scoring;
+  Lift lift;
+  Claw claw;
   Orientation orientation;
-  public OrientAndHoldObject(Scoring scoring, Orientation orientation) {
+  public OrientAndHoldObject(Lift lift, Claw claw, Orientation orientation) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    this.scoring = scoring;
+    this.lift = lift;
+    this.claw = claw;
     this.orientation = orientation;
 
 
@@ -30,9 +33,9 @@ public class OrientAndHoldObject extends SequentialCommandGroup {
     addCommands(
       new ParallelCommandGroup(  
         new MoveExtensionToInPosition(orientation),
-        new MoveLiftToLowPos(scoring)
+        new MoveLiftToLowPos(lift)
       ),
-      new CloseClaw(scoring) 
+      new CloseClaw(claw) 
 
       
     );

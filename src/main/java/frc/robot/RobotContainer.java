@@ -64,6 +64,7 @@ import frc.robot.commands.Orientation.OrientationStop;
 import frc.robot.commands.Orientation.OrientationStopOnlyExtension;
 import frc.robot.commands.Scoring.CloseClaw;
 import frc.robot.commands.Scoring.FlipperOut;
+import frc.robot.commands.Scoring.LiftStop;
 import frc.robot.commands.Scoring.MoveLift;
 import frc.robot.commands.Scoring.MoveLiftToHighPos;
 import frc.robot.commands.Scoring.MoveLiftToMidPos;
@@ -153,18 +154,18 @@ public class RobotContainer {
   private final EndgameToCenter endgameToCenter = new EndgameToCenter(endgame);
 
   // Scoring
-  private final stopScoring scoringStop = new stopScoring(lift);
+  private final LiftStop liftstop = new LiftStop(lift);
   private final RotateWrist rotateWrist = new RotateWrist(claw);
-  private final FlipperOut flipperOut = new FlipperOut(scoring);
-  private final RotateWristToReady rotateWristToReady = new RotateWristToReady(scoring);
-  private final CloseClaw closeClaw = new CloseClaw(scoring);
-  private final openClaw openClaw = new openClaw(scoring);
-  private final MoveLift moveLiftup = new MoveLift(scoring, 0.5);
-  private final MoveLift moveLiftdown = new MoveLift(scoring, -0.5);
-  private final MoveLiftToHighPos moveLiftToHighPos = new MoveLiftToHighPos(scoring);
-  private final MoveLiftToMidPos moveLiftToMidPos = new MoveLiftToMidPos(scoring);
-  private final MoveLiftToLowPos moveLiftToLowPos = new MoveLiftToLowPos(scoring);
-  private final MoveLiftToReadyPos moveLiftToReadyPos = new MoveLiftToReadyPos(scoring);
+  private final FlipperOut flipperOut = new FlipperOut(lift);
+  private final RotateWristToReady rotateWristToReady = new RotateWristToReady(claw);
+  private final CloseClaw closeClaw = new CloseClaw(claw);
+  private final openClaw openClaw = new openClaw(claw);
+  private final MoveLift moveLiftup = new MoveLift(lift, 0.5);
+  private final MoveLift moveLiftdown = new MoveLift(lift, -0.5);
+  private final MoveLiftToHighPos moveLiftToHighPos = new MoveLiftToHighPos(lift);
+  private final MoveLiftToMidPos moveLiftToMidPos = new MoveLiftToMidPos(lift);
+  private final MoveLiftToLowPos moveLiftToLowPos = new MoveLiftToLowPos(lift);
+  private final MoveLiftToReadyPos moveLiftToReadyPos = new MoveLiftToReadyPos(lift);
 
   // Limelight
   private final LimelightMoveToAprilTag goToTarget = new LimelightMoveToAprilTag(base, limelight);
@@ -250,7 +251,7 @@ public class RobotContainer {
     base.setDefaultCommand(driveWithJoysticks);
     intake.setDefaultCommand(intakeStop);
     orientation.setDefaultCommand(new OrientationStop(orientation));
-    scoring.setDefaultCommand(scoringStop);
+    lift.setDefaultCommand(liftstop);
 
     //Game controllers
     logitech = new Joystick(KLogitechPort); //Logitech Dual Action

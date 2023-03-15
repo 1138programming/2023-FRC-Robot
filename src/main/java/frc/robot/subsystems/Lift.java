@@ -72,6 +72,7 @@ public double getInnerLiftPos() {
 
   public void stop() {
       lift.set(0);
+      innerLift.set(0);
       flipper.set(0);
   }       
 }

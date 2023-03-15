@@ -4,37 +4,28 @@
 
 package frc.robot.commands.Scoring;
 
-import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Lift;
 import static frc.robot.Constants.*;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class RotateWrist extends CommandBase {
-  /** Creates a new flipWrist. */
-  private Claw claw;
-  public RotateWrist(Claw claw) {
-    this.claw = claw;
-
-    addRequirements(claw);
+public class LiftStop extends CommandBase {
+  /** Creates a new LiftStop. */
+  Lift lift;
+  public LiftStop(Lift lift) {
+    this.lift = lift;
+    addRequirements(lift);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (claw.getWristStatus() == KWristFlip) {
-      claw.moveWrist(KWristFlipPos);
-    }
-    else {
-      claw.moveWrist(KWristNoFlipPos);
-    }
+    lift.stop();
   }
-  
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
