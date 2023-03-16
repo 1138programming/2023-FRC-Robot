@@ -62,6 +62,8 @@ import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightForward;
 import frc.robot.commands.Orientation.OrientationSpinOnlyLeftandRightReverse;
 import frc.robot.commands.Orientation.OrientationStop;
 import frc.robot.commands.Orientation.OrientationStopOnlyExtension;
+import frc.robot.commands.Orientation.ExtendAndIntake;
+import frc.robot.commands.Orientation.ExtendAndOuttake;
 import frc.robot.commands.Scoring.CloseClaw;
 import frc.robot.commands.Scoring.FlipperOut;
 import frc.robot.commands.Scoring.LiftStop;
@@ -141,8 +143,8 @@ public class RobotContainer {
   
 
   //Orientation
-  private final MoveExtensionToOutPosition OrientationMoveOut = new MoveExtensionToOutPosition(orientation);
-  private final MoveExtensionToInPosition OrientationMoveIn = new MoveExtensionToInPosition(orientation);
+  private final ExtendAndOuttake OrientationMoveOut = new ExtendAndOuttake(orientation);
+  private final ExtendAndIntake OrientationMoveIn = new ExtendAndIntake(orientation);
   private final ExtensionNudge OrientationNudge = new ExtensionNudge(orientation);
   private final OrientationSpinOnlyLeftandRightReverse orientationSpinInwards = new OrientationSpinOnlyLeftandRightReverse(orientation);
   private final OrientationSpinOnlyLeftandRightForward orientationSpinOutwards = new OrientationSpinOnlyLeftandRightForward(orientation);

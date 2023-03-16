@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Orientation;
 import static frc.robot.Constants.*;
 
-public class ExtendAndOuttake extends CommandBase {
+public class ExtendAndIntake extends CommandBase {
   private Orientation orientation;
   /** Creates a new ExtendAndOuttake. */
-  public ExtendAndOuttake(Orientation orientation) {
+  public ExtendAndIntake(Orientation orientation) {
     this.orientation = orientation;
     addRequirements(orientation);
   }
@@ -23,7 +23,7 @@ public class ExtendAndOuttake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (!orientation.getMagSensorOut()) {
+    if (!orientation.getMagSensorIn()) {
     orientation.moveOrientationMotorExtension(KExtensionMotorSpeed);
     }
     // else {
