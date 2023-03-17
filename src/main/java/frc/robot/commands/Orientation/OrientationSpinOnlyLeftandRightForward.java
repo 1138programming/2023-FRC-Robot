@@ -25,7 +25,7 @@ public class OrientationSpinOnlyLeftandRightForward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    orientation.moveOrientationLeftandRightMotors();
+    orientation.moveOrientationLeftandRightMotors(0.5);
   }
 
   // Called once the command ends or is interrupted.

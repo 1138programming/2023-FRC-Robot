@@ -39,9 +39,10 @@ public class Orientation extends SubsystemBase {
         HallEffectSensorOut = new DigitalInput(KOrientationMagSensorOutID);
 
         leftSpin.setIdleMode(IdleMode.kBrake);
+        rightSpin.setInverted(KOrientationRightMotorReversed);
         // extension.setIdleMode(IdleMode.kBrake);
         
-        rightSpin.follow(leftSpin, KOrientationRightMotorReversed);
+        
     }
 
     /**
@@ -61,6 +62,7 @@ public class Orientation extends SubsystemBase {
      */
     public void moveOrientationLeftandRightMotors(double speed) {
         leftSpin.set(speed);
+        rightSpin.set(speed);
     }
 
     public void moveOrientationMotorExtension(double speed) {
@@ -102,7 +104,7 @@ public class Orientation extends SubsystemBase {
     @Override
     public void periodic()
     {
-        // SmartDashboard.putBoolean("Magnetic Limit", getMagSensorOut());
-        // SmartDashboard.putBoolean("Magnetic Limit!", getMagSensorIn());
+        SmartDashboard.putBoolean("Magnetic Limit", getMagSensorOut());
+        SmartDashboard.putBoolean("Magnetic Limit!", getMagSensorIn());
     }
 }

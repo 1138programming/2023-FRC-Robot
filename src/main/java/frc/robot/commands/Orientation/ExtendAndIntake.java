@@ -27,7 +27,7 @@ public class ExtendAndIntake extends CommandBase {
     orientation.moveOrientationMotorExtension(KExtensionMotorSpeed);
     }
     // else {
-    orientation.moveOrientationLeftandRightMotors(-0.5);
+    orientation.moveOrientationLeftandRightMotors(0.5);
     // }
   }
 
@@ -38,6 +38,6 @@ public class ExtendAndIntake extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return orientation.getMagSensorIn();
   }
 }

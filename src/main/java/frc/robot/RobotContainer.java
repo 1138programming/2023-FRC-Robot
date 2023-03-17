@@ -328,13 +328,23 @@ public class RobotContainer {
     logitechBtnLB.onFalse(toggleSlowSpeed);
     logitechBtnY.onTrue(resetEncoders);
 
-    xboxBtnA.whileTrue(new OrientationMoveAllForward(orientation));
+    xboxBtnA.onTrue(OrientationMoveIn);
+    xboxBtnB.onTrue(OrientationMoveOut);
+    xboxBtnX.onTrue(OrientationNudge);
 
     xboxBtnLB.whileTrue(intakeSpinForward);
     xboxBtnLT.whileTrue(intakeSpinReverse);
 
     xboxBtnRB.whileTrue(moveSwivelUp); 
     xboxBtnRT.whileTrue(moveSwivelDown);
+
+    streamDeck5.onTrue(OrientationMoveOut);
+    streamDeck6.onTrue(OrientationMoveIn);
+    streamDeck7.onTrue(OrientationNudge);
+    streamDeck1.whileTrue(new IntakeSpin(intake));
+    streamDeck3.whileTrue(new IntakeMoveSwivelUp(intake));
+    streamDeck8.whileTrue(new OrientationSpinOnlyLeftandRightForward(orientation));
+
 
     // xboxBtnA.whileTrue(intakeSwivelBottom);
     // xboxBtnB.whileTrue(intakeSwivelTop);
