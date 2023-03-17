@@ -61,11 +61,13 @@ public class Intake extends SubsystemBase {
     ledStrip.setLength(ledBuffer.getLength());
     ledStrip.setData(ledBuffer);
     // ledStrip.start();
+
+    intakeMode = false;
   }
 
   @Override 
   public void periodic() {
-    // SmartDashboard.putBoolean("Mode", intakeMode);
+    SmartDashboard.putBoolean("Mode", intakeMode);
     SmartDashboard.putNumber("Intake Encoder", getIntakeEncoder());
     SmartDashboard.putBoolean("limit INTAKE", getTopLimitSwitch());
     // SmartDashboard.putNumber("intake drain", swivel.getStatorCurrent());
@@ -79,24 +81,24 @@ public class Intake extends SubsystemBase {
    * Spins the "spaghetti" motors (the spinners in the intake)
    */
   public void spaghettiSpin() {
-    spaghetti.set(ControlMode.PercentOutput, KIntakeCubeSpaghettitSpeed);
     
-    // if (intakeMode) {
-    //   spaghetti.set(ControlMode.PercentOutput, KIntakeConeSpaghettitSpeed);
-    // }
-    // else if (!intakeMode) {
-    //   spaghetti.set(ControlMode.PercentOutput, KIntakeCubeSpaghettitSpeed);
-    // }
+    
+    if (intakeMode) {
+      spaghetti.set(ControlMode.PercentOutput, KIntakeConeSpaghettitSpeed);
+    }
+    else if (!intakeMode) {
+      spaghetti.set(ControlMode.PercentOutput, KIntakeCubeSpaghettitSpeed);
+    }
   }
   
   public void spaghettiSpinReverse() {
-    spaghetti.set(ControlMode.PercentOutput, -KIntakeCubeSpaghettitSpeed);
-    // if (intakeMode) {
-    //   spaghetti.set(ControlMode.PercentOutput, -KIntakeConeSpaghettitSpeed);
-    // }
-    // else if (!intakeMode) {
-    //   spaghetti.set(ControlMode.PercentOutput, -KIntakeCubeSpaghettitSpeed);
-    // }
+    
+    if (intakeMode) {
+      spaghetti.set(ControlMode.PercentOutput, -KIntakeConeSpaghettitSpeed);
+    }
+    else if (!intakeMode) {
+      spaghetti.set(ControlMode.PercentOutput, -KIntakeCubeSpaghettitSpeed);
+    }
   }
 
 public void setLEDToColor(int R, int G, int B) {

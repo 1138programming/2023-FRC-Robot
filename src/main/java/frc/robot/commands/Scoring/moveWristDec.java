@@ -6,12 +6,11 @@ package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Claw;
-public class moveWrist extends CommandBase {
+public class moveWristDec extends CommandBase {
   Claw wrist;
   double position;
-  public moveWrist(Claw wrist, double position) {
+  public moveWristDec(Claw wrist) {
     this.wrist = wrist;
-    this.position = position;
     addRequirements(wrist);
   }
 
@@ -23,7 +22,7 @@ public class moveWrist extends CommandBase {
   @Override
   public void execute() 
   {
-    wrist.moveWrist(position);
+    wrist.moveWristDecrement();
   }
 
   // Called once the command ends or is interrupted.
@@ -33,6 +32,6 @@ public class moveWrist extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

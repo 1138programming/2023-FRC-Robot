@@ -42,7 +42,9 @@ public class Orientation extends SubsystemBase {
         // extension.setIdleMode(IdleMode.kBrake);
         
         rightSpin.follow(leftSpin, KOrientationRightMotorReversed);
+        orientationMode = false;
     }
+
 
     /**
      * This command makes both motors move, because although it looks like only one moves, the follow() command is used on the right motor earlier.

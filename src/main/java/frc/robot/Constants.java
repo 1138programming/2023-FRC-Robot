@@ -58,8 +58,8 @@ public final class Constants {
 
   public static final int KLinearServoFront = 0;
   public static final int KLinearServoBack = 1;
-  public static final int KClawServo = 2;
-  public static final int KWristServo = 3;
+  public static final int KClawServo = 3;
+  public static final int KWristServo = 2;
   public static final int KLEDPort1 = 4;
   public static final int KLEDPort2 = 5;
 
@@ -249,9 +249,10 @@ public final class Constants {
   public static final double KAngleMotorSpeed = 0; //TBD
   public static final double KElevatorSpeed = 0; //TBD
 
-  public static final double KCloseClawCone = 0.5; //TBD
-  public static final double KCloseClawCube = 0.5; //TBD
-  public static final double KOpenClaw = 0; // TBD
+  public static final double KCloseClawCone = 0; //TBD
+  public static final double KCloseClawCube = 0; //TBD
+  public static final double KOpenClaw = 0.4; // TBD
+ 
 
   public static final double KLiftReadyPos = 0; //TBD
   public static final double KLiftMediumPos = 0; //TBD
@@ -262,7 +263,7 @@ public final class Constants {
 
   public static final boolean KWristFlip = true; 
   
-  public static final double KWristFlipPos = 0;
+  public static final double KWristFlipPos = 1;
   public static final double KWristNoFlipPos = 0;
 
   

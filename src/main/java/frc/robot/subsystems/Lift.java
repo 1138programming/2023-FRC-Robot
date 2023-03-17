@@ -1,12 +1,20 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.*;
+
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax; // Neos and 775
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType; // Covers Neos and 775 
+import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.revrobotics.SparkMaxAbsoluteEncoder;
+// import 
 
 public class Lift extends SubsystemBase {
   private CANSparkMax lift;
@@ -16,7 +24,8 @@ public class Lift extends SubsystemBase {
   private RelativeEncoder liftEncoder;
   private PIDController innerLiftControl;
   private RelativeEncoder innerLiftEncoder;
-  private RelativeEncoder flipperEncoder;
+  private SparkMaxAbsoluteEncoder flipperEncoder;
+  
   private PIDController flipperController;
   
   public Lift()
@@ -28,15 +37,16 @@ public class Lift extends SubsystemBase {
     innerLift = new CANSparkMax(KInnerLiftMotor, MotorType.kBrushless);
     innerLiftControl = new PIDController(KInnerLiftP, KInnerLiftI, KInnerLiftD);
     innerLiftEncoder = innerLift.getEncoder();
-
-    flipper = new CANSparkMax(KFlipperMotor, MotorType.kBrushless);
-    flipperEncoder = flipper.getEncoder();
+    // flipperEncoder = new 
+    flipperEncoder = flipper.getAbsoluteEncoder(Type.kDutyCycle);
+    
     flipperController = new PIDController(KFlipperP, KFlipperI, KFlipperD);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("FlipperEncoder", flipperEncoder.getPosition()); 
   }
   public void moveFlipper(double speed) {
     flipper.set(speed);
@@ -62,8 +72,6 @@ public double getInnerLiftPos() {
   public void flipToPos(double setPoint) {
       moveFlipper(flipperController.calculate(getFlipperPos(), setPoint));
   }
-
-  
 
  
 
