@@ -4,26 +4,32 @@
 
 package frc.robot.commands.Scoring;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Lift;
+import frc.robot.subsystems.Claw;
 import static frc.robot.Constants.*;
 
-public class FlipperOut extends CommandBase {
-  private Lift flipper;
-  /** Creates a new FlipperToReadyPos. */
-  public FlipperOut(Lift flipper) {
-    this.flipper = flipper;
-    addRequirements(flipper);
+import edu.wpi.first.wpilibj2.command.CommandBase;
+
+public class RotateWristOut extends CommandBase {
+  /** Creates a new flipWrist. */
+  private Claw claw;
+  public RotateWristOut(Claw claw) {
+    this.claw = claw;
+    addRequirements(claw);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+
+    claw.moveWrist(KWristFlipPos);
+    
+  }
+  
+  
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    flipper.flipToPos(KFlipOut);
   }
 
   // Called once the command ends or is interrupted.
@@ -33,6 +39,6 @@ public class FlipperOut extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

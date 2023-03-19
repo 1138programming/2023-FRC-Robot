@@ -6,12 +6,12 @@ package frc.robot.commands.Scoring;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Lift;
-public class moveLiftToPos extends CommandBase {
+public class MoveInnerLift extends CommandBase {
   Lift lift;
-  private double setPoint;
-  public moveLiftToPos(Lift lift, double setPoint) {
+  double speed;
+  public MoveInnerLift(Lift lift, double speed) {
     this.lift = lift;
-    this.setPoint = setPoint;
+    this.speed = speed;
     addRequirements(lift);
   }
 
@@ -23,7 +23,7 @@ public class moveLiftToPos extends CommandBase {
   @Override
   public void execute()
   {
-    lift.moveLift(setPoint);
+    lift.moveInnerLift(speed);
   }
 
   // Called once the command ends or is interrupted.

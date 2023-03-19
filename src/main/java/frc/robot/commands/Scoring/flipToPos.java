@@ -26,7 +26,7 @@ public class flipToPos extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    flipper.flipToPos(scoringPos);
+    // flipper.flipToPos(scoringPos);
   }
 
   // Called once the command ends or is interrupted.
@@ -36,11 +36,12 @@ public class flipToPos extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (flipper.getFlipperPos() <  scoringPos + 0.5 && flipper.getFlipperPos() > scoringPos - 0.5) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    // if (flipper.getFlipperPos() <  scoringPos + 0.5 && flipper.getFlipperPos() > scoringPos - 0.5) {
+    //   return true;
+    // }
+    // else {
+    //   return false;
+    // }
+    return false;
   }
 }

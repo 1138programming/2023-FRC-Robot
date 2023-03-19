@@ -48,7 +48,7 @@ public final class Constants {
   public static final int KEndgameBackIR = 11;
 
   // Intake - 3 in total
-  public static final int KIntakeTopLimitId = 8;  //NavX port number: 0
+  public static final int KIntakeTopLimitId = 23;  //NavX port number: 0
   public static final int KIntakeEncoderID = 9; //NavX port number: 1
   public static final int KIntakeBottomLimitId = 12;  //NavX port number: 2
   
@@ -221,7 +221,7 @@ public final class Constants {
   public static final int KScoringEncoder2ID = 7; //name can be changed later
 
     // Flipper PID
-  public static final double KFlipperP = 0; // TBD
+  public static final double KFlipperP = 0.01; // TBD
   public static final double KFlipperI = 0; // TBD
   public static final double KFlipperD = 0; // TBD
   public static final double KScoringFlipPos = 0; //TBD
@@ -251,7 +251,7 @@ public final class Constants {
 
   public static final double KCloseClawCone = 0; //TBD
   public static final double KCloseClawCube = 0; //TBD
-  public static final double KOpenClaw = 0.4; // TBD
+  public static final double KOpenClaw = 0.35; // TBD
  
 
   public static final double KLiftReadyPos = 0; //TBD
@@ -265,6 +265,9 @@ public final class Constants {
   
   public static final double KWristFlipPos = 1;
   public static final double KWristNoFlipPos = 0;
+
+  public static final double KFlipOut= -18;
+  public static final double KFlipIn = -5;
 
   
   //Limelight

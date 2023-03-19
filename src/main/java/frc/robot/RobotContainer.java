@@ -64,7 +64,9 @@ import frc.robot.commands.Orientation.OrientationStop;
 import frc.robot.commands.Orientation.OrientationStopOnlyExtension;
 import frc.robot.commands.Scoring.CloseClaw;
 import frc.robot.commands.Scoring.FlipperOut;
+import frc.robot.commands.Scoring.FlipperToReadyPos;
 import frc.robot.commands.Scoring.LiftStop;
+import frc.robot.commands.Scoring.MoveInnerLift;
 import frc.robot.commands.Scoring.MoveLift;
 import frc.robot.commands.Scoring.MoveLiftToHighPos;
 import frc.robot.commands.Scoring.MoveLiftToMidPos;
@@ -73,6 +75,7 @@ import frc.robot.commands.Scoring.MoveLiftToReadyPos;
 // import frc.robot.commands.Scoring.MoveWrist;
 // import frc.robot.commands.Scoring.OpenClaw;
 import frc.robot.commands.Scoring.RotateWrist;
+import frc.robot.commands.Scoring.RotateWristOut;
 import frc.robot.commands.Scoring.RotateWristToReady;
 import frc.robot.commands.Scoring.moveFlipper;
 import frc.robot.commands.Scoring.moveWristDec;
@@ -160,8 +163,8 @@ public class RobotContainer {
   private final LiftStop liftstop = new LiftStop(lift);
   private final RotateWrist rotateWrist = new RotateWrist(claw);
   private final FlipperOut flipperOut = new FlipperOut(lift);
-  private final moveFlipper moveFlipperForward = new moveFlipper(lift, 0.15);
-  private final moveFlipper moveFlipperReverse = new moveFlipper(lift, -0.15);
+  private final moveFlipper moveFlipperForward = new moveFlipper(lift, 0.05);
+  private final moveFlipper moveFlipperReverse = new moveFlipper(lift, -0.05);
   private final RotateWristToReady rotateWristToReady = new RotateWristToReady(claw);
   private final CloseClaw closeClaw = new CloseClaw(claw);
   private final moveWristDec movewrist = new moveWristDec(claw);
@@ -174,7 +177,8 @@ public class RobotContainer {
   private final MoveLiftToMidPos moveLiftToMidPos = new MoveLiftToMidPos(lift);
   private final MoveLiftToLowPos moveLiftToLowPos = new MoveLiftToLowPos(lift);
   private final MoveLiftToReadyPos moveLiftToReadyPos = new MoveLiftToReadyPos(lift);
-
+  private final FlipperOut flipout = new FlipperOut(lift);
+  private final FlipperToReadyPos flipin = new FlipperToReadyPos(lift);
   // Limelight
   private final LimelightMoveToAprilTag goToTarget = new LimelightMoveToAprilTag(base, limelight);
   private final LimelightMoveToConeNode goToTargetTape = new LimelightMoveToConeNode(base, limelight);
@@ -348,17 +352,26 @@ public class RobotContainer {
 
     // logitechBtnX.whileTrue(OrientationMoveIn);
 
-    xboxBtnA.onTrue(IncrementWrist);
-    xboxBtnB.onTrue(DecrementWrist);
+    xboxBtnLB.onTrue(flipin);
+    xboxBtnRB.onTrue(flipout);
 
-    xboxBtnLT.whileTrue(DecrementWrist);
-
+    
+   
     
     xboxBtnX.whileTrue(closeClaw);
     xboxBtnY.whileTrue(openClaw);
+    
+   
 
-    xboxBtnRB.whileTrue(moveFlipperForward);
-    xboxBtnLB.whileTrue(moveFlipperReverse);
+    xboxBtnStrt.whileTrue(moveFlipperForward);
+    xboxBtnSelect.whileTrue(moveFlipperReverse);
+
+    xboxBtnRT.whileTrue(new MoveInnerLift(lift, 0.15));
+    xboxBtnLT.whileTrue(new MoveInnerLift(lift, -0.15));
+
+
+    xboxBtnA.whileTrue(new RotateWristOut(claw));
+    xboxBtnB.whileTrue(new RotateWristToReady(claw));
     // xboxBtnLB.whileTrue(intakeSpinForward);
     // xboxBtnLT.whileTrue(intakeSpinReverse);
 
