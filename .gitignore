@@ -160,3 +160,9 @@ bin/
 
 # Simulation GUI and other tools window save file
 *-window.json
+src/main/java/frc/robot/commands/Scoring/stopScoring.java
+src/main/java/frc/robot/commands/Scoring/openClaw.java
+src/main/java/frc/robot/commands/Scoring/moveLiftToPos.java
+src/main/java/frc/robot/commands/Scoring/moveFlipper.java
+src/main/java/frc/robot/commands/Scoring/moveClaw.java
+src/main/java/frc/robot/commands/Scoring/Lift/StopScoring.java

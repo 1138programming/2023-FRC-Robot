@@ -50,7 +50,9 @@ public class SwerveModule extends SubsystemBase {
 
     this.angleMotor.setInverted(angleMotorReversed);
     this.driveMotor.setInverted(driveMotorReversed);
- 
+    
+    this.driveMotor.setSmartCurrentLimit(80);
+
     CANCoderConfiguration config = new CANCoderConfiguration();
 
     config.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
@@ -75,18 +77,22 @@ public class SwerveModule extends SubsystemBase {
     angleController = new PIDController(KAngleP, KAngleI, KAngleD);
     angleController.enableContinuousInput(-180, 180); // Tells PIDController that 180 deg is same in both directions
 
-    setAbsoluteOffset(offset);
 
+    setAbsoluteOffset(offset);
+    // this.driveMotor.burnFlash();
     feedforward = new SimpleMotorFeedforward(ks, kv, ka);
   }
   
   @Override
   public void periodic() {
     SmartDashboard.putNumber("drive current" + driveMotor.getDeviceId(), driveMotor.getOutputCurrent());
+    SmartDashboard.putString("posistion " + driveMotor.getDeviceId(), getPosition().toString());
+    SmartDashboard.putNumber("encoder " + driveMotor.getDeviceId(), getDriveEncoderPos());
+
+    SmartDashboard.putNumber("mag deg " + driveMotor.getDeviceId(), getMagDeg());
   }
 
   public void setDesiredState(SwerveModuleState desiredState) {
-    SmartDashboard.putNumber("encoder " + driveMotor.getDeviceId(), getDriveEncoderPos());
     // If no controller input, set angle and drive motor to 0
     if (Math.abs(desiredState.speedMetersPerSecond) < 0.001) {
       angleMotor.set(0);
@@ -115,7 +121,12 @@ public class SwerveModule extends SubsystemBase {
 
   public void lockWheel() {
     double angleMotorOutput;
-    angleMotorOutput = angleController.calculate(getAngleDeg(), -45);
+    if (angleMotor.getDeviceId() == KFrontLeftAngleID || angleMotor.getDeviceId() == KBackRightAngleID) {
+      angleMotorOutput = angleController.calculate(getAngleDeg(), 45);
+    }
+    else {
+      angleMotorOutput = angleController.calculate(getAngleDeg(), -45);
+    }
 
     angleMotor.set(angleMotorOutput);
     driveMotor.set(0);
@@ -123,7 +134,6 @@ public class SwerveModule extends SubsystemBase {
 
   public SwerveModulePosition getPosition() {
     SwerveModulePosition position = new SwerveModulePosition(getDriveEncoderPos(), getAngleR2D());
-    SmartDashboard.putString("posistion " + driveMotor.getDeviceId(), position.toString());
     return position;
   }
 

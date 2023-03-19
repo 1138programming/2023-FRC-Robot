@@ -35,22 +35,27 @@ public final class Constants {
     // Orientation - 5 in total
   public static final int KOrientationMagSensorOutID = 1;
   public static final int KOrientationMagSensorInID = 2;
-  public static final int KOrientationkDoorControlID = 3;
-  public static final int KOrientationkBaseCheckerID = 4;
-  public static final int KOrientationkTipCheckerID = 5;
+  public static final int KOrientationkDoorControlID = 13; // Changing to two ports because it's no longer a IR Sensor and now Ultrasonic
+
+  public static final int KOrientationRangeOut = 3;
+  public static final int KOrientationRangeIn = 4;
+
+  // public static final int KOrientationkBaseCheckerID = 4; // Gone
+  // public static final int KOrientationkTipCheckerID = 5; // Gone
 
     // Scoring - 2 in total
   public static final int KScoringTopLimitSwitch = 6;
   public static final int KScoringBottomLimitSwitch = 7;
+  public static final int KLiftEncoder = 10; // NavX port number: 0 
+  
+  // Intake - 3 in total
+  public static final int KIntakeTopLimitId = 8; 
+  public static final int KIntakeEncoderID = 9;
+  public static final int KIntakeBottomLimitId = 12; // NavX port number: 2
 
   // Endgame - 2 in total
-  public static final int KEndgameFrontIR = 10;
-  public static final int KEndgameBackIR = 11;
-
-  // Intake - 3 in total
-  public static final int KIntakeTopLimitId = 8;  //NavX port number: 0
-  public static final int KIntakeEncoderID = 9; //NavX port number: 1
-  public static final int KIntakeBottomLimitId = 12;  //NavX port number: 2
+  public static final int KEndgameFrontIR = 20; // NavX port number: 4
+  public static final int KEndgameBackIR = 21; // NavX port number: 5
   
   // End of Sensing - DIO *****************************************************
 
@@ -120,31 +125,22 @@ public final class Constants {
   
   public static final double KAngleMotorRotToDeg = 35;
   public static final double KPhysicalMaxDriveSpeedMPS = KNeoMaxRPM * KDriveMotorRPMToMetersPerSec;
-  public static final double KMaxAngularSpeed = Math.PI; // MAY NEED CHANGING
+  public static final double KMaxAngularSpeed = Math.PI * 2; // MAY NEED CHANGING
   
   // not used, may be useful to know/keep
   private static final double KAngleMotorShaftToWheelRatio = 1 / 10.2857; 
   
   
     // Low and high percent: sets max speed of drivetrain for driver
-  public static final double KBaseDriveLowPercent = 0.3;
-  public static final double KBaseDriveHighPercent = 0.7;
+  public static final double KBaseDriveLowPercent = 0.25;
+  public static final double KBaseDriveMidPercent = 0.5;
   public static final double KBaseDriveMaxPercent = 1;
   
     // Offsets for absolute encoders, used to set up angle encoders
-  // public static final double KFrontLeftOffset = 0.159;
-  // public static final double KFrontLeftOffset = 191.04;
-  // public static final double KFrontRightOffset = 18.11;
-  // public static final double KBackLeftOffset = 13.97;
-  // public static final double KBackRightOffset = 285.82; 
-  // public static final double KFrontLeftOffset = 12.57;
-  // public static final double KFrontRightOffset = 9.14;
-  // public static final double KBackLeftOffset = 11.86;
-  // public static final double KBackRightOffset = 1.67; 
-  public static final double KFrontLeftOffset = -135;
-  public static final double KFrontRightOffset = -27.11;
-  public static final double KBackLeftOffset = -116.19;
-  public static final double KBackRightOffset = -285.82; 
+  public static final double KFrontLeftOffset = -143.70;
+  public static final double KFrontRightOffset = -27.60;
+  public static final double KBackLeftOffset = -116.89;
+  public static final double KBackRightOffset = -285.64; 
  
   
   // public static final double KFrontLeftOffset = -147.22;
@@ -254,8 +250,9 @@ public final class Constants {
  
 
   public static final double KLiftReadyPos = 0; //TBD
-  public static final double KLiftMediumPos = 0; //TBD
-  public static final double KLiftHighPos = 0; //TBD
+  public static final double KLiftLowPos = 30; //TBD
+  public static final double KLiftMediumPos = 60; //TBD
+  public static final double KLiftHighPos = 90; //TBD
 
   public static final double KInnerLiftHighPos= 0;
   public static final double KInnerLiftLowPos= 0;

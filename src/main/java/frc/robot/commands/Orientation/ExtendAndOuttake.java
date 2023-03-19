@@ -24,11 +24,9 @@ public class ExtendAndOuttake extends CommandBase {
   @Override
   public void execute() {
     if (!orientation.getMagSensorOut()) {
-    orientation.moveOrientationMotorExtension(KExtensionMotorSpeed);
+      orientation.moveOrientationMotorExtension(KExtensionMotorSpeed);
     }
-    // else {
-    orientation.moveOrientationLeftandRightMotors(0.5);
-    // }
+    orientation.moveOrientationLeftandRightMotors(KExtensionMotorSpeed);
   }
 
   // Called once the command ends or is interrupted.

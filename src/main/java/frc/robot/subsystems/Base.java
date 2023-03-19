@@ -85,11 +85,13 @@ public class Base extends SubsystemBase {
       KBackLeftLocation, KBackRightLocation
     );
     odometry = new SwerveDriveOdometry(kinematics, getHeading(), getPositions());
-    driveSpeedFactor = KBaseDriveLowPercent;
+    driveSpeedFactor = KBaseDriveMidPercent;
 
-    xRateLimiter = new SlewRateLimiter(3);
-    yRateLimiter = new SlewRateLimiter(3);
-    rotRateLimiter = new SlewRateLimiter(3);
+    int limiter = 10;
+
+    xRateLimiter = new SlewRateLimiter(limiter);
+    yRateLimiter = new SlewRateLimiter(limiter);
+    // rotRateLimiter = new SlewRateLimiter(limiter);
   }
 
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, double maxDriveSpeedMPS) {
@@ -97,9 +99,9 @@ public class Base extends SubsystemBase {
     ySpeed *= maxDriveSpeedMPS;
     rot *= KMaxAngularSpeed;
 
-    xSpeed = xRateLimiter.calculate(xSpeed);
-    ySpeed = yRateLimiter.calculate(ySpeed);
-    rot = rotRateLimiter.calculate(rot);
+    // xSpeed = xRateLimiter.calculate(xSpeed);
+    // ySpeed = yRateLimiter.calculate(ySpeed);
+    // rot = rotRateLimiter.calculate(rot);
     
     //feeding parameter speeds into toSwerveModuleStates to get an array of SwerveModuleState objects
     SwerveModuleState[] states =
@@ -108,10 +110,14 @@ public class Base extends SubsystemBase {
           ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, getHeading())
           : new ChassisSpeeds(xSpeed, ySpeed, rot));
     SwerveDriveKinematics.desaturateWheelSpeeds(states, KPhysicalMaxDriveSpeedMPS);
-    SmartDashboard.putNumber("speedFactor", driveSpeedFactor);
 
+    SmartDashboard.putNumber("xspeed HI", xSpeed);
+    SmartDashboard.putNumber("yspeed HI", ySpeed);
+    SmartDashboard.putNumber("rot HI", rot);
+    SmartDashboard.putBoolean("degense more", defenseMode);
     if (defenseMode && xSpeed == 0 && ySpeed == 0 && rot == 0) {
       lockWheels();
+      SmartDashboard.putBoolean("HELLO", true);
     }
     else {
       //setting module states, aka moving the motors
@@ -120,6 +126,7 @@ public class Base extends SubsystemBase {
       backLeftModule.setDesiredState(states[2]);
       backRightModule.setDesiredState(states[3]);
     }
+    SmartDashboard.putBoolean("HELLO", false);
   }
 
   public void lockWheels() {
@@ -175,6 +182,11 @@ public class Base extends SubsystemBase {
     gyro.setAngleAdjustment(0);
   }
 
+  public void resetGyro(double gyroOffset) {
+    gyro.reset();
+    gyro.setAngleAdjustment(gyroOffset);
+  }
+
   public void resetAllRelEncoders() {
     frontLeftModule.resetRelEncoders();
     frontRightModule.resetRelEncoders();
@@ -220,21 +232,21 @@ public class Base extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Gyro", getHeadingDeg());
+    // SmartDashboard.putNumber("Gyro", getHeadingDeg());
 
-    SmartDashboard.putNumber("Front left module", frontLeftModule.getAngleDeg());
-    SmartDashboard.putNumber("Front right module", frontRightModule.getAngleDeg());
-    SmartDashboard.putNumber("Back left module", backLeftModule.getAngleDeg());
-    SmartDashboard.putNumber("Back right module", backRightModule.getAngleDeg());
+    // SmartDashboard.putNumber("Front left module", frontLeftModule.getAngleDeg());
+    // SmartDashboard.putNumber("Front right module", frontRightModule.getAngleDeg());
+    // SmartDashboard.putNumber("Back left module", backLeftModule.getAngleDeg());
+    // SmartDashboard.putNumber("Back right module", backRightModule.getAngleDeg());
 
-    SmartDashboard.putNumber("front left mag", frontLeftModule.getMagDeg());
-    SmartDashboard.putNumber("front right mag", frontRightModule.getMagDeg());
-    SmartDashboard.putNumber("back left mag", backLeftModule.getMagDeg());
-    SmartDashboard.putNumber("back right mag", backRightModule.getMagDeg());
+    // SmartDashboard.putNumber("front left mag", frontLeftModule.getMagDeg());
+    // SmartDashboard.putNumber("front right mag", frontRightModule.getMagDeg());
+    // SmartDashboard.putNumber("back left mag", backLeftModule.getMagDeg());
+    // SmartDashboard.putNumber("back right mag", backRightModule.getMagDeg());
 
-    SmartDashboard.putString("odometry pose", odometry.getPoseMeters().toString());
+    // SmartDashboard.putString("odometry pose", odometry.getPoseMeters().toString());
 
-    SmartDashboard.putBoolean("isCalibrating", gyro.isCalibrating());
+    // SmartDashboard.putBoolean("isCalibrating", gyro.isCalibrating());
 
     // SmartDashboard.putNumber(, KAngleD)
 

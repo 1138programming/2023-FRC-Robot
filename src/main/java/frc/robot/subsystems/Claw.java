@@ -32,8 +32,8 @@ public class Claw extends SubsystemBase {
   {
     claw = new Servo(KClawServo);
     wrist = new Servo (KWristServo);
-    BaseChecker = new DigitalInput (KOrientationkBaseCheckerID);
-    TipChecker = new DigitalInput (KOrientationkTipCheckerID);
+    // BaseChecker = new DigitalInput (KOrientationkBaseCheckerID);
+    // TipChecker = new DigitalInput (KOrientationkTipCheckerID);
     // claw.setBounds(1.0, 1.8, 1.5, 1.2, 1.0);
     double offset = 0.095;
     wrist.setBounds(2.4 + offset, 1.502, 1.5, 1.498, 0.6 - offset);

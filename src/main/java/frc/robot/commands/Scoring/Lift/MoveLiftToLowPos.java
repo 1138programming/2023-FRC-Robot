@@ -22,13 +22,15 @@ public class MoveLiftToLowPos extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    lift.moveLift(KLiftReadyPos);
-    lift.moveInnerLift(KInnerLiftHighPos);
+    lift.setLiftPos(KLiftLowPos);
+    // lift.moveInnerLift(KInnerLiftHighPos);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    lift.moveLift(0);
+  }
 
   // Returns true when the command should end.
   @Override
@@ -36,6 +38,6 @@ public class MoveLiftToLowPos extends CommandBase {
     // if (KLiftReadyPos+? >=  scoring.getLiftPos() || KLiftReadyPos-? <=  scoring.getLiftPos()){
     //   return true;
     // }
-    return false;
+    return lift.getLiftPos() > 29 && lift.getLiftPos() < 31;
   }
 }

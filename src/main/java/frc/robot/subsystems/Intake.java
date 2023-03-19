@@ -41,9 +41,9 @@ public class Intake extends SubsystemBase {
     spaghetti = new TalonSRX(KSpaghettiIntakeId);
     swivel = new TalonSRX(KSwivelIntakeId);
 
-    swivel.setNeutralMode(NeutralMode.Coast); 
+    swivel.setNeutralMode(NeutralMode.Brake);
     swivel.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-    spaghetti.setNeutralMode(NeutralMode.Brake);
+    spaghetti.setNeutralMode(NeutralMode.Coast);
     
     spaghetti.setInverted(true); 
 

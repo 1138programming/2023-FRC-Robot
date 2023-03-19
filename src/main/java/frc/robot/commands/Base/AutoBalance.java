@@ -15,7 +15,7 @@ public class AutoBalance extends CommandBase {
   private PIDController balanceController;
   private boolean onStation = false;
   private double onStationSpeed = 0.15;
-  private double offStationSpeed = 0.5;
+  private double offStationSpeed = 0.15;
 
   /** Creates a new AutoBalance. */
   public AutoBalance(Base base) {
@@ -27,7 +27,7 @@ public class AutoBalance extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    base.resetAllRelEncoders();
+    // base.resetAllRelEncoders();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -38,29 +38,29 @@ public class AutoBalance extends CommandBase {
     // SmartDashboard.putNumber("pitch", base.());
     double roll = base.getPitch();
     if (onStation == false) {
-      base.drive(-offStationSpeed, 0, 0, false, KPhysicalMaxDriveSpeedMPS);
+      base.drive(offStationSpeed, 0, 0, false, KPhysicalMaxDriveSpeedMPS);
       if (Math.abs(roll) > 10) {
         onStation = true;
       }
     }
     else {
-      if (Math.abs(roll) < 2) {
+      if (Math.abs(roll) < 5) {
         base.lockWheels();
         // base.drive(0, 0, 0, false, KPhysicalMaxDriveSpeedMPS);
       }
       else {
 
-        // double speed = balanceController.calculate(roll, 0);
-        // base.drive(0, speed, 0, false, KPhysicalMaxDriveSpeedMPS);
-        if (roll < 0) {
-          base.drive(onStationSpeed, 0, 0, false, KPhysicalMaxDriveSpeedMPS);
-        }
-        else {
-          base.drive(-onStationSpeed, 0, 0, false, KPhysicalMaxDriveSpeedMPS);
+        double speed = balanceController.calculate(roll, 0);
+        base.drive(-speed, 0, 0, false, KPhysicalMaxDriveSpeedMPS);
+        // if (roll < 0) {
+        //   base.drive(-onStationSpeed, 0, 0, false, KPhysicalMaxDriveSpeedMPS);
+        // }
+        // else {
+        //   base.drive(onStationSpeed, 0, 0, false, KPhysicalMaxDriveSpeedMPS);
         }
       }
     }
-  }
+  // }
 
   // Called once the command ends or is interrupted.
   @Override
