@@ -4,9 +4,12 @@ import static frc.robot.Constants.*;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax; // Neos and 775
+import com.revrobotics.EncoderType;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxAnalogSensor;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType; // Covers Neos and 775 
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
+import com.revrobotics.SparkMaxAnalogSensor.Mode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
@@ -15,7 +18,10 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
+import com.revrobotics.SparkMaxRelativeEncoder;
 // import 
+
+import com.revrobotics.SparkMaxAbsoluteEncoder;
 
 public class Lift extends SubsystemBase {
   private CANSparkMax lift;
@@ -24,7 +30,6 @@ public class Lift extends SubsystemBase {
 
   private PIDController liftControl;
   private PIDController liftDownController;
-
   private PIDController innerLiftControl;
   private PIDController flipperController;
 
@@ -47,6 +52,16 @@ public class Lift extends SubsystemBase {
     // flipperEncoder = new 
     // flipperEncoder = flipper.getAbsoluteEncoder(Type.kDutyCycle);
     
+    innerLift = new CANSparkMax(16, MotorType.kBrushed);
+    // innerLiftControl = new PIDController(KInnerLiftP, KInnerLiftI, KInnerLiftD);
+    //  innerLiftEncoder = new DutyCycleEncoder(8);
+    innerLiftEncoder = innerLift.getEncoder(com.revrobotics.SparkMaxRelativeEncoder.Type.kQuadrature,1);
+    // innerLiftEncoder = innerLift.get
+
+    // innerLiftEncoder.setPositionConversionFactor(1);
+
+    flipper = new CANSparkMax(KFlipperMotor, MotorType.kBrushless);
+    flipperEncoder = flipper.getEncoder();
     flipperController = new PIDController(KFlipperP, KFlipperI, KFlipperD);
 
     liftEncoder.setPosition(0);

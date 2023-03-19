@@ -9,10 +9,10 @@ import static frc.robot.Constants.*;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class RotateWristToReady extends CommandBase {
+public class RotateWristOut extends CommandBase {
   /** Creates a new flipWrist. */
   private Claw claw;
-  public RotateWristToReady(Claw claw) {
+  public RotateWristOut(Claw claw) {
     this.claw = claw;
     addRequirements(claw);
   }
@@ -21,7 +21,8 @@ public class RotateWristToReady extends CommandBase {
   @Override
   public void initialize() {
 
-      claw.moveWrist(KWristNoFlipPos);
+    claw.moveWrist(KWristFlipPos);
+    
   }
   
   

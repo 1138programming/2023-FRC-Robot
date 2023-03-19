@@ -24,7 +24,7 @@ public class FlipperIn extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    flipper.flipToPos(0);
+    flipper.flipToPos(KFlipIn);
   }
 
   // Called once the command ends or is interrupted.

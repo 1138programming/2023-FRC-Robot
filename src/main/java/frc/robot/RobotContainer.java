@@ -78,6 +78,7 @@ import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionReverse;
 import frc.robot.commands.Limelight.LimelightMoveToAprilTag;
 import frc.robot.commands.Limelight.LimelightMoveToConeNode;
 import frc.robot.commands.Limelight.ToggleLimelightPipeline;
+import frc.robot.commands.Scoring.Lift.FlipperToReadyPos;
 
 // import frc.robot.commands.Endgame.*;
 
@@ -150,8 +151,8 @@ public class RobotContainer {
   private final LiftStop liftstop = new LiftStop(lift);
   private final RotateWrist rotateWrist = new RotateWrist(claw);
   private final FlipperOut flipperOut = new FlipperOut(lift);
-  private final MoveFlipper moveFlipperForward = new MoveFlipper(lift, 0.15);
-  private final MoveFlipper moveFlipperReverse = new MoveFlipper(lift, -0.15);
+  private final MoveFlipper moveFlipperForward = new MoveFlipper(lift, 0.05);
+  private final MoveFlipper moveFlipperReverse = new MoveFlipper(lift, -0.05);
   private final RotateWristToReady rotateWristToReady = new RotateWristToReady(claw);
   private final CloseClaw closeClaw = new CloseClaw(claw);
   private final OpenClaw openClaw = new OpenClaw(claw);
@@ -161,7 +162,8 @@ public class RobotContainer {
   private final MoveLiftToMidPos moveLiftToMidPos = new MoveLiftToMidPos(lift);
   private final MoveLiftToLowPos moveLiftToLowPos = new MoveLiftToLowPos(lift);
   private final MoveLiftToReadyPos moveLiftToReadyPos = new MoveLiftToReadyPos(lift);
-
+  private final FlipperOut flipout = new FlipperOut(lift);
+  private final FlipperToReadyPos flipin = new FlipperToReadyPos(lift);
   // Limelight
   private final LimelightMoveToAprilTag goToTarget = new LimelightMoveToAprilTag(base, limelight);
   private final LimelightMoveToConeNode goToTargetTape = new LimelightMoveToConeNode(base, limelight);
