@@ -82,11 +82,17 @@ public class Lift extends SubsystemBase {
 
 public void moveInnerLift(double speed) {         
   innerLift.set(speed);
-    // innerLift.set(innerLiftControl.calculate(innerLiftEncoder.getPosition(),setPoint));
+    
 }
-// public double getInnerLiftPos() {
-//     return innerLiftEncoder.getPosition();
-// }
+public void moveInnerLiftToPos(double setPoint) {         
+  innerLift.set(innerLiftControl.calculate(innerLiftEncoder.getPosition(),setPoint));
+    
+}
+
+
+public double getInnerLiftPos() {
+    return innerLiftEncoder.getPosition();
+}
   public double getFlipperPos(){
     return flipperEncoder.getPosition();
   }
