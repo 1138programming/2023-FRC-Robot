@@ -10,6 +10,7 @@ import static frc.robot.Constants.*;
 
 public class MoveLiftToHighPos extends CommandBase {
   Lift lift;
+  double setpoint = KLiftHighPos;
   public MoveLiftToHighPos(Lift lift) {
     this.lift = lift;
     addRequirements(lift);
@@ -22,7 +23,7 @@ public class MoveLiftToHighPos extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    lift.setLiftPos(KLiftHighPos);
+    lift.setLiftPos(setpoint);
   }
 
   // Called once the command ends or is interrupted.
@@ -34,9 +35,6 @@ public class MoveLiftToHighPos extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // if (KLiftReadyPos+? >=  scoring.getLiftPos() || KLiftReadyPos-? <=  scoring.getLiftPos()){
-    //   return true;
-    // }
-    return false;
+    return Math.abs(setpoint - lift.getLiftPos()) < KLiftDeadzone;
   }
 }

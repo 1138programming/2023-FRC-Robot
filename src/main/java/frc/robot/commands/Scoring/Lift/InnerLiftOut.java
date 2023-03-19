@@ -2,20 +2,20 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Intake;
+package frc.robot.commands.Scoring.Lift;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
-
+import frc.robot.subsystems.Lift;
 import static frc.robot.Constants.*;
 
-public class IntakeSwivelBottum extends CommandBase {
-  /** Creates a new IntakeSwivelBottum. */
-  private Intake intake;
-
-  public IntakeSwivelBottum(Intake intake) {
-    this.intake = intake;
-    addRequirements(intake);
+public class InnerLiftOut extends CommandBase {
+  private Lift lift;
+  private double setpoint = KInnerLiftOutPos;
+  /** Creates a new InnerLiftOut. */
+  public InnerLiftOut(Lift lift) {
+    this.lift = lift;
+    addRequirements(lift);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -27,24 +27,18 @@ public class IntakeSwivelBottum extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.swivelSpinToPos(KIntakeSwivelBottumPos);
+    lift.setInnerLiftPos(setpoint);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
+    lift.moveInnerLift(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    
-    if (intake.getIntakeEncoder() <= KIntakeSwivelBottumPos + KIntakeSwiveBottumOffset && intake.getIntakeEncoder() <= KIntakeSwivelBottumPos - KIntakeSwiveBottumOffset) {
-      return true;
-     }
-     else {
-   return false;
- }
+    return Math.abs(setpoint - lift.getInnerLiftPos()) < KInnerLiftDeadzone;
   }
 }

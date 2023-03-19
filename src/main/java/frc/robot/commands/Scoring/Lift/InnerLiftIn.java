@@ -6,42 +6,39 @@ package frc.robot.commands.Scoring.Lift;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Lift;
+import static frc.robot.Constants.*;
 
-public class FlipToPos extends CommandBase {
-  /** Creates a new flipToPos. */
-  private Lift flipper;
-  private double scoringPos;
-
-  public FlipToPos(Lift flipper, double scoringPos) {
+public class InnerLiftIn extends CommandBase {
+  private Lift lift;
+  private double setpoint = 0;
+  /** Creates a new InnerLiftOut. */
+  public InnerLiftIn(Lift lift) {
+    this.lift = lift;
+    addRequirements(lift);
     // Use addRequirements() here to declare subsystem dependencies.
-    this.flipper = flipper;
-    this.scoringPos = scoringPos;
-    addRequirements(flipper);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // flipper.flipToPos(scoringPos);
+    lift.setInnerLiftPos(setpoint);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    lift.moveInnerLift(0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // if (flipper.getFlipperPos() <  scoringPos + 0.5 && flipper.getFlipperPos() > scoringPos - 0.5) {
-    //   return true;
-    // }
-    // else {
-    //   return false;
-    // }
-    return false;
+    return Math.abs(setpoint - lift.getInnerLiftPos()) < KInnerLiftDeadzone;
   }
 }

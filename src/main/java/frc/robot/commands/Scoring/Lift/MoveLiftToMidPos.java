@@ -10,6 +10,7 @@ import static frc.robot.Constants.*;
 
 public class MoveLiftToMidPos extends CommandBase {
   Lift lift;
+  double setpoint = KLiftMediumPos;
   public MoveLiftToMidPos(Lift lift) {
     this.lift = lift;
     addRequirements(lift);
@@ -22,7 +23,7 @@ public class MoveLiftToMidPos extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    lift.setLiftPos(KLiftMediumPos);
+    lift.setLiftPos(setpoint);
   }
 
   // Called once the command ends or is interrupted.
@@ -37,6 +38,6 @@ public class MoveLiftToMidPos extends CommandBase {
     // if (KLiftReadyPos+? >=  scoring.getLiftPos() || KLiftReadyPos-? <=  scoring.getLiftPos()){
     //   return true;
     // }
-    return false;
+    return Math.abs(setpoint - lift.getLiftPos()) < KLiftDeadzone;
   }
 }

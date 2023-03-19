@@ -21,6 +21,7 @@ import frc.robot.CommandGroups.Auton.RightSideLeaveCommunity;
 import frc.robot.CommandGroups.Auton.RightSideOutakeAndLeave;
 import frc.robot.CommandGroups.Auton.TimedDriveForward;
 import frc.robot.commands.Base.AutoBalance;
+import frc.robot.commands.Base.BaseStop;
 import frc.robot.commands.Base.DriveWithJoysticks;
 import frc.robot.commands.Intake.IntakeMoveSwivelDown;
 import frc.robot.commands.Intake.IntakeMoveSwivelUp;
@@ -49,7 +50,7 @@ import frc.robot.commands.Base.DriveWithJoysticks;
 //Commands for the Intake
 import frc.robot.commands.Intake.IntakeSpin;
 import frc.robot.commands.Intake.IntakeStop;
-import frc.robot.commands.Intake.IntakeSwivelBottum;
+import frc.robot.commands.Intake.IntakeSwivelBottom;
 import frc.robot.commands.Intake.IntakeSwivelTop;
 import frc.robot.commands.Intake.OuttakeAndSwivel;
 //Commands for the Orientation
@@ -62,10 +63,13 @@ import frc.robot.commands.Orientation.ExtendAndOuttake;
 import frc.robot.commands.Scoring.Claw.CloseClaw;
 import frc.robot.commands.Scoring.Claw.OpenClaw;
 import frc.robot.commands.Scoring.Claw.RotateWrist;
+import frc.robot.commands.Scoring.Claw.RotateWristOut;
 import frc.robot.commands.Scoring.Claw.RotateWristToReady;
 import frc.robot.commands.Scoring.Lift.FlipperOut;
+import frc.robot.commands.Scoring.Lift.InnerLiftOut;
 import frc.robot.commands.Scoring.Lift.LiftStop;
 import frc.robot.commands.Scoring.Lift.MoveFlipper;
+import frc.robot.commands.Scoring.Lift.MoveInnerLift;
 import frc.robot.commands.Scoring.Lift.MoveLift;
 import frc.robot.commands.Scoring.Lift.MoveLiftToHighPos;
 import frc.robot.commands.Scoring.Lift.MoveLiftToLowPos;
@@ -124,7 +128,7 @@ public class RobotContainer {
   private final IntakeMoveSwivelUp moveSwivelUp = new IntakeMoveSwivelUp(intake);
 
   private final IntakeSwivelTop intakeSwivelTop = new IntakeSwivelTop(intake);
-  private final IntakeSwivelBottum intakeSwivelBottom = new IntakeSwivelBottum(intake);
+  private final IntakeSwivelBottom intakeSwivelBottom = new IntakeSwivelBottom(intake);
   private final IntakeSpinAndSwivel intakeSpinAndSwivel = new IntakeSpinAndSwivel(intake);
   private final OuttakeAndSwivel outtakeAndSwivel = new OuttakeAndSwivel(intake);
 
@@ -245,6 +249,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     base.setDefaultCommand(driveWithJoysticks);
+    // base.setDefaultCommand(new BaseStop(base));
     intake.setDefaultCommand(intakeStop);
     orientation.setDefaultCommand(new OrientationStop(orientation));
     lift.setDefaultCommand(liftstop);
@@ -324,27 +329,8 @@ public class RobotContainer {
     logitechBtnLB.onTrue(toggleMaxSpeed);
     logitechBtnRB.onTrue(toggleLowSpeed);
     logitechBtnLB.or(logitechBtnRB).onFalse(toggleMidSpeed);
-    // if(!logitechBtnRB.getAsBoolean() && !logitechBtnLB.getAsBoolean()) {
-
-    // }
-    SmartDashboard.putBoolean("mid", logitechBtnRB.getAsBoolean());
-    SmartDashboard.putBoolean("high", logitechBtnLB.getAsBoolean());
-    // logitechBtnLB.onFalse(toggleMidSpeed);
 
     logitechBtnY.onTrue(resetEncoders);
-
-    xboxBtnA.onTrue(OrientationMoveIn);
-    xboxBtnB.onTrue(OrientationMoveOut);
-    xboxBtnX.onTrue(OrientationNudge);
-
-    // logitechBtnLB.whileTrue(intakeSpinForward);
-    // logitechBtnLT.whileTrue(intakeSpinReverse);
-    
-    // logitechBtnA.whileTrue(setCubeMode);
-    // logitechBtnB.whileTrue(setConeMode);
-
-    // logitechBtnRB.whileTrue(moveSwivelUp);
-    // logitechBtnRT.whileTrue(moveSwivelDown);
 
     liftHighSetpointButton.whileTrue(new MoveLiftToHighPos(lift));
     liftMidSetpointButton.whileTrue(new MoveLiftToMidPos(lift));
@@ -355,24 +341,20 @@ public class RobotContainer {
     moveLiftDownButton.whileTrue(new MoveLift(lift, -0.3));
 
 
-    streamDeck1.whileTrue(new IntakeSpin(intake));
-    streamDeck2.onTrue(new CheckDoorAndCollectObject(orientation));
+    streamDeck1.onTrue(new ExtensionNudge(orientation));
+    streamDeck2.whileTrue(new CheckDoorAndCollectObject(orientation));
     streamDeck3.whileTrue(new IntakeMoveSwivelUp(intake));
-    streamDeck4.whileTrue(new IntakeMoveSwivelDown(intake));
-    streamDeck5.onTrue(OrientationMoveOut);
-    streamDeck6.onTrue(OrientationMoveIn);
-    streamDeck7.onTrue(OrientationNudge);
-    streamDeck8.whileTrue(new OrientationSpinOut(orientation));
-    streamDeck9.onTrue(new SetDefenseModeTrue(base));
-    streamDeck10.onTrue(new SetDefenseModeFalse(base));
-
+    streamDeck4.whileTrue(new MoveFlipper(lift, -0.1));
+    streamDeck5.whileTrue(new MoveFlipper(lift, 0.1));
+    streamDeck6.whileTrue(new MoveInnerLift(lift, -0.1));
+    streamDeck7.whileTrue(new MoveInnerLift(lift, 0.1));
+    streamDeck8.whileTrue(new RotateWristToReady(claw));
+    streamDeck9.whileTrue(new RotateWristOut(claw));
+    streamDeck10.whileTrue(new CloseClaw(claw));
+    streamDeck11.whileTrue(new OpenClaw(claw));
     streamDeck12.whileTrue(new MoveLift(lift, 0.3));
     streamDeck13.whileTrue(new MoveLift(lift, -0.3  ));
     streamDeck14.whileTrue(new MoveLiftToLowPos(lift));
-
-
-    // xboxBtnA.whileTrue(intakeSwivelBottom);
-    // xboxBtnB.whileTrue(intakeSwivelTop);
 
     SmartDashboard.putBoolean("stream deck boolean", streamDeck12.getAsBoolean());
   }
@@ -384,21 +366,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand()
    {
-    // An ExampleCommand will run in autonomous
-    // return new AutoBalance(base);
-
-    // return new LeftLeaveCommunity(base);
-    // return new LeftSideOutakeAndLeave(base, intake);
-    // return new LeftLeaveCommunityAndGoAway(base);
-
-    // return new RightLeaveCommunityAndGoAway(base);
-    // return new RightLeaveCommunity(base);
-    // return new RightSideOutakeAndLeave(base, intake);
-
-    
     return new AutoBalance(base);
-
-    // return null;
   }
 
   public static double scaleBetween(double unscaledNum, double minAllowed, double maxAllowed, double min, double max) {

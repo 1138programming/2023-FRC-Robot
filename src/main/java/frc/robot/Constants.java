@@ -63,8 +63,8 @@ public final class Constants {
 
   public static final int KLinearServoFront = 0;
   public static final int KLinearServoBack = 1;
-  public static final int KClawServo = 3;
   public static final int KWristServo = 2;
+  public static final int KClawServo = 3;
   public static final int KLEDPort1 = 4;
   public static final int KLEDPort2 = 5;
 
@@ -202,6 +202,9 @@ public final class Constants {
   public static final double KIntakeP = 0.001; // TBD
   public static final double KIntakeI = 0; // TBD 
   public static final double KIntakeD = 0; // TBD
+
+  // Timing for lift
+  public static final double KIntakeThenLiftTime = 0.5;
   
   
   // Endgame
@@ -253,6 +256,12 @@ public final class Constants {
   public static final double KLiftLowPos = 30; //TBD
   public static final double KLiftMediumPos = 60; //TBD
   public static final double KLiftHighPos = 90; //TBD
+  
+  public static final double KInnerLiftOutPos = 10; //TBD
+
+  public static final double KLiftDeadzone = 1;
+  public static final double KInnerLiftDeadzone = 1;
+
 
   public static final double KInnerLiftHighPos= 0;
   public static final double KInnerLiftLowPos= 0;
@@ -264,7 +273,8 @@ public final class Constants {
 
   public static final double KFlipOut= -18;
   public static final double KFlipIn = -5;
-
+  
+  public static final double KFlipperDeadzone = 0.5;
   
   //Limelight
   public static final double KLimelightHeight = 19.5; // inches

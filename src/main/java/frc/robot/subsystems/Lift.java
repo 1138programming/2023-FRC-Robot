@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxRelativeEncoder;
 // import 
-
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
 
 public class Lift extends SubsystemBase {
@@ -43,7 +43,10 @@ public class Lift extends SubsystemBase {
   {
     flipper = new CANSparkMax(KFlipperMotor, MotorType.kBrushless);
     lift = new CANSparkMax(KLiftMotor, MotorType.kBrushless);
-    innerLift = new CANSparkMax(KInnerLiftMotor, MotorType.kBrushless);
+    innerLift = new CANSparkMax(KInnerLiftMotor, MotorType.kBrushed);
+    innerLift.setIdleMode(IdleMode.kBrake);
+    flipper.setIdleMode(IdleMode.kBrake);
+    lift.setIdleMode(IdleMode.kBrake);
     
     liftControl = new PIDController(0.05, 0.001, 0.0001);
     liftDownController = new PIDController(0.03, 0, 0);
