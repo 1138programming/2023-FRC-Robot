@@ -20,13 +20,10 @@ public class RotateWristToReady extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (claw.getWristStatus() == KWristFlip) {
-      claw.moveWrist(KWristFlipPos);
-    }
-    else {
+
       claw.moveWrist(KWristNoFlipPos);
-    }
   }
+  
   
 
   // Called every time the scheduler runs while the command is scheduled.
