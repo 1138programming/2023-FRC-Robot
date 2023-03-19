@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
 
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*; // Pnuematics
 
@@ -25,27 +26,60 @@ public class Claw extends SubsystemBase {
   private boolean scoringMode;
   private boolean toRotateWrist;
 
+  private double wristConstant;
+
   public Claw() 
   {
     claw = new Servo(KClawServo);
     wrist = new Servo (KWristServo);
     BaseChecker = new DigitalInput (KOrientationkBaseCheckerID);
     TipChecker = new DigitalInput (KOrientationkTipCheckerID);
+    // claw.setBounds(1.0, 1.8, 1.5, 1.2, 1.0);
+    double offset = 0.095;
+    wrist.setBounds(2.4 + offset, 1.502, 1.5, 1.498, 0.6 - offset);
+    claw.set(KOpenClaw);
+    wrist. set(wristConstant);
+
+    wristConstant = 0; 
+
+    scoringMode = false;
+
+    
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("ClawPos", claw.getPosition());
+    SmartDashboard.putNumber("WristPos", wristConstant);
   }
 
   public void moveClaw(double setpoint) {
-      setpoint *= 1/135; // converts from degrees (135 max)
+      // setpoint *= 1/135; // converts from degrees (135 max)
       claw.set(setpoint);
+
   }
-  public void moveWrist(double setpoint) {
-      setpoint *= 1/300;
-      wrist.set(setpoint);
+  public void moveWrist (double setPoint) {
+       wrist.set(setPoint);
   }
+  public void moveWristIncrement() {
+      wristConstant += .05; 
+      if (wristConstant > 1) {
+        wristConstant = 1;
+      }
+      
+      wrist.set(wristConstant);
+  } 
+  public void moveWristDecrement() {
+     wristConstant -= .05; 
+     if (wristConstant < 0) {
+       wristConstant = 0;
+    }
+    
+    wrist.set(wristConstant);
+} 
+
+
 
   public void closeClaw() {
       if (scoringMode) {
@@ -57,12 +91,12 @@ public class Claw extends SubsystemBase {
   }
 
   public void openClaw() {
-      if (scoringMode) {
-          claw.set(KOpenClaw);
-      }
+    
+    claw.set(KOpenClaw);
+
   }
 
-    public void setConeMode() {
+  public void setConeMode() {
       scoringMode = KConeMode; 
   }
 

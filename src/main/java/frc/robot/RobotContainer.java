@@ -76,6 +76,9 @@ import frc.robot.commands.Scoring.MoveLiftToReadyPos;
 // import frc.robot.commands.Scoring.OpenClaw;
 import frc.robot.commands.Scoring.RotateWrist;
 import frc.robot.commands.Scoring.RotateWristToReady;
+import frc.robot.commands.Scoring.moveFlipper;
+import frc.robot.commands.Scoring.moveWristDec;
+import frc.robot.commands.Scoring.moveWristIn;
 import frc.robot.commands.Scoring.openClaw;
 import frc.robot.commands.Scoring.stopScoring;
 import frc.robot.commands.Orientation.ExtensionNudge;
@@ -159,9 +162,14 @@ public class RobotContainer {
   private final LiftStop liftstop = new LiftStop(lift);
   private final RotateWrist rotateWrist = new RotateWrist(claw);
   private final FlipperOut flipperOut = new FlipperOut(lift);
+  private final moveFlipper moveFlipperForward = new moveFlipper(lift, 0.15);
+  private final moveFlipper moveFlipperReverse = new moveFlipper(lift, -0.15);
   private final RotateWristToReady rotateWristToReady = new RotateWristToReady(claw);
   private final CloseClaw closeClaw = new CloseClaw(claw);
+  private final moveWristDec movewrist = new moveWristDec(claw);
   private final openClaw openClaw = new openClaw(claw);
+  private final moveWristIn IncrementWrist = new moveWristIn(claw);
+  private final moveWristDec DecrementWrist = new moveWristDec(claw);
   private final MoveLift moveLiftup = new MoveLift(lift, 0.5);
   private final MoveLift moveLiftdown = new MoveLift(lift, -0.5);
   private final MoveLiftToHighPos moveLiftToHighPos = new MoveLiftToHighPos(lift);
@@ -180,6 +188,7 @@ public class RobotContainer {
   private static final int KXboxPort = 1;  
   private static final int KStreamDeckPort = 2;
   private static final int KTestingStreamDeckPort = 3;
+
 
   //Deadzone
   private static final double KDeadZone = 0.05;
@@ -332,11 +341,14 @@ public class RobotContainer {
     xboxBtnB.onTrue(OrientationMoveOut);
     xboxBtnX.onTrue(OrientationNudge);
 
-    xboxBtnLB.whileTrue(intakeSpinForward);
-    xboxBtnLT.whileTrue(intakeSpinReverse);
+    // logitechBtnLB.whileTrue(intakeSpinForward);
+    // logitechBtnLT.whileTrue(intakeSpinReverse);
+    
+    // logitechBtnA.whileTrue(setCubeMode);
+    // logitechBtnB.whileTrue(setConeMode);
 
-    xboxBtnRB.whileTrue(moveSwivelUp); 
-    xboxBtnRT.whileTrue(moveSwivelDown);
+    // logitechBtnRB.whileTrue(moveSwivelUp);
+    // logitechBtnRT.whileTrue(moveSwivelDown);
 
     streamDeck5.onTrue(OrientationMoveOut);
     streamDeck6.onTrue(OrientationMoveIn);
