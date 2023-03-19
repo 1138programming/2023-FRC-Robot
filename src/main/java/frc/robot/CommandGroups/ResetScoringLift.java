@@ -7,12 +7,11 @@ package frc.robot.CommandGroups;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Claw;
-import frc.robot.commands.Scoring.CloseClaw;
-import frc.robot.commands.Scoring.MoveLiftToReadyPos;
-import frc.robot.commands.Scoring.FlipperToReadyPos;
-import frc.robot.commands.Scoring.openClaw;
-import frc.robot.commands.Scoring.MoveLiftToLowPos;
-// import frc.robot.commands.Scoring.OpenClaw;
+import frc.robot.commands.Scoring.Claw.CloseClaw;
+import frc.robot.commands.Scoring.Claw.OpenClaw;
+import frc.robot.commands.Scoring.Lift.FlipperToReadyPos;
+import frc.robot.commands.Scoring.Lift.MoveLiftToLowPos;
+import frc.robot.commands.Scoring.Lift.MoveLiftToReadyPos;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -30,7 +29,7 @@ public class ResetScoringLift extends SequentialCommandGroup {
       new CloseClaw(claw),
       new FlipperToReadyPos(lift),
       new MoveLiftToReadyPos(lift),
-      new openClaw(claw)
+      new OpenClaw(claw)
     );
   }
 }

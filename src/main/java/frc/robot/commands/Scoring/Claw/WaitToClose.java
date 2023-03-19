@@ -2,16 +2,17 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Scoring;
+package frc.robot.commands.Scoring.Claw;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Claw;
-public class moveWristDec extends CommandBase {
-  Claw wrist;
-  double position;
-  public moveWristDec(Claw wrist) {
-    this.wrist = wrist;
-    addRequirements(wrist);
+
+public class WaitToClose extends CommandBase {
+  public Claw claw;
+
+  public WaitToClose(Claw claw) {
+    this.claw = claw;
+    addRequirements(claw);
   }
 
   // Called when the command is initially scheduled.
@@ -20,18 +21,20 @@ public class moveWristDec extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() 
-  {
-    wrist.moveWristDecrement();
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    claw.closeClaw();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    if (claw.getBaseSensor() || claw.getTipSensor()) {
+      return true;
+    }
+      return false;
   }
 }

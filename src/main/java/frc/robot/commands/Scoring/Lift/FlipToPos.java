@@ -2,17 +2,21 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Scoring;
+package frc.robot.commands.Scoring.Lift;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Lift;
-import static frc.robot.Constants.*;
 
-public class MoveLiftToReadyPos extends CommandBase {
-  Lift lift;
-  public MoveLiftToReadyPos(Lift lift) {
-    this.lift = lift;
-    addRequirements(lift);
+public class FlipToPos extends CommandBase {
+  /** Creates a new flipToPos. */
+  private Lift flipper;
+  private double scoringPos;
+
+  public FlipToPos(Lift flipper, double scoringPos) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.flipper = flipper;
+    this.scoringPos = scoringPos;
+    addRequirements(flipper);
   }
 
   // Called when the command is initially scheduled.
@@ -22,7 +26,7 @@ public class MoveLiftToReadyPos extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    lift.moveLift(KLiftReadyPos);
+    flipper.flipToPos(scoringPos);
   }
 
   // Called once the command ends or is interrupted.
@@ -32,9 +36,11 @@ public class MoveLiftToReadyPos extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // if (KLiftReadyPos+? >=  scoring.getLiftPos() || KLiftReadyPos-? <=  scoring.getLiftPos()){
-    //   return true;
-    // }
-    return false;
+    if (flipper.getFlipperPos() <  scoringPos + 0.5 && flipper.getFlipperPos() > scoringPos - 0.5) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }

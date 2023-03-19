@@ -2,17 +2,17 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Scoring;
+package frc.robot.commands.Scoring.Lift;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Lift;
-public class moveFlipper extends CommandBase {
-  Lift flipper;
-  double speed;
-  public moveFlipper(Lift flipper, double speed) {
-    this.flipper = flipper;
-    this.speed = speed;
-    addRequirements(flipper);
+public class MoveLiftToPos extends CommandBase {
+  Lift lift;
+  private double setPoint;
+  public MoveLiftToPos(Lift lift, double setPoint) {
+    this.lift = lift;
+    this.setPoint = setPoint;
+    addRequirements(lift);
   }
 
   // Called when the command is initially scheduled.
@@ -23,7 +23,7 @@ public class moveFlipper extends CommandBase {
   @Override
   public void execute()
   {
-    flipper.moveFlipper(speed);
+    lift.moveLift(setPoint);
   }
 
   // Called once the command ends or is interrupted.

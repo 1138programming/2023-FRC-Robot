@@ -2,32 +2,30 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Scoring;
+package frc.robot.commands.Scoring.Lift;
+
+import frc.robot.subsystems.Lift;
+import static frc.robot.Constants.*;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Claw;
-import frc.robot.subsystems.Lift;
-public class stopScoring extends CommandBase {
-  Claw claw;
+
+public class LiftStop extends CommandBase {
+  /** Creates a new LiftStop. */
   Lift lift;
-  public stopScoring(Claw claw, Lift lift) {
-    this.claw = claw;
+  public LiftStop(Lift lift) {
     this.lift = lift;
-    addRequirements(claw);
     addRequirements(lift);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    lift.stop();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() 
-  {
-    claw.stop();
-    lift.stop();
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
@@ -36,6 +34,6 @@ public class stopScoring extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

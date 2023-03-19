@@ -2,17 +2,19 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Scoring;
+package frc.robot.commands.Scoring.Claw;
+
+import frc.robot.subsystems.Claw;
+
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Lift;
-public class moveLiftToPos extends CommandBase {
-  Lift lift;
-  private double setPoint;
-  public moveLiftToPos(Lift lift, double setPoint) {
-    this.lift = lift;
-    this.setPoint = setPoint;
-    addRequirements(lift);
+
+public class OpenClaw extends CommandBase {
+  /** Creates a new openClaw. */
+  Claw claw;
+  public OpenClaw(Claw claw) {
+    this.claw = claw;
+    addRequirements(claw);
   }
 
   // Called when the command is initially scheduled.
@@ -21,9 +23,8 @@ public class moveLiftToPos extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute()
-  {
-    lift.moveLift(setPoint);
+  public void execute() {
+    claw.openClaw();
   }
 
   // Called once the command ends or is interrupted.
@@ -33,6 +34,6 @@ public class moveLiftToPos extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

@@ -2,27 +2,29 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Scoring;
+package frc.robot.commands.Scoring.Claw;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Claw;
-
-public class CloseClaw extends CommandBase {
+public class MoveClaw extends CommandBase {
   Claw claw;
-  public CloseClaw(Claw claw) {
+  double position;
+  public MoveClaw(Claw claw, double position) {
     this.claw = claw;
+    this.position = position;
     addRequirements(claw);
   }
 
-  // Called when the command is initially scheduled.
+  
   @Override
-  public void initialize() {
-    claw.closeClaw();
-  }
+  public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
+  
   @Override
-  public void execute() {}
+  public void execute() 
+  {
+    claw.moveClaw(position);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -31,6 +33,6 @@ public class CloseClaw extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

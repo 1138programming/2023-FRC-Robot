@@ -2,17 +2,17 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Scoring;
+package frc.robot.commands.Scoring.Lift;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Lift;
+import static frc.robot.Constants.*;
 
-public class WaitToClose extends CommandBase {
-  public Claw claw;
-
-  public WaitToClose(Claw claw) {
-    this.claw = claw;
-    addRequirements(claw);
+public class MoveLiftToHighPos extends CommandBase {
+  Lift lift;
+  public MoveLiftToHighPos(Lift lift) {
+    this.lift = lift;
+    addRequirements(lift);
   }
 
   // Called when the command is initially scheduled.
@@ -21,20 +21,20 @@ public class WaitToClose extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    lift.moveLift(KLiftHighPos);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    claw.closeClaw();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (claw.getBaseSensor() || claw.getTipSensor()) {
-      return true;
-    }
-      return false;
+    // if (KLiftReadyPos+? >=  scoring.getLiftPos() || KLiftReadyPos-? <=  scoring.getLiftPos()){
+    //   return true;
+    // }
+    return false;
   }
 }
