@@ -78,7 +78,6 @@ import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionReverse;
 import frc.robot.commands.Limelight.LimelightMoveToAprilTag;
 import frc.robot.commands.Limelight.LimelightMoveToConeNode;
 import frc.robot.commands.Limelight.ToggleLimelightPipeline;
-import frc.robot.commands.Scoring.Lift.FlipperToReadyPos;
 
 // import frc.robot.commands.Endgame.*;
 
@@ -163,7 +162,6 @@ public class RobotContainer {
   private final MoveLiftToLowPos moveLiftToLowPos = new MoveLiftToLowPos(lift);
   private final MoveLiftToReadyPos moveLiftToReadyPos = new MoveLiftToReadyPos(lift);
   private final FlipperOut flipout = new FlipperOut(lift);
-  private final FlipperToReadyPos flipin = new FlipperToReadyPos(lift);
   // Limelight
   private final LimelightMoveToAprilTag goToTarget = new LimelightMoveToAprilTag(base, limelight);
   private final LimelightMoveToConeNode goToTargetTape = new LimelightMoveToConeNode(base, limelight);

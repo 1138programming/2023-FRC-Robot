@@ -41,30 +41,18 @@ public class Lift extends SubsystemBase {
   
   public Lift()
   {
+    flipper = new CANSparkMax(KFlipperMotor, MotorType.kBrushless);
     lift = new CANSparkMax(KLiftMotor, MotorType.kBrushless);
+    innerLift = new CANSparkMax(KInnerLiftMotor, MotorType.kBrushless);
+    
     liftControl = new PIDController(0.05, 0.001, 0.0001);
     liftDownController = new PIDController(0.03, 0, 0);
-    liftEncoder = lift.getEncoder();
-
-    innerLift = new CANSparkMax(KInnerLiftMotor, MotorType.kBrushless);
     innerLiftControl = new PIDController(KInnerLiftP, KInnerLiftI, KInnerLiftD);
-    innerLiftEncoder = innerLift.getEncoder();
-    // flipperEncoder = new 
-    // flipperEncoder = flipper.getAbsoluteEncoder(Type.kDutyCycle);
-    
-    innerLift = new CANSparkMax(16, MotorType.kBrushed);
-    // innerLiftControl = new PIDController(KInnerLiftP, KInnerLiftI, KInnerLiftD);
-    //  innerLiftEncoder = new DutyCycleEncoder(8);
-    innerLiftEncoder = innerLift.getEncoder(com.revrobotics.SparkMaxRelativeEncoder.Type.kQuadrature,1);
-    // innerLiftEncoder = innerLift.get
-
-    // innerLiftEncoder.setPositionConversionFactor(1);
-
-    flipper = new CANSparkMax(KFlipperMotor, MotorType.kBrushless);
-    flipperEncoder = flipper.getEncoder();
     flipperController = new PIDController(KFlipperP, KFlipperI, KFlipperD);
-
-    liftEncoder.setPosition(0);
+    
+    innerLiftEncoder = innerLift.getEncoder(com.revrobotics.SparkMaxRelativeEncoder.Type.kQuadrature,1);
+    liftEncoder = lift.getEncoder();
+    flipperEncoder = flipper.getEncoder();
 
     liftSwitch = new DigitalInput(KScoringBottomLimitSwitch);
   }
