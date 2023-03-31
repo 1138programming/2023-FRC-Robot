@@ -4,14 +4,12 @@
 
 package frc.robot.CommandGroups.IntakeThenLift;
 
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.Intake.IntakeMoveSwivelDown;
-import frc.robot.commands.Scoring.Claw.OpenClaw;
+import frc.robot.commands.Scoring.Claw.RotateWristCube;
+import frc.robot.commands.Scoring.Lift.MoveLiftToMidPos;
 import frc.robot.commands.Scoring.Lift.MoveLiftToReadyPos;
 import frc.robot.subsystems.Claw;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lift;
 import static frc.robot.Constants.*;
 
@@ -21,16 +19,14 @@ import static frc.robot.Constants.*;
 public class LiftReadySetpoint extends SequentialCommandGroup {
   /** Creates a new IntakeThenLiftUp. */
   
-  public LiftReadySetpoint(Intake intake, Lift lift, Claw claw) {
+  public LiftReadySetpoint(Lift lift, Claw claw) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ParallelRaceGroup(
-        new IntakeMoveSwivelDown(intake),
-        new WaitCommand(KIntakeThenLiftTime)
-      ),
-      new MoveLiftToReadyPos(lift),
-      new OpenClaw(claw)
+      new ParallelCommandGroup(
+        // new RotateWristCube(claw),
+        new MoveLiftToReadyPos(lift)
+      )
     );
   }
 }

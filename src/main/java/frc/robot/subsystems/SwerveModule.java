@@ -51,7 +51,7 @@ public class SwerveModule extends SubsystemBase {
     this.angleMotor.setInverted(angleMotorReversed);
     this.driveMotor.setInverted(driveMotorReversed);
     
-    this.driveMotor.setSmartCurrentLimit(80);
+    // this.driveMotor.setSmartCurrentLimit(80);
 
     CANCoderConfiguration config = new CANCoderConfiguration();
 
@@ -87,7 +87,7 @@ public class SwerveModule extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("drive current" + driveMotor.getDeviceId(), driveMotor.getOutputCurrent());
     SmartDashboard.putString("posistion " + driveMotor.getDeviceId(), getPosition().toString());
-    SmartDashboard.putNumber("encoder " + driveMotor.getDeviceId(), getDriveEncoderPos());
+    SmartDashboard.putNumber("encoder " + driveMotor.getDeviceId(), getAngleDeg());
 
     SmartDashboard.putNumber("mag deg " + driveMotor.getDeviceId(), getMagDeg());
   }

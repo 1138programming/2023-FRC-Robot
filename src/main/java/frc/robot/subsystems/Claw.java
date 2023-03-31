@@ -38,9 +38,9 @@ public class Claw extends SubsystemBase {
     double offset = 0.095;
     wrist.setBounds(2.4 + offset, 1.502, 1.5, 1.498, 0.6 - offset);
     claw.set(KOpenClaw);
-    wrist. set(wristConstant);
+    // wristConstant = 0; 
+    // wrist. set(wristConstant);
 
-    wristConstant = 0; 
 
     scoringMode = false;
 
@@ -82,12 +82,13 @@ public class Claw extends SubsystemBase {
 
 
   public void closeClaw() {
-      if (scoringMode) {
-          claw.set(KCloseClawCone);  
-      }
-      else {
-          claw.set(KCloseClawCube);
-      }
+      // if (scoringMode) {
+      //     claw.set(KCloseClawCone);  
+      // }
+      // else {
+      //     claw.set(KCloseClawCube);
+      //   }
+    claw.set(KCloseClawCube);
   }
 
   public void openClaw() {

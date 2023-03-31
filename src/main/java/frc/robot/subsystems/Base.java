@@ -23,6 +23,10 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Base extends SubsystemBase {
+  private SlewRateLimiter accelerationLimiter;
+  private double currentDriveSpeed = 0;
+
+
   private SwerveModule frontLeftModule;
   private SwerveModule frontRightModule;
   private SwerveModule backLeftModule;
@@ -89,10 +93,14 @@ public class Base extends SubsystemBase {
 
     int limiter = 10;
 
-    xRateLimiter = new SlewRateLimiter(limiter);
-    yRateLimiter = new SlewRateLimiter(limiter);
+    accelerationLimiter = new SlewRateLimiter(0.5);
+
+    // xRateLimiter = new SlewRateLimiter(limiter);
+    // yRateLimiter = new SlewRateLimiter(limiter);
     // rotRateLimiter = new SlewRateLimiter(limiter);
   }
+
+  // public double driv
 
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, double maxDriveSpeedMPS) {
     xSpeed *= maxDriveSpeedMPS;
@@ -111,12 +119,9 @@ public class Base extends SubsystemBase {
           : new ChassisSpeeds(xSpeed, ySpeed, rot));
     SwerveDriveKinematics.desaturateWheelSpeeds(states, KPhysicalMaxDriveSpeedMPS);
 
-    SmartDashboard.putNumber("xspeed HI", xSpeed);
-    SmartDashboard.putNumber("yspeed HI", ySpeed);
-    SmartDashboard.putNumber("rot HI", rot);
-    SmartDashboard.putBoolean("degense more", defenseMode);
+    
     if (defenseMode && xSpeed == 0 && ySpeed == 0 && rot == 0) {
-      lockWheels();
+      // lockWheels();
       SmartDashboard.putBoolean("HELLO", true);
     }
     else {
@@ -130,10 +135,10 @@ public class Base extends SubsystemBase {
   }
 
   public void lockWheels() {
-    frontLeftModule.lockWheel();
-    frontRightModule.lockWheel();
-    backLeftModule.lockWheel();
-    backRightModule.lockWheel();
+    // frontLeftModule.lockWheel(); 
+    // frontRightModule.lockWheel();
+    // backLeftModule.lockWheel();
+    // backRightModule.lockWheel();
   }
   
   public void resetOdometry(Pose2d pose) {
@@ -232,6 +237,7 @@ public class Base extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putBoolean("DEFENSE MODE", getDefenseMode());
     // SmartDashboard.putNumber("Gyro", getHeadingDeg());
 
     // SmartDashboard.putNumber("Front left module", frontLeftModule.getAngleDeg());

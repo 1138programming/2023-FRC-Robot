@@ -128,10 +128,10 @@ public class Orientation extends SubsystemBase {
     @Override
     public void periodic()
     {
-        SmartDashboard.putNumber("range", getDoorRange());
-        SmartDashboard.putBoolean("range being detected", getDoorRange() > 19 && getDoorRange() < 22);
-        SmartDashboard.putBoolean("CLOSE", getDoorSensor());
-        SmartDashboard.putBoolean("Out", getMagSensorOut());
-        SmartDashboard.putBoolean("IN", getMagSensorIn());
+        // SmartDashboard.putNumber("range", getDoorRange());
+        // SmartDashboard.putBoolean("range being detected", getDoorRange() > 19 && getDoorRange() < 22);
+        // SmartDashboard.putBoolean("CLOSE", getDoorSensor());
+        // SmartDashboard.putBoolean("Out", getMagSensorOut());
+        // SmartDashboard.putBoolean("IN", getMagSensorIn());
     }
 }

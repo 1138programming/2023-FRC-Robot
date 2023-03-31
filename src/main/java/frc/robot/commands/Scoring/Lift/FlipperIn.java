@@ -11,7 +11,7 @@ import static frc.robot.Constants.*;
 
 public class FlipperIn extends CommandBase {
   private Lift flipper;
-  private double setPosition = KFlipIn;
+  private double setPosition = KFlipperInPos;
   /** Creates a new FlipperToReadyPos. */
   public FlipperIn(Lift flipper) {
     this.flipper = flipper;

@@ -9,6 +9,7 @@ import frc.robot.subsystems.Base;
 import static frc.robot.Constants.*;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class DriveWithJoysticks extends CommandBase {
@@ -19,6 +20,7 @@ public class DriveWithJoysticks extends CommandBase {
   private double lrSpeed; //Speed of the robot in the Y direction (sideways).
   private double rot;
 
+
   // private PIDController rotationCorrectionPID;
   // private double initHeading;
 
@@ -26,7 +28,12 @@ public class DriveWithJoysticks extends CommandBase {
   // private double kRotationI = 0;
   // private double kRotationD = 0;
 
+  // private SlewRateLimiter accelerationLimiter = new SlewRateLimiter(0);
+
   // private double maxDriveSpeed = KPhysicalMaxDriveSpeedMPS;
+
+  SlewRateLimiter accelerationLimiter = new SlewRateLimiter(0.5);
+  double limitSpeed = 0;
 
   /** Creates a new DriveWithJoysticks. */
   public DriveWithJoysticks(Base base) {
@@ -46,6 +53,7 @@ public class DriveWithJoysticks extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
     fbSpeed = Robot.m_robotContainer.getLogiLeftYAxis();
     lrSpeed = Robot.m_robotContainer.getLogiLeftXAxis();
     rot = Robot.m_robotContainer.getLogiRightXAxis();

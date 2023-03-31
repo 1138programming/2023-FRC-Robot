@@ -125,7 +125,7 @@ public final class Constants {
   
   public static final double KAngleMotorRotToDeg = 35;
   public static final double KPhysicalMaxDriveSpeedMPS = KNeoMaxRPM * KDriveMotorRPMToMetersPerSec;
-  public static final double KMaxAngularSpeed = Math.PI * 2; // MAY NEED CHANGING
+  public static final double KMaxAngularSpeed = 4.5; // MAY NEED CHANGING
   
   // not used, may be useful to know/keep
   private static final double KAngleMotorShaftToWheelRatio = 1 / 10.2857; 
@@ -137,9 +137,9 @@ public final class Constants {
   public static final double KBaseDriveMaxPercent = 1;
   
     // Offsets for absolute encoders, used to set up angle encoders
-  public static final double KFrontLeftOffset = -143.70;
-  public static final double KFrontRightOffset = -27.60;
-  public static final double KBackLeftOffset = -116.89;
+  public static final double KFrontLeftOffset = -142.21;
+  public static final double KFrontRightOffset = -208.30;
+  public static final double KBackLeftOffset = -119.36;
   public static final double KBackRightOffset = -285.64; 
  
   
@@ -184,7 +184,8 @@ public final class Constants {
   public static final boolean KOrientationRightMotorReversed = true;
   
   public static final double KIntakeSwivelTopPos = 0;
-  public static final double KIntakeSwivelBottumPos = 500;
+  public static final double KIntakeSwivelShootPos = 140;
+  public static final double KSwivelBottomPosition = 656;
 
   //Speeds and stuff
   public static final double KIntakeConeSpaghettitSpeed = 0.7;
@@ -197,10 +198,9 @@ public final class Constants {
   
   // Intake
     // Swivel Encoder
-  public static final double KSwivelBottomPosition = 1000;
     // Swivel PID
-  public static final double KIntakeP = 0.001; // TBD
-  public static final double KIntakeI = 0; // TBD 
+  public static final double KIntakeP = 0.003; // TBD
+  public static final double KIntakeI = 0.0001; // TBD 
   public static final double KIntakeD = 0; // TBD
 
   // Timing for lift
@@ -257,24 +257,26 @@ public final class Constants {
   public static final double KLiftMediumPos = 60; //TBD
   public static final double KLiftHighPos = 90; //TBD
   
-  public static final double KInnerLiftOutPos = 10; //TBD
+  public static final double KInnerLiftInPos = 2000; //TBD
+  public static final double KInnerLiftOutPos = 3600; //TBD
 
-  public static final double KLiftDeadzone = 1;
-  public static final double KInnerLiftDeadzone = 1;
+  public static final double KFlipperInPos = 0;
+  public static final double KFlipperStartPos = 0;
+  public static final double KFlipperOutPos = 43;
+  public static final double KFlipperDeadzone = 0.5;
+
+  public static final double KLiftDeadzone = 2;
+  public static final double KInnerLiftDeadzone = 4;
 
 
-  public static final double KInnerLiftHighPos= 0;
-  public static final double KInnerLiftLowPos= 0;
+  // public static final double KInnerLiftHighPos= 0;
+  // public static final double KInnerLiftLowPos= 0;
 
   public static final boolean KWristFlip = true; 
   
-  public static final double KWristFlipPos = 1;
+  public static final double KWristFlipPos = 0.86;
   public static final double KWristNoFlipPos = 0;
-
-  public static final double KFlipOut= -18;
-  public static final double KFlipIn = -5;
-  
-  public static final double KFlipperDeadzone = 0.5;
+  public static final double KWristCubePos = 0.35;
   
   //Limelight
   public static final double KLimelightHeight = 19.5; // inches

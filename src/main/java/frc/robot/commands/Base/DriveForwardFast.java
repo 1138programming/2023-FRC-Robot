@@ -2,19 +2,19 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Orientation;
-
-import frc.robot.subsystems.Orientation;
-import static frc.robot.Constants.*;
+package frc.robot.commands.Base;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Base;
+import static frc.robot.Constants.*;
 
-public class OrientationSetExtensionToIn extends CommandBase {
-  /** Creates a new OrientationSetExtensionToIn. */
-  Orientation orientation;
-  public OrientationSetExtensionToIn(Orientation orientation) {
-    this.orientation = orientation;
-    addRequirements(orientation);
+public class DriveForwardFast extends CommandBase {
+  private Base base;
+  /** Creates a new DriveForward. */
+  public DriveForwardFast(Base base) {
+    this.base = base;
+    addRequirements(base);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -24,7 +24,7 @@ public class OrientationSetExtensionToIn extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    orientation.moveOrientationMotorExtension(KExtensionMotorSpeed);
+    base.drive(0.5, 0, 0, true, KPhysicalMaxDriveSpeedMPS);
   }
 
   // Called once the command ends or is interrupted.
@@ -34,6 +34,6 @@ public class OrientationSetExtensionToIn extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return orientation.getMagSensorIn();
+    return false;
   }
 }

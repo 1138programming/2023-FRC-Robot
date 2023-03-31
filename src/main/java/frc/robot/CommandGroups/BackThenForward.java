@@ -20,18 +20,19 @@ public class BackThenForward extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ResetEncoders(base),
-      new ParallelDeadlineGroup(
+      new ResetGyroOffset(base),
+      new ParallelDeadlineGroup( 
         new WaitCommand(0.5), 
         //new IntakeSpinReverse(intake),
-        new DriveForward(base)
+        new DriveBackward(base)
       ),
       // new ParallelDeadlineGroup(
       //   new WaitCommand(1),
       //   new IntakeSpinReverse(intake)
       // ),
       new ParallelDeadlineGroup(
-        new WaitCommand(3), 
-        new DriveBackward(base)
+        new WaitCommand(3.5), 
+        new DriveForward(base)
       )
     );
   }

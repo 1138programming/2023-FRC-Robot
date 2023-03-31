@@ -24,7 +24,7 @@ public class DriveForward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    base.drive(0.5, 0, 0, true, KPhysicalMaxDriveSpeedMPS);
+    base.drive(0.3, 0, 0, true, KPhysicalMaxDriveSpeedMPS);
   }
 
   // Called once the command ends or is interrupted.

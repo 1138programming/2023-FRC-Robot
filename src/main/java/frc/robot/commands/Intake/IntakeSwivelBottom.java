@@ -27,24 +27,27 @@ public class IntakeSwivelBottom extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.swivelSpinToPos(KIntakeSwivelBottumPos);
+    // intake.swivelSpinToPos(500);
+    intake.swivelSpinToPos(KSwivelBottomPosition);
+    intake.spaghettiSpin();
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
+    intake.intakeStop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    
-    if (intake.getIntakeEncoder() <= KIntakeSwivelBottumPos + KIntakeSwiveBottumOffset && intake.getIntakeEncoder() <= KIntakeSwivelBottumPos - KIntakeSwiveBottumOffset) {
-      return true;
-     }
-     else {
-   return false;
- }
+    // if (Math.abs(intake.getIntakeEncoder() - KSwivelBottomPosition) < KIntakeSwiveBottumOffset) {
+    //   return true;
+    // }
+    // else {
+    //   return false;
+    // }
+    return false;
   }
 }

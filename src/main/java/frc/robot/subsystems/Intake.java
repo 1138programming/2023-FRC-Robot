@@ -8,6 +8,7 @@ import static frc.robot.Constants.*;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -27,6 +28,7 @@ public class Intake extends SubsystemBase {
   private TalonSRX spaghetti;
 
   private PIDController intakeController;
+  private SlewRateLimiter intakeSlewRateLimiter = new SlewRateLimiter(0.5);
 
   private DigitalInput intakeTopLimit;
   private DigitalInput intakeBottomLimit;
@@ -42,7 +44,7 @@ public class Intake extends SubsystemBase {
     swivel = new TalonSRX(KSwivelIntakeId);
 
     swivel.setNeutralMode(NeutralMode.Brake);
-    swivel.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    swivel.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
     spaghetti.setNeutralMode(NeutralMode.Coast);
     
     spaghetti.setInverted(true); 
@@ -78,8 +80,6 @@ public class Intake extends SubsystemBase {
    * Spins the "spaghetti" motors (the spinners in the intake)
    */
   public void spaghettiSpin() {
-    
-    
     if (intakeMode) {
       spaghetti.set(ControlMode.PercentOutput, KIntakeConeSpaghettitSpeed);
     }
@@ -88,6 +88,12 @@ public class Intake extends SubsystemBase {
     }
   }
   
+  public void spaghettiSpinReverse(double speed) {
+    
+    // if (intakeMode) {
+      spaghetti.set(ControlMode.PercentOutput, -speed);
+    // }
+  }
   public void spaghettiSpinReverse() {
     
     if (intakeMode) {
@@ -105,8 +111,7 @@ public void setLEDToColor(int R, int G, int B) {
     }
     ledStrip.start();
     ledStrip.setData(ledBuffer);
-}
-
+  }
 
 
   public void ledsOff() {
@@ -174,7 +179,7 @@ public void setLEDToColor(int R, int G, int B) {
    * @param speed
    */
   public void moveSwivel(double speed) {
-    swivel.set(ControlMode.PercentOutput, speed);
+    swivel.set(ControlMode.PercentOutput, intakeSlewRateLimiter.calculate(speed));
     // if (speed < 0 && getTopLimitSwitch()) {
     //   swivel.set(ControlMode.PercentOutput, speed);
     // }
@@ -190,7 +195,7 @@ public void setLEDToColor(int R, int G, int B) {
     swivel.setSelectedSensorPosition(position);
   }
   public double getIntakeEncoder() {
-    return swivel.getSelectedSensorPosition();
+    return swivel.getSelectedSensorPosition() / 10;
   }
 
   public boolean getTopLimitSwitch() {

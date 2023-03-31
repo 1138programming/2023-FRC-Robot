@@ -4,13 +4,11 @@
 
 package frc.robot.CommandGroups.IntakeThenLift;
 
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.CommandGroups.InnerLiftFlipOut;
-import frc.robot.commands.Intake.IntakeMoveSwivelDown;
+import frc.robot.commands.Scoring.Claw.RotateWrist;
 import frc.robot.commands.Scoring.Lift.MoveLiftToLowPos;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Lift;
 import static frc.robot.Constants.*;
 
@@ -19,16 +17,14 @@ import static frc.robot.Constants.*;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class LiftLowSetpoint extends SequentialCommandGroup {
   /** Creates a new IntakeThenLiftUp. */
-  public LiftLowSetpoint(Intake intake, Lift lift) {
+  public LiftLowSetpoint(Lift lift, Claw claw) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ParallelRaceGroup(
-        new IntakeMoveSwivelDown(intake),
-        new WaitCommand(KIntakeThenLiftTime)
-      ),
-      new MoveLiftToLowPos(lift),
-      new InnerLiftFlipOut(lift)
+      new ParallelCommandGroup(
+        new RotateWrist(claw),
+        new MoveLiftToLowPos(lift)
+      )
     );
   }
 }

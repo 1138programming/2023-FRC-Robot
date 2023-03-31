@@ -4,7 +4,10 @@
 
 package frc.robot.CommandGroups;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Scoring.Lift.FlipperOut;
 import frc.robot.commands.Scoring.Lift.InnerLiftOut;
 import frc.robot.subsystems.Lift;
@@ -18,8 +21,16 @@ public class InnerLiftFlipOut extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new InnerLiftOut(lift),
+      new ParallelDeadlineGroup(
+        new WaitCommand(0.5), 
+        new InnerLiftOut(lift)
+      ),
+      
       new FlipperOut(lift)
+      // new ParallelCommandGroup(
+      //   new InnerLiftOut(lift),
+      //   new FlipperOut(lift)
+      // )
     );
   }
 }

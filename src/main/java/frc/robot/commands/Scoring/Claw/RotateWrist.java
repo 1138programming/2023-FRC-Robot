@@ -22,12 +22,14 @@ public class RotateWrist extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (claw.getWristStatus() == KWristFlip) {
+    // if (claw.getWristStatus() == KWristFlip) {
       claw.moveWrist(KWristFlipPos);
-    }
-    else {
-      claw.moveWrist(KWristNoFlipPos);
-    }
+    // }
+    // else {
+    //   claw.moveccWrist(KWristNoFlipPos);
+    // }
+    
+    // claw.moveWrist(KWristNoFlipPos);
   }
   
 

@@ -14,6 +14,7 @@ import frc.robot.commands.Intake.IntakeSwivelTop;
 import frc.robot.commands.Orientation.CheckCubeAndCollectObject;
 import frc.robot.commands.Orientation.CheckDoorAndCollectObject;
 import frc.robot.commands.Orientation.ExtendOutAndIntake;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Orientation;
 
@@ -22,7 +23,7 @@ import frc.robot.subsystems.Orientation;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class IntakeAndOrient extends SequentialCommandGroup {
   /** Creates a new IntakeAndOrient. */
-  public IntakeAndOrient(Orientation orientation, Intake intake) {
+  public IntakeAndOrient(Orientation orientation, Intake intake, Claw claw) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -35,7 +36,7 @@ public class IntakeAndOrient extends SequentialCommandGroup {
         new CheckDoorAndCollectObject(orientation)
       ),
       new ParallelCommandGroup(
-        new CheckCubeAndCollectObject(orientation, null),
+        new CheckCubeAndCollectObject(orientation, claw),
         new IntakeSwivelTop(intake)
       )
       

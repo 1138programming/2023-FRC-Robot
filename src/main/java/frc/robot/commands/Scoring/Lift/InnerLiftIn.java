@@ -10,7 +10,7 @@ import static frc.robot.Constants.*;
 
 public class InnerLiftIn extends CommandBase {
   private Lift lift;
-  private double setpoint = 0;
+  private double setpoint = KInnerLiftInPos;
   /** Creates a new InnerLiftOut. */
   public InnerLiftIn(Lift lift) {
     this.lift = lift;
