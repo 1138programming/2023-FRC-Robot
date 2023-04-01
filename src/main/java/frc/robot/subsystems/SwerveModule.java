@@ -51,7 +51,7 @@ public class SwerveModule extends SubsystemBase {
     this.angleMotor.setInverted(angleMotorReversed);
     this.driveMotor.setInverted(driveMotorReversed);
     
-    // this.driveMotor.setSmartCurrentLimit(80);
+    this.driveMotor.setSmartCurrentLimit(80);
 
     CANCoderConfiguration config = new CANCoderConfiguration();
 
@@ -111,12 +111,13 @@ public class SwerveModule extends SubsystemBase {
     angleMotor.set(angleMotorOutput);
 
     // Drive calculation
-    driveMotorOutput = desiredState.speedMetersPerSecond / KPhysicalMaxDriveSpeedMPS;
-    SmartDashboard.putNumber("desired speed " + driveMotor.getDeviceId(), driveMotorOutput);
-    driveMotor.set(driveMotorOutput);
+    // driveMotorOutput = desiredState.speedMetersPerSecond / KPhysicalMaxDriveSpeedMPS;
+    // SmartDashboard.putNumber("desired speed " + driveMotor.getDeviceId(), driveMotorOutput);
+    // driveMotor.set(driveMotorOutput);
 
-    // driveMotorOutput = feedforward.calculate(desiredState.speedMetersPerSecond);
-    // driveMotor.setVoltage(driveMotorOutput);
+    driveMotorOutput = feedforward.calculate(desiredState.speedMetersPerSecond);
+    driveMotor.setVoltage(driveMotorOutput);
+    SmartDashboard.putNumber("DRIVE SPEED " + driveMotor.getDeviceId(), driveMotorOutput);
   }
 
   public void lockWheel() {

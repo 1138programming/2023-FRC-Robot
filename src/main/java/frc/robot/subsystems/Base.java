@@ -120,9 +120,9 @@ public class Base extends SubsystemBase {
     SwerveDriveKinematics.desaturateWheelSpeeds(states, KPhysicalMaxDriveSpeedMPS);
 
     
+    SmartDashboard.putBoolean("HELLO", defenseMode && xSpeed == 0 && ySpeed == 0 && rot == 0);
     if (defenseMode && xSpeed == 0 && ySpeed == 0 && rot == 0) {
       // lockWheels();
-      SmartDashboard.putBoolean("HELLO", true);
     }
     else {
       //setting module states, aka moving the motors
@@ -250,7 +250,7 @@ public class Base extends SubsystemBase {
     // SmartDashboard.putNumber("back left mag", backLeftModule.getMagDeg());
     // SmartDashboard.putNumber("back right mag", backRightModule.getMagDeg());
 
-    // SmartDashboard.putString("odometry pose", odometry.getPoseMeters().toString());
+    SmartDashboard.putString("odometry pose", odometry.getPoseMeters().toString());
 
     // SmartDashboard.putBoolean("isCalibrating", gyro.isCalibrating());
 

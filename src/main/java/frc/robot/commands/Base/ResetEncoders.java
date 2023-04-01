@@ -20,7 +20,6 @@ public class ResetEncoders extends CommandBase {
   public void initialize() {
     base.resetAllRelEncoders();
     base.resetGyro();
-    base.resetOdometry();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

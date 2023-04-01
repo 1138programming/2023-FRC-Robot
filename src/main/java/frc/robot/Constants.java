@@ -367,6 +367,8 @@ public final class Constants {
   public static final double KBalanceI = 0;
   public static final double KBalanceD = 0.001;
   
+  public static PathConstraints constraints = new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration);
+
   // Pathplanner trajectories
   //left
   public static final PathPlannerTrajectory KLeftSideLeaveCommunity = PathPlanner.loadPath("LeftSideLeaveCommunity", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
@@ -377,9 +379,10 @@ public final class Constants {
   
   public static final PathPlannerTrajectory KPickUpLeftSide = PathPlanner.loadPath("PickUpLeftSide", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
   public static final PathPlannerTrajectory KPickUpRightSide = PathPlanner.loadPath("PickUpRightSide", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
+  public static final PathPlannerTrajectory KLeftSideCubeToStation = PathPlanner.loadPath("LeftSideCubeToStation", constraints);
 
   //sys id config numbers 
-  public static final double ks = 0.20309;
-  public static final double kv = 2.5574;
-  public static final double ka = 0.38422;
+  public static final double ks = 0.20358;
+  public static final double kv = 2.5974;
+  public static final double ka = 0.48832;
 }

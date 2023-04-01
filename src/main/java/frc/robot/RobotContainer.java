@@ -10,8 +10,10 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.CommandGroups.Auton.LeftLeaveCommunity;
 import frc.robot.CommandGroups.Auton.ScoreHighAndLeave;
 import frc.robot.CommandGroups.Auton.ScoreHighDontMove;
+import frc.robot.CommandGroups.Auton.PathFollowers.PickUpLeftSide;
 import frc.robot.CommandGroups.IntakeThenLift.LiftHighSetpoint;
 import frc.robot.CommandGroups.IntakeThenLift.LiftLowSetpoint;
 import frc.robot.CommandGroups.IntakeThenLift.LiftMidSetpoint;
@@ -273,7 +275,6 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     base.setDefaultCommand(driveWithJoysticks);
-    // base.setDefaultCommand(new BaseStop(base));
     intake.setDefaultCommand(intakeStop);
     orientation.setDefaultCommand(orientationStop);
     lift.setDefaultCommand(liftstop);
@@ -384,41 +385,41 @@ public class RobotContainer {
     // moveLiftUpButton.whileTrue(new MoveLift(lift, 0.3));
     // moveLiftDownButton.whileTrue(new MoveLift(lift, -0.3));
 
-    comp1.onTrue(intakeSwivelShoot);
-    comp2.whileTrue(intakeShootOut);
+    // comp1.onTrue(intakeSwivelShoot);
+    // comp2.whileTrue(intakeShootOut);
 
     // comp3.onTrue(liftLowSetpoint);
     // comp4.onTrue(liftMidSetpoint);
     // comp5.onTrue(liftHighSetpoint);
-    comp6.onTrue(closeClaw);
-    comp7.onTrue(openClaw);
+    // comp6.onTrue(closeClaw);
+    // comp7.onTrue(openClaw);
 
-    comp8.whileTrue(moveLiftUp);
-    comp9.whileTrue(moveLiftDown);
-    comp10.onTrue(intakeBottomNoCollect);
-    comp11.whileTrue(intakeSwivelBottom);
-    comp11.onFalse(intakeSwivelTop);
+    // comp8.whileTrue(moveLiftUp);
+    // comp9.whileTrue(moveLiftDown);
+    // comp10.onTrue(intakeBottomNoCollect);
+    // comp11.whileTrue(intakeSwivelBottom);
+    // comp11.onFalse(intakeSwivelTop);
 
-    comp12.whileTrue(moveSwivelUp);
+    // comp12.whileTrue(moveSwivelUp);
 
-    comp13.onTrue(moveLiftToReadyPos);
+    // comp13.onTrue(moveLiftToReadyPos);
 
     // comp14.onTrue(toggleDefenseMode);
 
-    streamDeck1.whileTrue(moveSwivelUp);
-    streamDeck2.whileTrue(moveSwivelDown);
-    streamDeck3.whileTrue(intakeSpinForward);
-    streamDeck4.whileTrue(moveLiftUp);
-    streamDeck5.whileTrue(moveLiftDown);
-    streamDeck6.whileTrue(moveInnerLiftUp);
-    streamDeck7.whileTrue(intakeShootOut);
-    streamDeck8.whileTrue(moveFlipperForward);
-    streamDeck9.whileTrue(moveFlipperReverse);
-    streamDeck10.whileTrue(rotateWrist);
-    streamDeck11.whileTrue(rotateWristCube);
-    streamDeck12.onTrue(extendOut);
-    streamDeck13.onTrue(storeObject);
-    streamDeck14.whileTrue(intakeSpinReverse);
+    // streamDeck1.whileTrue(moveSwivelUp);
+    // streamDeck2.whileTrue(moveSwivelDown);
+    // streamDeck3.whileTrue(intakeSpinForward);
+    // streamDeck4.whileTrue(moveLiftUp);
+    // streamDeck5.whileTrue(moveLiftDown);
+    // streamDeck6.whileTrue(moveInnerLiftUp);
+    // streamDeck7.whileTrue(intakeShootOut);
+    // streamDeck8.whileTrue(moveFlipperForward);
+    // streamDeck9.whileTrue(moveFlipperReverse);
+    // streamDeck10.whileTrue(rotateWrist);
+    // streamDeck11.whileTrue(rotateWristCube);
+    // streamDeck12.onTrue(extendOut);
+    // streamDeck13.onTrue(storeObject);
+    // streamDeck14.whileTrue(intakeSpinReverse);
   }
 
   /**
@@ -429,7 +430,10 @@ public class RobotContainer {
   public Command getAutonomousCommand()
    {
     // return null;
-    return new BackThenForward(base);
+
+    return new PickUpLeftSide(base);
+    // return new LeftLeaveCommunity(base);
+    // return new BackThenForward(base);
     // return new ScoreLowDontMove(base);
     // return new ScoreHighDontMove(lift, claw, base, intake);
     // return new ScoreHighAndLeave(lift, claw, base, intake);
