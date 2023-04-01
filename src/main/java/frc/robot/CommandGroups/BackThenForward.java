@@ -5,10 +5,7 @@
 package frc.robot.CommandGroups;
 
 import frc.robot.subsystems.Base;
-import frc.robot.subsystems.Intake;
 import frc.robot.commands.Base.*;
-import frc.robot.commands.Intake.IntakeSpinReverse;
-import edu.wpi.first.wpilibj.Watchdog;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -23,18 +20,19 @@ public class BackThenForward extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ResetEncoders(base),
-      new ParallelDeadlineGroup(
+      new ResetGyroOffset(base),
+      new ParallelDeadlineGroup( 
         new WaitCommand(0.5), 
         //new IntakeSpinReverse(intake),
-        new DriveForward(base)
+        new DriveBackward(base)
       ),
       // new ParallelDeadlineGroup(
       //   new WaitCommand(1),
       //   new IntakeSpinReverse(intake)
       // ),
       new ParallelDeadlineGroup(
-        new WaitCommand(3), 
-        new DriveBackward(base)
+        new WaitCommand(3.5), 
+        new DriveForward(base)
       )
     );
   }

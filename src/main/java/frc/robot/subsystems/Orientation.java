@@ -1,10 +1,16 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.*;
+
+import javax.sound.sampled.Line;
+
 import com.revrobotics.CANSparkMax; // Covers Neo's
 import com.revrobotics.CANSparkMaxLowLevel.MotorType; // Cover's Neo's
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.filter.LinearFilter;
+import edu.wpi.first.math.filter.MedianFilter;
 import edu.wpi.first.wpilibj.DigitalInput; // Sensors
+import edu.wpi.first.wpilibj.Ultrasonic;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -21,9 +27,12 @@ public class Orientation extends SubsystemBase {
     private CANSparkMax rightSpin;
     private TalonSRX extension;
     
-    private DigitalInput DoorControl;
+    private DigitalInput doorControl;
     private DigitalInput HallEffectSensorIn;
     private DigitalInput HallEffectSensorOut;
+
+    private Ultrasonic doorChecker;
+    MedianFilter doorCheckerFilter;
 
     private boolean orientationMode;
 
@@ -32,17 +41,26 @@ public class Orientation extends SubsystemBase {
         leftSpin = new CANSparkMax(KOrientationLeftMotorID, MotorType.kBrushless);
         rightSpin = new CANSparkMax(KOrientationRightMotorID, MotorType.kBrushless);
 
+        leftSpin.setIdleMode(IdleMode.kCoast);
+        rightSpin.setIdleMode(IdleMode.kCoast);
+
         extension = new TalonSRX(KOrientationMotorExtensionID);
         
-        DoorControl = new DigitalInput (KOrientationkDoorControlID);
+        doorControl = new DigitalInput (KOrientationkDoorControlID);
         HallEffectSensorIn = new DigitalInput(KOrientationMagSensorInID);
         HallEffectSensorOut = new DigitalInput(KOrientationMagSensorOutID);
 
+        doorChecker = new Ultrasonic(KOrientationRangeOut, KOrientationRangeIn);
+        doorCheckerFilter = new MedianFilter(6);
+        Ultrasonic.setAutomaticMode(true);
+
         leftSpin.setIdleMode(IdleMode.kBrake);
+        rightSpin.setInverted(KOrientationRightMotorReversed);
         // extension.setIdleMode(IdleMode.kBrake);
         
-        rightSpin.follow(leftSpin, KOrientationRightMotorReversed);
+        
     }
+
 
     /**
      * This command makes both motors move, because although it looks like only one moves, the follow() command is used on the right motor earlier.
@@ -61,6 +79,7 @@ public class Orientation extends SubsystemBase {
      */
     public void moveOrientationLeftandRightMotors(double speed) {
         leftSpin.set(speed);
+        rightSpin.set(speed);
     }
 
     public void moveOrientationMotorExtension(double speed) {
@@ -87,22 +106,32 @@ public class Orientation extends SubsystemBase {
         extension.set(ControlMode.PercentOutput, 0);
     }
 
-    public boolean getDoorSensor() {
-        return DoorControl.get();
-    }
+    // public boolean getDoorSensor() {
+    //     return doorControl.get();
+    // }
 
-    public boolean getMagSensorOut() {
+    public boolean  
+    getMagSensorOut() {
         return !HallEffectSensorOut.get();
     }
 
     public boolean getMagSensorIn(){
         return !HallEffectSensorIn.get();
     }
+    public double getDoorRange() {
+        return doorCheckerFilter.calculate(doorChecker.getRangeInches());
+    }
+    public boolean getDoorSensor() {
+        return getDoorRange() < 12;
+    }
 
     @Override
     public void periodic()
     {
-        // SmartDashboard.putBoolean("Magnetic Limit", getMagSensorOut());
-        // SmartDashboard.putBoolean("Magnetic Limit!", getMagSensorIn());
+        // SmartDashboard.putNumber("range", getDoorRange());
+        // SmartDashboard.putBoolean("range being detected", getDoorRange() > 19 && getDoorRange() < 22);
+        // SmartDashboard.putBoolean("CLOSE", getDoorSensor());
+        // SmartDashboard.putBoolean("Out", getMagSensorOut());
+        // SmartDashboard.putBoolean("IN", getMagSensorIn());
     }
 }

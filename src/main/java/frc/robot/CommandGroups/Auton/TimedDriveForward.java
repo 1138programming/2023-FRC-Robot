@@ -21,7 +21,7 @@ public class TimedDriveForward extends SequentialCommandGroup {
     addCommands(
       new ResetEncoders(base),
       new ParallelDeadlineGroup(
-        new WaitCommand(4),
+        new WaitCommand(3.5),
         new DriveForward(base)
       )
     );
