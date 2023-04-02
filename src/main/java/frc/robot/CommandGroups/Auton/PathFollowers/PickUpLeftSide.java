@@ -20,9 +20,9 @@ public class PickUpLeftSide extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ResetEncoders(base),
-      base.followTrajectoryCommand(KPickUpLeftSide, true)
-      // new WaitCommand(1),
-      // base.followTrajectoryCommand(KLeftSideCubeToStation, false)
+      base.followTrajectoryCommand(KPickUpLeftSide, true),
+      new WaitCommand(1),
+      base.followTrajectoryCommand(KLeftSideCubeToStation, false)
     );
   }
 }

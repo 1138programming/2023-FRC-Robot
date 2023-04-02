@@ -21,12 +21,12 @@ public class DriveWithJoysticks extends CommandBase {
   private double rot;
 
 
-  // private PIDController rotationCorrectionPID;
-  // private double initHeading;
+  private PIDController rotationCorrectionPID;
+  private double initHeading;
 
-  // private double kRotationP = 0.005;
-  // private double kRotationI = 0;
-  // private double kRotationD = 0;
+  private double kRotationP = 0.005;
+  private double kRotationI = 0;
+  private double kRotationD = 0;
 
   // private SlewRateLimiter accelerationLimiter = new SlewRateLimiter(0);
 
@@ -39,7 +39,7 @@ public class DriveWithJoysticks extends CommandBase {
   public DriveWithJoysticks(Base base) {
     this.base = base;
   
-    // rotationCorrectionPID = new PIDController(kRotationP, kRotationI, kRotationD);
+    rotationCorrectionPID = new PIDController(kRotationP, kRotationI, kRotationD);
 
     addRequirements(base);
   }
@@ -57,6 +57,13 @@ public class DriveWithJoysticks extends CommandBase {
     fbSpeed = Robot.m_robotContainer.getLogiLeftYAxis();
     lrSpeed = Robot.m_robotContainer.getLogiLeftXAxis();
     rot = Robot.m_robotContainer.getLogiRightXAxis();
+
+    if (Math.abs(rot) <= 0.01 && (Math.abs(fbSpeed) >= 0.01 || Math.abs(lrSpeed) >= 0.01)) {
+      rot = rotationCorrectionPID.calculate(base.getHeadingDeg(), initHeading);
+    }
+    else {
+      initHeading = base.getHeadingDeg();
+    }
 
     base.drive(fbSpeed, lrSpeed, rot, true, KPhysicalMaxDriveSpeedMPS * base.getDriveSpeedFactor());
   }

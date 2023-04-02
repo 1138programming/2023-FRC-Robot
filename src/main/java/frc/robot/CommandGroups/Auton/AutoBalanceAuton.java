@@ -4,21 +4,33 @@
 
 package frc.robot.CommandGroups.Auton;
 
-import frc.robot.commands.Base.AutoBalance;
-import frc.robot.subsystems.Base;
-
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.Auton.DriveToPose;
+import frc.robot.commands.Base.AutoBalance;
+import frc.robot.commands.Base.DriveUntilStation;
+import frc.robot.commands.Base.ResetEncodersTeleop;
+import frc.robot.subsystems.Base;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutoBalanceAuton extends SequentialCommandGroup {
-  // private Base base;
   /** Creates a new AutoBalanceAuton. */
   public AutoBalanceAuton(Base base) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new ResetEncodersTeleop(base),
+    new DriveUntilStation(base),
+      new ResetEncodersTeleop(base),
+      new ParallelRaceGroup(
+        new WaitCommand(1),
+        new DriveToPose(base, new Pose2d(0.55, 0, new Rotation2d()))
+      ),
       new AutoBalance(base)
     );
   }

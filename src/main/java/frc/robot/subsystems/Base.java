@@ -15,6 +15,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -46,6 +47,9 @@ public class Base extends SubsystemBase {
   private SlewRateLimiter xRateLimiter;
   private SlewRateLimiter yRateLimiter;
   private SlewRateLimiter rotRateLimiter;
+
+  private double xyP = 0;
+  private double rotP = 0;
   
   public Base() {
     frontLeftModule = new SwerveModule(
@@ -94,6 +98,10 @@ public class Base extends SubsystemBase {
     int limiter = 10;
 
     accelerationLimiter = new SlewRateLimiter(0.5);
+
+    SmartDashboard.putNumber("X and Y PID", 0);
+    SmartDashboard.putNumber("rot P", 0);
+
 
     // xRateLimiter = new SlewRateLimiter(limiter);
     // yRateLimiter = new SlewRateLimiter(limiter);
@@ -160,15 +168,19 @@ public class Base extends SubsystemBase {
              traj,
              this::getPose, // Pose supplier
              this.kinematics, // SwerveDriveKinematics
-             new PIDController(2, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-             new PIDController(2, 0, 0), // Y controller (usually the same values as X controller)
-             new PIDController(0, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+             new PIDController(xyP, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+             new PIDController(xyP, 0, 0), // Y controller (usually the same values as X controller)
+             new PIDController(rotP, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
              this::setModuleStates, // Module states consumer
-             true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+             false, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
              this // Requires this drive subsystem
          )
      );
   }
+
+  // public Command followTrajectoryWPILib(Trajectory traj) {
+  //   // return ne Se
+  // }
 
   public Pose2d getPose() {
     return pose;
@@ -251,6 +263,11 @@ public class Base extends SubsystemBase {
     // SmartDashboard.putNumber("back right mag", backRightModule.getMagDeg());
 
     SmartDashboard.putString("odometry pose", odometry.getPoseMeters().toString());
+
+    
+    xyP = SmartDashboard.getNumber("X and Y PID", 0);
+    rotP = SmartDashboard.getNumber("rot P", 0);
+    SmartDashboard.putNumber("xyP", xyP);
 
     // SmartDashboard.putBoolean("isCalibrating", gyro.isCalibrating());
 

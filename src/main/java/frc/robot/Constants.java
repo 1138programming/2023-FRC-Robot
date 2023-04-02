@@ -137,10 +137,10 @@ public final class Constants {
   public static final double KBaseDriveMaxPercent = 1;
   
     // Offsets for absolute encoders, used to set up angle encoders
-  public static final double KFrontLeftOffset = -142.21;
-  public static final double KFrontRightOffset = -208.30;
-  public static final double KBackLeftOffset = -119.36;
-  public static final double KBackRightOffset = -285.64; 
+  public static final double KFrontLeftOffset = -141.86;
+  public static final double KFrontRightOffset = -205.93;
+  public static final double KBackLeftOffset = -117.60;
+  public static final double KBackRightOffset = -286.08; 
  
   
   // public static final double KFrontLeftOffset = -147.22;
@@ -151,7 +151,7 @@ public final class Constants {
   
     // Describes the locations of the swerve modules relative to the center of the robot
   // Important for kinematics
-  public static final double KWheelDistanceFromCenter = 0.29845;
+  public static final double KWheelDistanceFromCenter = 0.257175;
   public static final Translation2d KFrontLeftLocation = new Translation2d(
     KWheelDistanceFromCenter, KWheelDistanceFromCenter
   );

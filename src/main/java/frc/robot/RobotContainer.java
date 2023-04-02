@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.CommandGroups.Auton.AutoBalanceAuton;
 import frc.robot.CommandGroups.Auton.LeftLeaveCommunity;
 import frc.robot.CommandGroups.Auton.ScoreHighAndLeave;
 import frc.robot.CommandGroups.Auton.ScoreHighDontMove;
@@ -20,6 +21,7 @@ import frc.robot.CommandGroups.IntakeThenLift.LiftMidSetpoint;
 import frc.robot.CommandGroups.BackThenForward;
 import frc.robot.CommandGroups.ScoreLowDontMove;
 import frc.robot.commands.Base.AutoBalance;
+import frc.robot.commands.Base.BaseStop;
 import frc.robot.commands.Base.DriveWithJoysticks;
 import frc.robot.commands.Intake.IntakeBottomNoCollect;
 import frc.robot.commands.Intake.IntakeMoveSwivelDown;
@@ -42,6 +44,7 @@ import frc.robot.subsystems.Limelight;
 //Commands for the Base
 import frc.robot.commands.Base.ToggleSpeed;
 import frc.robot.commands.Base.ResetEncoders;
+import frc.robot.commands.Base.ResetEncodersTeleop;
 import frc.robot.commands.Base.ResetGyro;
 import frc.robot.commands.Base.ToggleDefenseMode;
 import frc.robot.commands.Base.SetDefenseModeFalse;
@@ -275,6 +278,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     base.setDefaultCommand(driveWithJoysticks);
+    // base.setDefaultCommand(new BaseStop(base));
     intake.setDefaultCommand(intakeStop);
     orientation.setDefaultCommand(orientationStop);
     lift.setDefaultCommand(liftstop);
@@ -375,7 +379,7 @@ public class RobotContainer {
     // logitechBtnRB.onTrue(toggleLowSpeed);
     // logitechBtnLB.or(logitechBtnRB).onFalse(toggleMidSpeed);
 
-    logitechBtnY.onTrue(resetEncoders);
+    logitechBtnY.onTrue(new ResetEncodersTeleop(base));
 
     // liftHighSetpointButton.whileTrue(new MoveLiftToHighPos(lift));
     // liftMidSetpointButton.whileTrue(new MoveLiftToMidPos(lift));
@@ -406,10 +410,10 @@ public class RobotContainer {
 
     // comp14.onTrue(toggleDefenseMode);
 
-    // streamDeck1.whileTrue(moveSwivelUp);
-    // streamDeck2.whileTrue(moveSwivelDown);
-    // streamDeck3.whileTrue(intakeSpinForward);
-    // streamDeck4.whileTrue(moveLiftUp);
+    streamDeck1.onTrue(new PickUpLeftSide(base));
+    streamDeck2.onTrue(new AutoBalance(base));
+    streamDeck3.whileTrue(intakeSpinForward);
+    streamDeck4.onTrue(new AutoBalanceAuton(base));
     // streamDeck5.whileTrue(moveLiftDown);
     // streamDeck6.whileTrue(moveInnerLiftUp);
     // streamDeck7.whileTrue(intakeShootOut);
@@ -419,7 +423,7 @@ public class RobotContainer {
     // streamDeck11.whileTrue(rotateWristCube);
     // streamDeck12.onTrue(extendOut);
     // streamDeck13.onTrue(storeObject);
-    // streamDeck14.whileTrue(intakeSpinReverse);
+    streamDeck14.whileTrue(intakeSpinReverse);
   }
 
   /**

@@ -39,7 +39,8 @@ public class SwerveModule extends SubsystemBase {
   private double offset;
 
   private SimpleMotorFeedforward feedforward;
-   
+  private PIDController driveController;  
+
   public SwerveModule(int angleMotorID, int driveMotorID, int encoderPort, double offset, 
                       boolean driveMotorReversed, boolean angleMotorReversed) {
     angleMotor = new CANSparkMax(angleMotorID, MotorType.kBrushless);
@@ -81,6 +82,7 @@ public class SwerveModule extends SubsystemBase {
     setAbsoluteOffset(offset);
     // this.driveMotor.burnFlash();
     feedforward = new SimpleMotorFeedforward(ks, kv, ka);
+    driveController = new PIDController(0.64442, 0, 0);
   }
   
   @Override
@@ -115,9 +117,16 @@ public class SwerveModule extends SubsystemBase {
     // SmartDashboard.putNumber("desired speed " + driveMotor.getDeviceId(), driveMotorOutput);
     // driveMotor.set(driveMotorOutput);
 
+    double velocityOutput = driveController.calculate(getDriveEncoderVel(), desiredState.speedMetersPerSecond);
+    
+
     driveMotorOutput = feedforward.calculate(desiredState.speedMetersPerSecond);
-    driveMotor.setVoltage(driveMotorOutput);
+    // driveMotor.setVoltage(driveMotorOutput);
+    driveMotor.setVoltage(driveMotorOutput + velocityOutput);
     SmartDashboard.putNumber("DRIVE SPEED " + driveMotor.getDeviceId(), driveMotorOutput);
+
+    SmartDashboard.putNumber("wheel velocity " + driveMotor.getDeviceId(), getDriveEncoderVel());
+    SmartDashboard.putNumber("wheel output current " + driveMotor.getDeviceId(), driveMotor.getOutputCurrent());
   }
 
   public void lockWheel() {
