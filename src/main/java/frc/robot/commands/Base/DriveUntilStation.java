@@ -19,7 +19,7 @@ public class DriveUntilStation extends CommandBase {
   private PIDController pitchChangeController;
 
   private boolean onStation = false;
-  private double offStationSpeed = 0.4;
+  private double offStationSpeed = 0.75;
 
   /** Creates a new AutoBalance. */
   public DriveUntilStation(Base base) {

@@ -2,26 +2,17 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.*;
 
-import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax; // Neos and 775
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxAnalogSensor;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType; // Covers Neos and 775 
-import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
-import com.revrobotics.SparkMaxAnalogSensor.Mode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType; // Covers Neos and 775
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.revrobotics.SparkMaxAbsoluteEncoder;
-import com.revrobotics.SparkMaxRelativeEncoder;
 // import 
 import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.SparkMaxAbsoluteEncoder;
 
 public class Lift extends SubsystemBase {
   private CANSparkMax lift;

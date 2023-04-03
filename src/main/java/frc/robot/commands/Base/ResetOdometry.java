@@ -6,26 +6,24 @@ package frc.robot.commands.Base;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Base;
-import static frc.robot.Constants.*;
 
-public class DriveForwardFast extends CommandBase {
+public class ResetOdometry extends CommandBase {
   private Base base;
-  /** Creates a new DriveForward. */
-  public DriveForwardFast(Base base) {
+  /** Creates a new ResetEncoders. */
+  public ResetOdometry(Base base) {
     this.base = base;
     addRequirements(base);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    base.resetOdometry();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    base.drive(0.5, 0, 0, true, KPhysicalMaxDriveSpeedMPS);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
@@ -34,6 +32,6 @@ public class DriveForwardFast extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

@@ -2,36 +2,35 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.CommandGroups.Auton;
+package frc.robot.CommandGroups.Auton.PathFollowers;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.Auton.DriveToPose;
-import frc.robot.commands.Base.AutoBalance;
-import frc.robot.commands.Base.DriveUntilStation;
+import frc.robot.CommandGroups.Auton.AutoBalanceSequence;
+import frc.robot.commands.Base.ResetEncoders;
 import frc.robot.commands.Base.ResetEncodersTeleop;
 import frc.robot.subsystems.Base;
+import static frc.robot.Constants.*;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoBalanceAuton extends SequentialCommandGroup {
-  /** Creates a new AutoBalanceAuton. */
-  public AutoBalanceAuton(Base base) {
+public class LeftSideGrabScoreGrabBalance extends SequentialCommandGroup {
+  /** Creates a new PickUpLeftSide. */
+  public LeftSideGrabScoreGrabBalance(Base base) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new ResetEncoders(base),
+      base.followTrajectoryCommand(KPickUpLeftSide, true),
+      new WaitCommand(0.2),
+      base.followTrajectoryCommand(KLeftSideCubeToStation, false),
+      new WaitCommand(0.2),
+      base.followTrajectoryCommand(KLeftSidePickup2, false),
+      new WaitCommand(0.2),
+      base.followTrajectoryCommand(KLeftSidePickup2ToBalance, false),
       new ResetEncodersTeleop(base),
-    new DriveUntilStation(base),
-      new ResetEncodersTeleop(base),
-      new ParallelRaceGroup(
-        new WaitCommand(1),
-        new DriveToPose(base, new Pose2d(0.55, 0, new Rotation2d()))
-      ),
-      new AutoBalance(base)
+      new AutoBalanceSequence(base)
     );
   }
 }

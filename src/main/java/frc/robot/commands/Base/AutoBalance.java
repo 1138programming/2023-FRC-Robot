@@ -34,7 +34,6 @@ public class AutoBalance extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // base.resetAllRelEncoders();
     onStation = false;
   }
 
@@ -42,7 +41,6 @@ public class AutoBalance extends CommandBase {
   @Override
   public void execute() {
     SmartDashboard.putNumber("pitch", base.getPitch());
-    // SmartDashboard.putNumber("pitch", base.());
     double pitch = base.getPitch();
     pitchChange = (pitch - lastPitch);
     lastPitch = pitch;

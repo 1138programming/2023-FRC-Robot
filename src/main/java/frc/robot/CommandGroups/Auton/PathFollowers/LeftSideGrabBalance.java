@@ -6,23 +6,27 @@ package frc.robot.CommandGroups.Auton.PathFollowers;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.CommandGroups.Auton.AutoBalanceSequence;
 import frc.robot.commands.Base.ResetEncoders;
+import frc.robot.commands.Base.ResetEncodersTeleop;
 import frc.robot.subsystems.Base;
 import static frc.robot.Constants.*;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class PickUpLeftSide extends SequentialCommandGroup {
+public class LeftSideGrabBalance extends SequentialCommandGroup {
   /** Creates a new PickUpLeftSide. */
-  public PickUpLeftSide(Base base) {
+  public LeftSideGrabBalance(Base base) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ResetEncoders(base),
       base.followTrajectoryCommand(KPickUpLeftSide, true),
-      new WaitCommand(1),
-      base.followTrajectoryCommand(KLeftSideCubeToStation, false)
+      // new WaitCommand(0.2),
+      base.followTrajectoryCommand(KLeftSidePickupToBalance, false),
+      new ResetEncodersTeleop(base),
+      new AutoBalanceSequence(base)
     );
   }
 }

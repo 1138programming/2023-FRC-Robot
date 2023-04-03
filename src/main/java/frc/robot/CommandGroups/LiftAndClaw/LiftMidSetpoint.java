@@ -2,26 +2,28 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.CommandGroups.Auton;
+package frc.robot.CommandGroups.LiftAndClaw;
 
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.Intake.IntakeSpinReverse;
-import frc.robot.subsystems.Intake;
+import frc.robot.commands.Scoring.Claw.RotateWrist;
+import frc.robot.commands.Scoring.Lift.MoveLiftToMidPos;
+import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Lift;
+import static frc.robot.Constants.*;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class IntakeSpit extends SequentialCommandGroup {
-  /** Creates a new IntakeSpit. */
-  public IntakeSpit(Intake intake) {
+public class LiftMidSetpoint extends SequentialCommandGroup {
+  /** Creates a new IntakeThenLiftUp. */
+  public LiftMidSetpoint(Lift lift, Claw claw) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ParallelDeadlineGroup(
-        new WaitCommand(1), 
-        new IntakeSpinReverse(intake)
+      new ParallelCommandGroup(
+        new RotateWrist(claw),
+        new MoveLiftToMidPos(lift)
       )
     );
   }

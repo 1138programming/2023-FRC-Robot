@@ -6,9 +6,7 @@ import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderConfiguration;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
-import com.fasterxml.jackson.databind.cfg.ConfigOverrides;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -19,7 +17,6 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -57,7 +54,7 @@ public class SwerveModule extends SubsystemBase {
     CANCoderConfiguration config = new CANCoderConfiguration();
 
     config.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
-    config.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;
+    config.absoluteSensorRange = AbsoluteSensorRange.Signed_PlusMinus180;
     config.sensorDirection = false;
     config.magnetOffsetDegrees = offset;
 
@@ -183,7 +180,9 @@ public class SwerveModule extends SubsystemBase {
   }
 
   public double getAngleDeg() {
-    return angleEncoder.getPosition() % 360;
+    // double angle = angleEncoder.getPosition() % 360;
+    double angle = getMagDeg();
+    return angle;
   }
   public Rotation2d getAngleR2D() {
     return Rotation2d.fromDegrees(getAngleDeg()); 

@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.CommandGroups.Auton;
+package frc.robot.CommandGroups.Auton.OldAutonRoutines;
 
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -17,9 +17,9 @@ import static frc.robot.Constants.*;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ScoreAndPickupLeftSide extends SequentialCommandGroup {
+public class ScoreAndPickupRightSide extends SequentialCommandGroup {
   /** Creates a new ScoreAndPickup. */
-  public ScoreAndPickupLeftSide(Base base, Intake intake) {
+  public ScoreAndPickupRightSide(Base base, Intake intake) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -30,7 +30,7 @@ public class ScoreAndPickupLeftSide extends SequentialCommandGroup {
       new IntakeSpit(intake),
       new ParallelDeadlineGroup(
         new WaitCommand(10), 
-        base.followTrajectoryCommand(KPickUpLeftSide, true), 
+        base.followTrajectoryCommand(KPickUpRightSide, true), 
         new IntakeSpin(intake)
       )
       // base.followTrajectoryCommand(KPickUpRightSide, true)

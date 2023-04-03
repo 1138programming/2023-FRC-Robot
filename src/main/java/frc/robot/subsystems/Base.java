@@ -252,10 +252,10 @@ public class Base extends SubsystemBase {
     SmartDashboard.putBoolean("DEFENSE MODE", getDefenseMode());
     // SmartDashboard.putNumber("Gyro", getHeadingDeg());
 
-    // SmartDashboard.putNumber("Front left module", frontLeftModule.getAngleDeg());
-    // SmartDashboard.putNumber("Front right module", frontRightModule.getAngleDeg());
-    // SmartDashboard.putNumber("Back left module", backLeftModule.getAngleDeg());
-    // SmartDashboard.putNumber("Back right module", backRightModule.getAngleDeg());
+    SmartDashboard.putNumber("Front left module", frontLeftModule.getAngleDeg());
+    SmartDashboard.putNumber("Front right module", frontRightModule.getAngleDeg());
+    SmartDashboard.putNumber("Back left module", backLeftModule.getAngleDeg());
+    SmartDashboard.putNumber("Back right module", backRightModule.getAngleDeg());
 
     // SmartDashboard.putNumber("front left mag", frontLeftModule.getMagDeg());
     // SmartDashboard.putNumber("front right mag", frontRightModule.getMagDeg());
