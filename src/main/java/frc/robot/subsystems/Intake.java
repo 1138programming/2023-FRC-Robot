@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 public class Intake extends SubsystemBase {
 
   private TalonSRX swivel;
+  // "spaghetti" refers to the spaghetti-looking motors that actually do the intaking.
   private TalonSRX spaghetti;
 
   private PIDController intakeController;
@@ -105,12 +106,11 @@ public class Intake extends SubsystemBase {
   }
 
 public void setLEDToColor(int R, int G, int B) {
-  // ledStrip.start();
   for (int i = 0; i < ledBuffer.getLength(); i++) {
       ledBuffer.setRGB(i, R, G, B);
     }
-    ledStrip.start();
     ledStrip.setData(ledBuffer);
+    ledStrip.start();
   }
 
 
@@ -131,23 +131,13 @@ public void setLEDToColor(int R, int G, int B) {
     defenseMode = false; 
     
     // yellow
-    // ledStrip.start();
-    for (int i = 0; i < ledBuffer.getLength(); i++) {
-      ledBuffer.setRGB(i, 150, 150, 0);
-    }
-    ledStrip.setData(ledBuffer);
-    ledStrip.start();
+    setLEDToColor(150, 150, 0);
   }
 
   public void toggleDefenseMode() {
     if (!defenseMode) {
       defenseMode = true;
-      // ledStrip.start();
-      for (int i = 0; i < ledBuffer.getLength(); i++) {
-        ledBuffer.setRGB(i, 200, 0, 0);
-      }
-      ledStrip.setData(ledBuffer);
-      ledStrip.start();
+      setLEDToColor(200, 0, 0);
     }
     else {
       defenseMode = false;
@@ -158,11 +148,6 @@ public void setLEDToColor(int R, int G, int B) {
         setCubeMode();
       }
     }
-  }
-  
-  // Possible mode
-  public void setDefenseMode() {
-    setLEDToColor(255, 0, 0);
   }
 
   // get the operating mode of the intake
@@ -179,21 +164,22 @@ public void setLEDToColor(int R, int G, int B) {
    * @param speed
    */
   public void moveSwivel(double speed) {
-    swivel.set(ControlMode.PercentOutput, intakeSlewRateLimiter.calculate(speed));
-    // if (speed < 0 && getTopLimitSwitch()) {
-    //   swivel.set(ControlMode.PercentOutput, speed);
-    // }
-    // else if (speed > 0) {
-    //   swivel.set(ControlMode.PercentOutput, speed);
-    // }
-    // else {
-    //   swivel.set(ControlMode.PercentOutput, 0);
-    // }
+    // May need a rate limiter...
+    if (speed > 0 && getTopLimitSwitch()) {
+      swivel.set(ControlMode.PercentOutput, 0);
+    }
+    else {
+      swivel.set(ControlMode.PercentOutput, speed);
+    }
   }
 
   public void setIntakeEncoder(double position) {
     swivel.setSelectedSensorPosition(position);
   }
+  /***
+   * @return
+   * 1/10 raw encoder value.
+   */
   public double getIntakeEncoder() {
     return swivel.getSelectedSensorPosition() / 10;
   }

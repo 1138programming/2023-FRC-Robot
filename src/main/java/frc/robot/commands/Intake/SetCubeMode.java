@@ -5,29 +5,21 @@
 package frc.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Orientation;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.Claw;
 import static frc.robot.Constants.*;
 
 public class SetCubeMode extends CommandBase {
   /** Creates a new SetCubeMode. */
 
-  private Orientation orientation; 
-  private Claw claw;
   private Intake intake;
   private Limelight limelight;
 
-  public SetCubeMode(Orientation orientation, Intake intake, Claw claw, Limelight limelight) {
-    this.orientation = orientation;
+  public SetCubeMode(Intake intake, Limelight limelight) {
     this.intake = intake;
-    this.claw = claw;
     this.limelight = limelight;
 
-    addRequirements(orientation);
     addRequirements(intake);
-    addRequirements(claw);
     addRequirements(limelight);
   }
 
@@ -35,8 +27,6 @@ public class SetCubeMode extends CommandBase {
   @Override
   public void initialize() {
     intake.setCubeMode();
-    orientation.setCubeMode();
-    claw.setCubeMode();
     limelight.setPipeline(KAprilTagPipeline);
   }
 

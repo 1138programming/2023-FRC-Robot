@@ -47,7 +47,7 @@ public class Lift extends SubsystemBase {
   {
     flipper = new CANSparkMax(KFlipperMotor, MotorType.kBrushless);
     lift = new CANSparkMax(KLiftMotor, MotorType.kBrushless);
-    innerLift = new CANSparkMax(KInnerLiftMotor, MotorType.kBrushed);
+    // innerLift = new CANSparkMax(KInnerLiftMotor, MotorType.kBrushed);
 
     innerLift.setIdleMode(IdleMode.kBrake);
     flipper.setIdleMode(IdleMode.kBrake);

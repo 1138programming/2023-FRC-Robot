@@ -8,11 +8,9 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.CommandGroups.IntakeThenLift.LiftHighSetpoint;
-import frc.robot.CommandGroups.IntakeThenLift.LiftReadySetpoint;
+
 import frc.robot.commands.Intake.IntakeMoveSwivelDown;
-import frc.robot.commands.Scoring.Claw.CloseClaw;
-import frc.robot.commands.Scoring.Claw.OpenClaw;
+
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lift;
@@ -27,27 +25,23 @@ public class ScoreHighAndLeave extends SequentialCommandGroup {
   public ScoreHighAndLeave(Lift lift, Claw claw, Base base, Intake intake) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
+    addCommands( 
       new ParallelDeadlineGroup(
-        new WaitCommand(1),
-        new CloseClaw(claw)
+        new WaitCommand(1) 
       ),
       new ParallelRaceGroup(
-        new WaitCommand(4),
-        new LiftHighSetpoint(lift, claw)
+        new WaitCommand(4)
       ),
       new WaitCommand(1),
       new ParallelDeadlineGroup(
-        new WaitCommand(2), 
-        new OpenClaw(claw)
+        new WaitCommand(2)
       ),
       // new ParallelDeadlineGroup(
       //   new WaitCommand(0.3), 
       //   new IntakeMoveSwivelDown(intake)
       // ),
       new ParallelRaceGroup(
-        new WaitCommand(4),
-        new LiftReadySetpoint(lift, claw)
+        new WaitCommand(4)
       ),
       new TimedDriveForward(base)
     );

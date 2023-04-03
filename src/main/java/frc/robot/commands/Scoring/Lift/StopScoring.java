@@ -25,7 +25,7 @@ public class StopScoring extends CommandBase {
   @Override
   public void execute() 
   {
-    claw.stop();
+    
     lift.stop();
   }
 

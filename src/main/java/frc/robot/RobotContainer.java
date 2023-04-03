@@ -12,9 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.CommandGroups.Auton.ScoreHighAndLeave;
 import frc.robot.CommandGroups.Auton.ScoreHighDontMove;
-import frc.robot.CommandGroups.IntakeThenLift.LiftHighSetpoint;
-import frc.robot.CommandGroups.IntakeThenLift.LiftLowSetpoint;
-import frc.robot.CommandGroups.IntakeThenLift.LiftMidSetpoint;
+
 import frc.robot.CommandGroups.BackThenForward;
 import frc.robot.CommandGroups.ScoreLowDontMove;
 import frc.robot.commands.Base.AutoBalance;
@@ -33,9 +31,7 @@ import frc.robot.commands.Intake.SetCubeMode;
 import frc.robot.subsystems.Base;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lift;
-import frc.robot.subsystems.Endgame;
 import frc.robot.subsystems.Claw;
-import frc.robot.subsystems.Orientation;
 import frc.robot.subsystems.Limelight;
 //Commands for the Base
 import frc.robot.commands.Base.ToggleSpeed;
@@ -52,19 +48,8 @@ import frc.robot.commands.Intake.IntakeSwivelBottom;
 import frc.robot.commands.Intake.IntakeSwivelShoot;
 import frc.robot.commands.Intake.IntakeSwivelTop;
 import frc.robot.commands.Intake.OuttakeAndSwivel;
-//Commands for the Orientation
-import frc.robot.commands.Orientation.OrientationSpinOut;
-import frc.robot.commands.Orientation.OrientationSpinIn;
-import frc.robot.commands.Orientation.OrientationStop;
-import frc.robot.commands.Orientation.CheckDoorAndCollectObject;
-import frc.robot.commands.Orientation.ExtendAndIntake;
-import frc.robot.commands.Orientation.ExtendAndOuttake;
-import frc.robot.commands.Scoring.Claw.CloseClaw;
-import frc.robot.commands.Scoring.Claw.OpenClaw;
-import frc.robot.commands.Scoring.Claw.RotateWrist;
-import frc.robot.commands.Scoring.Claw.RotateWristCube;
-import frc.robot.commands.Scoring.Claw.RotateWristOut;
-import frc.robot.commands.Scoring.Claw.RotateWristToReady;
+//Claw and LIft
+
 import frc.robot.commands.Scoring.Lift.FlipperIn;
 import frc.robot.commands.Scoring.Lift.FlipperOut;
 import frc.robot.commands.Scoring.Lift.InnerLiftIn;
@@ -77,9 +62,7 @@ import frc.robot.commands.Scoring.Lift.MoveLiftToHighPos;
 import frc.robot.commands.Scoring.Lift.MoveLiftToLowPos;
 import frc.robot.commands.Scoring.Lift.MoveLiftToMidPos;
 import frc.robot.commands.Scoring.Lift.MoveLiftToReadyPos;
-import frc.robot.commands.Orientation.ExtensionNudge;
-import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionForward;
-import frc.robot.commands.Orientation.OrientationMoveOnlyExtensionReverse;
+
 
 import frc.robot.commands.Limelight.LimelightMoveToAprilTag;
 import frc.robot.commands.Limelight.LimelightMoveToConeNode;
@@ -89,10 +72,6 @@ import frc.robot.commands.Limelight.ToggleLimelightPipeline;
 
 
 import frc.robot.commands.Base.ToggleSpeed;
-import frc.robot.commands.Endgame.DeployEndgame;
-import frc.robot.commands.Endgame.EndgameReadyUp;
-import frc.robot.commands.Endgame.EndgameToCenter;
-import frc.robot.commands.Endgame.MoveEndgameShuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -109,9 +88,8 @@ public class RobotContainer {
   private final Base base = new Base();
   private final Lift lift = new Lift();
   private final Claw claw = new Claw();
-  private final Endgame endgame = new Endgame();
   private final Intake intake = new Intake();
-  private final Orientation orientation = new Orientation();
+
   private final Limelight limelight = new Limelight();
 
   // Base
@@ -142,36 +120,17 @@ public class RobotContainer {
   private final OuttakeAndSwivel outtakeAndSwivel = new OuttakeAndSwivel(intake);
 
   private final IntakeStop intakeStop = new IntakeStop(intake);
-  private final SetConeMode setConeMode = new SetConeMode(orientation, intake, claw, limelight);
-  private final SetCubeMode setCubeMode = new SetCubeMode(orientation, intake, claw, limelight);
+
   
-
-  //Orientation
-  private final ExtendAndOuttake extendOut = new ExtendAndOuttake(orientation);
-  private final ExtendAndIntake storeObject = new ExtendAndIntake(orientation);
-  private final ExtensionNudge nudge = new ExtensionNudge(orientation);
-  private final OrientationSpinIn orientationSpinIn = new OrientationSpinIn(orientation);
-  private final OrientationSpinOut orientationSpinOut = new OrientationSpinOut(orientation);
-  private final CheckDoorAndCollectObject checkDoorAndCollectObject = new CheckDoorAndCollectObject(orientation);
-  private final OrientationStop orientationStop = new OrientationStop(orientation);
-
-  // Endgame
-  private final MoveEndgameShuffleboard moveEndgameShuffleboard = new MoveEndgameShuffleboard(endgame);
-  private final DeployEndgame deployEndgame = new DeployEndgame(endgame);
-  private final EndgameReadyUp endgameReadyUp = new EndgameReadyUp(endgame);
-  private final EndgameToCenter endgameToCenter = new EndgameToCenter(endgame);
 
   // Scoring
   private final LiftStop liftstop = new LiftStop(lift);
-  private final RotateWrist rotateWrist = new RotateWrist(claw);
-  private final RotateWristCube rotateWristCube = new RotateWristCube(claw);
+
   private final FlipperOut flipperOut = new FlipperOut(lift);
   private final FlipperIn flipperIn = new FlipperIn(lift);
   private final MoveFlipper moveFlipperForward = new MoveFlipper(lift, 0.1);
   private final MoveFlipper moveFlipperReverse = new MoveFlipper(lift, -0.1);
-  private final RotateWristToReady rotateWristToReady = new RotateWristToReady(claw);
-  private final CloseClaw closeClaw = new CloseClaw(claw);
-  private final OpenClaw openClaw = new OpenClaw(claw);
+
   private final MoveLift moveLiftUp = new MoveLift(lift, 0.1);
   private final MoveLift moveLiftDown = new MoveLift(lift, -0.1);
   // private final MoveLift moveLiftUp = new MoveLift(lift, 0.4);
@@ -186,9 +145,6 @@ public class RobotContainer {
   private final LimelightMoveToAprilTag goToTarget = new LimelightMoveToAprilTag(base, limelight);
   private final LimelightMoveToConeNode goToTargetTape = new LimelightMoveToConeNode(base, limelight);
 
-  private final LiftHighSetpoint liftHighSetpoint = new LiftHighSetpoint(lift, claw);
-  private final LiftMidSetpoint liftMidSetpoint = new LiftMidSetpoint(lift, claw);
-  private final LiftLowSetpoint liftLowSetpoint = new LiftLowSetpoint(lift, claw);
 
 
 
@@ -275,7 +231,7 @@ public class RobotContainer {
     base.setDefaultCommand(driveWithJoysticks);
     // base.setDefaultCommand(new BaseStop(base));
     intake.setDefaultCommand(intakeStop);
-    orientation.setDefaultCommand(orientationStop);
+
     lift.setDefaultCommand(liftstop);
 
     //Game controllers
@@ -390,8 +346,7 @@ public class RobotContainer {
     // comp3.onTrue(liftLowSetpoint);
     // comp4.onTrue(liftMidSetpoint);
     // comp5.onTrue(liftHighSetpoint);
-    comp6.onTrue(closeClaw);
-    comp7.onTrue(openClaw);
+
 
     comp8.whileTrue(moveLiftUp);
     comp9.whileTrue(moveLiftDown);
@@ -414,10 +369,8 @@ public class RobotContainer {
     streamDeck7.whileTrue(intakeShootOut);
     streamDeck8.whileTrue(moveFlipperForward);
     streamDeck9.whileTrue(moveFlipperReverse);
-    streamDeck10.whileTrue(rotateWrist);
-    streamDeck11.whileTrue(rotateWristCube);
-    streamDeck12.onTrue(extendOut);
-    streamDeck13.onTrue(storeObject);
+    // streamDeck10.whileTrue(rotateWrist);
+    // streamDeck11.whileTrue(rotateWristCube);
     streamDeck14.whileTrue(intakeSpinReverse);
   }
 

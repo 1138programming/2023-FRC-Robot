@@ -32,16 +32,6 @@ public final class Constants {
 
   // Sensing - DIO ----------------------------------------------------------------
 
-    // Orientation - 5 in total
-  public static final int KOrientationMagSensorOutID = 1;
-  public static final int KOrientationMagSensorInID = 2;
-  public static final int KOrientationkDoorControlID = 13; // Changing to two ports because it's no longer a IR Sensor and now Ultrasonic
-
-  public static final int KOrientationRangeOut = 3;
-  public static final int KOrientationRangeIn = 4;
-
-  // public static final int KOrientationkBaseCheckerID = 4; // Gone
-  // public static final int KOrientationkTipCheckerID = 5; // Gone
 
     // Scoring - 2 in total
   public static final int KScoringTopLimitSwitch = 6;
@@ -53,9 +43,6 @@ public final class Constants {
   public static final int KIntakeEncoderID = 9;
   public static final int KIntakeBottomLimitId = 12; // NavX port number: 2
 
-  // Endgame - 2 in total
-  public static final int KEndgameFrontIR = 10;
-  public static final int KEndgameBackIR = 11;
   
   // End of Sensing - DIO *****************************************************
 
@@ -89,15 +76,11 @@ public final class Constants {
   public static final int KSpaghettiIntakeId = 9;   // Talon + 775
   public static final int KSwivelIntakeId = 10;     // Talon + 775
 
-    // Storage
-  public static final int KOrientationLeftMotorID = 11;		    // SparkMax + NEO550
-  public static final int KOrientationRightMotorID = 12;	    // SparkMax + NEO550
-  public static final int KOrientationMotorExtensionID = 13;	// SnowBlower + Talon
 
     // Scoring
   public static final int KLiftMotor = 14;	
-  public static final int KInnerLiftMotor = 16;		// SparkMax + NEO
   public static final int KFlipperMotor = 15;	// Talon + 775
+  public static final int KClawMotorID = 16; //SparkMax + Neo
 
   // End of Motor Section *****************************************************
 
@@ -181,7 +164,6 @@ public final class Constants {
   public static final boolean KBackLeftDriveEncoderReversed = false;
   public static final boolean KBackRightDriveEncoderReversed = false; 
   
-  public static final boolean KOrientationRightMotorReversed = true;
   
   public static final double KIntakeSwivelTopPos = 0;
   public static final double KIntakeSwivelShootPos = 140;
@@ -195,6 +177,7 @@ public final class Constants {
   
   public static final double KIntakeSwiveTopOffset = 2; 
   public static final double KIntakeSwiveBottumOffset = 2;  
+
   
   // Intake
     // Swivel Encoder
@@ -206,13 +189,7 @@ public final class Constants {
   // Timing for lift
   public static final double KIntakeThenLiftTime = 0.5;
   
-  
-  // Endgame
-  public static final double KEndgameServoReadyPos = 1;
-  public static final double KEndgameServoNeutralPos = 0.74;
-  public static final double KEndgameServoDeployPos = 0.41;
 
-  public static final double KEndgameDriveSpeed = 0.2;
   
   // Scoring
   public static final int KScoringEncoder1ID = 6; //name can be changed later
@@ -235,21 +212,17 @@ public final class Constants {
   public static final double KLiftRotToFoot = 0; //TBD
   
   // Orientation
-  public static final double KExtensionMotorSpeed = 0.5;
-  public static final double KMotorExtensionTime = 0.1;
-  public static final double KCubeLeftandRightMotorSpeeds = 18;
-  public static final double KConeLeftandRightMotorSpeeds = 18;
   public static final boolean KCubeMode = false;
   public static final boolean KConeMode = true;
   
   // Scoring
-  public static final double KClawMotorSpeed = 0; //TBD
+  //public static final double KClawMotorSpeed = 0.5; //TBD
+  public static final double KClawMotorSpeed = 0.5;
   public static final double KAngleMotorSpeed = 0; //TBD
   public static final double KElevatorSpeed = 0; //TBD
+  
 
-  public static final double KCloseClawCone = 0; //TBD
-  public static final double KCloseClawCube = 0; //TBD
-  public static final double KOpenClaw = 0.35; // TBD
+
  
 
   public static final double KLiftReadyPos = 0; //TBD
