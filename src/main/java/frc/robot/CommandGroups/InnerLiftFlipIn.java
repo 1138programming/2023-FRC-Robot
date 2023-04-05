@@ -6,7 +6,7 @@ package frc.robot.CommandGroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Scoring.Lift.FlipperIn;
-import frc.robot.commands.Scoring.Lift.InnerLiftIn;
+
 import frc.robot.subsystems.Lift;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -18,8 +18,8 @@ public class InnerLiftFlipIn extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new FlipperIn(lift),
-      new InnerLiftIn(lift)
+      new FlipperIn(lift)
+     
     );
   }
 }

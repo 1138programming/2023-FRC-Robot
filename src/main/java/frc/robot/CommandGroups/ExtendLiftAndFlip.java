@@ -4,16 +4,24 @@
 
 package frc.robot.CommandGroups;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import frc.robot.commands.Scoring.Lift.FlipperOut;
+import frc.robot.commands.Scoring.Lift.MoveLiftToHighPos;
+import frc.robot.subsystems.Lift;
+
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class LeftSideLeaveCommunity extends SequentialCommandGroup {
-  /** Creates a new LeftSideLeaveCommunity. */
-  public LeftSideLeaveCommunity() {
+public class ExtendLiftAndFlip extends ParallelCommandGroup {
+  /** Creates a new ExtendLiftAndFlip. */
+  Lift lift;
+  public ExtendLiftAndFlip(Lift lift) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands();
+    addCommands(
+      new MoveLiftToHighPos(lift), 
+      new FlipperOut(lift)
+    );
   }
 }

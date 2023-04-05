@@ -229,6 +229,7 @@ public final class Constants {
   public static final double KLiftLowPos = 30; //TBD
   public static final double KLiftMediumPos = 60; //TBD
   public static final double KLiftHighPos = 90; //TBD
+  public static final double KLiftShelfPos = 90; //TBD
   
   public static final double KInnerLiftInPos = 2000; //TBD
   public static final double KInnerLiftOutPos = 3600; //TBD

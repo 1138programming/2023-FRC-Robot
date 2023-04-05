@@ -52,11 +52,10 @@ import frc.robot.commands.Intake.OuttakeAndSwivel;
 
 import frc.robot.commands.Scoring.Lift.FlipperIn;
 import frc.robot.commands.Scoring.Lift.FlipperOut;
-import frc.robot.commands.Scoring.Lift.InnerLiftIn;
-import frc.robot.commands.Scoring.Lift.InnerLiftOut;
+
 import frc.robot.commands.Scoring.Lift.LiftStop;
 import frc.robot.commands.Scoring.Lift.MoveFlipper;
-import frc.robot.commands.Scoring.Lift.MoveInnerLift;
+
 import frc.robot.commands.Scoring.Lift.MoveLift;
 import frc.robot.commands.Scoring.Lift.MoveLiftToHighPos;
 import frc.robot.commands.Scoring.Lift.MoveLiftToLowPos;
@@ -135,8 +134,7 @@ public class RobotContainer {
   private final MoveLift moveLiftDown = new MoveLift(lift, -0.1);
   // private final MoveLift moveLiftUp = new MoveLift(lift, 0.4);
   // private final MoveLift moveLiftDown = new MoveLift(lift, -0.4);
-  private final MoveInnerLift moveInnerLiftUp = new MoveInnerLift(lift, 0.2);
-  private final MoveInnerLift moveInnerLiftDown = new MoveInnerLift(lift, -0.2);
+ 
   private final MoveLiftToHighPos moveLiftToHighPos = new MoveLiftToHighPos(lift);
   private final MoveLiftToMidPos moveLiftToMidPos = new MoveLiftToMidPos(lift);
   private final MoveLiftToLowPos moveLiftToLowPos = new MoveLiftToLowPos(lift);
@@ -365,7 +363,6 @@ public class RobotContainer {
     streamDeck3.whileTrue(intakeSpinForward);
     streamDeck4.whileTrue(moveLiftUp);
     streamDeck5.whileTrue(moveLiftDown);
-    streamDeck6.whileTrue(moveInnerLiftUp);
     streamDeck7.whileTrue(intakeShootOut);
     streamDeck8.whileTrue(moveFlipperForward);
     streamDeck9.whileTrue(moveFlipperReverse);
@@ -477,3 +474,4 @@ public boolean joystickThreshold(double triggerValue) {
       return true;
   }
 }
+

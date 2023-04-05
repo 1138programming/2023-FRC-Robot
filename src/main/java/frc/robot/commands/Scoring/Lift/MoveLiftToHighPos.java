@@ -24,7 +24,6 @@ public class MoveLiftToHighPos extends CommandBase {
   @Override
   public void execute() {
     lift.setLiftPos(setpoint);
-    lift.setInnerLiftPos(KInnerLiftOutPos);
     lift.flipToPos(KFlipperOutPos);
   }
 
@@ -39,7 +38,7 @@ public class MoveLiftToHighPos extends CommandBase {
   public boolean isFinished() {
     return (Math.abs(setpoint - lift.getLiftPos()) < KLiftDeadzone) 
       && (Math.abs(KFlipperOutPos - lift.getFlipperPos()) < KFlipperDeadzone 
-      && (Math.abs(KInnerLiftOutPos - lift.getInnerLiftPos()) < KInnerLiftDeadzone)
+      
     );
   }
 }

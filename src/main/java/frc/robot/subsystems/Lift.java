@@ -84,7 +84,7 @@ public class Lift extends SubsystemBase {
     SmartDashboard.putBoolean("lift limit switch", getBottomLimitSwitch());
 
     SmartDashboard.putNumber("flipper encoder", getFlipperPos());
-    SmartDashboard.putNumber("UPPER LIFT encoder", getInnerLiftPos());
+    
 
   }
   public void setLiftPos (double setPoint) {
@@ -113,34 +113,22 @@ public class Lift extends SubsystemBase {
     }
   }
 
-  public void setInnerLiftPos(double setPoint) {
-    
-    innerLiftSpeed = -innerLiftControl.calculate(innerLiftEncoder.getPosition(),setPoint);
-    if (innerLiftSpeed > 0.3) {
-      innerLiftSpeed = 0.3;
-    }
-    innerLift.set(innerLiftSpeed);
+ 
 
-    // if (setPoint < getLiftPos()) {
-    // }
-    // else {
-    //   innerLift.set(innerLiftControl.calculate(innerLiftEncoder.getPosition(),setPoint));
-    // }
-  }
-  public void moveInnerLift(double speed) {
-    innerLiftSpeed = -speed;
-    innerLift.set(-speed);
-  }
-  
+  // flipper
   public void flipToPos(double setPoint) {
     moveFlipper(flipperController.calculate(getFlipperPos(), setPoint));
 
-    // innerLift.set(-0.05);
   }
   public void moveFlipper(double speed) {
     flipper.set(speed);
   }
-  
+
+  public double getFlipperPos(){
+    return flipperEncoder.getPosition();
+  }
+
+  // lift
   public double getLiftPos() {
     return liftEncoder.getPosition();
   }
@@ -148,12 +136,8 @@ public class Lift extends SubsystemBase {
     liftEncoder.setPosition(pos);
   }
 
-  public double getInnerLiftPos() {
-    return innerLiftEncoder.getPosition();
-  }
-  public double getFlipperPos(){
-    return flipperEncoder.getPosition();
-  }
+
+  
 
   public boolean getBottomLimitSwitch() {
     return !liftSwitch.get();

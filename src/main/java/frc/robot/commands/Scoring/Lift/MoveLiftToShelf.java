@@ -10,7 +10,7 @@ import static frc.robot.Constants.*;
 
 public class MoveLiftToShelf extends CommandBase {
   Lift lift;
-  double setpoint = KLiftHighPos;
+  double setpoint = KLiftShelfPos;
   public MoveLiftToShelf(Lift lift) {
     this.lift = lift;
     addRequirements(lift);

@@ -1,4 +1,4 @@
-package frc.robot.commands.Claw;
+package frc.robot.commands.Scoring.Claw;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Claw;

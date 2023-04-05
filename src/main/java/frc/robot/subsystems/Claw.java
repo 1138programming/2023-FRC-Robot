@@ -34,21 +34,11 @@ public class Claw extends SubsystemBase {
     // This method will be called once per scheduler run
     
   }
-
+  // spin roller
   public void spinRoller(double speed) {
     roller.set(KClawMotorSpeed);
   }
 
-  // public void setConeMode() {
-  //     scoringMode = KConeMode; 
-  // }
 
-  // public boolean isConeMode() {
-  //     return scoringMode;
-  // }
-
-  // public void setCubeMode() {
-  //   scoringMode = KCubeMode;
-  // }
  
 }

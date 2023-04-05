@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Scoring.Lift.FlipperOut;
-import frc.robot.commands.Scoring.Lift.InnerLiftOut;
+
 import frc.robot.subsystems.Lift;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -22,8 +22,8 @@ public class InnerLiftFlipOut extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ParallelDeadlineGroup(
-        new WaitCommand(0.5), 
-        new InnerLiftOut(lift)
+        new WaitCommand(0.5) 
+     
       ),
       
       new FlipperOut(lift)
