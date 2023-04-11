@@ -40,7 +40,7 @@ public class IntakeSwivelShoot extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (Math.abs(intake.getIntakeEncoder() - KSwivelBottomPosition) < KIntakeSwiveBottumOffset) {
+    if (Math.abs(intake.getIntakeEncoder() - KSwivelBottomPosition) < KSwivelBottomPosition) {
       return true;
     }
     else {

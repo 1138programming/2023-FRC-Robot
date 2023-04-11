@@ -17,7 +17,10 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
+import com.ctre.phoenix.sensors.AbsoluteSensorRange;
+import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.sensors.CANCoderConfiguration;
+import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
@@ -28,11 +31,15 @@ public class Intake extends SubsystemBase {
   // "spaghetti" refers to the spaghetti-looking motors that actually do the intaking.
   private TalonSRX spaghetti;
 
+  private CANCoder intakeSwivelCanCoder; 
+
   private PIDController intakeController;
   private SlewRateLimiter intakeSlewRateLimiter = new SlewRateLimiter(0.5);
 
   private DigitalInput intakeTopLimit;
   private DigitalInput intakeBottomLimit;
+
+  CANCoderConfiguration config;
 
   AddressableLED ledStrip;
   AddressableLEDBuffer ledBuffer;
@@ -60,6 +67,18 @@ public class Intake extends SubsystemBase {
 
     ledStrip.setLength(ledBuffer.getLength());
     ledStrip.setData(ledBuffer);
+   
+    config = new CANCoderConfiguration();
+
+    config.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
+    config.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;
+    config.magnetOffsetDegrees = KIntakeOffset;
+    config.sensorDirection = true;
+
+
+    intakeSwivelCanCoder = new CANCoder(KIntakeCanCoder);
+    intakeSwivelCanCoder.configAllSettings(config);
+    intakeSwivelCanCoder.setPositionToAbsolute();
     // ledStrip.start();
 
     intakeMode = false;
@@ -69,6 +88,7 @@ public class Intake extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putBoolean("Mode", intakeMode);
     SmartDashboard.putNumber("Intake Encoder", getIntakeEncoder());
+    SmartDashboard.putNumber("Intake Swivel CanCoder", getCanCoderAbsPos());
     SmartDashboard.putBoolean("limit INTAKE", getTopLimitSwitch());
     // SmartDashboard.putNumber("intake drain", swivel.getStatorCurrent());
     // SmartDashboard.putNumber("intake drain", spaghetti.getStatorCurrent());
@@ -183,7 +203,9 @@ public void setLEDToColor(int R, int G, int B) {
   public double getIntakeEncoder() {
     return swivel.getSelectedSensorPosition() / 10;
   }
-
+  public double getCanCoderAbsPos() {
+    return intakeSwivelCanCoder.getAbsolutePosition();
+  }
   public boolean getTopLimitSwitch() {
     return !intakeTopLimit.get();
   } 

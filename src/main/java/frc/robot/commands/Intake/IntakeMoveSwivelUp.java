@@ -23,7 +23,7 @@ public class IntakeMoveSwivelUp extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.moveSwivel(-0.55);
+    intake.moveSwivel(-0.1);
     // intake.moveSwivel(-KIntakeSwivelSpeed);
 
     // intake.spaghettiSpin();

@@ -31,7 +31,7 @@ import frc.robot.commands.Intake.SetCubeMode;
 import frc.robot.subsystems.Base;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lift;
-import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Flipper;
 import frc.robot.subsystems.Limelight;
 //Commands for the Base
 import frc.robot.commands.Base.ToggleSpeed;
@@ -49,9 +49,13 @@ import frc.robot.commands.Intake.IntakeSwivelShoot;
 import frc.robot.commands.Intake.IntakeSwivelTop;
 import frc.robot.commands.Intake.OuttakeAndSwivel;
 //Claw and LIft
-
+import frc.robot.commands.Scoring.Flipper.FlipperRollerSpin;
+import frc.robot.commands.Scoring.Flipper.FlipperStop;
+import frc.robot.commands.Scoring.Flipper.FlipperToPos;
+import frc.robot.commands.Scoring.Flipper.FlipperSwivelSpin;
 import frc.robot.commands.Scoring.Lift.FlipperIn;
 import frc.robot.commands.Scoring.Lift.FlipperOut;
+
 
 import frc.robot.commands.Scoring.Lift.LiftStop;
 import frc.robot.commands.Scoring.Lift.MoveFlipper;
@@ -86,7 +90,7 @@ public class RobotContainer {
   //Subsystems
   private final Base base = new Base();
   private final Lift lift = new Lift();
-  private final Claw claw = new Claw();
+  private final Flipper flipper = new Flipper();
   private final Intake intake = new Intake();
 
   private final Limelight limelight = new Limelight();
@@ -124,13 +128,20 @@ public class RobotContainer {
 
   // Scoring
   private final LiftStop liftstop = new LiftStop(lift);
+  private final FlipperSwivelSpin swivelForward = new FlipperSwivelSpin(flipper,KClawSwivelMotorSpeed);
+  private final FlipperSwivelSpin swivelReverse = new FlipperSwivelSpin(flipper,-KClawSwivelMotorSpeed);
+
+  private final FlipperRollerSpin rollersForward = new FlipperRollerSpin(flipper, KClawMotorSpeed);
+  private final FlipperToPos FlippertoTopSetPoint = new FlipperToPos(flipper, null);
+  private final FlipperRollerSpin rollersReverse = new FlipperRollerSpin(flipper, -KClawMotorSpeed);
+  private final FlipperStop flipperStop = new FlipperStop(flipper);
 
   private final FlipperOut flipperOut = new FlipperOut(lift);
   private final FlipperIn flipperIn = new FlipperIn(lift);
   private final MoveFlipper moveFlipperForward = new MoveFlipper(lift, 0.1);
   private final MoveFlipper moveFlipperReverse = new MoveFlipper(lift, -0.1);
 
-  private final MoveLift moveLiftUp = new MoveLift(lift, 0.1);
+  private final MoveLift moveLiftUp = new MoveLift(lift, 0.45);
   private final MoveLift moveLiftDown = new MoveLift(lift, -0.1);
   // private final MoveLift moveLiftUp = new MoveLift(lift, 0.4);
   // private final MoveLift moveLiftDown = new MoveLift(lift, -0.4);
@@ -232,6 +243,8 @@ public class RobotContainer {
 
     lift.setDefaultCommand(liftstop);
 
+    flipper.setDefaultCommand(flipperStop);
+
     //Game controllers
     logitech = new Joystick(KLogitechPort); //Logitech Dual Action
     xbox = new XboxController(KXboxPort);   //Xbox 360 for Windows
@@ -320,15 +333,24 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    logitechBtnLB.onTrue(toggleMaxSpeed);
-    logitechBtnLB.onFalse(toggleMidSpeed);
+    // logitechBtnLB.onTrue(toggleMaxSpeed);
+    // logitechBtnLB.onFalse(toggleMidSpeed);
+
+    // xboxBtnA.whileTrue(swivelForward);
+    // xboxBtnB.whileTrue(swivelReverse);
+
+    xboxBtnY.whileTrue(moveFlipperForward);
+    xboxBtnA.whileTrue(moveSwivelDown);
+
+    // xboxBtnX.whileTrue(rollersForward);
+    // xboxBtnY.whileTrue(rollersReverse);
 
     // logitechBtnRB.onTrue(setDefenseModeTrue);
     // logitechBtnRB.onFalse(setDefenseModeFalse);
     // logitechBtnRB.onTrue(toggleLowSpeed);
     // logitechBtnLB.or(logitechBtnRB).onFalse(toggleMidSpeed);
 
-    logitechBtnY.onTrue(resetEncoders);
+    // logitechBtnY.onTrue(resetEncoders);
 
     // liftHighSetpointButton.whileTrue(new MoveLiftToHighPos(lift));
     // liftMidSetpointButton.whileTrue(new MoveLiftToMidPos(lift));
@@ -338,37 +360,37 @@ public class RobotContainer {
     // moveLiftUpButton.whileTrue(new MoveLift(lift, 0.3));
     // moveLiftDownButton.whileTrue(new MoveLift(lift, -0.3));
 
-    comp1.onTrue(intakeSwivelShoot);
-    comp2.whileTrue(intakeShootOut);
+    // comp1.onTrue(intakeSwivelShoot);
+    // comp2.whileTrue(intakeShootOut);
 
     // comp3.onTrue(liftLowSetpoint);
     // comp4.onTrue(liftMidSetpoint);
     // comp5.onTrue(liftHighSetpoint);
 
 
-    comp8.whileTrue(moveLiftUp);
-    comp9.whileTrue(moveLiftDown);
-    comp10.onTrue(intakeBottomNoCollect);
-    comp11.whileTrue(intakeSwivelBottom);
-    comp11.onFalse(intakeSwivelTop);
+    // comp8.whileTrue(moveLiftUp);
+    // comp9.whileTrue(moveLiftDown);
+    // comp10.onTrue(intakeBottomNoCollect);
+    // comp11.whileTrue(intakeSwivelBottom);
+    // comp11.onFalse(intakeSwivelTop);
 
-    comp12.whileTrue(moveSwivelUp);
+    // comp12.whileTrue(moveSwivelUp);
 
-    comp13.onTrue(moveLiftToReadyPos);
+    // comp13.onTrue(moveLiftToReadyPos);
 
     // comp14.onTrue(toggleDefenseMode);
 
-    streamDeck1.whileTrue(moveSwivelUp);
-    streamDeck2.whileTrue(moveSwivelDown);
-    streamDeck3.whileTrue(intakeSpinForward);
-    streamDeck4.whileTrue(moveLiftUp);
-    streamDeck5.whileTrue(moveLiftDown);
-    streamDeck7.whileTrue(intakeShootOut);
-    streamDeck8.whileTrue(moveFlipperForward);
-    streamDeck9.whileTrue(moveFlipperReverse);
+    // streamDeck1.whileTrue(moveSwivelUp);
+    // streamDeck2.whileTrue(moveSwivelDown);
+    // streamDeck3.whileTrue(intakeSpinForward);
+    // streamDeck4.whileTrue(moveLiftUp);
+    // streamDeck5.whileTrue(moveLiftDown);
+    // streamDeck7.whileTrue(intakeShootOut);
+    // streamDeck8.whileTrue(moveFlipperForward);
+    // streamDeck9.whileTrue(moveFlipperReverse);
     // streamDeck10.whileTrue(rotateWrist);
     // streamDeck11.whileTrue(rotateWristCube);
-    streamDeck14.whileTrue(intakeSpinReverse);
+    // streamDeck14.whileTrue(intakeSpinReverse);
   }
 
   /**

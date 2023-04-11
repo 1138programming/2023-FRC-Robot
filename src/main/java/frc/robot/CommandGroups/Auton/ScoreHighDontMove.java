@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import frc.robot.commands.Intake.IntakeMoveSwivelDown;
 
-import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Flipper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Base;
@@ -22,7 +22,7 @@ import frc.robot.subsystems.Base;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ScoreHighDontMove extends SequentialCommandGroup {
   /** Creates a new ScoreHighAndLeave. */
-  public ScoreHighDontMove(Lift lift, Claw claw, Base base, Intake intake) {
+  public ScoreHighDontMove(Lift lift, Flipper claw, Base base, Intake intake) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(

@@ -23,10 +23,12 @@ public final class Constants {
   // Sensing - CANBUS -------------------------------------------------------------
   
     // BASE - Values will be changed for CANCoders (which will not use DIO)
-  public static final int KFrontLeftMagEncoderID = 1;
-  public static final int KFrontRightMagEncoderID = 2;
-  public static final int KBackLeftMagEncoderID = 3;
-  public static final int KBackRightMagEncoderID = 4;
+    public static final int KFrontLeftMagEncoderID = 1;
+    public static final int KFrontRightMagEncoderID = 2;
+    public static final int KBackLeftMagEncoderID = 3;
+    public static final int KBackRightMagEncoderID = 4;
+    public static final int KFlipperCanCoder = 5;
+    public static final int KIntakeCanCoder = 6;
 
   // End of Sensing - CANBUS **************************************************
 
@@ -34,9 +36,15 @@ public final class Constants {
 
 
     // Scoring - 2 in total
+
   public static final int KScoringTopLimitSwitch = 6;
   public static final int KScoringBottomLimitSwitch = 7;
-  public static final int KLiftEncoder = 10; // NavX port number: 0 
+  public static final int KLiftEncoderA = 2; // NavX port number: 0 
+  public static final int KLiftEncoderB = 3; // NavX port number: 0 
+
+    // Scoring CANcoders 
+    public static final int KClawCanCoder = 25;
+
   
   // Intake - 3 in total
   public static final int KIntakeTopLimitId = 8; 
@@ -48,10 +56,7 @@ public final class Constants {
 
   // Servos - PWM ----------------------------------------------------------------
 
-  public static final int KLinearServoFront = 0;
-  public static final int KLinearServoBack = 1;
-  public static final int KWristServo = 2;
-  public static final int KClawServo = 3;
+ 
   public static final int KLEDPort1 = 4;
   public static final int KLEDPort2 = 5;
 
@@ -60,27 +65,27 @@ public final class Constants {
   // Motor IDs by Subsystem ------------------------------------------------------
 
     // Base
-  public static final int KFrontLeftAngleID = 1;  	// SparkMax + NEO
-  public static final int KFrontLeftDriveID = 2;  	// SparkMax + NEO
+  public static final int KFrontLeftAngleID = 9;  	// SparkMax + NEO
+  public static final int KFrontLeftDriveID = 8;  	// SparkMax + NEO
   
-  public static final int KFrontRightAngleID = 3;  	// SparkMax + NEO
-  public static final int KFrontRightDriveID = 4;  	// SparkMax + NEO
+  public static final int KFrontRightAngleID = 2;  	// SparkMax + NEO
+  public static final int KFrontRightDriveID = 1;  	// SparkMax + NEO
   
-  public static final int KBackLeftAngleID = 5;  	  // SparkMax + NEO
-  public static final int KBackLeftDriveID = 6;  	  // SparkMax + NEO
+  public static final int KBackLeftAngleID = 11;  	  // SparkMax + NEO
+  public static final int KBackLeftDriveID = 10;  	  // SparkMax + NEO
   
-  public static final int KBackRightAngleID = 7;  	// SparkMax + NEO
-  public static final int KBackRightDriveID = 8;  	// SparkMax + NEO
+  public static final int KBackRightAngleID = 19;  	// SparkMax + NEO
+  public static final int KBackRightDriveID = 18;  	// SparkMax + NEO
 
     // Intake
-  public static final int KSpaghettiIntakeId = 9;   // Talon + 775
-  public static final int KSwivelIntakeId = 10;     // Talon + 775
+  public static final int KSpaghettiIntakeId = 7;   // Talon + 775
+  public static final int KSwivelIntakeId = 6;     // Talon + 775
 
 
     // Scoring
-  public static final int KLiftMotor = 14;	
-  public static final int KFlipperMotor = 15;	// Talon + 775
-  public static final int KClawMotorID = 16; //SparkMax + Neo
+  public static final int KFlipperRollerMotor = 15; //SparkMax + Neo
+  public static final int KFlipperSwivelMotor = 16;	// Talon + 775
+  public static final int KLiftMotor = 17;	
 
   // End of Motor Section *****************************************************
 
@@ -165,9 +170,10 @@ public final class Constants {
   public static final boolean KBackRightDriveEncoderReversed = false; 
   
   
+  public static final double KIntakeOffset = -61.25;
   public static final double KIntakeSwivelTopPos = 0;
   public static final double KIntakeSwivelShootPos = 140;
-  public static final double KSwivelBottomPosition = 656;
+  public static final double KSwivelBottomPosition = 322.91;
 
   //Speeds and stuff
   public static final double KIntakeConeSpaghettitSpeed = 0.7;
@@ -175,8 +181,6 @@ public final class Constants {
 
   public static final double KIntakeSwivelSpeed = 0.45;  
   
-  public static final double KIntakeSwiveTopOffset = 2; 
-  public static final double KIntakeSwiveBottumOffset = 2;  
 
   
   // Intake
@@ -217,9 +221,10 @@ public final class Constants {
   
   // Scoring
   //public static final double KClawMotorSpeed = 0.5; //TBD
-  public static final double KClawMotorSpeed = 0.5;
+  public static final double KClawMotorSpeed = 0.6;
+  public static final double KClawSwivelMotorSpeed = 0.15;
   public static final double KAngleMotorSpeed = 0; //TBD
-  public static final double KElevatorSpeed = 0; //TBD
+  public static final double KElevatorSpeed = 0.5; //TBD
   
 
 
@@ -231,8 +236,9 @@ public final class Constants {
   public static final double KLiftHighPos = 90; //TBD
   public static final double KLiftShelfPos = 90; //TBD
   
-  public static final double KInnerLiftInPos = 2000; //TBD
-  public static final double KInnerLiftOutPos = 3600; //TBD
+  public static final double KClawSwivelKP = 0.00001;
+  public static final double KClawSwivelKI =0;
+  public static final double KClawSwivelKd =0;
 
   public static final double KFlipperInPos = 0;
   public static final double KFlipperStartPos = 0;

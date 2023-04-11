@@ -5,12 +5,12 @@
 package frc.robot.commands.Scoring.Lift;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Flipper;
 import frc.robot.subsystems.Lift;
 public class StopScoring extends CommandBase {
-  Claw claw;
+  Flipper claw;
   Lift lift;
-  public StopScoring(Claw claw, Lift lift) {
+  public StopScoring(Flipper claw, Lift lift) {
     this.claw = claw;
     this.lift = lift;
     addRequirements(claw);

@@ -24,7 +24,7 @@ public class IntakeMoveSwivelDown extends CommandBase {
   @Override
   public void execute() {
     // intake.moveSwivel(KIntakeSwivelSpeed);
-    intake.moveSwivel(0.7);
+    intake.moveSwivel(0.1);
   }
 
   // Called once the command ends or is interrupted.
