@@ -34,7 +34,7 @@ public class Lift extends SubsystemBase {
   private CANSparkMax flipperSwivel;
 
   private CANCoder flipperCanCoder;
-  CANCoderConfiguration config;
+  private CANCoderConfiguration config;
 
   private PIDController liftControl;
   private PIDController liftDownController;
@@ -74,7 +74,8 @@ public class Lift extends SubsystemBase {
 
     flipperEncoder = flipperSwivel.getEncoder();
 
-    
+    config = new CANCoderConfiguration();
+
     config.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
     config.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;
     config.magnetOffsetDegrees = KIntakeOffset;

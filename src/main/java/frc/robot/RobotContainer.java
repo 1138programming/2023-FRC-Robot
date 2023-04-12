@@ -132,17 +132,17 @@ public class RobotContainer {
   private final FlipperSwivelSpin swivelReverse = new FlipperSwivelSpin(flipper,-KClawSwivelMotorSpeed);
 
   private final FlipperRollerSpin rollersForward = new FlipperRollerSpin(flipper, KClawMotorSpeed);
-  private final FlipperToPos FlippertoTopSetPoint = new FlipperToPos(flipper, null);
+  // private final FlipperToPos FlippertoTopSetPoint = new FlipperToPos(flipper, null);
   private final FlipperRollerSpin rollersReverse = new FlipperRollerSpin(flipper, -KClawMotorSpeed);
   private final FlipperStop flipperStop = new FlipperStop(flipper);
 
   private final FlipperOut flipperOut = new FlipperOut(lift);
   private final FlipperIn flipperIn = new FlipperIn(lift);
-  private final MoveFlipper moveFlipperForward = new MoveFlipper(lift, 0.1);
+  private final MoveFlipper moveFlipperForward = new MoveFlipper(lift, 0.3);
   private final MoveFlipper moveFlipperReverse = new MoveFlipper(lift, -0.1);
 
-  private final MoveLift moveLiftUp = new MoveLift(lift, 0.45);
-  private final MoveLift moveLiftDown = new MoveLift(lift, -0.1);
+  private final MoveLift moveLiftUp = new MoveLift(lift, 0.20);
+  private final MoveLift moveLiftDown = new MoveLift(lift, -0.20);
   // private final MoveLift moveLiftUp = new MoveLift(lift, 0.4);
   // private final MoveLift moveLiftDown = new MoveLift(lift, -0.4);
  
@@ -336,11 +336,13 @@ public class RobotContainer {
     // logitechBtnLB.onTrue(toggleMaxSpeed);
     // logitechBtnLB.onFalse(toggleMidSpeed);
 
-    // xboxBtnA.whileTrue(swivelForward);
-    // xboxBtnB.whileTrue(swivelReverse);
-
-    xboxBtnY.whileTrue(moveFlipperForward);
-    xboxBtnA.whileTrue(moveSwivelDown);
+    xboxBtnLB.whileTrue(moveFlipperForward);
+    xboxBtnRB.whileTrue(moveFlipperReverse);
+    xboxBtnB.whileTrue(swivelReverse);
+    xboxBtnY.whileTrue(moveLiftUp);
+    xboxBtnB.whileTrue(swivelReverse);
+    xboxBtnX.whileTrue(swivelForward);
+    xboxBtnA.whileTrue(moveLiftDown);
 
     // xboxBtnX.whileTrue(rollersForward);
     // xboxBtnY.whileTrue(rollersReverse);

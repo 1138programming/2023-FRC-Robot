@@ -362,4 +362,17 @@ public final class Constants {
   public static final double ks = 0.20309;
   public static final double kv = 2.5574;
   public static final double ka = 0.38422;
+
+
+
+
+  public static final double KliftHightScoreEncoderVal = 4.91;
+  public static final double KliftcubeShelfEncoderVal = 4.91;
+  public static final double KFlipperCanCoderConeOffShelfVal = 34.51;
+  public static final double KFlipperCanCoderCubeOffShelfVal = 34.51;
+  // public static final double  = 34.51;
+  //307.61 for cube high claw
+  //3.60 for lift mid cube
+  
+
 }
