@@ -106,5 +106,8 @@ public class Flipper extends SubsystemBase {
     //   swivelSpeed = -0.05;
     // }
     // swivel.set(ControlMode.PercentOutput, swivelSpeed);
-  } 
+  }
+
+public void FlipperRollerSpin(Flipper flipper, double speed) {
+} 
 }

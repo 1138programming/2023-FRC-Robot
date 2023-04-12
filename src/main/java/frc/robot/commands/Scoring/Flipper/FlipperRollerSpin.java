@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Scoring.Flipper;
 
+import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Flipper;
 import static frc.robot.Constants.*;
@@ -12,10 +13,11 @@ public class FlipperRollerSpin extends CommandBase {
   /** Creates a new ClawRollersSpin. */
   Flipper flipper;
   Double speed;
-  public FlipperRollerSpin(Flipper claw, Double speed) {
+  public FlipperRollerSpin(Flipper flipper, Double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.flipper = claw;
+    this.flipper = flipper;
     this.speed = speed;    
+    addRequirements(flipper);
   }
 
   // Called when the command is initially scheduled.

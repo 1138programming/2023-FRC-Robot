@@ -141,10 +141,10 @@ public class Lift extends SubsystemBase {
 
   // flipper
   public void flipToPos(double setPoint) {
-    moveFlipper(flipperController.calculate(getFlipperPos(), setPoint));
+    moveFlipperSwivel(flipperController.calculate(getFlipperPos(), setPoint));
 
   }
-  public void moveFlipper(double speed) {
+  public void moveFlipperSwivel(double speed) {
     flipperSwivel.set(speed);
   }
 
@@ -174,5 +174,6 @@ public class Lift extends SubsystemBase {
       lift.set(0);
       
       flipperSwivel.set(0);
-  }       
+  }
+    
 }

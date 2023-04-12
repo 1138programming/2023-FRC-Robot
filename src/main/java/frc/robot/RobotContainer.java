@@ -47,18 +47,19 @@ import frc.robot.commands.Intake.IntakeStop;
 import frc.robot.commands.Intake.IntakeSwivelBottom;
 import frc.robot.commands.Intake.IntakeSwivelShoot;
 import frc.robot.commands.Intake.IntakeSwivelTop;
+import frc.robot.commands.Intake.IntakeSwivelUpAndStop;
 import frc.robot.commands.Intake.OuttakeAndSwivel;
 //Claw and LIft
 import frc.robot.commands.Scoring.Flipper.FlipperRollerSpin;
 import frc.robot.commands.Scoring.Flipper.FlipperStop;
 import frc.robot.commands.Scoring.Flipper.FlipperToPos;
 import frc.robot.commands.Scoring.Flipper.FlipperSwivelSpin;
-import frc.robot.commands.Scoring.Lift.FlipperIn;
-import frc.robot.commands.Scoring.Lift.FlipperOut;
+import frc.robot.commands.Scoring.Lift.FlipperToStowedSetPos;
+import frc.robot.commands.Scoring.Lift.FlipperToScoringSetPos;
 
 
 import frc.robot.commands.Scoring.Lift.LiftStop;
-import frc.robot.commands.Scoring.Lift.MoveFlipper;
+import frc.robot.commands.Scoring.Lift.MoveFlipperRoller;
 
 import frc.robot.commands.Scoring.Lift.MoveLift;
 import frc.robot.commands.Scoring.Lift.MoveLiftToHighPos;
@@ -66,6 +67,8 @@ import frc.robot.commands.Scoring.Lift.MoveLiftToLowPos;
 import frc.robot.commands.Scoring.Lift.MoveLiftToMidPos;
 import frc.robot.commands.Scoring.Lift.MoveLiftToReadyPos;
 
+import frc.robot.CommandGroups.GrabOfShelforScore;
+import frc.robot.CommandGroups.MoveFlipperAndSpin;
 
 import frc.robot.commands.Limelight.LimelightMoveToAprilTag;
 import frc.robot.commands.Limelight.LimelightMoveToConeNode;
@@ -128,18 +131,23 @@ public class RobotContainer {
 
   // Scoring
   private final LiftStop liftstop = new LiftStop(lift);
-  private final FlipperSwivelSpin swivelForward = new FlipperSwivelSpin(flipper,KClawSwivelMotorSpeed);
-  private final FlipperSwivelSpin swivelReverse = new FlipperSwivelSpin(flipper,-KClawSwivelMotorSpeed);
+  private final GrabOfShelforScore coneGrabOfShelf = new GrabOfShelforScore(lift, flipper, KFlipperRollerSpeedCone);
+  private final GrabOfShelforScore cubeGrabOfShelf = new GrabOfShelforScore(lift, flipper, KFlipperRollerSpeedCube);
+
+  private final FlipperSwivelSpin flipperSwivelMoveForward = new FlipperSwivelSpin(flipper,KClawSwivelMotorSpeed);
+  private final FlipperSwivelSpin flipperSwivelMoveBack = new FlipperSwivelSpin(flipper,-KClawSwivelMotorSpeed);
 
   private final FlipperRollerSpin rollersForward = new FlipperRollerSpin(flipper, KClawMotorSpeed);
   // private final FlipperToPos FlippertoTopSetPoint = new FlipperToPos(flipper, null);
   private final FlipperRollerSpin rollersReverse = new FlipperRollerSpin(flipper, -KClawMotorSpeed);
   private final FlipperStop flipperStop = new FlipperStop(flipper);
 
-  private final FlipperOut flipperOut = new FlipperOut(lift);
-  private final FlipperIn flipperIn = new FlipperIn(lift);
-  private final MoveFlipper moveFlipperForward = new MoveFlipper(lift, 0.3);
-  private final MoveFlipper moveFlipperReverse = new MoveFlipper(lift, -0.1);
+  private final FlipperToScoringSetPos flipperToScoringSetPos = new FlipperToScoringSetPos(lift);
+  private final FlipperToStowedSetPos flipperToStowedSetPos = new FlipperToStowedSetPos(lift);
+  private final MoveFlipperRoller flipperRollerCubeIntake = new MoveFlipperRoller(lift, 0.3);
+  private final MoveFlipperRoller flipperRollerCubeOuttake = new MoveFlipperRoller(lift, 0.3);
+  private final MoveFlipperRoller flipperRollerConeIntake = new MoveFlipperRoller(lift, 0.3);
+  private final MoveFlipperRoller flipperRollerConeOuttake = new MoveFlipperRoller(lift, -0.1);
 
   private final MoveLift moveLiftUp = new MoveLift(lift, 0.20);
   private final MoveLift moveLiftDown = new MoveLift(lift, -0.20);
@@ -151,8 +159,8 @@ public class RobotContainer {
   private final MoveLiftToLowPos moveLiftToLowPos = new MoveLiftToLowPos(lift);
   private final MoveLiftToReadyPos moveLiftToReadyPos = new MoveLiftToReadyPos(lift);
   // Limelight
-  private final LimelightMoveToAprilTag goToTarget = new LimelightMoveToAprilTag(base, limelight);
-  private final LimelightMoveToConeNode goToTargetTape = new LimelightMoveToConeNode(base, limelight);
+  private final LimelightMoveToAprilTag limelightMoveToAprilTag = new LimelightMoveToAprilTag(base, limelight);
+  private final LimelightMoveToConeNode limelightMoveToConeNode = new LimelightMoveToConeNode(base, limelight);
 
 
 
@@ -336,12 +344,12 @@ public class RobotContainer {
     // logitechBtnLB.onTrue(toggleMaxSpeed);
     // logitechBtnLB.onFalse(toggleMidSpeed);
 
-    xboxBtnLB.whileTrue(moveFlipperForward);
-    xboxBtnRB.whileTrue(moveFlipperReverse);
-    xboxBtnB.whileTrue(swivelReverse);
+    xboxBtnLB.whileTrue(flipperRollerConeIntake);
+    xboxBtnRB.whileTrue(flipperRollerConeOuttake);
+    xboxBtnB.whileTrue(flipperSwivelMoveBack);
     xboxBtnY.whileTrue(moveLiftUp);
-    xboxBtnB.whileTrue(swivelReverse);
-    xboxBtnX.whileTrue(swivelForward);
+    xboxBtnB.whileTrue(flipperSwivelMoveBack);
+    xboxBtnX.whileTrue(flipperSwivelMoveForward);
     xboxBtnA.whileTrue(moveLiftDown);
 
     // xboxBtnX.whileTrue(rollersForward);
@@ -382,17 +390,20 @@ public class RobotContainer {
 
     // comp14.onTrue(toggleDefenseMode);
 
-    // streamDeck1.whileTrue(moveSwivelUp);
-    // streamDeck2.whileTrue(moveSwivelDown);
-    // streamDeck3.whileTrue(intakeSpinForward);
-    // streamDeck4.whileTrue(moveLiftUp);
-    // streamDeck5.whileTrue(moveLiftDown);
-    // streamDeck7.whileTrue(intakeShootOut);
-    // streamDeck8.whileTrue(moveFlipperForward);
-    // streamDeck9.whileTrue(moveFlipperReverse);
-    // streamDeck10.whileTrue(rotateWrist);
-    // streamDeck11.whileTrue(rotateWristCube);
-    // streamDeck14.whileTrue(intakeSpinReverse);
+    streamDeck1.whileTrue(moveLiftUp);
+    streamDeck2.whileTrue(moveLiftDown);
+    streamDeck3.whileTrue(flipperRollerCubeIntake);
+    streamDeck4.whileTrue(flipperRollerConeIntake);
+    streamDeck5.whileTrue(cubeGrabOfShelf);
+    streamDeck6.whileTrue(flipperSwivelMoveForward);
+    streamDeck7.whileTrue(flipperSwivelMoveBack);
+    streamDeck8.whileTrue(flipperRollerCubeOuttake);
+    streamDeck9.whileTrue(flipperRollerConeOuttake);
+    streamDeck10.whileTrue(coneGrabOfShelf);
+    streamDeck11.whileTrue(moveSwivelUp);
+    streamDeck12.whileTrue(moveSwivelDown);
+    streamDeck13.whileTrue(intakeSpinForward);
+    streamDeck14.whileTrue(intakeSpinReverse);
   }
 
   /**

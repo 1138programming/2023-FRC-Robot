@@ -365,14 +365,15 @@ public final class Constants {
 
 
 
-
-  public static final double KliftHightScoreEncoderVal = 4.91;
-  public static final double KliftcubeShelfEncoderVal = 4.91;
-  public static final double KFlipperCanCoderConeOffShelfVal = 34.51;
-  public static final double KFlipperCanCoderCubeOffShelfVal = 34.51;
-  // public static final double  = 34.51;
-  //307.61 for cube high claw
-  //3.60 for lift mid cube
+  //More Lift Set Points
+  public static final double KliftHighScoreEncoderVal = 4.91;
+  public static final double KliftShelfGrabEncoderVal = 4.91;
+  public static final double KFlipperSwivelCanCoderOffShelfVal = 34.51;
+  public static final double KFlipperSwivelCanCoderCubeScore = 307.61;
+  public static final double KLiftMidScoreEncoderVal = 3.60;
   
+  public static final double KFlipperSwivelSpeed = 0.1;
+  public static final double KFlipperRollerSpeedCone = 0.1;
+  public static final double KFlipperRollerSpeedCube = 0.3;
 
 }

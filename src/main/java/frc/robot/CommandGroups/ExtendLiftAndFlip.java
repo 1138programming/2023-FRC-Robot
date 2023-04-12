@@ -5,7 +5,7 @@
 package frc.robot.CommandGroups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.commands.Scoring.Lift.FlipperOut;
+import frc.robot.commands.Scoring.Lift.FlipperToScoringSetPos;
 import frc.robot.commands.Scoring.Lift.MoveLiftToHighPos;
 import frc.robot.subsystems.Lift;
 
@@ -21,7 +21,7 @@ public class ExtendLiftAndFlip extends ParallelCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new MoveLiftToHighPos(lift), 
-      new FlipperOut(lift)
+      new FlipperToScoringSetPos(lift)
     );
   }
 }
