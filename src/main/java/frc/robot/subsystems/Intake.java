@@ -71,6 +71,7 @@ public class Intake extends SubsystemBase {
 
     ledStrip.setLength(ledBuffer.getLength());
     ledStrip.setData(ledBuffer);
+    ledStrip.start();
     
     config = new CANCoderConfiguration();
     
@@ -78,7 +79,7 @@ public class Intake extends SubsystemBase {
     config.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;
     config.magnetOffsetDegrees = KIntakeOffset;
     config.sensorDirection = true;
-    
+    setConeMode();
     
     intakeSwivelCanCoder = new CANCoder(KIntakeCanCoder);
     intakeSwivelCanCoder.configAllSettings(config);
@@ -104,6 +105,7 @@ public class Intake extends SubsystemBase {
     if (getTopLimitSwitch()) {
       setIntakeEncoder(0);
     }
+    setConeMode();
   }
 
   /**
@@ -138,7 +140,7 @@ public class Intake extends SubsystemBase {
       ledBuffer.setRGB(i, R, G, B);
     }
     ledStrip.setData(ledBuffer);
-    ledStrip.start();
+    // ledStrip.start();
   }
 
 
@@ -162,21 +164,21 @@ public class Intake extends SubsystemBase {
     setLEDToColor(150, 150, 0);
   }
 
-  public void toggleDefenseMode() {
-    if (!defenseMode) {
-      defenseMode = true;
-      setLEDToColor(200, 0, 0);
-    }
-    else {
-      defenseMode = false;
-      if (intakeMode == KConeMode) {
-        setConeMode();
-      }
-      else {
-        setCubeMode();
-      }
-    }
-  }
+  // public void toggleDefenseMode() {
+  //   if (!defenseMode) {
+  //     defenseMode = true;
+  //     setLEDToColor(200, 0, 0);
+  //   }
+  //   else {
+  //     defenseMode = false;
+  //     if (intakeMode == KConeMode) {
+  //       setConeMode();
+  //     }
+  //     else {
+  //       setCubeMode();
+  //     }
+  //   }
+  // }
 
   // get the operating mode of the intake
   public boolean isConeMode() {

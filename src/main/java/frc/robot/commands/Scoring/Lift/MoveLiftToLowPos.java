@@ -25,7 +25,7 @@ public class MoveLiftToLowPos extends CommandBase {
   @Override
   public void execute() {
     lift.setLiftPos(liftSetpoint);
-    // lift.flipToPos(flipperSetpoint);
+    lift.flipToPos(flipperSetpoint);
   }
 
   // Called once the command ends or is interrupted.

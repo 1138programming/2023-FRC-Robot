@@ -329,7 +329,7 @@ public final class Constants {
   public static final double KTapeLimelightMoveD = 0;
   
   // Additional LED info:
-  public static final int KLEDBuffer = 30;
+  public static final int KLEDBuffer = 60;
   public static enum KLEDSTATE {
     OFF,
     YELLOW,
@@ -405,9 +405,9 @@ public final class Constants {
 
   
   
-  public static final double KFlipperRollerIntakeSpeedCone = 0.6;
-  public static final double KFlipperRollerOuttakeSpeedCone = -0.6;
-  public static final double KFlipperRollerIntakeSpeedCube = -0.4;
-  public static final double KFlipperRollerOuttakeSpeedCube = 0.3;
+  public static final double KFlipperRollerIntakeSpeedCone = 0.9;
+  public static final double KFlipperRollerOuttakeSpeedCone = -0.9;
+  public static final double KFlipperRollerIntakeSpeedCube = -0.9;
+  public static final double KFlipperRollerOuttakeSpeedCube = 0.9;
   
 }

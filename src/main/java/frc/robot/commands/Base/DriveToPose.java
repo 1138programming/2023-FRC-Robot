@@ -38,6 +38,8 @@ public class DriveToPose extends CommandBase {
   private SlewRateLimiter fbSpeedLimiter;
   private SlewRateLimiter lrSpeedLimiter;
 
+  private double maxRotSpeed = 0.6;
+
   /** Creates a new DriveToPose. */
   public DriveToPose(Base base, Pose2d targetPose) {
     this.base = base;
@@ -81,6 +83,12 @@ public class DriveToPose extends CommandBase {
     xSpeed = fbSpeedLimiter.calculate(xSpeed);
     ySpeed = lrSpeedLimiter.calculate(ySpeed);
     rotSpeed = rotController.calculate(currentPose.getRotation().getDegrees()/360, targetPose.getRotation().getDegrees()/360);
+
+    if (rotSpeed > maxRotSpeed) {
+        rotSpeed = maxRotSpeed;
+    } else if (rotSpeed < -maxRotSpeed) {
+        rotSpeed = -maxRotSpeed;
+    }
     
     base.drive(xSpeed, ySpeed, rotSpeed, true, KPhysicalMaxDriveSpeedMPS);
   }

@@ -6,6 +6,8 @@ package frc.robot.commands.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
+import static frc.robot.Constants.*;
+
 public class IntakeShootOut extends CommandBase {
   private Intake intake;
   /** Creates a new IntakeSpinRollers. */
@@ -22,6 +24,7 @@ public class IntakeShootOut extends CommandBase {
   @Override
   public void execute() {
     intake.spaghettiSpinReverse(0.85);
+    intake.swivelSpinToPos(KIntakeSwivelShootPos);
   }
 
   // Called once the command ends or is interrupted.

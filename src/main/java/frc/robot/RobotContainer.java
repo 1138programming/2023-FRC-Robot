@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.CommandGroups.BackThenForward;
 import frc.robot.CommandGroups.ScoreLowDontMove;
+import frc.robot.CommandGroups.Auton.CubeShootBalance;
 import frc.robot.commands.Base.AutoBalance;
 import frc.robot.commands.Base.ToggleSpeed;
 import frc.robot.commands.Base.ResetEncoders;
@@ -129,7 +130,7 @@ public class RobotContainer {
   private final IntakeSwivelTop intakeSwivelTop = new IntakeSwivelTop(intake);
   private final IntakeSwivelBottom intakeSwivelBottom = new IntakeSwivelBottom(intake);
   private final IntakeSwivelShoot intakeSwivelShoot = new IntakeSwivelShoot(intake);
-  private final IntakeBottomNoCollect intakeBottomNoCollect = new IntakeBottomNoCollect(intake);
+  private final IntakeBottomNoCollect intakeSwivelBottomNoCollect = new IntakeBottomNoCollect(intake);
   private final IntakeSpinAndSwivel intakeSpinAndSwivel = new IntakeSpinAndSwivel(intake);
   private final OuttakeAndSwivel outtakeAndSwivel = new OuttakeAndSwivel(intake);
   private final IntakeStop intakeStop = new IntakeStop(intake);
@@ -182,6 +183,9 @@ public class RobotContainer {
   // Limelight
   private final LimelightMoveToAprilTag limelightMoveToAprilTag = new LimelightMoveToAprilTag(base, limelight);
   private final LimelightMoveToConeNode limelightMoveToConeNode = new LimelightMoveToConeNode(base, limelight);
+
+  // AUTONS
+  private final CubeShootBalance cubeShootLeave = new CubeShootBalance(base, intake, limelight, lift);
 
 
 
@@ -367,24 +371,21 @@ public class RobotContainer {
     logitechBtnY.onTrue(new ResetEncodersTeleop(base));
 
 
-    comp1.onTrue(intakeRollers);
-    comp2.whileTrue(outtakeRollers);
-
+    comp1.onTrue(moveLiftToHighPos);
+    comp2.whileTrue(moveLiftToShelfPos);
     comp3.onTrue(setConeMode);
     comp4.onTrue(setCubeMode);
-    comp5.whileTrue(intakeSwivelTop);
-    comp6.whileTrue(flipperToShelfPos);
-    comp7.whileTrue(moveLiftToShelfPos);
-    
-    comp8.whileTrue(intakeShootOut);
-    comp9.whileTrue(intakeSwivelShoot);
-    comp10.whileTrue(intakeSwivelBottom);
-    comp10.onFalse(intakeSwivelTop);
-
-    comp11.onTrue(moveLiftToReadyPos);
-    comp12.onTrue(moveLiftToMidPos);
-    comp13.onTrue(moveLiftToHighPos);
-
+    comp5.whileTrue(intakeRollers);
+    comp6.onTrue(moveLiftToMidPos);
+    comp7.onTrue(moveLiftToReadyPos);
+    comp8.onTrue(intakeSwivelTop);
+    comp9.onTrue(intakeSwivelShoot);
+    comp10.whileTrue(outtakeRollers);
+    comp11.onTrue(moveLiftToLowPos);
+    comp12.whileTrue(intakeShootOut);
+    comp13.whileTrue(intakeSwivelBottom);
+    comp13.onFalse(intakeSwivelTop);
+    comp14.onTrue(intakeSwivelBottomNoCollect);
 
     // comp9.whileTrue(moveLiftDown);
     // comp10.onTrue(intakeBottomNoCollect);
@@ -421,9 +422,9 @@ public class RobotContainer {
   public Command getAutonomousCommand()
    {
     // return null;
-    return null;
+    // return null;
+    return cubeShootLeave;
     // return new ScoreLowDontMove(base);
-    // return new ScoreHighDontMove(lift, claw, base, intake);
     // return new ScoreHighAndLeave(lift, claw, base, intake);
     // return new AutoBalance(base);
   }
