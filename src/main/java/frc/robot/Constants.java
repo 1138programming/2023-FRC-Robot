@@ -112,7 +112,7 @@ public final class Constants {
   
   public static final double KAngleMotorRotToDeg = 35;
   public static final double KPhysicalMaxDriveSpeedMPS = KNeoMaxRPM * KDriveMotorRPMToMetersPerSec;
-  public static final double KMaxAngularSpeed = 4.5; // MAY NEED CHANGING
+  public static final double KMaxAngularSpeed = 3.5; // MAY NEED CHANGING
   
   // not used, may be useful to know/keep
   private static final double KAngleMotorShaftToWheelRatio = 1 / 10.2857; 
@@ -142,7 +142,7 @@ public final class Constants {
   
     // Describes the locations of the swerve modules relative to the center of the robot
   // Important for kinematics
-  public static final double KWheelDistanceFromCenter = 0.29845;
+  public static final double KWheelDistanceFromCenter = 0.257175;
   public static final Translation2d KFrontLeftLocation = new Translation2d(
     KWheelDistanceFromCenter, KWheelDistanceFromCenter
   );
@@ -354,19 +354,28 @@ public final class Constants {
   public static final double KRotMaxAcceleration = 3.14;
   
   // Auto balance PID
-  public static final double KBalanceP = 0.0055;
+  public static final double KBalanceP = 0.0065;
   public static final double KBalanceI = 0;
   public static final double KBalanceD = 0.001;
   
+  public static PathConstraints KPathPLannerConstraints = new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration);
+
   // Pathplanner trajectories
   //left
-  public static final PathPlannerTrajectory KLeftSideLeaveCommunity = PathPlanner.loadPath("LeftSideLeaveCommunity", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
-  public static final PathPlannerTrajectory KLeftLeaveCommunityAndGoAway = PathPlanner.loadPath("LeftLeaveAndGoAway", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
+  
+  public static final PathPlannerTrajectory KLeftSideCubeToBalance = PathPlanner.loadPath("LeftSideCubeToBalance", KPathPLannerConstraints);
+  public static final PathPlannerTrajectory KLeftSideCubeToStation = PathPlanner.loadPath("LeftSideCubeToStation", KPathPLannerConstraints);
+  public static final PathPlannerTrajectory KPickUpLeftSide = PathPlanner.loadPath("PickUpLeftSide", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
+  public static final PathPlannerTrajectory KLeftSidePickup2 = PathPlanner.loadPath("LeftSidePickup2", KPathPLannerConstraints);
+  
+  public static final PathPlannerTrajectory KLeftSidePickupToBalance = PathPlanner.loadPath("LeftSidePickupToBalance", new PathConstraints(2, 2));
+  public static final PathPlannerTrajectory KLeftSidePickup2ToBalance = PathPlanner.loadPath("LeftSidePickup2ToBalance", new PathConstraints(2, 2));
   //Right
+  
   public static final PathPlannerTrajectory KRightSideLeaveCommunity = PathPlanner.loadPath("LeftSideLeaveCommunity", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
   public static final PathPlannerTrajectory KRightSideLeaveAndGoToStation = PathPlanner.loadPath("RightSideLeaveAndGoToStation", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
-  
-  public static final PathPlannerTrajectory KPickUpLeftSide = PathPlanner.loadPath("PickUpLeftSide", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
+  public static final PathPlannerTrajectory KLeftSideLeaveCommunity = PathPlanner.loadPath("LeftSideLeaveCommunity", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
+  public static final PathPlannerTrajectory KLeftLeaveCommunityAndGoAway = PathPlanner.loadPath("LeftLeaveAndGoAway", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
   public static final PathPlannerTrajectory KPickUpRightSide = PathPlanner.loadPath("PickUpRightSide", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
   
   //sys id config numbers 

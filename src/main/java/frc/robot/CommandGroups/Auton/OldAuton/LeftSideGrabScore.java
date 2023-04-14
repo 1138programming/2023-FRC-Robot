@@ -4,37 +4,25 @@
 
 package frc.robot.CommandGroups.Auton.OldAuton;
 
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.Base.DriveForward;
-import frc.robot.commands.Intake.IntakeSpin;
+import frc.robot.commands.Base.ResetEncoders;
 import frc.robot.subsystems.Base;
-import frc.robot.subsystems.Intake;
-
 import static frc.robot.Constants.*;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ScoreAndPickupRightSide extends SequentialCommandGroup {
-  /** Creates a new ScoreAndPickup. */
-  public ScoreAndPickupRightSide(Base base, Intake intake) {
+public class LeftSideGrabScore extends SequentialCommandGroup {
+  /** Creates a new PickUpLeftSide. */
+  public LeftSideGrabScore(Base base) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      // new ParallelDeadlineGroup(
-      //   new WaitCommand(0.5), 
-      //   new DriveForward(base)
-      // )
-      new IntakeSpit(intake),
-      new ParallelDeadlineGroup(
-        new WaitCommand(10), 
-        base.followTrajectoryCommand(KPickUpRightSide, true), 
-        new IntakeSpin(intake)
-      )
-      // base.followTrajectoryCommand(KPickUpRightSide, true)
-      
+      new ResetEncoders(base),
+      base.followTrajectoryCommand(KPickUpLeftSide, true),
+      new WaitCommand(0.2),
+      base.followTrajectoryCommand(KLeftSideCubeToStation, false)
     );
   }
 }

@@ -46,8 +46,8 @@ public class DriveToPose extends CommandBase {
 
     currentPose = base.getPose();
 
-    fbController = new PIDController(0.75, 0, 0);
-    lrController = new PIDController(0.75, 0, 0);
+    fbController = new PIDController(0.80, 0, 0);
+    lrController = new PIDController(0.80, 0, 0);
     // fbController = new PIDController(0.50, 0.001, 0);
     // lrController = new PIDController(0.50, 0.001, 0);
     rotController = new PIDController(rotP, rotI, rotD);
@@ -61,7 +61,6 @@ public class DriveToPose extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
   }
 
   @Override

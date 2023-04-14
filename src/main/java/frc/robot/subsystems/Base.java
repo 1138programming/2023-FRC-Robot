@@ -15,6 +15,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -46,6 +47,9 @@ public class Base extends SubsystemBase {
   private SlewRateLimiter xRateLimiter;
   private SlewRateLimiter yRateLimiter;
   private SlewRateLimiter rotRateLimiter;
+
+  private double xyP = 0;
+  private double rotP = 0;
   
   public Base() {
     frontLeftModule = new SwerveModule(
@@ -95,6 +99,10 @@ public class Base extends SubsystemBase {
 
     accelerationLimiter = new SlewRateLimiter(0.5);
 
+    SmartDashboard.putNumber("X and Y PID", 0);
+    SmartDashboard.putNumber("rot P", 0);
+
+
     // xRateLimiter = new SlewRateLimiter(limiter);
     // yRateLimiter = new SlewRateLimiter(limiter);
     // rotRateLimiter = new SlewRateLimiter(limiter);
@@ -120,9 +128,9 @@ public class Base extends SubsystemBase {
     SwerveDriveKinematics.desaturateWheelSpeeds(states, KPhysicalMaxDriveSpeedMPS);
 
     
+    SmartDashboard.putBoolean("HELLO", defenseMode && xSpeed == 0 && ySpeed == 0 && rot == 0);
     if (defenseMode && xSpeed == 0 && ySpeed == 0 && rot == 0) {
       // lockWheels();
-      SmartDashboard.putBoolean("HELLO", true);
     }
     else {
       //setting module states, aka moving the motors
@@ -160,15 +168,19 @@ public class Base extends SubsystemBase {
              traj,
              this::getPose, // Pose supplier
              this.kinematics, // SwerveDriveKinematics
-             new PIDController(2, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-             new PIDController(2, 0, 0), // Y controller (usually the same values as X controller)
-             new PIDController(0, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+             new PIDController(xyP, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+             new PIDController(xyP, 0, 0), // Y controller (usually the same values as X controller)
+             new PIDController(rotP, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
              this::setModuleStates, // Module states consumer
-             true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+             false, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
              this // Requires this drive subsystem
          )
      );
   }
+
+  // public Command followTrajectoryWPILib(Trajectory traj) {
+  //   // return ne Se
+  // }
 
   public Pose2d getPose() {
     return pose;
@@ -240,17 +252,22 @@ public class Base extends SubsystemBase {
     SmartDashboard.putBoolean("DEFENSE MODE", getDefenseMode());
     // SmartDashboard.putNumber("Gyro", getHeadingDeg());
 
-    // SmartDashboard.putNumber("Front left module", frontLeftModule.getAngleDeg());
-    // SmartDashboard.putNumber("Front right module", frontRightModule.getAngleDeg());
-    // SmartDashboard.putNumber("Back left module", backLeftModule.getAngleDeg());
-    // SmartDashboard.putNumber("Back right module", backRightModule.getAngleDeg());
+    SmartDashboard.putNumber("Front left module", frontLeftModule.getAngleDeg());
+    SmartDashboard.putNumber("Front right module", frontRightModule.getAngleDeg());
+    SmartDashboard.putNumber("Back left module", backLeftModule.getAngleDeg());
+    SmartDashboard.putNumber("Back right module", backRightModule.getAngleDeg());
 
     // SmartDashboard.putNumber("front left mag", frontLeftModule.getMagDeg());
     // SmartDashboard.putNumber("front right mag", frontRightModule.getMagDeg());
     // SmartDashboard.putNumber("back left mag", backLeftModule.getMagDeg());
     // SmartDashboard.putNumber("back right mag", backRightModule.getMagDeg());
 
-    // SmartDashboard.putString("odometry pose", odometry.getPoseMeters().toString());
+    SmartDashboard.putString("odometry pose", odometry.getPoseMeters().toString());
+
+    
+    xyP = SmartDashboard.getNumber("X and Y PID", 0);
+    rotP = SmartDashboard.getNumber("rot P", 0);
+    SmartDashboard.putNumber("xyP", xyP);
 
     // SmartDashboard.putBoolean("isCalibrating", gyro.isCalibrating());
 

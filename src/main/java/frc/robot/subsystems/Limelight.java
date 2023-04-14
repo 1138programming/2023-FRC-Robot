@@ -8,7 +8,6 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.subsystems.Base;
 
-import frc.robot.subsystems.Base;
 import static frc.robot.Constants.*;
 
 import java.util.Arrays;

@@ -14,7 +14,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.CommandGroups.BackThenForward;
 import frc.robot.CommandGroups.ScoreLowDontMove;
 import frc.robot.commands.Base.AutoBalance;
+import frc.robot.commands.Base.ToggleSpeed;
+import frc.robot.commands.Base.ResetEncoders;
+import frc.robot.commands.Base.ResetEncodersTeleop;
+import frc.robot.commands.Base.ResetGyro;
+import frc.robot.commands.Base.ToggleDefenseMode;
+import frc.robot.commands.Base.SetDefenseModeFalse;
+import frc.robot.commands.Base.SetDefenseModeTrue;
 import frc.robot.commands.Base.DriveWithJoysticks;
+import frc.robot.commands.Base.ToggleSpeed; 
+import frc.robot.commands.Base.DriveWithJoysticks;
+
+//  Intake
+import frc.robot.commands.Intake.IntakeSpin;
+import frc.robot.commands.Intake.IntakeStop;
+import frc.robot.commands.Intake.IntakeSwivelBottom;
+import frc.robot.commands.Intake.IntakeSwivelShoot;
+import frc.robot.commands.Intake.IntakeSwivelTop;
+import frc.robot.commands.Intake.OuttakeAndSwivel;
 import frc.robot.commands.Intake.IntakeBottomNoCollect;
 import frc.robot.commands.Intake.IntakeMoveSwivelDown;
 import frc.robot.commands.Intake.IntakeMoveSwivelUp;
@@ -62,6 +79,7 @@ import frc.robot.commands.Scoring.Lift.MoveLiftToShelfPos;
 import frc.robot.commands.Scoring.Lift.IntakeRollers;
 import frc.robot.commands.Scoring.Lift.OuttakeRollers;
 
+//  Limelight
 import frc.robot.commands.Limelight.LimelightMoveToAprilTag;
 import frc.robot.commands.Limelight.LimelightMoveToConeNode;
 import frc.robot.commands.Limelight.ToggleLimelightPipeline;
@@ -102,22 +120,18 @@ public class RobotContainer {
   private final SetDefenseModeTrue setDefenseModeTrue = new SetDefenseModeTrue(base);
   private final SetDefenseModeFalse setDefenseModeFalse = new SetDefenseModeFalse(base);
 
-  // Intake  
+  //  Intake  
   private final IntakeSpin intakeSpinForward = new IntakeSpin(intake);
   private final IntakeSpinReverse intakeSpinReverse = new IntakeSpinReverse(intake);
   private final IntakeShootOut intakeShootOut = new IntakeShootOut(intake);
-
   private final IntakeMoveSwivelDown moveSwivelDown = new IntakeMoveSwivelDown(intake);
   private final IntakeMoveSwivelUp moveSwivelUp = new IntakeMoveSwivelUp(intake);
-
   private final IntakeSwivelTop intakeSwivelTop = new IntakeSwivelTop(intake);
   private final IntakeSwivelBottom intakeSwivelBottom = new IntakeSwivelBottom(intake);
   private final IntakeSwivelShoot intakeSwivelShoot = new IntakeSwivelShoot(intake);
   private final IntakeBottomNoCollect intakeBottomNoCollect = new IntakeBottomNoCollect(intake);
-
   private final IntakeSpinAndSwivel intakeSpinAndSwivel = new IntakeSpinAndSwivel(intake);
   private final OuttakeAndSwivel outtakeAndSwivel = new OuttakeAndSwivel(intake);
-
   private final IntakeStop intakeStop = new IntakeStop(intake);
 
   
@@ -350,7 +364,7 @@ public class RobotContainer {
     // logitechBtnRB.onTrue(toggleLowSpeed);
     // logitechBtnLB.or(logitechBtnRB).onFalse(toggleMidSpeed);
 
-    logitechBtnY.onTrue(resetEncoders);
+    logitechBtnY.onTrue(new ResetEncodersTeleop(base));
 
 
     comp1.onTrue(intakeRollers);
