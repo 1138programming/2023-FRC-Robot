@@ -6,13 +6,13 @@ package frc.robot.commands.Scoring.Lift;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Lift;
-import static frc.robot.Constants.*;
 
-public class LiftEndConditionPos extends CommandBase {
+public class IntakeRollers extends CommandBase {
   Lift lift;
-  /** Creates a new LiftEndConditionPos. */
-  public LiftEndConditionPos(Lift lift) {
+  /** Creates a new SpinRollers. */
+  public IntakeRollers(Lift lift) {
     this.lift = lift;
+    addRequirements(lift);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -22,7 +22,9 @@ public class LiftEndConditionPos extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    lift.intakeRoller();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -31,6 +33,6 @@ public class LiftEndConditionPos extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (lift.getLiftPos() >= KliftShelfGrabEncoderVal - 1);
+    return false;
   }
 }

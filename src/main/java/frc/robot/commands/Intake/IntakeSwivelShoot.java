@@ -12,6 +12,7 @@ import static frc.robot.Constants.*;
 public class IntakeSwivelShoot extends CommandBase {
   /** Creates a new IntakeSwivelBottum. */
   private Intake intake;
+  private double intakeSetpoint = KIntakeSwivelShootPos;
 
   public IntakeSwivelShoot(Intake intake) {
     this.intake = intake;
@@ -27,8 +28,7 @@ public class IntakeSwivelShoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // intake.swivelSpinToPos(500);
-    intake.swivelSpinToPos(KIntakeSwivelShootPos);
+    intake.swivelSpinToPos(intakeSetpoint);
   }
 
   // Called once the command ends or is interrupted.
@@ -40,11 +40,6 @@ public class IntakeSwivelShoot extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (Math.abs(intake.getIntakeEncoder() - KSwivelBottomPosition) < KSwivelBottomPosition) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return Math.abs(intake.getSwivelEncoder() - intakeSetpoint) < KIntakeSwivelOffset;
   }
 }

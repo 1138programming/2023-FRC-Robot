@@ -27,8 +27,8 @@ public final class Constants {
     public static final int KFrontRightMagEncoderID = 2;
     public static final int KBackLeftMagEncoderID = 3;
     public static final int KBackRightMagEncoderID = 4;
-    public static final int KFlipperCanCoder = 5;
-    public static final int KIntakeCanCoder = 6;
+    public static final int KIntakeCanCoder = 5;
+    public static final int KFlipperCanCoder = 6;
 
   // End of Sensing - CANBUS **************************************************
 
@@ -38,7 +38,7 @@ public final class Constants {
     // Scoring - 2 in total
 
   public static final int KScoringTopLimitSwitch = 6;
-  public static final int KScoringBottomLimitSwitch = 7;
+  public static final int KScoringBottomLimitSwitch = 9;
   public static final int KLiftEncoderA = 2; // NavX port number: 0 
   public static final int KLiftEncoderB = 3; // NavX port number: 0 
 
@@ -57,8 +57,7 @@ public final class Constants {
   // Servos - PWM ----------------------------------------------------------------
 
  
-  public static final int KLEDPort1 = 4;
-  public static final int KLEDPort2 = 5;
+  public static final int KLEDPort = 4;
 
   // End Servo Section ********************************************************
 
@@ -125,11 +124,15 @@ public final class Constants {
   public static final double KBaseDriveMaxPercent = 1;
   
     // Offsets for absolute encoders, used to set up angle encoders
-  public static final double KFrontLeftOffset = -142.21;
-  public static final double KFrontRightOffset = -208.30;
-  public static final double KBackLeftOffset = -119.36;
-  public static final double KBackRightOffset = -285.64; 
- 
+    // public static final double KFrontLeftOffset = -77.90;
+    // public static final double KFrontRightOffset = -217;
+    // public static final double KBackLeftOffset = -54.67;
+    // public static final double KBackRightOffset = -75.23; 
+    public static final double KFrontLeftOffset = -257.90;
+    public static final double KFrontRightOffset = -37.00;
+    public static final double KBackLeftOffset = -234.67;
+    public static final double KBackRightOffset = -255.23; 
+    
   
   // public static final double KFrontLeftOffset = -147.22;
   // public static final double KFrontRightOffset = -36.56;
@@ -170,46 +173,59 @@ public final class Constants {
   public static final boolean KBackRightDriveEncoderReversed = false; 
   
   
-  public static final double KIntakeOffset = -61.25;
-  public static final double KIntakeSwivelTopPos = 0;
-  public static final double KIntakeSwivelShootPos = 140;
-  public static final double KSwivelBottomPosition = 322.91;
+  public static final double KIntakeOffset = 156; // ALL TBD 
+  public static final double KIntakeSwivelOffset = 1; // ALL TBD 
+  public static final double KIntakeSwivelTopPos = 15;
+  public static final double KIntakeSwivelShootPos = 61;
+  public static final double KSwivelBottomPosition = 138;
 
   //Speeds and stuff
-  public static final double KIntakeConeSpaghettitSpeed = 0.7;
+  public static final double KIntakeConeSpaghettitSpeed = 0.6;
   public static final double KIntakeCubeSpaghettitSpeed = 0.6;
-
+  
   public static final double KIntakeSwivelSpeed = 0.45;  
   
-
+  
   
   // Intake
-    // Swivel Encoder
-    // Swivel PID
-  public static final double KIntakeP = 0.003; // TBD
-  public static final double KIntakeI = 0.0001; // TBD 
+  // Swivel Encoder
+  // Swivel PID
+  
+  // Gray bot values
+  // public static final double KIntakeP = 0.003;
+  // public static final double KIntakeI = 0.0001;
+  // public static final double KIntakeD = 0;
+  
+  // Blue bot values: TBD
+  public static final double KIntakeP = 0.0065; // TBD
+  public static final double KIntakeI = 0.001; // TBD 
   public static final double KIntakeD = 0; // TBD
+  
+  // public static final double KIntakeSwivelCanCoderRatio = 1;
+  public static final double KIntakeSwivelCanCoderRatio = 14/34;
 
   // Timing for lift
   public static final double KIntakeThenLiftTime = 0.5;
   
-
+  
   
   // Scoring
   public static final int KScoringEncoder1ID = 6; //name can be changed later
   public static final int KScoringEncoder2ID = 7; //name can be changed later
-
-    // Flipper PID
-  public static final double KFlipperP = 0.01; // TBD
+  
+  // Flipper PID
+  public static final double KFlipperP = 0.03; // TBD
   public static final double KFlipperI = 0; // TBD
   public static final double KFlipperD = 0; // TBD
   public static final double KScoringFlipPos = 0; //TBD
-  
-    // lift PID
-  public static final double KLiftP = 0; //TBD
-  public static final double KLiftI = 0; //TBD
-  public static final double KLiftD = 0; //TBD
 
+  public static final double KFlipperCanCoderRatio = 0.4375;
+  
+  // lift PID
+  public static final double KLiftP = 0.0005; //TBD
+  public static final double KLiftI = 0; //TBD
+  public static final double KLiftD = 0.0000005; //TBD
+  
   public static final double KInnerLiftP = 0; //TBD
   public static final double KInnerLiftI = 0; //TBD
   public static final double KInnerLiftD = 0; //TBD
@@ -226,32 +242,27 @@ public final class Constants {
   public static final double KAngleMotorSpeed = 0; //TBD
   public static final double KElevatorSpeed = 0.5; //TBD
   
-
-
- 
-
   public static final double KLiftReadyPos = 0; //TBD
-  public static final double KLiftLowPos = 30; //TBD
-  public static final double KLiftMediumPos = 60; //TBD
-  public static final double KLiftHighPos = 90; //TBD
-  public static final double KLiftShelfPos = 90; //TBD
+  public static final double KLiftLowPos = 0; //TBD
+  public static final double KLiftMediumPos = 4284.75;
+  public static final double KLiftHighPos = 8836.25; 
+  public static final double KLiftShelfPos = 6988; //TBD
   
   public static final double KClawSwivelKP = 0.00001;
   public static final double KClawSwivelKI =0;
   public static final double KClawSwivelKd =0;
-
-  public static final double KFlipperInPos = 0;
-  public static final double KFlipperStartPos = 0;
-  public static final double KFlipperOutPos = 43;
-  public static final double KFlipperDeadzone = 0.5;
+  
+  // public static final double KFlipperInPos = 0;
+  // public static final double KFlipperStartPos = 0;
+  // public static final double KFlipperOutPos = 43;
 
   public static final double KLiftDeadzone = 2;
   public static final double KInnerLiftDeadzone = 4;
-
+  
 
   // public static final double KInnerLiftHighPos= 0;
   // public static final double KInnerLiftLowPos= 0;
-
+  
   public static final boolean KWristFlip = true; 
   
   public static final double KWristFlipPos = 0.86;
@@ -273,14 +284,14 @@ public final class Constants {
   public static final double KDistanceOffset = 0;
   public static final double KHorizDistanceOffset = 0;
   public static final double KGoalWidth = 15;
-
+  
   public static final int KAprilTagPipeline = 0;
   public static final int KReflectiveTapePipeline = 1;
-
+  
   public static final double KDistanceMoveOffset = 1;
-
+  
   public static final double KOffsetFromAprilTag = 1;
-
+  
   public static final double[] KXCoordinateOfTag = { 
     7.24310,
     7.24310,
@@ -291,7 +302,7 @@ public final class Constants {
     -7.24310,
     -7.24310,
   };
-
+  
   public static final double[] KYCoordinateOfTag = { 
     -2.93659,
     -1.26019,
@@ -302,21 +313,21 @@ public final class Constants {
     -1.26019,
     -2.93659
   };
-
+  
   public static final double KLimelightRotateP = 0.01;
   public static final double KLimelightRotateI = 0;
   public static final double KLimelightRotateD = 0;
   public static final double KLimelightMoveDeadzone = 0.01;
-
+  
   
   public static final double KTagLimelightMoveP = 0.08;
   public static final double KTagLimelightMoveI = 0;
   public static final double KTagLimelightMoveD = 0;
-
+  
   public static final double KTapeLimelightMoveP = 0.005;
   public static final double KTapeLimelightMoveI = 0;
   public static final double KTapeLimelightMoveD = 0;
-
+  
   // Additional LED info:
   public static final int KLEDBuffer = 30;
   public static enum KLEDSTATE {
@@ -357,23 +368,37 @@ public final class Constants {
   
   public static final PathPlannerTrajectory KPickUpLeftSide = PathPlanner.loadPath("PickUpLeftSide", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
   public static final PathPlannerTrajectory KPickUpRightSide = PathPlanner.loadPath("PickUpRightSide", new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration));
-
+  
   //sys id config numbers 
   public static final double ks = 0.20309;
   public static final double kv = 2.5574;
   public static final double ka = 0.38422;
-
-
-
+  
+  
+  
   //More Lift Set Points
-  public static final double KliftHighScoreEncoderVal = 4.91;
-  public static final double KliftShelfGrabEncoderVal = 4.91;
-  public static final double KFlipperSwivelCanCoderOffShelfVal = 34.51;
-  public static final double KFlipperSwivelCanCoderCubeScore = 307.61;
-  public static final double KLiftMidScoreEncoderVal = 3.60;
+  // public static final double KliftHighScoreEncoderVal = 4.91;
+  // public static final double KliftShelfGrabEncoderVal = 6980;
+  // public static final double KLiftMidScoreEncoderVal = 3.60;
+  
+  public static final double KFlipperOffShelfPos = 128; // TBD
+  public static final double KFlipperScoreConePos = 150;  // TBD
+  public static final double KFlipperScoreCubePos = 150;  // TBD
+  public static final double KFlipperStowedPos = 10;  // TBD
   
   public static final double KFlipperSwivelSpeed = 0.1;
-  public static final double KFlipperRollerSpeedCone = 0.1;
-  public static final double KFlipperRollerSpeedCube = 0.3;
+  public static final double KFlipperDeadzone = 0.5;
 
+  public static final double KFlipperSwivelOffset = 328;
+
+  public static final double KFlipperMaxSpeed = 0.5;
+  public static final double KFlipperMinSpeed = 0.15;
+
+  
+  
+  public static final double KFlipperRollerIntakeSpeedCone = 0.6;
+  public static final double KFlipperRollerOuttakeSpeedCone = -0.6;
+  public static final double KFlipperRollerIntakeSpeedCube = -0.4;
+  public static final double KFlipperRollerOuttakeSpeedCube = 0.3;
+  
 }

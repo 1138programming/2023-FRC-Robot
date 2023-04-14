@@ -5,13 +5,15 @@
 package frc.robot.commands.Scoring.Lift;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Lift;
 import static frc.robot.Constants.*;
 
-public class MoveLiftToShelf extends CommandBase {
+public class MoveLiftToShelfPos extends CommandBase {
   Lift lift;
   double setpoint = KLiftShelfPos;
-  public MoveLiftToShelf(Lift lift) {
+  double flipperSetpoint = KFlipperOffShelfPos;
+  public MoveLiftToShelfPos(Lift lift) {
     this.lift = lift;
     addRequirements(lift);
   }
@@ -23,18 +25,22 @@ public class MoveLiftToShelf extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    lift.setLiftPos(KliftShelfGrabEncoderVal);
+    lift.setLiftPos(setpoint);
+    lift.flipToPos(flipperSetpoint);
+    lift.intakeRoller();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     lift.moveLift(0);
+
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(setpoint - lift.getLiftPos()) < KLiftDeadzone) || (lift.getBottomLimitSwitch());
+    // return (Math.abs(setpoint - lift.getLiftPos()) < KLiftDeadzone);
+    return false;
   }
 }

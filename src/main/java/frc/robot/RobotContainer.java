@@ -10,8 +10,6 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.CommandGroups.Auton.ScoreHighAndLeave;
-import frc.robot.CommandGroups.Auton.ScoreHighDontMove;
 
 import frc.robot.CommandGroups.BackThenForward;
 import frc.robot.CommandGroups.ScoreLowDontMove;
@@ -31,7 +29,6 @@ import frc.robot.commands.Intake.SetCubeMode;
 import frc.robot.subsystems.Base;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lift;
-import frc.robot.subsystems.Flipper;
 import frc.robot.subsystems.Limelight;
 //Commands for the Base
 import frc.robot.commands.Base.ToggleSpeed;
@@ -50,25 +47,20 @@ import frc.robot.commands.Intake.IntakeSwivelTop;
 import frc.robot.commands.Intake.IntakeSwivelUpAndStop;
 import frc.robot.commands.Intake.OuttakeAndSwivel;
 //Claw and LIft
-import frc.robot.commands.Scoring.Flipper.FlipperRollerSpin;
-import frc.robot.commands.Scoring.Flipper.FlipperStop;
-import frc.robot.commands.Scoring.Flipper.FlipperToPos;
-import frc.robot.commands.Scoring.Flipper.FlipperSwivelSpin;
 import frc.robot.commands.Scoring.Lift.FlipperToStowedSetPos;
 import frc.robot.commands.Scoring.Lift.FlipperToScoringSetPos;
-
-
+import frc.robot.commands.Scoring.Lift.FlipperToShelfPos;
 import frc.robot.commands.Scoring.Lift.LiftStop;
 import frc.robot.commands.Scoring.Lift.MoveFlipperRoller;
-
+import frc.robot.commands.Scoring.Lift.MoveFlipperSwivel;
 import frc.robot.commands.Scoring.Lift.MoveLift;
 import frc.robot.commands.Scoring.Lift.MoveLiftToHighPos;
 import frc.robot.commands.Scoring.Lift.MoveLiftToLowPos;
 import frc.robot.commands.Scoring.Lift.MoveLiftToMidPos;
 import frc.robot.commands.Scoring.Lift.MoveLiftToReadyPos;
-
-import frc.robot.CommandGroups.GrabOfShelforScore;
-import frc.robot.CommandGroups.MoveFlipperAndSpin;
+import frc.robot.commands.Scoring.Lift.MoveLiftToShelfPos;
+import frc.robot.commands.Scoring.Lift.IntakeRollers;
+import frc.robot.commands.Scoring.Lift.OuttakeRollers;
 
 import frc.robot.commands.Limelight.LimelightMoveToAprilTag;
 import frc.robot.commands.Limelight.LimelightMoveToConeNode;
@@ -93,10 +85,11 @@ public class RobotContainer {
   //Subsystems
   private final Base base = new Base();
   private final Lift lift = new Lift();
-  private final Flipper flipper = new Flipper();
   private final Intake intake = new Intake();
-
   private final Limelight limelight = new Limelight();
+
+  // private final Flipper flipper = new Flipper();
+
 
   // Base
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
@@ -131,26 +124,38 @@ public class RobotContainer {
 
   // Scoring
   private final LiftStop liftstop = new LiftStop(lift);
-  private final GrabOfShelforScore coneGrabOfShelf = new GrabOfShelforScore(lift, flipper, KFlipperRollerSpeedCone);
-  private final GrabOfShelforScore cubeGrabOfShelf = new GrabOfShelforScore(lift, flipper, KFlipperRollerSpeedCube);
+  // private final GrabOfShelforScore coneGrabOfShelf = new GrabOfShelforScore(lift, flipper, KFlipperRollerSpeedCone);
+  // private final GrabOfShelforScore cubeGrabOfShelf = new GrabOfShelforScore(lift, flipper, KFlipperRollerSpeedCube);
 
-  private final FlipperSwivelSpin flipperSwivelMoveForward = new FlipperSwivelSpin(flipper,KClawSwivelMotorSpeed);
-  private final FlipperSwivelSpin flipperSwivelMoveBack = new FlipperSwivelSpin(flipper,-KClawSwivelMotorSpeed);
+  // private final FlipperSwivelSpin flipperSwivelMoveForward = new FlipperSwivelSpin(flipper,KClawSwivelMotorSpeed);
+  // private final FlipperSwivelSpin flipperSwivelMoveBack = new FlipperSwivelSpin(flipper,-KClawSwivelMotorSpeed);
 
-  private final FlipperRollerSpin rollersForward = new FlipperRollerSpin(flipper, KClawMotorSpeed);
-  // private final FlipperToPos FlippertoTopSetPoint = new FlipperToPos(flipper, null);
-  private final FlipperRollerSpin rollersReverse = new FlipperRollerSpin(flipper, -KClawMotorSpeed);
-  private final FlipperStop flipperStop = new FlipperStop(flipper);
+  // private final FlipperRollerSpin rollersForward = new FlipperRollerSpin(flipper, KClawMotorSpeed);
+  // // private final FlipperToPos FlippertoTopSetPoint = new FlipperToPos(flipper, null);
+  // private final FlipperRollerSpin rollersReverse = new FlipperRollerSpin(flipper, -KClawMotorSpeed);
+  // private final FlipperStop flipperStop = new FlipperStop(flipper);
 
   private final FlipperToScoringSetPos flipperToScoringSetPos = new FlipperToScoringSetPos(lift);
   private final FlipperToStowedSetPos flipperToStowedSetPos = new FlipperToStowedSetPos(lift);
-  private final MoveFlipperRoller flipperRollerCubeIntake = new MoveFlipperRoller(lift, 0.3);
-  private final MoveFlipperRoller flipperRollerCubeOuttake = new MoveFlipperRoller(lift, 0.3);
-  private final MoveFlipperRoller flipperRollerConeIntake = new MoveFlipperRoller(lift, 0.3);
+  private final FlipperToShelfPos flipperToShelfPos = new FlipperToShelfPos(lift);
+
+  private final MoveFlipperRoller flipperRollerCubeIntake = new MoveFlipperRoller(lift, -0.2);
+  private final MoveFlipperRoller flipperRollerCubeOuttake = new MoveFlipperRoller(lift, 0.1);
+  private final MoveFlipperRoller flipperRollerConeIntake = new MoveFlipperRoller(lift, 0.2);
   private final MoveFlipperRoller flipperRollerConeOuttake = new MoveFlipperRoller(lift, -0.1);
 
-  private final MoveLift moveLiftUp = new MoveLift(lift, 0.20);
-  private final MoveLift moveLiftDown = new MoveLift(lift, -0.20);
+  private final MoveFlipperSwivel moveFlipperIn = new MoveFlipperSwivel(lift, 0.2);
+  private final MoveFlipperSwivel moveFlipperOut = new MoveFlipperSwivel(lift, -0.2);
+
+  private final MoveLift moveLiftUp = new MoveLift(lift, 0.3);
+  private final MoveLift moveLiftDown = new MoveLift(lift, -0.3);
+
+  private final IntakeRollers intakeRollers = new IntakeRollers(lift);
+  private final OuttakeRollers outtakeRollers = new OuttakeRollers(lift);
+  
+  private final SetConeMode setConeMode = new SetConeMode(intake, limelight, lift);
+  private final SetCubeMode setCubeMode = new SetCubeMode(intake, limelight, lift);
+
   // private final MoveLift moveLiftUp = new MoveLift(lift, 0.4);
   // private final MoveLift moveLiftDown = new MoveLift(lift, -0.4);
  
@@ -158,6 +163,8 @@ public class RobotContainer {
   private final MoveLiftToMidPos moveLiftToMidPos = new MoveLiftToMidPos(lift);
   private final MoveLiftToLowPos moveLiftToLowPos = new MoveLiftToLowPos(lift);
   private final MoveLiftToReadyPos moveLiftToReadyPos = new MoveLiftToReadyPos(lift);
+  private final MoveLiftToShelfPos moveLiftToShelfPos = new MoveLiftToShelfPos(lift);
+
   // Limelight
   private final LimelightMoveToAprilTag limelightMoveToAprilTag = new LimelightMoveToAprilTag(base, limelight);
   private final LimelightMoveToConeNode limelightMoveToConeNode = new LimelightMoveToConeNode(base, limelight);
@@ -251,7 +258,7 @@ public class RobotContainer {
 
     lift.setDefaultCommand(liftstop);
 
-    flipper.setDefaultCommand(flipperStop);
+    // flipper.setDefaultCommand(flipperStop);
 
     //Game controllers
     logitech = new Joystick(KLogitechPort); //Logitech Dual Action
@@ -281,23 +288,6 @@ public class RobotContainer {
 		xboxBtnStrt = new JoystickButton(xbox, KXboxStartButton);
     xboxBtnLT = new Trigger(() -> (joystickThreshold(xbox.getRawAxis(KXboxLeftTrigger))));
     xboxBtnRT = new Trigger(() -> (joystickThreshold(xbox.getRawAxis(KXboxRightTrigger))));
-
-    coneModeButton = new JoystickButton(compStreamDeck, KConeModeButton);
-    cubeModeButton = new JoystickButton(compStreamDeck, KCubeModeButton);
-    liftLowSetpointButton = new JoystickButton(compStreamDeck, KLiftLowSetpoint);
-    liftMidSetpointButton = new JoystickButton(compStreamDeck, KLiftMidSetpoint);
-    liftHighSetpointButton = new JoystickButton(compStreamDeck, KLiftHighSetpoint);
-    closeClawButton = new JoystickButton(compStreamDeck, KCloseClawButton);
-    openClawButton = new JoystickButton(compStreamDeck, KOpenClawButton);
-    moveLiftUpButton = new JoystickButton(compStreamDeck, KMoveLiftUp);
-    moveLiftDownButton = new JoystickButton(compStreamDeck, KMoveLiftDown);
-    liftToWaitingPosButton = new JoystickButton(compStreamDeck, KLiftToWaitingPos);
-    intakeDownButton = new JoystickButton(compStreamDeck, KIntakeDown);
-    intakeUpButton = new JoystickButton(compStreamDeck, KIntakeUp);
-    
-    liftResetButton = new JoystickButton(compStreamDeck, 14);
-    
-    defenseModeButton = new JoystickButton(compStreamDeck, KDefenseModeButton);
 
     comp1 = new JoystickButton(compStreamDeck, 1);
     comp2 = new JoystickButton(compStreamDeck, 2);
@@ -341,15 +331,15 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // logitechBtnLB.onTrue(toggleMaxSpeed);
-    // logitechBtnLB.onFalse(toggleMidSpeed);
+    logitechBtnLB.onTrue(toggleMaxSpeed);
+    logitechBtnLB.onFalse(toggleMidSpeed);
 
     xboxBtnLB.whileTrue(flipperRollerConeIntake);
     xboxBtnRB.whileTrue(flipperRollerConeOuttake);
-    xboxBtnB.whileTrue(flipperSwivelMoveBack);
+    // xboxBtnB.whileTrue(flipperSwivelMoveBack);
     xboxBtnY.whileTrue(moveLiftUp);
-    xboxBtnB.whileTrue(flipperSwivelMoveBack);
-    xboxBtnX.whileTrue(flipperSwivelMoveForward);
+    // xboxBtnB.whileTrue(flipperSwivelMoveBack);
+    // xboxBtnX.whileTrue(flipperSwivelMoveForward);
     xboxBtnA.whileTrue(moveLiftDown);
 
     // xboxBtnX.whileTrue(rollersForward);
@@ -360,25 +350,28 @@ public class RobotContainer {
     // logitechBtnRB.onTrue(toggleLowSpeed);
     // logitechBtnLB.or(logitechBtnRB).onFalse(toggleMidSpeed);
 
-    // logitechBtnY.onTrue(resetEncoders);
-
-    // liftHighSetpointButton.whileTrue(new MoveLiftToHighPos(lift));
-    // liftMidSetpointButton.whileTrue(new MoveLiftToMidPos(lift));
-    // liftLowSetpointButton.whileTrue(new MoveLiftToLowPos(lift));
-    // liftResetButton.whileTrue(new MoveLiftToReadyPos(lift));
-
-    // moveLiftUpButton.whileTrue(new MoveLift(lift, 0.3));
-    // moveLiftDownButton.whileTrue(new MoveLift(lift, -0.3));
-
-    // comp1.onTrue(intakeSwivelShoot);
-    // comp2.whileTrue(intakeShootOut);
-
-    // comp3.onTrue(liftLowSetpoint);
-    // comp4.onTrue(liftMidSetpoint);
-    // comp5.onTrue(liftHighSetpoint);
+    logitechBtnY.onTrue(resetEncoders);
 
 
-    // comp8.whileTrue(moveLiftUp);
+    comp1.onTrue(intakeRollers);
+    comp2.whileTrue(outtakeRollers);
+
+    comp3.onTrue(setConeMode);
+    comp4.onTrue(setCubeMode);
+    comp5.whileTrue(intakeSwivelTop);
+    comp6.whileTrue(flipperToShelfPos);
+    comp7.whileTrue(moveLiftToShelfPos);
+    
+    comp8.whileTrue(intakeShootOut);
+    comp9.whileTrue(intakeSwivelShoot);
+    comp10.whileTrue(intakeSwivelBottom);
+    comp10.onFalse(intakeSwivelTop);
+
+    comp11.onTrue(moveLiftToReadyPos);
+    comp12.onTrue(moveLiftToMidPos);
+    comp13.onTrue(moveLiftToHighPos);
+
+
     // comp9.whileTrue(moveLiftDown);
     // comp10.onTrue(intakeBottomNoCollect);
     // comp11.whileTrue(intakeSwivelBottom);
@@ -394,16 +387,16 @@ public class RobotContainer {
     streamDeck2.whileTrue(moveLiftDown);
     streamDeck3.whileTrue(flipperRollerCubeIntake);
     streamDeck4.whileTrue(flipperRollerConeIntake);
-    streamDeck5.whileTrue(cubeGrabOfShelf);
-    streamDeck6.whileTrue(flipperSwivelMoveForward);
-    streamDeck7.whileTrue(flipperSwivelMoveBack);
+    streamDeck5.whileTrue(intakeRollers);
+    streamDeck6.whileTrue(moveFlipperIn);
+    streamDeck7.whileTrue(moveFlipperOut);
     streamDeck8.whileTrue(flipperRollerCubeOuttake);
     streamDeck9.whileTrue(flipperRollerConeOuttake);
-    streamDeck10.whileTrue(coneGrabOfShelf);
+    streamDeck10.whileTrue(outtakeRollers);
     streamDeck11.whileTrue(moveSwivelUp);
     streamDeck12.whileTrue(moveSwivelDown);
     streamDeck13.whileTrue(intakeSpinForward);
-    streamDeck14.whileTrue(intakeSpinReverse);
+    streamDeck14.whileTrue(intakeShootOut);
   }
 
   /**
@@ -414,7 +407,7 @@ public class RobotContainer {
   public Command getAutonomousCommand()
    {
     // return null;
-    return new BackThenForward(base);
+    return null;
     // return new ScoreLowDontMove(base);
     // return new ScoreHighDontMove(lift, claw, base, intake);
     // return new ScoreHighAndLeave(lift, claw, base, intake);

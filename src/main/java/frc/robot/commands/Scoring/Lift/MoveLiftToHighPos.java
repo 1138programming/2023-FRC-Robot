@@ -10,7 +10,8 @@ import static frc.robot.Constants.*;
 
 public class MoveLiftToHighPos extends CommandBase {
   Lift lift;
-  double setpoint = KLiftHighPos;
+  double liftSetpoint = KLiftHighPos;
+  double flipperSetpoint = KFlipperOffShelfPos;
   public MoveLiftToHighPos(Lift lift) {
     this.lift = lift;
     addRequirements(lift);
@@ -23,8 +24,8 @@ public class MoveLiftToHighPos extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    lift.setLiftPos(setpoint);
-    lift.flipToPos(KFlipperOutPos);
+    lift.setLiftPos(liftSetpoint);
+    lift.flipToPos(flipperSetpoint);
   }
 
   // Called once the command ends or is interrupted.
@@ -36,9 +37,9 @@ public class MoveLiftToHighPos extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(setpoint - lift.getLiftPos()) < KLiftDeadzone) 
-      && (Math.abs(KFlipperOutPos - lift.getFlipperPos()) < KFlipperDeadzone 
-      
+    return (Math.abs(liftSetpoint - lift.getLiftPos()) < KLiftDeadzone) 
+      && (Math.abs(flipperSetpoint - lift.getFlipperPos()) < KFlipperDeadzone 
     );
+    // return (Math.abs(liftSetpoint - lift.getLiftPos()) < KLiftDeadzone);
   }
 }

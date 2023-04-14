@@ -6,6 +6,7 @@ package frc.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Limelight;
 import static frc.robot.Constants.*;
 
@@ -14,19 +15,21 @@ public class SetCubeMode extends CommandBase {
 
   private Intake intake;
   private Limelight limelight;
+  private Lift lift;
 
-  public SetCubeMode(Intake intake, Limelight limelight) {
+  public SetCubeMode(Intake intake, Limelight limelight, Lift lift) {
     this.intake = intake;
     this.limelight = limelight;
+    this.lift = lift;
 
-    addRequirements(intake);
-    addRequirements(limelight);
+    addRequirements(intake, limelight, lift);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     intake.setCubeMode();
+    lift.setCubeMode();
     limelight.setPipeline(KAprilTagPipeline);
   }
 

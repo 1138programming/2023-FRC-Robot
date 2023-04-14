@@ -4,22 +4,19 @@
 
 package frc.robot.CommandGroups.Auton;
 
-import frc.robot.commands.Base.AutoBalance;
-import frc.robot.subsystems.Base;
-
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.subsystems.Base;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoBalanceAuton extends SequentialCommandGroup {
-  // private Base base;
-  /** Creates a new AutoBalanceAuton. */
-  public AutoBalanceAuton(Base base) {
+public class ScoreCubeAndLeave extends SequentialCommandGroup {
+  /** Creates a new ScoreCubeAndLeave. */
+  public ScoreCubeAndLeave(Base base) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutoBalance(base)
+      
     );
   }
 }

@@ -5,12 +5,14 @@
 package frc.robot.commands.Scoring.Lift;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lift;
 import static frc.robot.Constants.*;
 
 public class MoveLiftToMidPos extends CommandBase {
   Lift lift;
-  double setpoint = KLiftMediumPos;
+  double liftSetpoint = KLiftMediumPos;
+  double flipperSetpoint = KFlipperOffShelfPos;
   public MoveLiftToMidPos(Lift lift) {
     this.lift = lift;
     addRequirements(lift);
@@ -23,9 +25,8 @@ public class MoveLiftToMidPos extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    lift.setLiftPos(setpoint);
-  
-    lift.flipToPos(KFlipperOutPos);
+    lift.setLiftPos(liftSetpoint);
+    lift.flipToPos(flipperSetpoint);
   }
 
   // Called once the command ends or is interrupted.
@@ -37,9 +38,7 @@ public class MoveLiftToMidPos extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(setpoint - lift.getLiftPos()) < KLiftDeadzone) 
-      && (Math.abs(KFlipperOutPos - lift.getFlipperPos()) < KFlipperDeadzone 
-      
-    );
+    return (Math.abs(liftSetpoint - lift.getLiftPos()) < KLiftDeadzone) 
+      && (Math.abs(flipperSetpoint - lift.getFlipperPos()) < KFlipperDeadzone);
   }
 }

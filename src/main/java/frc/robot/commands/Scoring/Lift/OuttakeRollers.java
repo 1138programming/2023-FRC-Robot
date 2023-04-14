@@ -2,18 +2,18 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Scoring.Flipper;
+package frc.robot.commands.Scoring.Lift;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Flipper;
+import frc.robot.subsystems.Lift;
 
-public class FlipperStop extends CommandBase {
-  /** Creates a new ClawStop. */
-  Flipper flipper;
-  public FlipperStop(Flipper claw) {
-    this.flipper = claw;
+public class OuttakeRollers extends CommandBase {
+  Lift lift;
+  /** Creates a new SpinRollers. */
+  public OuttakeRollers(Lift lift) {
+    this.lift = lift;
+    addRequirements(lift);
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(claw);
   }
 
   // Called when the command is initially scheduled.
@@ -23,7 +23,8 @@ public class FlipperStop extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    flipper.stop();
+    // lift.spinRoller(-0.5);
+    lift.outtakeRoller();
   }
 
   // Called once the command ends or is interrupted.

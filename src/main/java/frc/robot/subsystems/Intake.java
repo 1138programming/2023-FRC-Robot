@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -26,7 +27,6 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 
 public class Intake extends SubsystemBase {
-
   private TalonSRX swivel;
   // "spaghetti" refers to the spaghetti-looking motors that actually do the intaking.
   private TalonSRX spaghetti;
@@ -47,6 +47,9 @@ public class Intake extends SubsystemBase {
   private boolean intakeMode;
   private boolean defenseMode = false;
 
+  private double finalCancoderVal;
+  private double lastSwivelPos;
+
   public Intake() {
     spaghetti = new TalonSRX(KSpaghettiIntakeId);
     swivel = new TalonSRX(KSwivelIntakeId);
@@ -58,38 +61,44 @@ public class Intake extends SubsystemBase {
     spaghetti.setInverted(true); 
 
     intakeController = new PIDController(KIntakeP, KIntakeI, KIntakeD);
+    // intakeController.
 
     intakeBottomLimit = new DigitalInput(KIntakeBottomLimitId);
     intakeTopLimit = new DigitalInput(KIntakeTopLimitId);
 
-    ledStrip = new AddressableLED(KLEDPort1);
+    ledStrip = new AddressableLED(KLEDPort);
     ledBuffer = new AddressableLEDBuffer(KLEDBuffer);
 
     ledStrip.setLength(ledBuffer.getLength());
     ledStrip.setData(ledBuffer);
-   
+    
     config = new CANCoderConfiguration();
-
+    
     config.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
     config.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;
     config.magnetOffsetDegrees = KIntakeOffset;
     config.sensorDirection = true;
-
-
+    
+    
     intakeSwivelCanCoder = new CANCoder(KIntakeCanCoder);
     intakeSwivelCanCoder.configAllSettings(config);
     intakeSwivelCanCoder.setPositionToAbsolute();
-    // ledStrip.start();
 
+    // ledStrip.start();
+    
+    finalCancoderVal = 0;
+    lastSwivelPos = 20;
     intakeMode = false;
   }
 
   @Override 
   public void periodic() {
     SmartDashboard.putBoolean("Mode", intakeMode);
-    SmartDashboard.putNumber("Intake Encoder", getIntakeEncoder());
-    SmartDashboard.putNumber("Intake Swivel CanCoder", getCanCoderAbsPos());
+    SmartDashboard.putNumber("Intake Swivel Cancoder", getSwivelEncoder());
+    SmartDashboard.putNumber("Intake Raw Swivel CanCoder", getSwivelEncoderRaw());
     SmartDashboard.putBoolean("limit INTAKE", getTopLimitSwitch());
+    SmartDashboard.putNumber("raw", intakeSwivelCanCoder.getAbsolutePosition());
+    // SmartDashboard.putNumber("swivel speed", )
     // SmartDashboard.putNumber("intake drain", swivel.getStatorCurrent());
     // SmartDashboard.putNumber("intake drain", spaghetti.getStatorCurrent());
     if (getTopLimitSwitch()) {
@@ -116,7 +125,6 @@ public class Intake extends SubsystemBase {
     // }
   }
   public void spaghettiSpinReverse() {
-    
     if (intakeMode) {
       spaghetti.set(ControlMode.PercentOutput, -KIntakeConeSpaghettitSpeed);
     }
@@ -125,8 +133,8 @@ public class Intake extends SubsystemBase {
     }
   }
 
-public void setLEDToColor(int R, int G, int B) {
-  for (int i = 0; i < ledBuffer.getLength(); i++) {
+  public void setLEDToColor(int R, int G, int B) {
+    for (int i = 0; i < ledBuffer.getLength(); i++) {
       ledBuffer.setRGB(i, R, G, B);
     }
     ledStrip.setData(ledBuffer);
@@ -176,7 +184,9 @@ public void setLEDToColor(int R, int G, int B) {
   }
 
   public void swivelSpinToPos(double setPoint) {
-    moveSwivel(intakeController.calculate(getIntakeEncoder(), setPoint));
+    double speed = -intakeController.calculate(getSwivelEncoder(), setPoint);
+    SmartDashboard.putNumber("swivel speed!", speed);
+    moveSwivel(speed);
   }
 
   /**
@@ -191,21 +201,26 @@ public void setLEDToColor(int R, int G, int B) {
     else {
       swivel.set(ControlMode.PercentOutput, speed);
     }
+    lastSwivelPos = getSwivelEncoder();
   }
 
   public void setIntakeEncoder(double position) {
     swivel.setSelectedSensorPosition(position);
   }
-  /***
-   * @return
-   * 1/10 raw encoder value.
-   */
-  public double getIntakeEncoder() {
-    return swivel.getSelectedSensorPosition() / 10;
+  
+  public double getSwivelEncoder() {
+    if (getSwivelEncoderRaw() < 50 && finalCancoderVal >= 100) {
+      finalCancoderVal = 360 * 14/34 + getSwivelEncoderRaw();
+    }
+    else {
+      finalCancoderVal = getSwivelEncoderRaw();
+    }
+    return finalCancoderVal;
   }
-  public double getCanCoderAbsPos() {
-    return intakeSwivelCanCoder.getAbsolutePosition();
+  public double getSwivelEncoderRaw() {
+    return intakeSwivelCanCoder.getAbsolutePosition() * 14/34;
   }
+
   public boolean getTopLimitSwitch() {
     return !intakeTopLimit.get();
   } 
@@ -214,7 +229,8 @@ public void setLEDToColor(int R, int G, int B) {
   } 
   
   public void intakeStop() {
-    swivel.set(ControlMode.PercentOutput, 0);
+    swivel.set(ControlMode.PercentOutput, -intakeController.calculate(getSwivelEncoder(), lastSwivelPos));
+    // swivel.set(ControlMode.PercentOutput, 0);
     spaghetti.set(ControlMode.PercentOutput, 0);
   }
 }

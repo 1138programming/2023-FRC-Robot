@@ -2,36 +2,32 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.*;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderConfiguration;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
-import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax; // Neos and 775
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxAnalogSensor;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType; // Covers Neos and 775 
-import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
-import com.revrobotics.SparkMaxAnalogSensor.Mode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.revrobotics.SparkMaxAbsoluteEncoder;
-import com.revrobotics.SparkMaxRelativeEncoder;
 // import 
 import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.SparkMaxAbsoluteEncoder;
 
 public class Lift extends SubsystemBase {
   private CANSparkMax lift;
- 
-  private CANSparkMax flipperSwivel;
+  private TalonFX flipperSwivel;
+  private CANSparkMax flipperRoller;
 
   private CANCoder flipperCanCoder;
   private CANCoderConfiguration config;
@@ -43,53 +39,55 @@ public class Lift extends SubsystemBase {
 
   private SlewRateLimiter liftLimiter;
 
-  private RelativeEncoder liftEncoder;
-  private Encoder liftEncoder2;
+  private Encoder liftShaftEncoder;
  
   private RelativeEncoder flipperEncoder;
 
   private DigitalInput liftSwitch;
 
- 
-  
+  private boolean objectMode;
+
+  private double finalCancoderVal;
+  private double lastFlipperPos;
+
   public Lift()
   {
-    flipperSwivel = new CANSparkMax(KFlipperSwivelMotor, MotorType.kBrushless);
+    flipperSwivel = new TalonFX(KFlipperSwivelMotor);
     lift = new CANSparkMax(KLiftMotor, MotorType.kBrushless);
+    flipperRoller = new CANSparkMax(KFlipperRollerMotor, MotorType.kBrushless);
    
-    flipperSwivel.setIdleMode(IdleMode.kBrake);
+    flipperSwivel.setNeutralMode(NeutralMode.Brake);
     lift.setIdleMode(IdleMode.kBrake);
-    
-    liftControl = new PIDController(0.05, 0.001, 0.0001);
-    liftDownController = new PIDController(0.01, 0, 0);
-    
+
+    // liftControl = new PIDController(0.05, 0.001, 0.0001);
+    liftControl = new PIDController(KLiftP, KLiftI, KLiftD);
+    // liftDownController = new PIDController(0.01, 0, 0);
     flipperController = new PIDController(KFlipperP, KFlipperI, KFlipperD);
 
     liftLimiter = new SlewRateLimiter(1);
     
-    liftEncoder = lift.getEncoder();
-
-    liftEncoder2 = new Encoder(KLiftEncoderA, KLiftEncoderB);
-
-
-    flipperEncoder = flipperSwivel.getEncoder();
+    // liftEncoder = lift.getEncoder();
+    liftShaftEncoder = new Encoder(KLiftEncoderA, KLiftEncoderB);
 
     config = new CANCoderConfiguration();
 
     config.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
     config.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;
-    config.magnetOffsetDegrees = KIntakeOffset;
+    config.magnetOffsetDegrees = KFlipperSwivelOffset;
     config.sensorDirection = true;
-
 
     flipperCanCoder = new CANCoder(KFlipperCanCoder);
     flipperCanCoder.configAllSettings(config);
     flipperCanCoder.setPositionToAbsolute();
-    // ledStrip.start();
 
-    // flipperEncoder.setPosition(0);
+    flipperSwivel.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
     liftSwitch = new DigitalInput(KScoringBottomLimitSwitch);
+
+    finalCancoderVal = getFlipperPosRaw();
+    lastFlipperPos = getFlipperPosRaw();
+
+    objectMode = KConeMode;
   }
 
   @Override
@@ -102,78 +100,109 @@ public class Lift extends SubsystemBase {
     SmartDashboard.putBoolean("lift limit switch", getBottomLimitSwitch());
 
     SmartDashboard.putNumber("flipper encoder", getFlipperPos());
-   
-    SmartDashboard.putNumber("flipper CanCoder", getFlipperCanCoderAbsPos());
+    SmartDashboard.putNumber("flipper CanCoder", getFlipperPosRaw());
+    SmartDashboard.putNumber("flipper CanCoder RAW", flipperCanCoder.getAbsolutePosition());
     
-    SmartDashboard.putNumber("Lift Encoder FOR REAL", liftEncoder2.getDistance());
-    
+    SmartDashboard.putNumber("Lift Encoder FOR REAL", liftShaftEncoder.getDistance());
 
+    SmartDashboard.putNumber("projected lift speed", liftControl.calculate(liftShaftEncoder.getDistance(), KLiftMediumPos));
+    SmartDashboard.putBoolean("object mode", objectMode);
+
+    
   }
+
   public void setLiftPos (double setPoint) {
     double liftSpeed;
-    if (setPoint > getLiftPos()) {
-      liftSpeed = liftControl.calculate(getLiftPos(), setPoint);
-    }
-    else {
-      liftSpeed = -0.2;
-      // liftSpeed = liftDownController.calculate(getLiftPos(), setPoint);
-    }
-    if (liftSpeed > 0.2) {
-      liftSpeed = 0.2;
-    }
+    liftSpeed = liftControl.calculate(getLiftPos(), setPoint);
+    
     moveLift(liftSpeed);
   }
+
+
   public void moveLift(double speed) {
     if (getBottomLimitSwitch() && speed < 0) {
       lift.set(0);
     }
     lift.set(speed);
-    
-    // else if (speed < 0) {
-    //   lift.set(liftLimiter.calculate(speed));
-    // }
-    // else {
-    //   lift.set(liftLimiter.calculate(speed));
-    // }
   }
-
- 
 
   // flipper
   public void flipToPos(double setPoint) {
-    moveFlipperSwivel(flipperController.calculate(getFlipperPos(), setPoint));
-
+    moveFlipperSwivel(-flipperController.calculate(getFlipperPos(), setPoint));
   }
+
   public void moveFlipperSwivel(double speed) {
-    flipperSwivel.set(speed);
+    SmartDashboard.putNumber("FIRST FLIPPER SPEED", speed);
+    if (speed > KFlipperMaxSpeed) {
+      speed = KFlipperMaxSpeed;
+    } else if (speed < -KFlipperMaxSpeed) {
+      speed = -KFlipperMaxSpeed;
+    }
+    // if (speed < KFlipperMinSpeed) {
+    //   speed = KFlipperMinSpeed;
+    // } else if (speed < -KFlipperMinSpeed) {
+    //   speed = -KFlipperMinSpeed;
+    // }
+    SmartDashboard.putNumber("FLIPPER SPEED", speed);
+    flipperSwivel.set(ControlMode.PercentOutput, speed);
+    lastFlipperPos = getFlipperPos();
   }
 
   public double getFlipperPos(){
-    return flipperEncoder.getPosition();
+    if (getFlipperPosRaw() < 50 && finalCancoderVal >= 100) {
+      finalCancoderVal = 360 * KFlipperCanCoderRatio + getFlipperPosRaw();
+    } else {
+      finalCancoderVal = getFlipperPosRaw();
+    }
+    return finalCancoderVal;
   }
-  public double getFlipperCanCoderAbsPos() {
-    return flipperCanCoder.getAbsolutePosition();
+  public double getFlipperPosRaw() {
+    return flipperCanCoder.getAbsolutePosition() * KFlipperCanCoderRatio;
   }
 
   // lift
   public double getLiftPos() {
-    return liftEncoder.getPosition();
+    return liftShaftEncoder.getDistance();
   }
   public void setLiftEncoderPos(double pos) {
-    liftEncoder.setPosition(pos);
+    liftShaftEncoder.reset();
   }
 
-
+  // Roller
+  public void spinRoller(double speed) {
+    flipperRoller.set(speed);
+  }
   
+  public void intakeRoller() {
+    if (objectMode == KConeMode) {
+      flipperRoller.set(KFlipperRollerIntakeSpeedCone);
+    } else if (objectMode == KCubeMode) {
+      flipperRoller.set(KFlipperRollerIntakeSpeedCube);
+    }
+  }
 
+  public void outtakeRoller() {
+    if (objectMode == KConeMode) {
+      flipperRoller.set(KFlipperRollerOuttakeSpeedCone);
+    } else if (objectMode == KCubeMode) {
+      flipperRoller.set(KFlipperRollerOuttakeSpeedCube);
+    }
+  }
   public boolean getBottomLimitSwitch() {
-    return !liftSwitch.get();
+    return liftSwitch.get();
+  }
+
+  public void setCubeMode() {
+    objectMode = KCubeMode;
+  }
+  public void setConeMode() {
+    objectMode = KConeMode;
   }
 
   public void stop() {
-      lift.set(0);
-      
-      flipperSwivel.set(0);
+    lift.set(0);
+    flipperRoller.set(0);
+    flipperSwivel.set(ControlMode.PercentOutput, 0);
+    // moveFlipperSwivel(flipperController.calculate(getFlipperPosRaw(), lastFlipperPos));
   }
-    
 }

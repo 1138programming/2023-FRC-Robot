@@ -13,6 +13,7 @@ import static frc.robot.Constants.*;
 public class IntakeSwivelTop extends CommandBase {
  /** Creates a new intakeSpaghettiSet. */
   private Intake intake;
+  private double intakePos = KIntakeSwivelTopPos;
   
   public IntakeSwivelTop (Intake intake) {
     this.intake = intake; 
@@ -28,7 +29,8 @@ public class IntakeSwivelTop extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.swivelSpinToPos(KIntakeSwivelTopPos);
+    intake.swivelSpinToPos(intakePos);
+    // intake.spaghettiSpin();
   }
 
   // Called once the command ends or is interrupted.
@@ -40,8 +42,10 @@ public class IntakeSwivelTop extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return intake.getTopLimitSwitch();
-    // if (intake.getIntakeEncoder() <= KIntakeSwivelTopPos + KIntakeSwiveTopOffset && intake.getIntakeEncoder() <= KIntakeSwivelTopPos - KIntakeSwiveTopOffset) {
+    // return intake.getSwivelEncoder() < KIntakeSwivelTopPos + KIntakeSwivelOffset;
+    // return intake.getTopLimitSwitch();
+    // if (intake.getSwivelEncoder() <= intakePos + KIntakeSwivelOffset && intake.getSwivelEncoder() <= intakePos - KIntakeSwivelOffset) {
+      return Math.abs(intake.getSwivelEncoder() - intakePos) < KIntakeSwivelOffset;
     //   return true;
     // }
     // else {
