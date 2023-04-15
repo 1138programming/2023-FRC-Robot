@@ -66,6 +66,7 @@ public class Lift extends SubsystemBase {
    
     flipperSwivel.setNeutralMode(NeutralMode.Brake);
     lift.setIdleMode(IdleMode.kBrake);
+    flipperRoller.setIdleMode(IdleMode.kBrake);
 
     // liftControl = new PIDController(0.05, 0.001, 0.0001);
     liftControl = new PIDController(KLiftP, KLiftI, KLiftD);
@@ -92,8 +93,8 @@ public class Lift extends SubsystemBase {
 
     liftSwitch = new DigitalInput(KScoringBottomLimitSwitch);
 
-    finalCancoderVal = getFlipperPosRaw();
-    lastFlipperPos = getFlipperPosRaw();
+    finalCancoderVal = 5;
+    lastFlipperPos = 5;
 
     objectMode = KConeMode;
   }

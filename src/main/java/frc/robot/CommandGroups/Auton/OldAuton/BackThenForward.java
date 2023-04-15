@@ -2,7 +2,10 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.CommandGroups;
+package frc.robot.CommandGroups.Auton.OldAuton;
+
+import static frc.robot.Constants.*;
+
 
 import frc.robot.subsystems.Base;
 import frc.robot.commands.Base.*;
@@ -20,7 +23,7 @@ public class BackThenForward extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ResetEncoders(base),
-      new ResetGyroOffset(base),
+      new ResetGyroOffset(base, KGyroOffset),
       new ParallelDeadlineGroup( 
         new WaitCommand(0.5), 
         //new IntakeSpinReverse(intake),

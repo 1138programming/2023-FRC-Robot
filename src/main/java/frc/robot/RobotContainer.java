@@ -10,10 +10,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import frc.robot.CommandGroups.BackThenForward;
-import frc.robot.CommandGroups.ScoreLowDontMove;
 import frc.robot.CommandGroups.Auton.CubeShootBalance;
+import frc.robot.CommandGroups.Auton.OldAuton.BackThenForward;
+import frc.robot.CommandGroups.Auton.OldAuton.ScoreLowDontMove;
 import frc.robot.commands.Base.AutoBalance;
 import frc.robot.commands.Base.ToggleSpeed;
 import frc.robot.commands.Base.ResetEncoders;

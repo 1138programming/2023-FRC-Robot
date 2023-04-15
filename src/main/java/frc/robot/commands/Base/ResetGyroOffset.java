@@ -9,16 +9,18 @@ import frc.robot.subsystems.Base;
 
 public class ResetGyroOffset extends CommandBase {
   private Base base;
+  private double offset;
   /** Creates a new ResetEncoders. */
-  public ResetGyroOffset(Base base) {
+  public ResetGyroOffset(Base base, double offset) {
     this.base = base;
+    this.offset = offset;
     addRequirements(base);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    base.resetGyro(180);
+    base.resetGyro(offset);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

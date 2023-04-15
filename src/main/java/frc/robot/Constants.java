@@ -56,8 +56,7 @@ public final class Constants {
 
   // Servos - PWM ----------------------------------------------------------------
 
- 
-  public static final int KLEDPort = 4;
+  public static final int KLEDPort = 5;
 
   // End Servo Section ********************************************************
 
@@ -170,7 +169,10 @@ public final class Constants {
   public static final boolean KFrontLeftDriveEncoderReversed = false;
   public static final boolean KFrontRightDriveEncoderReversed = false;
   public static final boolean KBackLeftDriveEncoderReversed = false;
-  public static final boolean KBackRightDriveEncoderReversed = false; 
+  public static final boolean KBackRightDriveEncoderReversed = false;
+
+  public static final double KGyroOffset = 180;
+  
   
   
   public static final double KIntakeOffset = 156; // ALL TBD 
@@ -329,7 +331,7 @@ public final class Constants {
   public static final double KTapeLimelightMoveD = 0;
   
   // Additional LED info:
-  public static final int KLEDBuffer = 60;
+  public static final int KLEDBuffer = 30;
   public static enum KLEDSTATE {
     OFF,
     YELLOW,
@@ -405,9 +407,9 @@ public final class Constants {
 
   
   
-  public static final double KFlipperRollerIntakeSpeedCone = 0.9;
-  public static final double KFlipperRollerOuttakeSpeedCone = -0.9;
-  public static final double KFlipperRollerIntakeSpeedCube = -0.9;
-  public static final double KFlipperRollerOuttakeSpeedCube = 0.9;
+  public static final double KFlipperRollerIntakeSpeedCone = 0.5;
+  public static final double KFlipperRollerOuttakeSpeedCone = -0.7;
+  public static final double KFlipperRollerIntakeSpeedCube = -0.4;
+  public static final double KFlipperRollerOuttakeSpeedCube = 0.3;
   
 }
