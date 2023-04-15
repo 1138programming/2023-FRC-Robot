@@ -51,6 +51,12 @@ public class Intake extends SubsystemBase {
   private double lastSwivelPos;
 
   public Intake() {
+
+    SmartDashboard.putNumber("IntakeSwivelPid P", 0.0065);
+    SmartDashboard.putNumber("IntakeSwivelPid I", 0.001);
+    SmartDashboard.putNumber("IntakeSwivelPid D", 0.0);
+
+
     spaghetti = new TalonSRX(KSpaghettiIntakeId);
     swivel = new TalonSRX(KSwivelIntakeId);
 
@@ -94,6 +100,13 @@ public class Intake extends SubsystemBase {
 
   @Override 
   public void periodic() {
+
+    if (intakeController.getP() != SmartDashboard.getNumber("IntakeSwivelPid P", 0.0) 
+    || intakeController.getI() != SmartDashboard.getNumber("IntakeSwivelPid I", 0.0)
+    || intakeController.getD() != SmartDashboard.getNumber("IntakeSwivelPid D", 0.0)) {
+      intakeController.setPID(SmartDashboard.getNumber("IntakeSwivelPid P", 0.0), SmartDashboard.getNumber("IntakeSwivelPid I", 0.0), SmartDashboard.getNumber("IntakeSwivelPid D", 0.0));
+    }
+
     SmartDashboard.putBoolean("Mode", intakeMode);
     SmartDashboard.putNumber("Intake Swivel Cancoder", getSwivelEncoder());
     SmartDashboard.putNumber("Intake Raw Swivel CanCoder", getSwivelEncoderRaw());

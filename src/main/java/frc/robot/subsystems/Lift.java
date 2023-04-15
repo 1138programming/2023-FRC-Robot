@@ -52,6 +52,14 @@ public class Lift extends SubsystemBase {
 
   public Lift()
   {
+    SmartDashboard.putNumber("FlipperPid P", 0.03);
+    SmartDashboard.putNumber("FlipperPid I", 0.0);
+    SmartDashboard.putNumber("FlipperPid D", 0.0);
+
+    SmartDashboard.putNumber("LiftPid P", 0.0005);
+    SmartDashboard.putNumber("LiftPid I", 0.0);
+    SmartDashboard.putNumber("LiftPid D", 0.0000005);
+
     flipperSwivel = new TalonFX(KFlipperSwivelMotor);
     lift = new CANSparkMax(KLiftMotor, MotorType.kBrushless);
     flipperRoller = new CANSparkMax(KFlipperRollerMotor, MotorType.kBrushless);
@@ -108,7 +116,16 @@ public class Lift extends SubsystemBase {
     SmartDashboard.putNumber("projected lift speed", liftControl.calculate(liftShaftEncoder.getDistance(), KLiftMediumPos));
     SmartDashboard.putBoolean("object mode", objectMode);
 
-    
+    if (flipperController.getP() != SmartDashboard.getNumber("FlipperPid P", 0.0) 
+    || flipperController.getI() != SmartDashboard.getNumber("FlipperPid I", 0.0)
+    || flipperController.getD() != SmartDashboard.getNumber("FlipperPid D", 0.0)) {
+      flipperController.setPID(SmartDashboard.getNumber("FlipperPid P", 0.0), SmartDashboard.getNumber("FlipperPid I", 0.0), SmartDashboard.getNumber("FlipperPid D", 0.0));
+    }
+    if (liftControl.getP() != SmartDashboard.getNumber("LiftPid P", 0.0) 
+    || liftControl.getI() != SmartDashboard.getNumber("LiftPid I", 0.0)
+    || liftControl.getD() != SmartDashboard.getNumber("LiftPid D", 0.0)) {
+      liftControl.setPID(SmartDashboard.getNumber("LiftPid P", 0.0), SmartDashboard.getNumber("LiftPid I", 0.0), SmartDashboard.getNumber("LiftPid D", 0.0));
+    }
   }
 
   public void setLiftPos (double setPoint) {
