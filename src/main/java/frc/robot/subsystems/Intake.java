@@ -153,14 +153,8 @@ public class Intake extends SubsystemBase {
       ledBuffer.setRGB(i, R, G, B);
     }
     ledStrip.setData(ledBuffer);
-    // ledStrip.start();
   }
 
-
-  public void ledsOff() {
-    ledStrip.stop();
-  }
-  
   public void setCubeMode() {
     intakeMode = KCubeMode;
     defenseMode = false; 
@@ -178,18 +172,11 @@ public class Intake extends SubsystemBase {
   }
 
   // public void toggleDefenseMode() {
-  //   if (!defenseMode) {
-  //     defenseMode = true;
-  //     setLEDToColor(200, 0, 0);
+  //   if (defenseMode == KCubeMode) {
+  //     setConeMode();
   //   }
   //   else {
-  //     defenseMode = false;
-  //     if (intakeMode == KConeMode) {
-  //       setConeMode();
-  //     }
-  //     else {
-  //       setCubeMode();
-  //     }
+  //     setCubeMode();
   //   }
   // }
 
