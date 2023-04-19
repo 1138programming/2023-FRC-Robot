@@ -52,9 +52,9 @@ public class Intake extends SubsystemBase {
 
   public Intake() {
 
-    SmartDashboard.putNumber("IntakeSwivelPid P", 0.0065);
-    SmartDashboard.putNumber("IntakeSwivelPid I", 0.001);
-    SmartDashboard.putNumber("IntakeSwivelPid D", 0.0);
+    // SmartDashboard.putNumber("IntakeSwivelPid P", 0.0065);
+    // SmartDashboard.putNumber("IntakeSwivelPid I", 0.001);
+    // SmartDashboard.putNumber("IntakeSwivelPid D", 0.0);
 
 
     spaghetti = new TalonSRX(KSpaghettiIntakeId);
@@ -101,22 +101,23 @@ public class Intake extends SubsystemBase {
   @Override 
   public void periodic() {
 
-    if (intakeController.getP() != SmartDashboard.getNumber("IntakeSwivelPid P", 0.0) 
-    || intakeController.getI() != SmartDashboard.getNumber("IntakeSwivelPid I", 0.0)
-    || intakeController.getD() != SmartDashboard.getNumber("IntakeSwivelPid D", 0.0)) {
-      intakeController.setPID(SmartDashboard.getNumber("IntakeSwivelPid P", 0.0), SmartDashboard.getNumber("IntakeSwivelPid I", 0.0), SmartDashboard.getNumber("IntakeSwivelPid D", 0.0));
-    }
+    // if (intakeController.getP() != SmartDashboard.getNumber("IntakeSwivelPid P", 0.0) 
+    // || intakeController.getI() != SmartDashboard.getNumber("IntakeSwivelPid I", 0.0)
+    // || intakeController.getD() != SmartDashboard.getNumber("IntakeSwivelPid D", 0.0)) {
+    //   intakeController.setPID(SmartDashboard.getNumber("IntakeSwivelPid P", 0.0), SmartDashboard.getNumber("IntakeSwivelPid I", 0.0), SmartDashboard.getNumber("IntakeSwivelPid D", 0.0));
+    // }
 
     SmartDashboard.putBoolean("Mode", intakeMode);
-    SmartDashboard.putNumber("Intake Swivel Cancoder", getSwivelEncoder());
-    SmartDashboard.putNumber("Intake Raw Swivel CanCoder", getSwivelEncoderRaw());
-    SmartDashboard.putBoolean("limit INTAKE", getTopLimitSwitch());
+    SmartDashboard.putNumber("Swivel Cancoder", getSwivelEncoder());
     SmartDashboard.putNumber("raw", intakeSwivelCanCoder.getAbsolutePosition());
+    SmartDashboard.putNumber("Raw Swivel CanCoder", getSwivelEncoderRaw());
+    SmartDashboard.putBoolean("limit INTAKE", getTopLimitSwitch());
     // SmartDashboard.putNumber("swivel speed", )
     // SmartDashboard.putNumber("intake drain", swivel.getStatorCurrent());
     // SmartDashboard.putNumber("intake drain", spaghetti.getStatorCurrent());
     if (getTopLimitSwitch()) {
       setIntakeEncoder(0);
+      resetSwivelEncoder();
     }
     setConeMode();
   }
@@ -209,6 +210,7 @@ public class Intake extends SubsystemBase {
    * @param speed
    */
   public void moveSwivel(double speed) {
+    // if (intakeSwivelCanCoder.)
     // May need a rate limiter...
     if (speed > 0 && getTopLimitSwitch()) {
       swivel.set(ControlMode.PercentOutput, 0);
@@ -223,6 +225,9 @@ public class Intake extends SubsystemBase {
     swivel.setSelectedSensorPosition(position);
   }
   
+  public void resetSwivelEncoder() {
+    finalCancoderVal  = getSwivelEncoder() % (360 * 14/32);
+  }
   public double getSwivelEncoder() {
     if (getSwivelEncoderRaw() < 50 && finalCancoderVal >= 100) {
       finalCancoderVal = 360 * 14/34 + getSwivelEncoderRaw();
@@ -237,15 +242,12 @@ public class Intake extends SubsystemBase {
   }
 
   public boolean getTopLimitSwitch() {
-    return !intakeTopLimit.get();
-  } 
-  public boolean getBottomLimitSwitch() {
-    return intakeBottomLimit.get();
-  } 
+    return intakeTopLimit.get();
+  }
   
   public void intakeStop() {
-    swivel.set(ControlMode.PercentOutput, -intakeController.calculate(getSwivelEncoder(), lastSwivelPos));
-    // swivel.set(ControlMode.PercentOutput, 0);
+    // swivel.set(ControlMode.PercentOutput, -intakeController.calculate(getSwivelEncoder(), lastSwivelPos));
+    swivel.set(ControlMode.PercentOutput, 0);
     spaghetti.set(ControlMode.PercentOutput, 0);
   }
 }

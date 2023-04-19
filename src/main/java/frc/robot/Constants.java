@@ -34,7 +34,6 @@ public final class Constants {
 
   // Sensing - DIO ----------------------------------------------------------------
 
-
     // Scoring - 2 in total
 
   public static final int KScoringTopLimitSwitch = 6;
@@ -46,10 +45,10 @@ public final class Constants {
     public static final int KClawCanCoder = 25;
 
   
+    public static final int KIntakeTopLimitId = 4; 
   // Intake - 3 in total
-  public static final int KIntakeTopLimitId = 8; 
+  public static final int KIntakeBottomLimitId = 8; 
   public static final int KIntakeEncoderID = 9;
-  public static final int KIntakeBottomLimitId = 12; // NavX port number: 2
 
   
   // End of Sensing - DIO *****************************************************
@@ -179,7 +178,8 @@ public final class Constants {
   public static final double KIntakeSwivelOffset = 1; // ALL TBD 
   public static final double KIntakeSwivelTopPos = 15;
   public static final double KIntakeSwivelShootPos = 61;
-  public static final double KSwivelBottomPosition = 138;
+  public static final double KSwivelBottomPosition = 120;
+  // public static final double KSwivelBottomPosition = 138;
 
   //Speeds and stuff
   public static final double KIntakeConeSpaghettitSpeed = 0.6;

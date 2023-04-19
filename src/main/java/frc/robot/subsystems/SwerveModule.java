@@ -84,11 +84,11 @@ public class SwerveModule extends SubsystemBase {
   
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("drive current" + driveMotor.getDeviceId(), driveMotor.getOutputCurrent());
-    SmartDashboard.putString("posistion " + driveMotor.getDeviceId(), getPosition().toString());
-    SmartDashboard.putNumber("encoder " + driveMotor.getDeviceId(), getAngleDeg());
+    // SmartDashboard.putNumber("drive current" + driveMotor.getDeviceId(), driveMotor.getOutputCurrent());
+    // SmartDashboard.putString("posistion " + driveMotor.getDeviceId(), getPosition().toString());
+    // SmartDashboard.putNumber("encoder " + driveMotor.getDeviceId(), getAngleDeg());
 
-    SmartDashboard.putNumber("mag deg " + driveMotor.getDeviceId(), getMagDeg());
+    // SmartDashboard.putNumber("mag deg " + driveMotor.getDeviceId(), getMagDeg());
   }
 
   public void setDesiredState(SwerveModuleState desiredState) {
@@ -120,10 +120,10 @@ public class SwerveModule extends SubsystemBase {
     driveMotorOutput = feedforward.calculate(desiredState.speedMetersPerSecond);
     // driveMotor.setVoltage(driveMotorOutput);
     driveMotor.setVoltage(driveMotorOutput + velocityOutput);
-    SmartDashboard.putNumber("DRIVE SPEED " + driveMotor.getDeviceId(), driveMotorOutput);
+    // SmartDashboard.putNumber("DRIVE SPEED " + driveMotor.getDeviceId(), driveMotorOutput);
 
-    SmartDashboard.putNumber("wheel velocity " + driveMotor.getDeviceId(), getDriveEncoderVel());
-    SmartDashboard.putNumber("wheel output current " + driveMotor.getDeviceId(), driveMotor.getOutputCurrent());
+    // SmartDashboard.putNumber("wheel velocity " + driveMotor.getDeviceId(), getDriveEncoderVel());
+    // SmartDashboard.putNumber("wheel output current " + driveMotor.getDeviceId(), driveMotor.getOutputCurrent());
   }
 
   public void lockWheel() {

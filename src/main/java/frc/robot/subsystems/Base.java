@@ -249,25 +249,25 @@ public class Base extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putBoolean("DEFENSE MODE", getDefenseMode());
+    // SmartDashboard.putBoolean("DEFENSE MODE", getDefenseMode());
     // SmartDashboard.putNumber("Gyro", getHeadingDeg());
 
-    SmartDashboard.putNumber("Front left module", frontLeftModule.getAngleDeg());
-    SmartDashboard.putNumber("Front right module", frontRightModule.getAngleDeg());
-    SmartDashboard.putNumber("Back left module", backLeftModule.getAngleDeg());
-    SmartDashboard.putNumber("Back right module", backRightModule.getAngleDeg());
+    // SmartDashboard.putNumber("Front left module", frontLeftModule.getAngleDeg());
+    // SmartDashboard.putNumber("Front right module", frontRightModule.getAngleDeg());
+    // SmartDashboard.putNumber("Back left module", backLeftModule.getAngleDeg());
+    // SmartDashboard.putNumber("Back right module", backRightModule.getAngleDeg());
 
     // SmartDashboard.putNumber("front left mag", frontLeftModule.getMagDeg());
     // SmartDashboard.putNumber("front right mag", frontRightModule.getMagDeg());
     // SmartDashboard.putNumber("back left mag", backLeftModule.getMagDeg());
     // SmartDashboard.putNumber("back right mag", backRightModule.getMagDeg());
 
-    SmartDashboard.putString("odometry pose", odometry.getPoseMeters().toString());
+    // SmartDashboard.putString("odometry pose", odometry.getPoseMeters().toString());
 
     
-    xyP = SmartDashboard.getNumber("X and Y PID", 0);
-    rotP = SmartDashboard.getNumber("rot P", 0);
-    SmartDashboard.putNumber("xyP", xyP);
+    // xyP = SmartDashboard.getNumber("X and Y PID", 0);
+    // rotP = SmartDashboard.getNumber("rot P", 0);
+    // SmartDashboard.putNumber("xyP", xyP);
 
     // SmartDashboard.putBoolean("isCalibrating", gyro.isCalibrating());
 

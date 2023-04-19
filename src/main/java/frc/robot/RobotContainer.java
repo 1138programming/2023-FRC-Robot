@@ -377,31 +377,20 @@ public class RobotContainer {
     comp5.whileTrue(intakeRollers);
     comp6.onTrue(moveLiftToMidPos);
     comp7.onTrue(moveLiftToReadyPos);
-    comp8.onTrue(intakeSwivelTop);
-    comp9.onTrue(intakeSwivelShoot);
+    // comp8.onTrue(intakeSwivelTop);
+    // comp9.onTrue(intakeSwivelShoot);
     comp10.whileTrue(outtakeRollers);
     comp11.onTrue(moveLiftToLowPos);
     comp12.whileTrue(intakeShootOut);
-    comp13.whileTrue(intakeSwivelBottom);
-    comp13.onFalse(intakeSwivelTop);
-    comp14.onTrue(intakeSwivelBottomNoCollect);
-
-    // comp9.whileTrue(moveLiftDown);
-    // comp10.onTrue(intakeBottomNoCollect);
-    // comp11.whileTrue(intakeSwivelBottom);
-    // comp11.onFalse(intakeSwivelTop);
-
-    // comp12.whileTrue(moveSwivelUp);
-
-    // comp13.onTrue(moveLiftToReadyPos);
-
-    // comp14.onTrue(toggleDefenseMode);
+    // comp13.whileTrue(intakeSwivelBottom);
+    // comp13.onFalse(intakeSwivelTop);
+    // comp14.onTrue(intakeSwivelBottomNoCollect);
 
     streamDeck1.whileTrue(moveLiftUp);
     streamDeck2.whileTrue(moveLiftDown);
     streamDeck3.whileTrue(flipperRollerCubeIntake);
     streamDeck4.whileTrue(flipperRollerConeIntake);
-    streamDeck5.whileTrue(intakeRollers);
+    // streamDeck5.whileTrue(intakeRollers);
     streamDeck6.whileTrue(moveFlipperIn);
     streamDeck7.whileTrue(moveFlipperOut);
     streamDeck8.whileTrue(flipperRollerCubeOuttake);
@@ -409,8 +398,8 @@ public class RobotContainer {
     streamDeck10.whileTrue(outtakeRollers);
     streamDeck11.whileTrue(moveSwivelUp);
     streamDeck12.whileTrue(moveSwivelDown);
-    streamDeck13.whileTrue(intakeSpinForward);
-    streamDeck14.whileTrue(intakeShootOut);
+    // streamDeck13.whileTrue(intakeSpinForward);
+    // streamDeck14.whileTrue(intakeShootOut);
   }
 
   /**
