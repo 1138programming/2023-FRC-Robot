@@ -14,6 +14,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -38,6 +39,8 @@ public class SwerveModule extends SubsystemBase {
   private SimpleMotorFeedforward feedforward;
   private PIDController driveController;  
 
+  private SlewRateLimiter speedLimiter;
+
   public SwerveModule(int angleMotorID, int driveMotorID, int encoderPort, double offset, 
                       boolean driveMotorReversed, boolean angleMotorReversed) {
     angleMotor = new CANSparkMax(angleMotorID, MotorType.kBrushless);
@@ -49,7 +52,9 @@ public class SwerveModule extends SubsystemBase {
     this.angleMotor.setInverted(angleMotorReversed);
     this.driveMotor.setInverted(driveMotorReversed);
     
-    this.driveMotor.setSmartCurrentLimit(80);
+    this.driveMotor.setSmartCurrentLimit(KDriveMotorCurrentLimit);
+    this.angleMotor.setSmartCurrentLimit(KAngleMotorCurrentLimit);
+    // this.angleMotor.setSmartCurrentLimit(20);
 
     CANCoderConfiguration config = new CANCoderConfiguration();
 
@@ -62,7 +67,6 @@ public class SwerveModule extends SubsystemBase {
     canCoder = new CANCoder(encoderPort);
     canCoder.configAllSettings(config);
     canCoder.setPositionToAbsolute();
-    // canCoder.wait();  
 
     driveEncoder = driveMotor.getEncoder();
     angleEncoder = angleMotor.getEncoder();
@@ -80,52 +84,36 @@ public class SwerveModule extends SubsystemBase {
     // this.driveMotor.burnFlash();
     feedforward = new SimpleMotorFeedforward(ks, kv, ka);
     driveController = new PIDController(0.64442, 0, 0);
+
+    SmartDashboard.putNumber("div", 4.6);
   }
   
   @Override
-  public void periodic() {
-    // SmartDashboard.putNumber("drive current" + driveMotor.getDeviceId(), driveMotor.getOutputCurrent());
-    // SmartDashboard.putString("posistion " + driveMotor.getDeviceId(), getPosition().toString());
-    // SmartDashboard.putNumber("encoder " + driveMotor.getDeviceId(), getAngleDeg());
-
-    // SmartDashboard.putNumber("mag deg " + driveMotor.getDeviceId(), getMagDeg());
-  }
-
+  public void periodic() {}
+  
   public void setDesiredState(SwerveModuleState desiredState) {
-    // If no controller input, set angle and drive motor to 0
-    if (Math.abs(desiredState.speedMetersPerSecond) < 0.001) {
-      angleMotor.set(0);
-      driveMotor.set(0);
-      return;
-    }
-
     double angleMotorOutput;
     double driveMotorOutput;
 
     Rotation2d currentAngleR2D = getAngleR2D();
     desiredState = SwerveModuleState.optimize(desiredState, currentAngleR2D);
-
-    // Angle calculation
     angleMotorOutput = angleController.calculate(getAngleDeg(), desiredState.angle.getDegrees());
-    angleMotor.set(angleMotorOutput);
-
-    // Drive calculation
-    // driveMotorOutput = desiredState.speedMetersPerSecond / KPhysicalMaxDriveSpeedMPS;
-    // SmartDashboard.putNumber("desired speed " + driveMotor.getDeviceId(), driveMotorOutput);
-    // driveMotor.set(driveMotorOutput);
-
-    double velocityOutput = driveController.calculate(getDriveEncoderVel(), desiredState.speedMetersPerSecond);
     
+    // driveMotorOutput = feedforward.calculate(desiredState.speedMetersPerSecond);
+    driveMotorOutput = desiredState.speedMetersPerSecond / KPhysicalMaxDriveSpeedMPS;
+    SmartDashboard.putNumber("MPS speed " + driveMotor.getDeviceId(), desiredState.speedMetersPerSecond);
+    // driveMotorOutput = desiredState.speedMetersPerSecond / SmartDashboard.getNumber("div", 4.6);
 
-    driveMotorOutput = feedforward.calculate(desiredState.speedMetersPerSecond);
+    // double velocityOutput = driveController.calculate(getDriveEncoderVel(), desiredState.speedMetersPerSecond);
+    
+    // Angle calculation
+    SmartDashboard.putNumber("driveOutput " + driveMotor.getDeviceId(), driveMotorOutput);
+    SmartDashboard.putNumber("current " + driveMotor.getDeviceId(), driveMotor.getOutputCurrent());
+    angleMotor.set(angleMotorOutput);
+    driveMotor.set(driveMotorOutput);
     // driveMotor.setVoltage(driveMotorOutput);
-    driveMotor.setVoltage(driveMotorOutput + velocityOutput);
-    // SmartDashboard.putNumber("DRIVE SPEED " + driveMotor.getDeviceId(), driveMotorOutput);
-
-    // SmartDashboard.putNumber("wheel velocity " + driveMotor.getDeviceId(), getDriveEncoderVel());
-    // SmartDashboard.putNumber("wheel output current " + driveMotor.getDeviceId(), driveMotor.getOutputCurrent());
   }
-
+  
   public void lockWheel() {
     double angleMotorOutput;
     if (angleMotor.getDeviceId() == KFrontLeftAngleID || angleMotor.getDeviceId() == KBackRightAngleID) {

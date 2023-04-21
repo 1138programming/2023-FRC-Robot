@@ -6,15 +6,16 @@ package frc.robot.commands.Base;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Base;
-import static frc.robot.Constants.*;
 public class ToggleSpeed extends CommandBase {
   private Base base;
 //   private 
-private double speedFactor;
+private double driveSpeedFactor;
+private double rotSpeedFactor;
 
-  public ToggleSpeed(Base base, double speedFactor) {
+  public ToggleSpeed(Base base, double driveSpeedFactor, double rotSpeedFactor) {
     this.base = base;
-    this.speedFactor = speedFactor;
+    this.driveSpeedFactor = driveSpeedFactor;
+    this.rotSpeedFactor = rotSpeedFactor;
     addRequirements(base);
   }
 
@@ -22,7 +23,8 @@ private double speedFactor;
   @Override
   public void initialize() 
   {
-    base.setDriveSpeedFactor(speedFactor);
+    base.setDriveSpeedFactor(driveSpeedFactor);
+    base.setRotSpeedFactor(rotSpeedFactor);
   }
 
   

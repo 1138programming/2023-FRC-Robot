@@ -17,6 +17,7 @@ import frc.robot.commands.Intake.IntakeShootOut;
 import frc.robot.commands.Intake.IntakeSwivelBottom;
 import frc.robot.commands.Intake.IntakeSwivelTop;
 import frc.robot.commands.Intake.SetConeMode;
+import frc.robot.commands.Intake.SetCubeMode;
 import frc.robot.commands.Scoring.Lift.MoveLiftToHighPos;
 import frc.robot.commands.Scoring.Lift.MoveLiftToReadyPos;
 import frc.robot.commands.Scoring.Lift.OuttakeRollers;
@@ -36,30 +37,20 @@ public class ConeHighCubeLow extends SequentialCommandGroup {
     addCommands(
       new SetConeMode(intake, limelight, lift),
       new ResetEncodersTeleop(base),
+      new ConeHigh(base, intake, limelight, lift),
+      new SetCubeMode(intake, limelight, lift),
       new ParallelRaceGroup(
-        new WaitCommand(3),
-        new MoveLiftToHighPos(lift)
-      ),
-      new ParallelDeadlineGroup(
-        new WaitCommand(0.3),
-        new OuttakeRollers(lift)
-      ),
-      new ParallelRaceGroup(
-        new WaitCommand(3),
-        new MoveLiftToReadyPos(lift)
-      ),
-      new ParallelRaceGroup(
-        new DriveToPose(base, new Pose2d(2.5, 0, new Rotation2d())),
+        new DriveToPose(base, new Pose2d(4.3, -0.45, new Rotation2d())),
         new IntakeSwivelBottom(intake),
         new WaitCommand(4)
       ),
       new ParallelRaceGroup(
-        new DriveToPose(base, new Pose2d(0.5, 0, new Rotation2d(145))),
+        new DriveToPose(base, new Pose2d(0.5, -0.15, new Rotation2d(-145))),
         new IntakeSwivelTop(intake),
         new WaitCommand(3)
       ),
       new ParallelRaceGroup(
-        new DriveToPose(base, new Pose2d(0.5, 0, new Rotation2d(180))),
+        new DriveToPose(base, new Pose2d(0.5, -0.15, new Rotation2d(180))),
         new IntakeBottomNoCollect(intake),
         new WaitCommand(2)
       ),

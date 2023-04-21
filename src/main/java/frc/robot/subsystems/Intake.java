@@ -50,20 +50,20 @@ public class Intake extends SubsystemBase {
   private double finalCancoderVal;
   private double lastSwivelPos;
 
+  private SlewRateLimiter swivelLimiter;
+
   public Intake() {
-
-    // SmartDashboard.putNumber("IntakeSwivelPid P", 0.0065);
-    // SmartDashboard.putNumber("IntakeSwivelPid I", 0.001);
-    // SmartDashboard.putNumber("IntakeSwivelPid D", 0.0);
-
+    SmartDashboard.putNumber("IntakeSwivelPid P", KIntakeP);
+    SmartDashboard.putNumber("IntakeSwivelPid I", KIntakeI);
+    SmartDashboard.putNumber("IntakeSwivelPid D", KIntakeD);
 
     spaghetti = new TalonSRX(KSpaghettiIntakeId);
     swivel = new TalonSRX(KSwivelIntakeId);
 
     swivel.setNeutralMode(NeutralMode.Brake);
-    swivel.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
     spaghetti.setNeutralMode(NeutralMode.Coast);
     
+    swivel.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
     spaghetti.setInverted(true); 
 
     intakeController = new PIDController(KIntakeP, KIntakeI, KIntakeD);
@@ -79,6 +79,8 @@ public class Intake extends SubsystemBase {
     ledStrip.setData(ledBuffer);
     ledStrip.start();
     
+    swivelLimiter = new SlewRateLimiter(1);
+    
     config = new CANCoderConfiguration();
     
     config.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
@@ -90,55 +92,47 @@ public class Intake extends SubsystemBase {
     intakeSwivelCanCoder = new CANCoder(KIntakeCanCoder);
     intakeSwivelCanCoder.configAllSettings(config);
     intakeSwivelCanCoder.setPositionToAbsolute();
-
-    // ledStrip.start();
     
     finalCancoderVal = 0;
     lastSwivelPos = 20;
-    intakeMode = false;
+    intakeMode = KConeMode;
   }
 
   @Override 
   public void periodic() {
+    // intakeController.setP(SmartDashboard.getNumber("IntakeSwivelPid P", KIntakeP));
+    // intakeController.setI(SmartDashboard.getNumber("IntakeSwivelPid I", KIntakeI));
+    // intakeController.setD(SmartDashboard.getNumber("IntakeSwivelPid D", KIntakeD));
 
-    // if (intakeController.getP() != SmartDashboard.getNumber("IntakeSwivelPid P", 0.0) 
-    // || intakeController.getI() != SmartDashboard.getNumber("IntakeSwivelPid I", 0.0)
-    // || intakeController.getD() != SmartDashboard.getNumber("IntakeSwivelPid D", 0.0)) {
-    //   intakeController.setPID(SmartDashboard.getNumber("IntakeSwivelPid P", 0.0), SmartDashboard.getNumber("IntakeSwivelPid I", 0.0), SmartDashboard.getNumber("IntakeSwivelPid D", 0.0));
-    // }
 
     SmartDashboard.putBoolean("Mode", intakeMode);
     SmartDashboard.putNumber("Swivel Cancoder", getSwivelEncoder());
     SmartDashboard.putNumber("raw", intakeSwivelCanCoder.getAbsolutePosition());
     SmartDashboard.putNumber("Raw Swivel CanCoder", getSwivelEncoderRaw());
     SmartDashboard.putBoolean("limit INTAKE", getTopLimitSwitch());
-    // SmartDashboard.putNumber("swivel speed", )
-    // SmartDashboard.putNumber("intake drain", swivel.getStatorCurrent());
-    // SmartDashboard.putNumber("intake drain", spaghetti.getStatorCurrent());
+
     if (getTopLimitSwitch()) {
       setIntakeEncoder(0);
       resetSwivelEncoder();
     }
-    setConeMode();
+    
   }
 
   /**
    * Spins the "spaghetti" motors (the spinners in the intake)
    */
   public void spaghettiSpin() {
-    if (intakeMode) {
-      spaghetti.set(ControlMode.PercentOutput, KIntakeConeSpaghettitSpeed);
-    }
-    else if (!intakeMode) {
-      spaghetti.set(ControlMode.PercentOutput, KIntakeCubeSpaghettitSpeed);
-    }
+    // if (intakeMode) {
+    //   spaghetti.set(ControlMode.PercentOutput, KIntakeConeSpaghettitSpeed);
+    // }
+    // else if (!intakeMode) {
+    //   spaghetti.set(ControlMode.PercentOutput, KIntakeCubeSpaghettitSpeed);
+    // }
+    spaghetti.set(ControlMode.PercentOutput, KIntakeCubeSpaghettitSpeed);
   }
   
   public void spaghettiSpinReverse(double speed) {
-    
-    // if (intakeMode) {
-      spaghetti.set(ControlMode.PercentOutput, -speed);
-    // }
+    spaghetti.set(ControlMode.PercentOutput, -speed);
   }
   public void spaghettiSpinReverse() {
     if (intakeMode) {
@@ -150,10 +144,12 @@ public class Intake extends SubsystemBase {
   }
 
   public void setLEDToColor(int R, int G, int B) {
+    // ledsOff();
     for (int i = 0; i < ledBuffer.getLength(); i++) {
       ledBuffer.setRGB(i, R, G, B);
     }
     ledStrip.setData(ledBuffer);
+    // ledStrip.
     // ledStrip.start();
   }
 
@@ -178,21 +174,9 @@ public class Intake extends SubsystemBase {
     setLEDToColor(150, 150, 0);
   }
 
-  // public void toggleDefenseMode() {
-  //   if (!defenseMode) {
-  //     defenseMode = true;
-  //     setLEDToColor(200, 0, 0);
-  //   }
-  //   else {
-  //     defenseMode = false;
-  //     if (intakeMode == KConeMode) {
-  //       setConeMode();
-  //     }
-  //     else {
-  //       setCubeMode();
-  //     }
-  //   }
-  // }
+  public boolean getObjectMode() {
+    return intakeMode;
+  }
 
   // get the operating mode of the intake
   public boolean isConeMode() {
@@ -200,7 +184,14 @@ public class Intake extends SubsystemBase {
   }
 
   public void swivelSpinToPos(double setPoint) {
+    
     double speed = -intakeController.calculate(getSwivelEncoder(), setPoint);
+    // if (speed > 0.6) {
+    //   speed = 0.6;
+    // }
+    // if (speed < -0.6) {
+    //   speed = -0.6;
+    // }
     SmartDashboard.putNumber("swivel speed!", speed);
     moveSwivel(speed);
   }
@@ -237,6 +228,7 @@ public class Intake extends SubsystemBase {
     }
     return finalCancoderVal;
   }
+
   public double getSwivelEncoderRaw() {
     return intakeSwivelCanCoder.getAbsolutePosition() * 14/34;
   }
@@ -245,9 +237,17 @@ public class Intake extends SubsystemBase {
     return intakeTopLimit.get();
   }
   
+  public void setLastEncoderPos(double lastEncoderPos) {
+    lastSwivelPos = lastEncoderPos;
+  }
+
+  public void resetPIDController() {
+    // intakeController.reset();
+  }
+
   public void intakeStop() {
-    // swivel.set(ControlMode.PercentOutput, -intakeController.calculate(getSwivelEncoder(), lastSwivelPos));
-    swivel.set(ControlMode.PercentOutput, 0);
+    swivel.set(ControlMode.PercentOutput, -intakeController.calculate(getSwivelEncoder(), lastSwivelPos));
+    // swivel.set(ControlMode.PercentOutput, 0);
     spaghetti.set(ControlMode.PercentOutput, 0);
   }
 }

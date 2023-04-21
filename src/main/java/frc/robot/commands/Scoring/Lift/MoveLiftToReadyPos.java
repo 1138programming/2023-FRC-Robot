@@ -26,6 +26,7 @@ public class MoveLiftToReadyPos extends CommandBase {
   public void execute() {
     lift.setLiftPos(liftSetpoint);
     lift.flipToPos(flipperSetpoint);
+    lift.stopRollers();
 
   }
 

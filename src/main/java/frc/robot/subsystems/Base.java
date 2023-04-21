@@ -24,10 +24,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Base extends SubsystemBase {
-  private SlewRateLimiter accelerationLimiter;
-  private double currentDriveSpeed = 0;
-
-
   private SwerveModule frontLeftModule;
   private SwerveModule frontRightModule;
   private SwerveModule backLeftModule;
@@ -43,13 +39,13 @@ public class Base extends SubsystemBase {
   private boolean defenseMode = false;
   
   private double driveSpeedFactor;
-
-  private SlewRateLimiter xRateLimiter;
-  private SlewRateLimiter yRateLimiter;
-  private SlewRateLimiter rotRateLimiter;
+  private double rotSpeedFactor;
 
   private double xyP = 0;
   private double rotP = 0;
+
+  private boolean fastSpeedButton;
+  private boolean slowSpeedButton;
   
   public Base() {
     frontLeftModule = new SwerveModule(
@@ -94,18 +90,13 @@ public class Base extends SubsystemBase {
     );
     odometry = new SwerveDriveOdometry(kinematics, getHeading(), getPositions());
     driveSpeedFactor = KBaseDriveMidPercent;
+    rotSpeedFactor = KBaseRotMidPercent;
 
-    int limiter = 10;
-
-    accelerationLimiter = new SlewRateLimiter(0.5);
+    fastSpeedButton = false;
+    slowSpeedButton = false;
 
     SmartDashboard.putNumber("X and Y PID", 0);
     SmartDashboard.putNumber("rot P", 0);
-
-
-    // xRateLimiter = new SlewRateLimiter(limiter);
-    // yRateLimiter = new SlewRateLimiter(limiter);
-    // rotRateLimiter = new SlewRateLimiter(limiter);
   }
 
   // public double driv
@@ -113,11 +104,7 @@ public class Base extends SubsystemBase {
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, double maxDriveSpeedMPS) {
     xSpeed *= maxDriveSpeedMPS;
     ySpeed *= maxDriveSpeedMPS;
-    rot *= KMaxAngularSpeed;
-
-    // xSpeed = xRateLimiter.calculate(xSpeed);
-    // ySpeed = yRateLimiter.calculate(ySpeed);
-    // rot = rotRateLimiter.calculate(rot);
+    rot *= KMaxAngularSpeed * getRotSpeedFactor();
     
     //feeding parameter speeds into toSwerveModuleStates to get an array of SwerveModuleState objects
     SwerveModuleState[] states =
@@ -127,19 +114,11 @@ public class Base extends SubsystemBase {
           : new ChassisSpeeds(xSpeed, ySpeed, rot));
     SwerveDriveKinematics.desaturateWheelSpeeds(states, KPhysicalMaxDriveSpeedMPS);
 
-    
-    SmartDashboard.putBoolean("HELLO", defenseMode && xSpeed == 0 && ySpeed == 0 && rot == 0);
-    if (defenseMode && xSpeed == 0 && ySpeed == 0 && rot == 0) {
-      // lockWheels();
-    }
-    else {
-      //setting module states, aka moving the motors
-      frontLeftModule.setDesiredState(states[0]);
-      frontRightModule.setDesiredState(states[1]);
-      backLeftModule.setDesiredState(states[2]);
-      backRightModule.setDesiredState(states[3]);
-    }
-    SmartDashboard.putBoolean("HELLO", false);
+    //setting module states, aka moving the motors
+    frontLeftModule.setDesiredState(states[0]);
+    frontRightModule.setDesiredState(states[1]);
+    backLeftModule.setDesiredState(states[2]);
+    backRightModule.setDesiredState(states[3]);
   }
 
   public void lockWheels() {
@@ -262,16 +241,7 @@ public class Base extends SubsystemBase {
     // SmartDashboard.putNumber("back left mag", backLeftModule.getMagDeg());
     // SmartDashboard.putNumber("back right mag", backRightModule.getMagDeg());
 
-    // SmartDashboard.putString("odometry pose", odometry.getPoseMeters().toString());
-
-    
-    // xyP = SmartDashboard.getNumber("X and Y PID", 0);
-    // rotP = SmartDashboard.getNumber("rot P", 0);
-    // SmartDashboard.putNumber("xyP", xyP);
-
-    // SmartDashboard.putBoolean("isCalibrating", gyro.isCalibrating());
-
-    // SmartDashboard.putNumber(, KAngleD)
+    SmartDashboard.putString("odometry pose", odometry.getPoseMeters().toString());
 
     odometry.update(getHeading(), getPositions());
     pose = odometry.getPoseMeters();
@@ -281,9 +251,17 @@ public class Base extends SubsystemBase {
   {
     return driveSpeedFactor;
   }
-  public void setDriveSpeedFactor(double set)
+  public void setDriveSpeedFactor(double speedFactor)
   {
-    driveSpeedFactor = set;
+    driveSpeedFactor = speedFactor;
+  }
+
+  public void setRotSpeedFactor(double speedFactor)
+  {
+    rotSpeedFactor = speedFactor;
+  }
+  public double getRotSpeedFactor() {
+    return rotSpeedFactor;
   }
 
   public boolean getDefenseMode() {

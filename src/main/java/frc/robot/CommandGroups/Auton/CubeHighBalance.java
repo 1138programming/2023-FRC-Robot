@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Base.ResetEncodersTeleop;
+import frc.robot.commands.Intake.IntakeSwivelTop;
 import frc.robot.commands.Intake.SetCubeMode;
 import frc.robot.commands.Scoring.Lift.MoveLiftToHighPos;
 import frc.robot.commands.Scoring.Lift.MoveLiftToReadyPos;
@@ -30,15 +31,19 @@ public class CubeHighBalance extends SequentialCommandGroup {
       new SetCubeMode(intake, limelight, lift),
       new ResetEncodersTeleop(base),
       new ParallelRaceGroup(
-        new WaitCommand(3),
+        new WaitCommand(1.5),
+        new ParallelDeadlineGroup(
+          new WaitCommand(1.5),
+          new IntakeSwivelTop(intake)
+        ),
         new MoveLiftToHighPos(lift)
       ),
       new ParallelDeadlineGroup(
-        new WaitCommand(1),
+        new WaitCommand(0.3),
         new OuttakeRollers(lift)
       ),
       new ParallelRaceGroup(
-        new WaitCommand(3),
+        new WaitCommand(1.5),
         new MoveLiftToReadyPos(lift)
       ),
       new AutoBalanceSequence(base)

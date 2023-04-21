@@ -30,13 +30,17 @@ public class IntakeSwivelTop extends CommandBase {
   @Override
   public void execute() {
     intake.swivelSpinToPos(intakePos);
+    // if (intake.getObjectMode() == KConeMode) {
+    //   intake.spaghettiSpin();
+    // }
     // intake.spaghettiSpin();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
+    intake.setLastEncoderPos(KIntakeSwivelTopPos);
+    intake.resetPIDController();
   }
 
   // Returns true when the command should end.
@@ -45,7 +49,7 @@ public class IntakeSwivelTop extends CommandBase {
     // return intake.getSwivelEncoder() < KIntakeSwivelTopPos + KIntakeSwivelOffset;
     // return intake.getTopLimitSwitch();
     // if (intake.getSwivelEncoder() <= intakePos + KIntakeSwivelOffset && intake.getSwivelEncoder() <= intakePos - KIntakeSwivelOffset) {
-      return Math.abs(intake.getSwivelEncoder() - intakePos) < KIntakeSwivelOffset;
+      return Math.abs(intake.getSwivelEncoder() - intakePos) < KIntakeSwivelOffset || intake.getTopLimitSwitch();
     //   return true;
     // }
     // else {

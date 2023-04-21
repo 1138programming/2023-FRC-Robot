@@ -10,6 +10,10 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.CommandGroups.Auton.ConeHigh;
+import frc.robot.CommandGroups.Auton.ConeHighBalance;
+import frc.robot.CommandGroups.Auton.ConeHighCubeLow;
+import frc.robot.CommandGroups.Auton.ConeHighLeave;
 import frc.robot.CommandGroups.Auton.CubeShootBalance;
 import frc.robot.CommandGroups.Auton.OldAuton.BackThenForward;
 import frc.robot.CommandGroups.Auton.OldAuton.ScoreLowDontMove;
@@ -31,15 +35,12 @@ import frc.robot.commands.Intake.IntakeStop;
 import frc.robot.commands.Intake.IntakeSwivelBottom;
 import frc.robot.commands.Intake.IntakeSwivelShoot;
 import frc.robot.commands.Intake.IntakeSwivelTop;
-import frc.robot.commands.Intake.OuttakeAndSwivel;
 import frc.robot.commands.Intake.IntakeBottomNoCollect;
 import frc.robot.commands.Intake.IntakeMoveSwivelDown;
 import frc.robot.commands.Intake.IntakeMoveSwivelUp;
 import frc.robot.commands.Intake.IntakeShootOut;
 import frc.robot.commands.Intake.IntakeSpin;
-import frc.robot.commands.Intake.IntakeSpinAndSwivel;
 import frc.robot.commands.Intake.IntakeSpinReverse;
-import frc.robot.commands.Intake.IntakeStop;
 import frc.robot.commands.Intake.SetConeMode;
 import frc.robot.commands.Intake.SetCubeMode;
 
@@ -47,25 +48,8 @@ import frc.robot.subsystems.Base;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Limelight;
-//Commands for the Base
-import frc.robot.commands.Base.ToggleSpeed;
-import frc.robot.commands.Base.ResetEncoders;
-import frc.robot.commands.Base.ResetGyro;
-import frc.robot.commands.Base.ToggleDefenseMode;
-import frc.robot.commands.Base.SetDefenseModeFalse;
-import frc.robot.commands.Base.SetDefenseModeTrue;
-import frc.robot.commands.Base.DriveWithJoysticks;
-//Commands for the Intake
-import frc.robot.commands.Intake.IntakeSpin;
-import frc.robot.commands.Intake.IntakeStop;
-import frc.robot.commands.Intake.IntakeSwivelBottom;
-import frc.robot.commands.Intake.IntakeSwivelShoot;
-import frc.robot.commands.Intake.IntakeSwivelTop;
-import frc.robot.commands.Intake.IntakeSwivelUpAndStop;
-import frc.robot.commands.Intake.OuttakeAndSwivel;
 //Claw and LIft
 import frc.robot.commands.Scoring.Lift.FlipperToStowedSetPos;
-import frc.robot.commands.Scoring.Lift.FlipperToScoringSetPos;
 import frc.robot.commands.Scoring.Lift.FlipperToShelfPos;
 import frc.robot.commands.Scoring.Lift.LiftStop;
 import frc.robot.commands.Scoring.Lift.MoveFlipperRoller;
@@ -89,6 +73,7 @@ import frc.robot.commands.Limelight.ToggleLimelightPipeline;
 
 import frc.robot.commands.Base.ToggleSpeed;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -106,14 +91,12 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   private final Limelight limelight = new Limelight();
 
-  // private final Flipper flipper = new Flipper();
-
 
   // Base
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
-  private final ToggleSpeed toggleMaxSpeed = new ToggleSpeed(base, KBaseDriveMaxPercent);
-  private final ToggleSpeed toggleMidSpeed = new ToggleSpeed(base, KBaseDriveMidPercent);
-  private final ToggleSpeed toggleLowSpeed = new ToggleSpeed(base, KBaseDriveLowPercent);
+  private final ToggleSpeed toggleMaxSpeed = new ToggleSpeed(base, KBaseDriveMaxPercent, KBaseRotMaxPercent);
+  private final ToggleSpeed toggleMidSpeed = new ToggleSpeed(base, KBaseDriveMidPercent, KBaseRotMidPercent);
+  private final ToggleSpeed toggleLowSpeed = new ToggleSpeed(base, KBaseDriveLowPercent, KBaseRotLowPercent);
   private final ResetGyro resetGyro = new ResetGyro(base);
   private final ResetEncoders resetEncoders = new ResetEncoders(base);
   private final ToggleDefenseMode toggleDefenseMode = new ToggleDefenseMode(base);
@@ -130,8 +113,6 @@ public class RobotContainer {
   private final IntakeSwivelBottom intakeSwivelBottom = new IntakeSwivelBottom(intake);
   private final IntakeSwivelShoot intakeSwivelShoot = new IntakeSwivelShoot(intake);
   private final IntakeBottomNoCollect intakeSwivelBottomNoCollect = new IntakeBottomNoCollect(intake);
-  private final IntakeSpinAndSwivel intakeSpinAndSwivel = new IntakeSpinAndSwivel(intake);
-  private final OuttakeAndSwivel outtakeAndSwivel = new OuttakeAndSwivel(intake);
   private final IntakeStop intakeStop = new IntakeStop(intake);
 
   
@@ -149,7 +130,6 @@ public class RobotContainer {
   // private final FlipperRollerSpin rollersReverse = new FlipperRollerSpin(flipper, -KClawMotorSpeed);
   // private final FlipperStop flipperStop = new FlipperStop(flipper);
 
-  private final FlipperToScoringSetPos flipperToScoringSetPos = new FlipperToScoringSetPos(lift);
   private final FlipperToStowedSetPos flipperToStowedSetPos = new FlipperToStowedSetPos(lift);
   private final FlipperToShelfPos flipperToShelfPos = new FlipperToShelfPos(lift);
 
@@ -158,8 +138,11 @@ public class RobotContainer {
   private final MoveFlipperRoller flipperRollerConeIntake = new MoveFlipperRoller(lift, 0.2);
   private final MoveFlipperRoller flipperRollerConeOuttake = new MoveFlipperRoller(lift, -0.1);
 
-  private final MoveFlipperSwivel moveFlipperIn = new MoveFlipperSwivel(lift, 0.2);
-  private final MoveFlipperSwivel moveFlipperOut = new MoveFlipperSwivel(lift, -0.2);
+  // private final MoveFlipperSwivel moveFlipperIn = new MoveFlipperSwivel(lift, 0.2);
+  // private final MoveFlipperSwivel moveFlipperOut = new MoveFlipperSwivel(lift, -0.2);
+
+  private final MoveFlipperSwivel moveFlipperIn = new MoveFlipperSwivel(lift, 0.1);
+  private final MoveFlipperSwivel moveFlipperOut = new MoveFlipperSwivel(lift, -0.1);
 
   private final MoveLift moveLiftUp = new MoveLift(lift, 0.3);
   private final MoveLift moveLiftDown = new MoveLift(lift, -0.3);
@@ -185,6 +168,12 @@ public class RobotContainer {
 
   // AUTONS
   private final CubeShootBalance cubeShootLeave = new CubeShootBalance(base, intake, limelight, lift);
+  private final ConeHighBalance coneHighBalance = new ConeHighBalance(base, intake, limelight, lift);
+  private final ConeHighLeave coneHighLeave = new ConeHighLeave(base, intake, limelight, lift);
+
+
+  // ScheduleCommands
+  // private final ScheduleCommand toggleMidSpeedScheduled = new ScheduleCommand(toggleMidSpeed)
 
 
 
@@ -349,48 +338,44 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     logitechBtnLB.onTrue(toggleMaxSpeed);
-    logitechBtnLB.onFalse(toggleMidSpeed);
-
-    xboxBtnLB.whileTrue(flipperRollerConeIntake);
-    xboxBtnRB.whileTrue(flipperRollerConeOuttake);
-    // xboxBtnB.whileTrue(flipperSwivelMoveBack);
-    xboxBtnY.whileTrue(moveLiftUp);
-    // xboxBtnB.whileTrue(flipperSwivelMoveBack);
-    // xboxBtnX.whileTrue(flipperSwivelMoveForward);
-    xboxBtnA.whileTrue(moveLiftDown);
-
-    // xboxBtnX.whileTrue(rollersForward);
-    // xboxBtnY.whileTrue(rollersReverse);
-
-    // logitechBtnRB.onTrue(setDefenseModeTrue);
-    // logitechBtnRB.onFalse(setDefenseModeFalse);
-    // logitechBtnRB.onTrue(toggleLowSpeed);
-    // logitechBtnLB.or(logitechBtnRB).onFalse(toggleMidSpeed);
+    logitechBtnRB.onTrue(toggleLowSpeed);
+    if (!logitechBtnLB.getAsBoolean()) {
+      logitechBtnRB.onFalse(toggleMidSpeed);
+    } else {
+      logitechBtnRB.onFalse(toggleMaxSpeed);
+    }
+    if (!logitechBtnRB.getAsBoolean()) {
+      logitechBtnLB.onFalse(toggleMidSpeed);
+    } else {
+      logitechBtnLB.onFalse(toggleLowSpeed);
+    }
 
     logitechBtnY.onTrue(new ResetEncodersTeleop(base));
 
 
     comp1.onTrue(moveLiftToHighPos);
     comp2.whileTrue(moveLiftToShelfPos);
+    comp2.onFalse(moveLiftToReadyPos);
     comp3.onTrue(setConeMode);
     comp4.onTrue(setCubeMode);
     comp5.whileTrue(intakeRollers);
     comp6.onTrue(moveLiftToMidPos);
     comp7.onTrue(moveLiftToReadyPos);
-    // comp8.onTrue(intakeSwivelTop);
-    // comp9.onTrue(intakeSwivelShoot);
+    comp8.onTrue(intakeSwivelTop);
+    comp9.onTrue(intakeSwivelShoot);
     comp10.whileTrue(outtakeRollers);
+    comp10.onFalse(moveLiftToReadyPos);
     comp11.onTrue(moveLiftToLowPos);
     comp12.whileTrue(intakeShootOut);
-    // comp13.whileTrue(intakeSwivelBottom);
-    // comp13.onFalse(intakeSwivelTop);
-    // comp14.onTrue(intakeSwivelBottomNoCollect);
+    comp13.whileTrue(intakeSwivelBottom);
+    comp13.onFalse(intakeSwivelTop);
+    comp14.onTrue(intakeSwivelBottomNoCollect);
 
     streamDeck1.whileTrue(moveLiftUp);
     streamDeck2.whileTrue(moveLiftDown);
     streamDeck3.whileTrue(flipperRollerCubeIntake);
     streamDeck4.whileTrue(flipperRollerConeIntake);
-    // streamDeck5.whileTrue(intakeRollers);
+    streamDeck5.whileTrue(intakeRollers);
     streamDeck6.whileTrue(moveFlipperIn);
     streamDeck7.whileTrue(moveFlipperOut);
     streamDeck8.whileTrue(flipperRollerCubeOuttake);
@@ -398,8 +383,8 @@ public class RobotContainer {
     streamDeck10.whileTrue(outtakeRollers);
     streamDeck11.whileTrue(moveSwivelUp);
     streamDeck12.whileTrue(moveSwivelDown);
-    // streamDeck13.whileTrue(intakeSpinForward);
-    // streamDeck14.whileTrue(intakeShootOut);
+    streamDeck13.whileTrue(intakeSpinForward);
+    streamDeck14.whileTrue(intakeShootOut);
   }
 
   /**
@@ -408,13 +393,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */ 
   public Command getAutonomousCommand()
-   {
-    // return null;
-    // return null;
-    return cubeShootLeave;
-    // return new ScoreLowDontMove(base);
-    // return new ScoreHighAndLeave(lift, claw, base, intake);
-    // return new AutoBalance(base);
+  {
+    return coneHighLeave;
   }
 
   public static double scaleBetween(double unscaledNum, double minAllowed, double maxAllowed, double min, double max) {
@@ -429,6 +409,7 @@ public class RobotContainer {
     else
       return 0;
   }
+  
 
   public double getLogiLeftYAxis() {
     final double Y = logitech.getY();

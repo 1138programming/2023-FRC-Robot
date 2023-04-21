@@ -52,14 +52,6 @@ public class Lift extends SubsystemBase {
 
   public Lift()
   {
-    // SmartDashboard.putNumber("FlipperPid P", 0.03);
-    // SmartDashboard.putNumber("FlipperPid I", 0.0);
-    // SmartDashboard.putNumber("FlipperPid D", 0.0);
-
-    // SmartDashboard.putNumber("LiftPid P", 0.0005);
-    // SmartDashboard.putNumber("LiftPid I", 0.0);
-    // SmartDashboard.putNumber("LiftPid D", 0.0000005);
-
     flipperSwivel = new TalonFX(KFlipperSwivelMotor);
     lift = new CANSparkMax(KLiftMotor, MotorType.kBrushless);
     flipperRoller = new CANSparkMax(KFlipperRollerMotor, MotorType.kBrushless);
@@ -97,6 +89,10 @@ public class Lift extends SubsystemBase {
     lastFlipperPos = 5;
 
     objectMode = KConeMode;
+
+    // SmartDashboard.putNumber("Lift P edit", KLiftP);
+    // SmartDashboard.putNumber("Lift I edit", KLiftI);
+    // SmartDashboard.putNumber("Lift D edit", KLiftD);
   }
 
   @Override
@@ -116,6 +112,10 @@ public class Lift extends SubsystemBase {
 
     // SmartDashboard.putNumber("projected lift speed", liftControl.calculate(liftShaftEncoder.getDistance(), KLiftMediumPos));
     SmartDashboard.putBoolean("object mode", objectMode);
+
+    // liftControl.setP(SmartDashboard.getNumber("Lift P edit", KLiftP));
+    // liftControl.setI(SmartDashboard.getNumber("Lift I edit", KLiftI));
+    // liftControl.setD(SmartDashboard.getNumber("Lift D edit", KLiftD));
 
     // if (flipperController.getP() != SmartDashboard.getNumber("FlipperPid P", 0.0) 
     // || flipperController.getI() != SmartDashboard.getNumber("FlipperPid I", 0.0)
@@ -139,7 +139,10 @@ public class Lift extends SubsystemBase {
 
   public void moveLift(double speed) {
     if (getBottomLimitSwitch() && speed < 0) {
-      lift.set(0);
+      speed = 0;
+    }
+    if (liftShaftEncoder.getDistance() >= KLiftHighPos && speed > 0) {
+      speed = 0;
     }
     lift.set(speed);
   }
@@ -207,7 +210,7 @@ public class Lift extends SubsystemBase {
     }
   }
   public boolean getBottomLimitSwitch() {
-    return liftSwitch.get();
+    return !liftSwitch.get();
   }
 
   public void setCubeMode() {
@@ -215,6 +218,10 @@ public class Lift extends SubsystemBase {
   }
   public void setConeMode() {
     objectMode = KConeMode;
+  }
+
+  public void stopRollers() {
+    flipperRoller.set(0);
   }
 
   public void stop() {

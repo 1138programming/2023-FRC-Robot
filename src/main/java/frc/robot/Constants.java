@@ -19,49 +19,49 @@ import edu.wpi.first.math.geometry.Translation2d;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-
+  
   // Sensing - CANBUS -------------------------------------------------------------
   
-    // BASE - Values will be changed for CANCoders (which will not use DIO)
-    public static final int KFrontLeftMagEncoderID = 1;
-    public static final int KFrontRightMagEncoderID = 2;
-    public static final int KBackLeftMagEncoderID = 3;
-    public static final int KBackRightMagEncoderID = 4;
-    public static final int KIntakeCanCoder = 5;
-    public static final int KFlipperCanCoder = 6;
-
+  // BASE - Values will be changed for CANCoders (which will not use DIO)
+  public static final int KFrontLeftMagEncoderID = 1;
+  public static final int KFrontRightMagEncoderID = 2;
+  public static final int KBackLeftMagEncoderID = 3;
+  public static final int KBackRightMagEncoderID = 4;
+  public static final int KIntakeCanCoder = 5;
+  public static final int KFlipperCanCoder = 6;
+  
   // End of Sensing - CANBUS **************************************************
-
+  
   // Sensing - DIO ----------------------------------------------------------------
-
-    // Scoring - 2 in total
-
+  
+  
+  // Scoring - 2 in total
+  
   public static final int KScoringTopLimitSwitch = 6;
   public static final int KScoringBottomLimitSwitch = 9;
   public static final int KLiftEncoderA = 2; // NavX port number: 0 
   public static final int KLiftEncoderB = 3; // NavX port number: 0 
-
-    // Scoring CANcoders 
-    public static final int KClawCanCoder = 25;
-
+  
+  // Scoring CANcoders 
+  public static final int KClawCanCoder = 25;
+  
   
     public static final int KIntakeTopLimitId = 4; 
   // Intake - 3 in total
   public static final int KIntakeBottomLimitId = 8; 
   public static final int KIntakeEncoderID = 9;
-
   
   // End of Sensing - DIO *****************************************************
-
+  
   // Servos - PWM ----------------------------------------------------------------
-
+  
   public static final int KLEDPort = 5;
-
+  
   // End Servo Section ********************************************************
-
+  
   // Motor IDs by Subsystem ------------------------------------------------------
-
-    // Base
+  
+  // Base
   public static final int KFrontLeftAngleID = 9;  	// SparkMax + NEO
   public static final int KFrontLeftDriveID = 8;  	// SparkMax + NEO
   
@@ -73,21 +73,27 @@ public final class Constants {
   
   public static final int KBackRightAngleID = 19;  	// SparkMax + NEO
   public static final int KBackRightDriveID = 18;  	// SparkMax + NEO
-
-    // Intake
+  
+  // Intake
   public static final int KSpaghettiIntakeId = 7;   // Talon + 775
   public static final int KSwivelIntakeId = 6;     // Talon + 775
-
-
-    // Scoring
+  
+  
+  // Scoring
   public static final int KFlipperRollerMotor = 15; //SparkMax + Neo
   public static final int KFlipperSwivelMotor = 16;	// Talon + 775
   public static final int KLiftMotor = 17;	
-
+  
   // End of Motor Section *****************************************************
+  
+  // CURRENT LIMITS
+  public static final int KDriveMotorCurrentLimit = 40;
+  public static final int KAngleMotorCurrentLimit = 30;
+  // public static final int KLiftMotorCurrentLimit = 30;
+  // public static final int KLiftMotorCurrentLimit = 30;
 
-
-// Math and other Constants
+  
+  // Math and other Constants
   // Swerve Modules
   public static final double KAngleP = 0.006;
   public static final double KAngleI = 0;
@@ -97,7 +103,7 @@ public final class Constants {
   public static final double KDriveI = 0.75;
   public static final double KDriveD = 0.005;
   
-    // used for math in Constants and SwerveModules to set up encoder units
+  // used for math in Constants and SwerveModules to set up encoder units
   public static final double KDegPerRotation = 360;
   public static final double KNeoMaxRPM = 5700;
   
@@ -110,16 +116,24 @@ public final class Constants {
   
   public static final double KAngleMotorRotToDeg = 35;
   public static final double KPhysicalMaxDriveSpeedMPS = KNeoMaxRPM * KDriveMotorRPMToMetersPerSec;
+  // public static final double KPhysicalMaxDriveSpeedMPS = 4.45;
   public static final double KMaxAngularSpeed = 3.5; // MAY NEED CHANGING
   
   // not used, may be useful to know/keep
-  private static final double KAngleMotorShaftToWheelRatio = 1 / 10.2857; 
-  
+  private static final double KAngleMotorShaftToWheelRatio = 1 / 10.2857;
   
     // Low and high percent: sets max speed of drivetrain for driver
   public static final double KBaseDriveLowPercent = 0.25;
   public static final double KBaseDriveMidPercent = 0.5;
   public static final double KBaseDriveMaxPercent = 1;
+
+  public static final double KBaseRotLowPercent = 0.8;
+  public static final double KBaseRotMidPercent = 1;
+  public static final double KBaseRotMaxPercent = 1.3;
+  
+  public static final int KDriveLowSpeed = 1;
+  public static final int KDriveMidSpeed = 2;
+  public static final int KDriveHighSpeed = 3;
   
     // Offsets for absolute encoders, used to set up angle encoders
     // public static final double KFrontLeftOffset = -77.90;
@@ -174,16 +188,17 @@ public final class Constants {
   
   
   
-  public static final double KIntakeOffset = 156; // ALL TBD 
-  public static final double KIntakeSwivelOffset = 1; // ALL TBD 
-  public static final double KIntakeSwivelTopPos = 15;
-  public static final double KIntakeSwivelShootPos = 61;
-  public static final double KSwivelBottomPosition = 120;
-  // public static final double KSwivelBottomPosition = 138;
+  public static final double KIntakeOffset = 150;
+  public static final double KIntakeSwivelOffset = 1;
+  public static final double KIntakeSwivelTopPos = 19;
+  public static final double KIntakeSwivelShootPos = 59;
+  // public static final double KSwivelBottomPosition = 120;
+  public static final double KSwivelBottomPosition = 137;
 
   //Speeds and stuff
-  public static final double KIntakeConeSpaghettitSpeed = 0.6;
-  public static final double KIntakeCubeSpaghettitSpeed = 0.6;
+  public static final double KIntakeConeSpaghettitSpeed = 0.8;
+  // public static final double KIntakeCubeSpaghettitSpeed = 0.8; // CHANGE
+  public static final double KIntakeCubeSpaghettitSpeed = 0.8; // CHANGE 
   
   public static final double KIntakeSwivelSpeed = 0.45;  
   
@@ -356,7 +371,8 @@ public final class Constants {
   public static final double KRotMaxAcceleration = 3.14;
   
   // Auto balance PID
-  public static final double KBalanceP = 0.0065;
+  public static final double KBalanceP = 0.008;
+  // public static final double KBalanceP = 0.0065;
   public static final double KBalanceI = 0;
   public static final double KBalanceD = 0.001;
   
@@ -393,14 +409,13 @@ public final class Constants {
   // public static final double KLiftMidScoreEncoderVal = 3.60;
   
   public static final double KFlipperOffShelfPos = 128; // TBD
-  public static final double KFlipperScoreConePos = 150;  // TBD
-  public static final double KFlipperScoreCubePos = 150;  // TBD
   public static final double KFlipperStowedPos = 10;  // TBD
   
   public static final double KFlipperSwivelSpeed = 0.1;
   public static final double KFlipperDeadzone = 0.5;
 
-  public static final double KFlipperSwivelOffset = 328;
+  // public static final double KFlipperSwivelOffset = 328;
+  public static final double KFlipperSwivelOffset = 318;
 
   public static final double KFlipperMaxSpeed = 0.5;
   public static final double KFlipperMinSpeed = 0.15;

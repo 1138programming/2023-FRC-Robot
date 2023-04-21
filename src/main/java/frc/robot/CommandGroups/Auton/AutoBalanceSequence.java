@@ -24,11 +24,14 @@ public class AutoBalanceSequence extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new DriveUntilStation(base),
+      new ParallelRaceGroup(
+        new WaitCommand(4),
+        new DriveUntilStation(base)
+      ),
       new ResetOdometry(base),
       new ParallelRaceGroup(
         new WaitCommand(1),
-        new DriveToPose(base, new Pose2d(0.55, 0, new Rotation2d()))
+        new DriveToPose(base, new Pose2d(0.5, 0, new Rotation2d()))
       ),
       new AutoBalance(base)
     );

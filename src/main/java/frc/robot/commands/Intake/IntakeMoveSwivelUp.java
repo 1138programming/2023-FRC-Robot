@@ -24,7 +24,6 @@ public class IntakeMoveSwivelUp extends CommandBase {
   @Override
   public void execute() {
     intake.moveSwivel(KIntakeSwivelSpeed);
-    intake.spaghettiSpin();
   }
 
   // Called once the command ends or is interrupted.

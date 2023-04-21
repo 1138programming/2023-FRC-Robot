@@ -49,9 +49,6 @@ public class Limelight extends SubsystemBase {
     skew = 0;
     botPoseX = 1;
     botPoseY = 1;
-    
-   
-    
 
     botPose = new double[6];
   }
@@ -83,6 +80,7 @@ public class Limelight extends SubsystemBase {
       botPoseX = botPose[0];
       botPoseY = botPose[1];
     }
+    SmartDashboard.putNumber("DISTANCE", getDistance());
   }
 
   public void LEDOn() {
@@ -154,9 +152,9 @@ public class Limelight extends SubsystemBase {
   }
 
 
-/**
- * Get ID of nearest AprilTag
- */
+  /**
+  * Get ID of nearest AprilTag
+  */
   public double getTID() {
     return id;
   }

@@ -37,6 +37,7 @@ public class IntakeSwivelBottom extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     intake.intakeStop();
+    intake.resetPIDController();
   }
 
   // Returns true when the command should end.

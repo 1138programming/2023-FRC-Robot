@@ -49,28 +49,28 @@ public class CubeHighCubeLow extends SequentialCommandGroup {
         new MoveLiftToReadyPos(lift)
       ),
       new ParallelRaceGroup(
-        new DriveToPose(base, new Pose2d(2.5, 0, new Rotation2d())),
-        new IntakeSwivelBottom(intake),
+        new DriveToPose(base, new Pose2d(2.5, -0.2, new Rotation2d())),
+        // new IntakeSwivelBottom(intake),
         new WaitCommand(4)
-      ),
-      new ParallelRaceGroup(
-        new DriveToPose(base, new Pose2d(0.5, 0, new Rotation2d(145))),
-        new IntakeSwivelTop(intake),
-        new WaitCommand(3)
-      ),
-      new ParallelRaceGroup(
-        new DriveToPose(base, new Pose2d(0.5, 0, new Rotation2d(180))),
-        new IntakeBottomNoCollect(intake),
-        new WaitCommand(2)
-      ),
-      new ParallelDeadlineGroup(
-        new WaitCommand(1), 
-        new IntakeShootOut(intake)
-      ),
-      new ParallelRaceGroup(
-        new IntakeSwivelTop(intake),
-        new WaitCommand(2)
       )
+      // new ParallelRaceGroup(
+      //   new DriveToPose(base, new Pose2d(0.5, 0, new Rotation2d(145))),
+      //   new IntakeSwivelTop(intake),
+      //   new WaitCommand(3)
+      // ),
+      // new ParallelRaceGroup(
+      //   new DriveToPose(base, new Pose2d(0.5, 0, new Rotation2d(180))),
+      //   new IntakeBottomNoCollect(intake),
+      //   new WaitCommand(2)
+      // ),
+      // new ParallelDeadlineGroup(
+      //   new WaitCommand(1), 
+      //   new IntakeShootOut(intake)
+      // ),
+      // new ParallelRaceGroup(
+      //   new IntakeSwivelTop(intake),
+      //   new WaitCommand(2)
+      // )
     );
   }
 }

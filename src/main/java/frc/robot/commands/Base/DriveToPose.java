@@ -50,8 +50,7 @@ public class DriveToPose extends CommandBase {
 
     fbController = new PIDController(0.80, 0, 0);
     lrController = new PIDController(0.80, 0, 0);
-    // fbController = new PIDController(0.50, 0.001, 0);
-    // lrController = new PIDController(0.50, 0.001, 0);
+    
     rotController = new PIDController(rotP, rotI, rotD);
 
     fbSpeedLimiter = new SlewRateLimiter(2);
@@ -67,9 +66,6 @@ public class DriveToPose extends CommandBase {
 
   @Override
   public void execute() {
-
-    // rotController.setPID(SmartDashboard.getNumber("rotP", 0), SmartDashboard.getNumber("rotI", 0), SmartDashboard.getNumber("rotD", 0));
-
     currentPose = base.getPose();
     xOffset = targetPose.getX() - currentPose.getX();
     yOffset = targetPose.getY() - currentPose.getY();
