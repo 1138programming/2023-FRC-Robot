@@ -49,10 +49,13 @@ public class DriveWithJoysticks extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // fbSpeed = Robot.m_robotContainer.getLogiLeftYAxis();
-    fbSpeed = joystickLimiter.calculate(Robot.m_robotContainer.getLogiLeftYAxis());
-    // lrSpeed = Robot.m_robotContainer.getLogiLeftXAxis();
-    lrSpeed = joystickLimiter.calculate(Robot.m_robotContainer.getLogiLeftXAxis());
+    fbSpeed = Robot.m_robotContainer.getLogiLeftYAxis();
+    lrSpeed = Robot.m_robotContainer.getLogiLeftXAxis();
+    
+    // fbSpeed = joystickLimiter.calculate(Robot.m_robotContainer.getLogiLeftYAxis());
+    // lrSpeed = joystickLimiter.calculate(Robot.m_robotContainer.getLogiLeftXAxis());
+    // SmartDashboard.putNumber(getName(), KAngleD)
+    
     rot = Robot.m_robotContainer.getLogiRightXAxis();
 
     // if (Math.abs(rot) <= 0.01 && (Math.abs(fbSpeed) >= 0.01 || Math.abs(lrSpeed) >= 0.01)) {

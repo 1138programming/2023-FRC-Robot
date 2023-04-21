@@ -127,13 +127,13 @@ public final class Constants {
   public static final double KBaseDriveMidPercent = 0.5;
   public static final double KBaseDriveMaxPercent = 1;
 
-  public static final double KBaseRotLowPercent = 0.8;
+  public static final double KBaseRotLowPercent = 0.75;
   public static final double KBaseRotMidPercent = 1;
-  public static final double KBaseRotMaxPercent = 1.3;
+  public static final double KBaseRotMaxPercent = 1.5;
   
-  public static final int KDriveLowSpeed = 1;
-  public static final int KDriveMidSpeed = 2;
-  public static final int KDriveHighSpeed = 3;
+  // public static final int KDriveLowSpeed = 1;
+  // public static final int KDriveMidSpeed = 2;
+  // public static final int KDriveHighSpeed = 3;
   
     // Offsets for absolute encoders, used to set up angle encoders
     // public static final double KFrontLeftOffset = -77.90;

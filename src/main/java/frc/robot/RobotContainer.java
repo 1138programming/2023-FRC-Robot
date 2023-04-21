@@ -12,7 +12,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.CommandGroups.Auton.ConeHigh;
 import frc.robot.CommandGroups.Auton.ConeHighBalance;
-import frc.robot.CommandGroups.Auton.ConeHighCubeLow;
+import frc.robot.CommandGroups.Auton.ConeHighCubeLowBlue;
+import frc.robot.CommandGroups.Auton.ConeHighCubeLowRed;
 import frc.robot.CommandGroups.Auton.ConeHighLeave;
 import frc.robot.CommandGroups.Auton.CubeShootBalance;
 import frc.robot.CommandGroups.Auton.OldAuton.BackThenForward;
@@ -394,7 +395,7 @@ public class RobotContainer {
    */ 
   public Command getAutonomousCommand()
   {
-    return coneHighLeave;
+    return new ConeHighCubeLowRed(base, intake, limelight, lift);
   }
 
   public static double scaleBetween(double unscaledNum, double minAllowed, double maxAllowed, double min, double max) {
