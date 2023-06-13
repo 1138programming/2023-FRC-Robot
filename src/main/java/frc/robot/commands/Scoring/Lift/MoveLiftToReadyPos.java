@@ -42,6 +42,6 @@ public class MoveLiftToReadyPos extends CommandBase {
     // return (Math.abs(liftSetpoint - lift.getLiftPos()) < KLiftDeadzone) 
     //   && (Math.abs(flipperSetpoint - lift.getFlipperPos()) < KFlipperDeadzone 
     // );
-    return lift.getBottomLimitSwitch();
+    return lift.getBottomLimitSwitch() && (Math.abs(flipperSetpoint - lift.getFlipperPos()) < KFlipperDeadzone);
   }
 }

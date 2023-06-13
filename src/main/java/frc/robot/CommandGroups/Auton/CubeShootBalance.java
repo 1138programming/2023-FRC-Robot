@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Base.DriveToPose;
 import frc.robot.commands.Base.ResetEncodersTeleop;
 import frc.robot.commands.Base.ResetGyroOffset;
-import frc.robot.commands.Intake.IntakeShootOut;
+import frc.robot.commands.Intake.IntakeSpaghettiShoot;
 import frc.robot.commands.Intake.IntakeSwivelShoot;
 import frc.robot.commands.Intake.IntakeSwivelTop;
 import frc.robot.commands.Intake.SetCubeMode;
@@ -42,7 +42,7 @@ public class CubeShootBalance extends SequentialCommandGroup {
       ),
       new ParallelDeadlineGroup(
         new WaitCommand(1),
-        new IntakeShootOut(intake)
+        new IntakeSpaghettiShoot(intake)
       ),
       new ParallelRaceGroup(
         new WaitCommand(1.5),

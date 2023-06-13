@@ -184,14 +184,7 @@ public class Intake extends SubsystemBase {
   }
 
   public void swivelSpinToPos(double setPoint) {
-    
     double speed = -intakeController.calculate(getSwivelEncoder(), setPoint);
-    // if (speed > 0.6) {
-    //   speed = 0.6;
-    // }
-    // if (speed < -0.6) {
-    //   speed = -0.6;
-    // }
     SmartDashboard.putNumber("swivel speed!", speed);
     moveSwivel(speed);
   }
@@ -246,7 +239,13 @@ public class Intake extends SubsystemBase {
   }
 
   public void intakeStop() {
-    swivel.set(ControlMode.PercentOutput, -intakeController.calculate(getSwivelEncoder(), lastSwivelPos));
+    double swivelSpeed = -intakeController.calculate(getSwivelEncoder(), lastSwivelPos);
+    if (swivelSpeed < -0.25) {
+      swivelSpeed = -0.25;
+    } else if (swivelSpeed > 0.25) {
+      swivelSpeed = 0.25;
+    }
+    swivel.set(ControlMode.PercentOutput, swivelSpeed);
     // swivel.set(ControlMode.PercentOutput, 0);
     spaghetti.set(ControlMode.PercentOutput, 0);
   }

@@ -44,9 +44,13 @@ public class ConeHighBalanceMobility extends SequentialCommandGroup {
       ),
       new ParallelRaceGroup(
         new WaitCommand(1.5),
+        new ParallelDeadlineGroup(
+          new WaitCommand(1.5),
+          new IntakeSwivelTop(intake)
+        ),
         new MoveLiftToReadyPos(lift)
       ),
-      new AutoBalanceBackwardsSequence(base)
+      new AutoBalanceBackwardsSequence(base, intake)
     );
   }
 }

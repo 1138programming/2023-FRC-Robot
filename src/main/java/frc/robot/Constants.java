@@ -8,6 +8,8 @@ import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 
 /**
@@ -118,6 +120,8 @@ public final class Constants {
   public static final double KPhysicalMaxDriveSpeedMPS = KNeoMaxRPM * KDriveMotorRPMToMetersPerSec;
   // public static final double KPhysicalMaxDriveSpeedMPS = 4.45;
   public static final double KMaxAngularSpeed = 3.5; // MAY NEED CHANGING
+
+  public static final double KTimedDriveSpeed = 0.3;
   
   // not used, may be useful to know/keep
   private static final double KAngleMotorShaftToWheelRatio = 1 / 10.2857;
@@ -375,6 +379,21 @@ public final class Constants {
   // public static final double KBalanceP = 0.0065;
   public static final double KBalanceI = 0;
   public static final double KBalanceD = 0.001;
+
+  // Poses for DriveToPose autons
+  public static final Pose2d KOpenSideCubePickupBlue = new Pose2d(4.3, -0.45, new Rotation2d());
+  public static final Pose2d KOpenSideBackToCommunityBlue = new Pose2d(0.5, -0.2, Rotation2d.fromDegrees(145));
+  public static final Pose2d KOpenSideShootPositionBlue = new Pose2d(0.2, -0.2, Rotation2d.fromDegrees(180));
+
+  public static final Pose2d KCableSideCubePickupBlue = new Pose2d(4.3, 0.45, new Rotation2d());
+  public static final Pose2d KCableSideCrossCableBlue = new Pose2d(2.85, 0.28, new Rotation2d());
+  public static final Pose2d KCableSideCubePickupAfterCrossBlue = new Pose2d(4.5, 0.45, new Rotation2d());
+  public static final Pose2d KCableSideBackToCommunityBlue = new Pose2d(0.3, 0, new Rotation2d());
+  public static final Pose2d KCableSideShootPositionBlue = new Pose2d(0.3, 0, Rotation2d.fromDegrees(180));
+  
+  public static final Pose2d KOpenSideCubePickupRed = new Pose2d(4.3, 0.45, new Rotation2d());
+  public static final Pose2d KOpenSideBackToCommunityRed = new Pose2d(0.5, 0.2, Rotation2d.fromDegrees(145));
+  public static final Pose2d KOpenSideShootPositionRed = new Pose2d(0.2, 0.2, Rotation2d.fromDegrees(180));
   
   public static PathConstraints KPathPLannerConstraints = new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration);
 

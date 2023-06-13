@@ -14,7 +14,7 @@ public class DriveUntilFloor extends CommandBase {
   private Base base;
 
   private int stage = 1;
-  private double overStationSpeed = 0.3;
+  private double overStationSpeed = 0.4;
 
   /** Creates a new AutoBalance. */
   public DriveUntilFloor(Base base) {
@@ -31,9 +31,9 @@ public class DriveUntilFloor extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+    SmartDashboard.putNumber("pitchhhhh", base.getPitch());
     base.drive(overStationSpeed, 0, 0, true, KPhysicalMaxDriveSpeedMPS);
-    if (base.getPitch() < -3) {
+    if (base.getPitch() < -3.5) {
       stage = 2;
     }
   }
@@ -41,12 +41,12 @@ public class DriveUntilFloor extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    
+    base.drive(0, 0, 0, true, KPhysicalMaxDriveSpeedMPS);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(base.getPitch()) < 3 && stage == 2;
+    return Math.abs(base.getPitch()) < 2 && stage == 2;
   }
 }

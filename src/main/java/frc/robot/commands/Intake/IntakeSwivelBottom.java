@@ -29,7 +29,6 @@ public class IntakeSwivelBottom extends CommandBase {
   @Override
   public void execute() {
     intake.swivelSpinToPos(intakeSetpoint);
-    intake.spaghettiSpin();
 
   }
 

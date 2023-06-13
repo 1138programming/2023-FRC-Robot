@@ -46,7 +46,7 @@ public class CubeHighBalanceMobility extends SequentialCommandGroup {
         new WaitCommand(1.5),
         new MoveLiftToReadyPos(lift)
       ),
-      new AutoBalanceBackwardsSequence(base)
+      new AutoBalanceBackwardsSequence(base, intake)
     );
   }
 }

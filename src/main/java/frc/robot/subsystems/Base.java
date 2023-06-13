@@ -114,18 +114,23 @@ public class Base extends SubsystemBase {
           : new ChassisSpeeds(xSpeed, ySpeed, rot));
     SwerveDriveKinematics.desaturateWheelSpeeds(states, KPhysicalMaxDriveSpeedMPS);
 
-    //setting module states, aka moving the motors
-    frontLeftModule.setDesiredState(states[0]);
-    frontRightModule.setDesiredState(states[1]);
-    backLeftModule.setDesiredState(states[2]);
-    backRightModule.setDesiredState(states[3]);
+    if (defenseMode) {
+      lockWheels();
+    }
+    else {
+      //setting module states, aka moving the motors
+      frontLeftModule.setDesiredState(states[0]);
+      frontRightModule.setDesiredState(states[1]);
+      backLeftModule.setDesiredState(states[2]);
+      backRightModule.setDesiredState(states[3]);
+    }
   }
 
   public void lockWheels() {
-    // frontLeftModule.lockWheel(); 
-    // frontRightModule.lockWheel();
-    // backLeftModule.lockWheel();
-    // backRightModule.lockWheel();
+    frontLeftModule.lockWheel(); 
+    frontRightModule.lockWheel();
+    backLeftModule.lockWheel();
+    backRightModule.lockWheel();
   }
   
   public void resetOdometry(Pose2d pose) {
@@ -228,7 +233,7 @@ public class Base extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("pitch", getPitch());
+    // SmartDashboard.putNumber("pitch", getPitch());
     // SmartDashboard.putBoolean("DEFENSE MODE", getDefenseMode());
     // SmartDashboard.putNumber("Gyro", getHeadingDeg());
 

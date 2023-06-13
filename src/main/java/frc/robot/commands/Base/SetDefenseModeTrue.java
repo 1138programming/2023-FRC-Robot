@@ -7,13 +7,17 @@ package frc.robot.commands.Base;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Base;
+import frc.robot.subsystems.Intake;
 
 public class SetDefenseModeTrue extends CommandBase {
   private Base base;
+  private Intake intake;
+
   /** Creates a new SetDefenseModeTrue. */
-  public SetDefenseModeTrue(Base base) {
+  public SetDefenseModeTrue(Base base, Intake intake) {
     this.base = base;
-    addRequirements(base);
+    this.intake = intake;
+    addRequirements(base, intake);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -21,6 +25,8 @@ public class SetDefenseModeTrue extends CommandBase {
   @Override
   public void initialize() {
     base.setDefenseMode(true);
+    intake.setLEDToColor(255, 0, 0);
+    intake.intakeStop();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

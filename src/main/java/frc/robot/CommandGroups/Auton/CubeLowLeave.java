@@ -15,8 +15,8 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Base.DriveToPose;
 import frc.robot.commands.Base.ResetEncodersTeleop;
 import frc.robot.commands.Base.ResetGyroOffset;
-import frc.robot.commands.Intake.IntakeBottomNoCollect;
-import frc.robot.commands.Intake.IntakeShootOut;
+import frc.robot.commands.Intake.IntakeSwivelBottom;
+import frc.robot.commands.Intake.IntakeSpaghettiShoot;
 import frc.robot.commands.Intake.IntakeSwivelTop;
 import frc.robot.commands.Intake.SetCubeMode;
 import frc.robot.subsystems.Base;
@@ -39,11 +39,11 @@ public class CubeLowLeave extends SequentialCommandGroup {
       new ResetGyroOffset(base, KGyroOffset),
       new ParallelRaceGroup(
         new WaitCommand(2),
-        new IntakeBottomNoCollect(intake)
+        new IntakeSwivelBottom(intake)
       ),
       new ParallelDeadlineGroup(
         new WaitCommand(1),
-        new IntakeShootOut(intake)
+        new IntakeSpaghettiShoot(intake)
       ),
       new ParallelRaceGroup(
         new WaitCommand(2),

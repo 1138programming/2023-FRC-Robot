@@ -1,3 +1,6 @@
+
+
+
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
@@ -6,50 +9,34 @@ package frc.robot;
 
 import static frc.robot.Constants.*;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.CommandGroups.Auton.ConeHigh;
-import frc.robot.CommandGroups.Auton.ConeHighBalance;
-import frc.robot.CommandGroups.Auton.ConeHighBalanceMobility;
-import frc.robot.CommandGroups.Auton.ConeHighCubeLowBlue;
-import frc.robot.CommandGroups.Auton.ConeHighCubeLowRed;
-import frc.robot.CommandGroups.Auton.ConeHighLeave;
-import frc.robot.CommandGroups.Auton.CubeShootBalance;
-import frc.robot.CommandGroups.Auton.OldAuton.BackThenForward;
-import frc.robot.CommandGroups.Auton.OldAuton.ScoreLowDontMove;
-import frc.robot.commands.Base.AutoBalance;
-import frc.robot.commands.Base.ToggleSpeed;
-import frc.robot.commands.Base.ResetEncoders;
-import frc.robot.commands.Base.ResetEncodersTeleop;
-import frc.robot.commands.Base.ResetGyro;
-import frc.robot.commands.Base.ToggleDefenseMode;
-import frc.robot.commands.Base.SetDefenseModeFalse;
-import frc.robot.commands.Base.SetDefenseModeTrue;
-import frc.robot.commands.Base.DriveWithJoysticks;
-import frc.robot.commands.Base.ToggleSpeed; 
-import frc.robot.commands.Base.DriveWithJoysticks;
+
 
 //  Intake
 import frc.robot.commands.Intake.IntakeSpin;
 import frc.robot.commands.Intake.IntakeStop;
-import frc.robot.commands.Intake.IntakeSwivelBottom;
+import frc.robot.commands.Intake.IntakeSwivelAndCollect;
 import frc.robot.commands.Intake.IntakeSwivelShoot;
 import frc.robot.commands.Intake.IntakeSwivelTop;
-import frc.robot.commands.Intake.IntakeBottomNoCollect;
+import frc.robot.commands.Intake.IntakeSwivelBottom;
 import frc.robot.commands.Intake.IntakeMoveSwivelDown;
 import frc.robot.commands.Intake.IntakeMoveSwivelUp;
-import frc.robot.commands.Intake.IntakeShootOut;
-import frc.robot.commands.Intake.IntakeSpin;
+import frc.robot.commands.Intake.IntakeSpaghettiShoot;
 import frc.robot.commands.Intake.IntakeSpinReverse;
 import frc.robot.commands.Intake.SetConeMode;
 import frc.robot.commands.Intake.SetCubeMode;
-
+import frc.robot.commands.Intake.SetLEDsToColor;
 import frc.robot.subsystems.Base;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Limelight;
+
 //Claw and LIft
 import frc.robot.commands.Scoring.Lift.FlipperToStowedSetPos;
 import frc.robot.commands.Scoring.Lift.FlipperToShelfPos;
@@ -68,16 +55,23 @@ import frc.robot.commands.Scoring.Lift.OuttakeRollers;
 //  Limelight
 import frc.robot.commands.Limelight.LimelightMoveToAprilTag;
 import frc.robot.commands.Limelight.LimelightMoveToConeNode;
-import frc.robot.commands.Limelight.ToggleLimelightPipeline;
 
-// import frc.robot.commands.Endgame.*;
-
-
+// Autons
+import frc.robot.CommandGroups.Auton.ConeHighBalance;
+import frc.robot.CommandGroups.Auton.ConeHighBalanceMobility;
+import frc.robot.CommandGroups.Auton.OpenSideConeHighCubeLowBlue;
+import frc.robot.CommandGroups.Auton.OpenSideConeHighCubeLowRed;
+import frc.robot.CommandGroups.Auton.ConeHighLeave;
+import frc.robot.CommandGroups.Auton.CubeShootBalance;
 import frc.robot.commands.Base.ToggleSpeed;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ScheduleCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.Base.ResetEncoders;
+import frc.robot.commands.Base.ResetEncodersTeleop;
+import frc.robot.commands.Base.ResetGyro;
+import frc.robot.commands.Base.ToggleDefenseMode;
+import frc.robot.commands.Base.SetDefenseModeFalse;
+import frc.robot.commands.Base.SetDefenseModeTrue;
+import frc.robot.commands.Base.DriveWithJoysticks;
+
 
 
 /**
@@ -92,59 +86,37 @@ public class RobotContainer {
   private final Lift lift = new Lift();
   private final Intake intake = new Intake();
   private final Limelight limelight = new Limelight();
-
-
+  
+  
   // Base
   private final DriveWithJoysticks driveWithJoysticks = new DriveWithJoysticks(base);
   private final ToggleSpeed toggleMaxSpeed = new ToggleSpeed(base, KBaseDriveMaxPercent, KBaseRotMaxPercent);
   private final ToggleSpeed toggleMidSpeed = new ToggleSpeed(base, KBaseDriveMidPercent, KBaseRotMidPercent);
   private final ToggleSpeed toggleLowSpeed = new ToggleSpeed(base, KBaseDriveLowPercent, KBaseRotLowPercent);
-  private final ResetGyro resetGyro = new ResetGyro(base);
-  private final ResetEncoders resetEncoders = new ResetEncoders(base);
-  private final ToggleDefenseMode toggleDefenseMode = new ToggleDefenseMode(base);
-  private final SetDefenseModeTrue setDefenseModeTrue = new SetDefenseModeTrue(base);
-  private final SetDefenseModeFalse setDefenseModeFalse = new SetDefenseModeFalse(base);
+  private final SetDefenseModeTrue setDefenseModeTrue = new SetDefenseModeTrue(base, intake);
+  private final SetDefenseModeFalse setDefenseModeFalse = new SetDefenseModeFalse(base, intake);
 
   //  Intake  
   private final IntakeSpin intakeSpinForward = new IntakeSpin(intake);
-  private final IntakeSpinReverse intakeSpinReverse = new IntakeSpinReverse(intake);
-  private final IntakeShootOut intakeShootOut = new IntakeShootOut(intake);
+  private final IntakeSpaghettiShoot intakeShootOut = new IntakeSpaghettiShoot(intake);
   private final IntakeMoveSwivelDown moveSwivelDown = new IntakeMoveSwivelDown(intake);
   private final IntakeMoveSwivelUp moveSwivelUp = new IntakeMoveSwivelUp(intake);
   private final IntakeSwivelTop intakeSwivelTop = new IntakeSwivelTop(intake);
-  private final IntakeSwivelBottom intakeSwivelBottom = new IntakeSwivelBottom(intake);
+  private final IntakeSwivelAndCollect intakeSwivelBottom = new IntakeSwivelAndCollect(intake);
   private final IntakeSwivelShoot intakeSwivelShoot = new IntakeSwivelShoot(intake);
-  private final IntakeBottomNoCollect intakeSwivelBottomNoCollect = new IntakeBottomNoCollect(intake);
+  private final IntakeSwivelBottom intakeSwivelBottomNoCollect = new IntakeSwivelBottom(intake);
   private final IntakeStop intakeStop = new IntakeStop(intake);
-
-  
 
   // Scoring
   private final LiftStop liftstop = new LiftStop(lift);
-  // private final GrabOfShelforScore coneGrabOfShelf = new GrabOfShelforScore(lift, flipper, KFlipperRollerSpeedCone);
-  // private final GrabOfShelforScore cubeGrabOfShelf = new GrabOfShelforScore(lift, flipper, KFlipperRollerSpeedCube);
-
-  // private final FlipperSwivelSpin flipperSwivelMoveForward = new FlipperSwivelSpin(flipper,KClawSwivelMotorSpeed);
-  // private final FlipperSwivelSpin flipperSwivelMoveBack = new FlipperSwivelSpin(flipper,-KClawSwivelMotorSpeed);
-
-  // private final FlipperRollerSpin rollersForward = new FlipperRollerSpin(flipper, KClawMotorSpeed);
-  // // private final FlipperToPos FlippertoTopSetPoint = new FlipperToPos(flipper, null);
-  // private final FlipperRollerSpin rollersReverse = new FlipperRollerSpin(flipper, -KClawMotorSpeed);
-  // private final FlipperStop flipperStop = new FlipperStop(flipper);
-
-  private final FlipperToStowedSetPos flipperToStowedSetPos = new FlipperToStowedSetPos(lift);
-  private final FlipperToShelfPos flipperToShelfPos = new FlipperToShelfPos(lift);
 
   private final MoveFlipperRoller flipperRollerCubeIntake = new MoveFlipperRoller(lift, -0.2);
   private final MoveFlipperRoller flipperRollerCubeOuttake = new MoveFlipperRoller(lift, 0.1);
   private final MoveFlipperRoller flipperRollerConeIntake = new MoveFlipperRoller(lift, 0.2);
   private final MoveFlipperRoller flipperRollerConeOuttake = new MoveFlipperRoller(lift, -0.1);
 
-  // private final MoveFlipperSwivel moveFlipperIn = new MoveFlipperSwivel(lift, 0.2);
-  // private final MoveFlipperSwivel moveFlipperOut = new MoveFlipperSwivel(lift, -0.2);
-
-  private final MoveFlipperSwivel moveFlipperIn = new MoveFlipperSwivel(lift, 0.1);
-  private final MoveFlipperSwivel moveFlipperOut = new MoveFlipperSwivel(lift, -0.1);
+  private final MoveFlipperSwivel moveFlipperIn = new MoveFlipperSwivel(lift, 0.3);
+  private final MoveFlipperSwivel moveFlipperOut = new MoveFlipperSwivel(lift, -0.3);
 
   private final MoveLift moveLiftUp = new MoveLift(lift, 0.3);
   private final MoveLift moveLiftDown = new MoveLift(lift, -0.3);
@@ -154,9 +126,6 @@ public class RobotContainer {
   
   private final SetConeMode setConeMode = new SetConeMode(intake, limelight, lift);
   private final SetCubeMode setCubeMode = new SetCubeMode(intake, limelight, lift);
-
-  // private final MoveLift moveLiftUp = new MoveLift(lift, 0.4);
-  // private final MoveLift moveLiftDown = new MoveLift(lift, -0.4);
  
   private final MoveLiftToHighPos moveLiftToHighPos = new MoveLiftToHighPos(lift);
   private final MoveLiftToMidPos moveLiftToMidPos = new MoveLiftToMidPos(lift);
@@ -164,21 +133,13 @@ public class RobotContainer {
   private final MoveLiftToReadyPos moveLiftToReadyPos = new MoveLiftToReadyPos(lift);
   private final MoveLiftToShelfPos moveLiftToShelfPos = new MoveLiftToShelfPos(lift);
 
-  // Limelight
-  private final LimelightMoveToAprilTag limelightMoveToAprilTag = new LimelightMoveToAprilTag(base, limelight);
-  private final LimelightMoveToConeNode limelightMoveToConeNode = new LimelightMoveToConeNode(base, limelight);
-
-  // AUTONS
+  // Autons
   private final CubeShootBalance cubeShootLeave = new CubeShootBalance(base, intake, limelight, lift);
   private final ConeHighBalance coneHighBalance = new ConeHighBalance(base, intake, limelight, lift);
   private final ConeHighLeave coneHighLeave = new ConeHighLeave(base, intake, limelight, lift);
   private final ConeHighBalanceMobility coneHighBalanceMobility = new ConeHighBalanceMobility(base, intake, limelight, lift);
-
-  private final ConeHighCubeLowBlue coneHighCubeLowBlue = new ConeHighCubeLowBlue(base, intake, limelight, lift);
-  private final ConeHighCubeLowRed coneHighCubeLowRed = new ConeHighCubeLowRed(base, intake, limelight, lift);
-
-  // ScheduleCommands
-  // private final ScheduleCommand toggleMidSpeedScheduled = new ScheduleCommand(toggleMidSpeed)
+  private final OpenSideConeHighCubeLowBlue openSideConeHighCubeLowBlue = new OpenSideConeHighCubeLowBlue(base, intake, limelight, lift);
+  private final OpenSideConeHighCubeLowRed openSideConeHighCubeLowRed = new OpenSideConeHighCubeLowRed(base, intake, limelight, lift);
 
   //Controller Ports (check in Driver Station, IDs may be different for each computer)
   private static final int KLogitechPort = 0;
@@ -246,9 +207,6 @@ public class RobotContainer {
   public JoystickButton xboxBtnA, xboxBtnB, xboxBtnX, xboxBtnY, xboxBtnLB, xboxBtnRB, xboxBtnStrt, xboxBtnSelect;
 
   public Trigger xboxBtnRT, xboxBtnLT;
-
-  public JoystickButton coneModeButton, cubeModeButton, liftLowSetpointButton, liftMidSetpointButton, liftHighSetpointButton, closeClawButton, // Vjoy 1
-    openClawButton, moveLiftUpButton, moveLiftDownButton, liftToWaitingPosButton, intakeUpButton, intakeDownButton, liftResetButton, defenseModeButton;
   
   public JoystickButton comp1, comp2, comp3, comp4, comp5, comp6, comp7, comp8, comp9, comp10, comp11, comp12, comp13, comp14;
 
@@ -351,9 +309,12 @@ public class RobotContainer {
       logitechBtnLB.onFalse(toggleLowSpeed);
     }
 
+    logitechBtnLT.onTrue(setDefenseModeTrue);
+    logitechBtnLT.onFalse(setDefenseModeFalse);
+    
     logitechBtnY.onTrue(new ResetEncodersTeleop(base));
-
-
+    
+    
     comp1.onTrue(moveLiftToHighPos);
     comp2.whileTrue(moveLiftToShelfPos);
     comp2.onFalse(moveLiftToReadyPos);
@@ -395,8 +356,7 @@ public class RobotContainer {
    */ 
   public Command getAutonomousCommand()
   {
-    return coneHighBalanceMobility;
-    // return coneHighCubeLowBlue;
+    return coneHighBalance;
   }
 
   public static double scaleBetween(double unscaledNum, double minAllowed, double maxAllowed, double min, double max) {
