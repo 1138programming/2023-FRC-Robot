@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.CommandGroups.Auton.ConeHigh;
 import frc.robot.CommandGroups.Auton.ConeHighBalance;
+import frc.robot.CommandGroups.Auton.ConeHighBalanceMobility;
 import frc.robot.CommandGroups.Auton.ConeHighCubeLowBlue;
 import frc.robot.CommandGroups.Auton.ConeHighCubeLowRed;
 import frc.robot.CommandGroups.Auton.ConeHighLeave;
@@ -171,13 +172,13 @@ public class RobotContainer {
   private final CubeShootBalance cubeShootLeave = new CubeShootBalance(base, intake, limelight, lift);
   private final ConeHighBalance coneHighBalance = new ConeHighBalance(base, intake, limelight, lift);
   private final ConeHighLeave coneHighLeave = new ConeHighLeave(base, intake, limelight, lift);
+  private final ConeHighBalanceMobility coneHighBalanceMobility = new ConeHighBalanceMobility(base, intake, limelight, lift);
 
+  private final ConeHighCubeLowBlue coneHighCubeLowBlue = new ConeHighCubeLowBlue(base, intake, limelight, lift);
+  private final ConeHighCubeLowRed coneHighCubeLowRed = new ConeHighCubeLowRed(base, intake, limelight, lift);
 
   // ScheduleCommands
   // private final ScheduleCommand toggleMidSpeedScheduled = new ScheduleCommand(toggleMidSpeed)
-
-
-
 
   //Controller Ports (check in Driver Station, IDs may be different for each computer)
   private static final int KLogitechPort = 0;
@@ -185,7 +186,6 @@ public class RobotContainer {
   private static final int KStreamDeckPort = 2;
   private static final int KTestingStreamDeckPort = 3;
   private static final int KTuningStreamDeckPort = 4;
-
 
   //Deadzone
   private static final double KDeadZone = 0.05;
@@ -395,7 +395,8 @@ public class RobotContainer {
    */ 
   public Command getAutonomousCommand()
   {
-    return new ConeHighCubeLowRed(base, intake, limelight, lift);
+    return coneHighBalanceMobility;
+    // return coneHighCubeLowBlue;
   }
 
   public static double scaleBetween(double unscaledNum, double minAllowed, double maxAllowed, double min, double max) {

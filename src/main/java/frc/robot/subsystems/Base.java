@@ -228,6 +228,7 @@ public class Base extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("pitch", getPitch());
     // SmartDashboard.putBoolean("DEFENSE MODE", getDefenseMode());
     // SmartDashboard.putNumber("Gyro", getHeadingDeg());
 

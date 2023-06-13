@@ -101,14 +101,14 @@ public class SwerveModule extends SubsystemBase {
     
     // driveMotorOutput = feedforward.calculate(desiredState.speedMetersPerSecond);
     driveMotorOutput = desiredState.speedMetersPerSecond / KPhysicalMaxDriveSpeedMPS;
-    SmartDashboard.putNumber("MPS speed " + driveMotor.getDeviceId(), desiredState.speedMetersPerSecond);
+    // SmartDashboard.putNumber("MPS speed " + driveMotor.getDeviceId(), desiredState.speedMetersPerSecond);
     // driveMotorOutput = desiredState.speedMetersPerSecond / SmartDashboard.getNumber("div", 4.6);
 
     // double velocityOutput = driveController.calculate(getDriveEncoderVel(), desiredState.speedMetersPerSecond);
     
     // Angle calculation
-    SmartDashboard.putNumber("driveOutput " + driveMotor.getDeviceId(), driveMotorOutput);
-    SmartDashboard.putNumber("current " + driveMotor.getDeviceId(), driveMotor.getOutputCurrent());
+    // SmartDashboard.putNumber("driveOutput " + driveMotor.getDeviceId(), driveMotorOutput);
+    // SmartDashboard.putNumber("current " + driveMotor.getDeviceId(), driveMotor.getOutputCurrent());
     angleMotor.set(angleMotorOutput);
     driveMotor.set(driveMotorOutput);
     // driveMotor.setVoltage(driveMotorOutput);
