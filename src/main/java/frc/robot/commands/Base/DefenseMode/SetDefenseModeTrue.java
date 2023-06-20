@@ -2,25 +2,31 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Base;
+package frc.robot.commands.Base.DefenseMode;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Base;
+import frc.robot.subsystems.Intake;
 
-public class ToggleDefenseMode extends CommandBase {
+public class SetDefenseModeTrue extends CommandBase {
   private Base base;
-  /** Creates a new SetDefenseModeFalse. */
-  public ToggleDefenseMode(Base base) {
+  private Intake intake;
+
+  /** Creates a new SetDefenseModeTrue. */
+  public SetDefenseModeTrue(Base base, Intake intake) {
     this.base = base;
-    addRequirements(base);
+    this.intake = intake;
+    addRequirements(base, intake);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    base.setDefenseMode(!base.getDefenseMode());
+    base.setDefenseMode(true);
+    intake.setLEDToColor(255, 0, 0);
+    intake.intakeStop();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

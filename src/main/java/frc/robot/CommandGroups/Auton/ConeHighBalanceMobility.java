@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.Base.ResetEncodersTeleop;
+import frc.robot.commands.Base.Resets.ResetEncodersTeleop;
 import frc.robot.commands.Intake.IntakeSwivelTop;
 import frc.robot.commands.Intake.SetConeMode;
 import frc.robot.commands.Scoring.Lift.MoveLiftToHighPos;

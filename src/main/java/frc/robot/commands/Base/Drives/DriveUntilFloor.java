@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Base;
+package frc.robot.commands.Base.Drives;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -10,14 +10,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Base;
 import static frc.robot.Constants.*;
 
-public class DriveUntilStationBackwards extends CommandBase {
+public class DriveUntilFloor extends CommandBase {
   private Base base;
 
-  // private double offStationSpeed = -0.8;
-  private double offStationSpeed = -0.55;
+  private int stage = 1;
+  private double overStationSpeed = 0.4;
 
   /** Creates a new AutoBalance. */
-  public DriveUntilStationBackwards(Base base) {
+  public DriveUntilFloor(Base base) {
     this.base = base;
     addRequirements(base);
   }
@@ -31,18 +31,22 @@ public class DriveUntilStationBackwards extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    base.drive(offStationSpeed, 0, 0, true, KPhysicalMaxDriveSpeedMPS);
+    SmartDashboard.putNumber("pitchhhhh", base.getPitch());
+    base.drive(overStationSpeed, 0, 0, true, KPhysicalMaxDriveSpeedMPS);
+    if (base.getPitch() < -3.5) {
+      stage = 2;
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    
+    base.drive(0, 0, 0, true, KPhysicalMaxDriveSpeedMPS);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(base.getPitch()) > 12;
+    return Math.abs(base.getPitch()) < 2 && stage == 2;
   }
 }

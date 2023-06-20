@@ -55,22 +55,20 @@ import frc.robot.commands.Scoring.Lift.OuttakeRollers;
 //  Limelight
 import frc.robot.commands.Limelight.LimelightMoveToAprilTag;
 import frc.robot.commands.Limelight.LimelightMoveToConeNode;
-
-// Autons
-import frc.robot.CommandGroups.Auton.ConeHighBalance;
 import frc.robot.CommandGroups.Auton.ConeHighBalanceMobility;
 import frc.robot.CommandGroups.Auton.OpenSideConeHighCubeLowBlue;
 import frc.robot.CommandGroups.Auton.OpenSideConeHighCubeLowRed;
-import frc.robot.CommandGroups.Auton.ConeHighLeave;
-import frc.robot.CommandGroups.Auton.CubeShootBalance;
+import frc.robot.CommandGroups.Auton.ConeOnly.ConeHighBalance;
+import frc.robot.CommandGroups.Auton.ConeOnly.ConeHighLeave;
+import frc.robot.CommandGroups.Auton.CubeOnly.CubeShootBalance;
 import frc.robot.commands.Base.ToggleSpeed;
-import frc.robot.commands.Base.ResetEncoders;
-import frc.robot.commands.Base.ResetEncodersTeleop;
-import frc.robot.commands.Base.ResetGyro;
-import frc.robot.commands.Base.ToggleDefenseMode;
-import frc.robot.commands.Base.SetDefenseModeFalse;
-import frc.robot.commands.Base.SetDefenseModeTrue;
-import frc.robot.commands.Base.DriveWithJoysticks;
+import frc.robot.commands.Base.DefenseMode.SetDefenseModeFalse;
+import frc.robot.commands.Base.DefenseMode.SetDefenseModeTrue;
+import frc.robot.commands.Base.DefenseMode.ToggleDefenseMode;
+import frc.robot.commands.Base.Drives.DriveWithJoysticks;
+import frc.robot.commands.Base.Resets.ResetEncoders;
+import frc.robot.commands.Base.Resets.ResetEncodersTeleop;
+import frc.robot.commands.Base.Resets.ResetGyro;
 
 
 

@@ -7,7 +7,7 @@ package frc.robot.CommandGroups.Auton.OldAuton;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.CommandGroups.Auton.AutoBalanceSequence;
-import frc.robot.commands.Base.ResetEncoders;
+import frc.robot.commands.Base.Resets.ResetEncoders;
 import frc.robot.subsystems.Base;
 import static frc.robot.Constants.*;
 

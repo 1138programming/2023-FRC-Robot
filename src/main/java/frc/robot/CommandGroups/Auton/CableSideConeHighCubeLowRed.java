@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-
-import frc.robot.commands.Base.DriveToPose;
-import frc.robot.commands.Base.ResetEncodersTeleop;
+import frc.robot.CommandGroups.Auton.ConeOnly.ConeHigh;
+import frc.robot.commands.Base.Drives.DriveToPose;
+import frc.robot.commands.Base.Resets.ResetEncodersTeleop;
 import frc.robot.commands.Intake.IntakeSwivelBottom;
 import frc.robot.commands.Intake.IntakeSpaghettiShoot;
 import frc.robot.commands.Intake.IntakeSwivelAndCollect;

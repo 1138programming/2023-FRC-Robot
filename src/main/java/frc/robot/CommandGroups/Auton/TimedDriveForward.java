@@ -7,10 +7,8 @@ package frc.robot.CommandGroups.Auton;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-
-import frc.robot.commands.Base.ResetEncoders;
-import frc.robot.commands.Base.DriveForward;
-
+import frc.robot.commands.Base.Drives.DriveForward;
+import frc.robot.commands.Base.Resets.ResetEncoders;
 import frc.robot.subsystems.Base;
 import static frc.robot.Constants.*;
 

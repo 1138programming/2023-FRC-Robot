@@ -2,25 +2,23 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Base;
+package frc.robot.commands.Base.Resets;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Base;
 
-public class ResetGyroOffset extends CommandBase {
+public class ResetOdometry extends CommandBase {
   private Base base;
-  private double offset;
   /** Creates a new ResetEncoders. */
-  public ResetGyroOffset(Base base, double offset) {
+  public ResetOdometry(Base base) {
     this.base = base;
-    this.offset = offset;
     addRequirements(base);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    base.resetGyro(offset);
+    base.resetOdometry();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

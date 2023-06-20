@@ -2,39 +2,30 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Base;
+package frc.robot.commands.Base.Drives;
 
-import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Base;
-import frc.robot.subsystems.Intake;
 import static frc.robot.Constants.*;
 
-public class SetDefenseModeFalse extends CommandBase {
+public class DriveBackward extends CommandBase {
   private Base base;
-  private Intake intake;
-  /** Creates a new SetDefenseModeFalse. */
-  public SetDefenseModeFalse(Base base, Intake intake) {
+  /** Creates a new DriveForward. */
+  public DriveBackward(Base base) {
     this.base = base;
-    this.intake = intake;
-    addRequirements(base, intake);
+    addRequirements(base);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    base.setDefenseMode(false);
-    if (intake.getObjectMode() == KConeMode) {
-      intake.setConeMode();
-    }
-    else {
-      intake.setCubeMode();
-    }
-  }
+  public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.l  @Override
-  public void execute() {}
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+    base.drive(-0.3, 0, 0, true, KPhysicalMaxDriveSpeedMPS);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -43,6 +34,6 @@ public class SetDefenseModeFalse extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

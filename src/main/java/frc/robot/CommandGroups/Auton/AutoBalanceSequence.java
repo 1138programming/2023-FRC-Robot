@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Base.AutoBalance;
-import frc.robot.commands.Base.DriveToPose;
-import frc.robot.commands.Base.DriveUntilStation;
-import frc.robot.commands.Base.ResetOdometry;
+import frc.robot.commands.Base.Drives.DriveToPose;
+import frc.robot.commands.Base.Drives.DriveUntilStation;
+import frc.robot.commands.Base.Resets.ResetOdometry;
 import frc.robot.subsystems.Base;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
