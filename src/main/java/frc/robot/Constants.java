@@ -427,8 +427,8 @@ public final class Constants {
   // public static final double KliftShelfGrabEncoderVal = 6980;
   // public static final double KLiftMidScoreEncoderVal = 3.60;
   
-  public static final double KFlipperOffShelfPos = 128; // TBD
-  public static final double KFlipperStowedPos = 10;  // TBD
+  public static final double KFlipperOffShelfPos = 138; // TBD
+  public static final double KFlipperStowedPos = 19;  // TBD
   
   public static final double KFlipperSwivelSpeed = 0.1;
   public static final double KFlipperDeadzone = 0.5;

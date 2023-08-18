@@ -327,6 +327,7 @@ public class RobotContainer {
     comp10.onFalse(moveLiftToReadyPos);
     comp11.onTrue(moveLiftToLowPos);
     comp12.whileTrue(intakeShootOut);
+    comp12.onFalse(intakeSwivelTop);
     comp13.whileTrue(intakeSwivelBottom);
     comp13.onFalse(intakeSwivelTop);
     comp14.onTrue(intakeSwivelBottomNoCollect);

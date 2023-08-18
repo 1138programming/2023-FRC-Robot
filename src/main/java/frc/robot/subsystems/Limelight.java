@@ -19,9 +19,6 @@ public class Limelight extends SubsystemBase {
   private String aprilTagsPipeline = "AprilTags";
   private String tapePipeline = "Tape";
   private String defaultPipeline = "limelight";
-
-  
-  
   private double targetFound;
   private double x;
   private double y;

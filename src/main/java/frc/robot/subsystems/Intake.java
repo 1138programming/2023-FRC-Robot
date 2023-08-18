@@ -134,6 +134,7 @@ public class Intake extends SubsystemBase {
   public void spaghettiSpinReverse(double speed) {
     spaghetti.set(ControlMode.PercentOutput, -speed);
   }
+  
   public void spaghettiSpinReverse() {
     if (intakeMode) {
       spaghetti.set(ControlMode.PercentOutput, -KIntakeConeSpaghettitSpeed);
@@ -149,8 +150,6 @@ public class Intake extends SubsystemBase {
       ledBuffer.setRGB(i, R, G, B);
     }
     ledStrip.setData(ledBuffer);
-    // ledStrip.
-    // ledStrip.start();
   }
 
 

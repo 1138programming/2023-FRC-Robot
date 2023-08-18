@@ -24,7 +24,7 @@ public class IntakeSpaghettiShoot extends CommandBase {
   @Override
   public void execute() {
     intake.spaghettiSpinReverse(0.85);
-    intake.swivelSpinToPos(KIntakeSwivelShootPos);
+    // intake.swivelSpinToPos(KIntakeSwivelShootPos);
   }
 
   // Called once the command ends or is interrupted.

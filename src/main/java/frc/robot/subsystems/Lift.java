@@ -228,6 +228,5 @@ public class Lift extends SubsystemBase {
     lift.set(0);
     flipperRoller.set(0);
     flipperSwivel.set(ControlMode.PercentOutput, 0);
-    // moveFlipperSwivel(flipperController.calculate(getFlipperPosRaw(), lastFlipperPos));
   }
 }
