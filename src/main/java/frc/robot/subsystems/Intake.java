@@ -8,9 +8,7 @@ import static frc.robot.Constants.*;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -27,14 +25,13 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 
 public class Intake extends SubsystemBase {
-  private TalonSRX swivel;
   // "spaghetti" refers to the spaghetti-looking motors that actually do the intaking.
   private TalonSRX spaghetti;
+  private TalonSRX swivel;
 
   private CANCoder intakeSwivelCanCoder; 
 
   private PIDController intakeController;
-  private SlewRateLimiter intakeSlewRateLimiter = new SlewRateLimiter(0.5);
 
   private DigitalInput intakeTopLimit;
   private DigitalInput intakeBottomLimit;
@@ -45,12 +42,9 @@ public class Intake extends SubsystemBase {
   AddressableLEDBuffer ledBuffer;
 
   private boolean intakeMode;
-  private boolean defenseMode = false;
 
   private double finalCancoderVal;
   private double lastSwivelPos;
-
-  private SlewRateLimiter swivelLimiter;
 
   public Intake() {
     SmartDashboard.putNumber("IntakeSwivelPid P", KIntakeP);
@@ -67,7 +61,6 @@ public class Intake extends SubsystemBase {
     spaghetti.setInverted(true); 
 
     intakeController = new PIDController(KIntakeP, KIntakeI, KIntakeD);
-    // intakeController.
 
     intakeBottomLimit = new DigitalInput(KIntakeBottomLimitId);
     intakeTopLimit = new DigitalInput(KIntakeTopLimitId);
@@ -78,9 +71,7 @@ public class Intake extends SubsystemBase {
     ledStrip.setLength(ledBuffer.getLength());
     ledStrip.setData(ledBuffer);
     ledStrip.start();
-    
-    swivelLimiter = new SlewRateLimiter(1);
-    
+        
     config = new CANCoderConfiguration();
     
     config.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
@@ -100,10 +91,6 @@ public class Intake extends SubsystemBase {
 
   @Override 
   public void periodic() {
-    // intakeController.setP(SmartDashboard.getNumber("IntakeSwivelPid P", KIntakeP));
-    // intakeController.setI(SmartDashboard.getNumber("IntakeSwivelPid I", KIntakeI));
-    // intakeController.setD(SmartDashboard.getNumber("IntakeSwivelPid D", KIntakeD));
-
 
     SmartDashboard.putBoolean("Mode", intakeMode);
     SmartDashboard.putNumber("Swivel Cancoder", getSwivelEncoder());
@@ -112,9 +99,12 @@ public class Intake extends SubsystemBase {
     SmartDashboard.putBoolean("limit INTAKE", getTopLimitSwitch());
 
     if (getTopLimitSwitch()) {
-      setIntakeEncoder(0);
       resetSwivelEncoder();
     }
+    if (getBottumLimitSwitch()) {
+      resetSwivelEncoder();
+    }
+    
     
   }
 
@@ -159,7 +149,6 @@ public class Intake extends SubsystemBase {
   
   public void setCubeMode() {
     intakeMode = KCubeMode;
-    defenseMode = false; 
 
     // set the led strip to purple
     setLEDToColor(119, 11, 219);
@@ -167,8 +156,7 @@ public class Intake extends SubsystemBase {
 
   public void setConeMode() {
     intakeMode = KConeMode;
-    defenseMode = false; 
-    
+
     // yellow
     setLEDToColor(150, 150, 0);
   }
@@ -184,6 +172,13 @@ public class Intake extends SubsystemBase {
 
   public void swivelSpinToPos(double setPoint) {
     double speed = -intakeController.calculate(getSwivelEncoder(), setPoint);
+    double maxspeed = 0.8;
+    if (speed >= maxspeed) {
+      speed = maxspeed;
+    }
+    else if (speed <= -maxspeed) {
+      speed = -maxspeed;
+    }
     SmartDashboard.putNumber("swivel speed!", speed);
     moveSwivel(speed);
   }
@@ -227,6 +222,9 @@ public class Intake extends SubsystemBase {
 
   public boolean getTopLimitSwitch() {
     return intakeTopLimit.get();
+  }
+  public boolean getBottumLimitSwitch() {
+    return intakeBottomLimit.get(); 
   }
   
   public void setLastEncoderPos(double lastEncoderPos) {

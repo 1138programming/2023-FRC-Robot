@@ -42,7 +42,7 @@ public class IntakeSwivelBottom extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
-    // return Math.abs(intake.getSwivelEncoder() - intakeSetpoint) < KIntakeSwivelOffset;
+    // return false;
+    return Math.abs(intake.getSwivelEncoder() - intakeSetpoint) < KIntakeSwivelOffset;
   }
 }

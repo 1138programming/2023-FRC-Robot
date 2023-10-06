@@ -10,6 +10,7 @@ import static frc.robot.Constants.*;
 
 public class IntakeMoveSwivelDown extends CommandBase {
   private Intake intake;
+  
   /** Creates a new IntakeSwivelUp. */
   public IntakeMoveSwivelDown(Intake intake) {
     this.intake = intake;

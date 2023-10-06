@@ -43,9 +43,6 @@ public class Base extends SubsystemBase {
 
   private double xyP = 0;
   private double rotP = 0;
-
-  private boolean fastSpeedButton;
-  private boolean slowSpeedButton;
   
   public Base() {
     frontLeftModule = new SwerveModule(
@@ -89,17 +86,13 @@ public class Base extends SubsystemBase {
       KBackLeftLocation, KBackRightLocation
     );
     odometry = new SwerveDriveOdometry(kinematics, getHeading(), getPositions());
+    
     driveSpeedFactor = KBaseDriveMidPercent;
     rotSpeedFactor = KBaseRotMidPercent;
-
-    fastSpeedButton = false;
-    slowSpeedButton = false;
 
     SmartDashboard.putNumber("X and Y PID", 0);
     SmartDashboard.putNumber("rot P", 0);
   }
-
-  // public double driv
 
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, double maxDriveSpeedMPS) {
     xSpeed *= maxDriveSpeedMPS;
@@ -211,10 +204,7 @@ public class Base extends SubsystemBase {
   }
 
   public double getHeadingDeg() {
-    // return -gyro.getRoll();
-    // return -gyro.getPitch();
     return -gyro.getAngle();
-    // return 0;
   }
 
   public double getRoll() {

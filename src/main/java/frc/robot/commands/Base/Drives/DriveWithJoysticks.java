@@ -20,22 +20,13 @@ public class DriveWithJoysticks extends CommandBase {
   private double lrSpeed; //Speed of the robot in the Y direction (sideways).
   private double rot;
 
-  private PIDController rotationCorrectionPID;
-  private double initHeading;
-
   private double kRotationP = 0.005;
   private double kRotationI = 0;
   private double kRotationD = 0;
 
-  private SlewRateLimiter joystickLimiter;
-
   /** Creates a new DriveWithJoysticks. */
   public DriveWithJoysticks(Base base) {
     this.base = base;
-  
-    rotationCorrectionPID = new PIDController(kRotationP, kRotationI, kRotationD);
-    joystickLimiter = new SlewRateLimiter(3);
-
 
     addRequirements(base);
   }
@@ -52,18 +43,7 @@ public class DriveWithJoysticks extends CommandBase {
     fbSpeed = Robot.m_robotContainer.getLogiLeftYAxis();
     lrSpeed = Robot.m_robotContainer.getLogiLeftXAxis();
     
-    // fbSpeed = joystickLimiter.calculate(Robot.m_robotContainer.getLogiLeftYAxis());
-    // lrSpeed = joystickLimiter.calculate(Robot.m_robotContainer.getLogiLeftXAxis());
-    // SmartDashboard.putNumber(getName(), KAngleD)
-    
     rot = Robot.m_robotContainer.getLogiRightXAxis();
-
-    // if (Math.abs(rot) <= 0.01 && (Math.abs(fbSpeed) >= 0.01 || Math.abs(lrSpeed) >= 0.01)) {
-    //   rot = rotationCorrectionPID.calculate(base.getHeadingDeg(), initHeading);
-    // }
-    // else {
-    //   initHeading = base.getHeadingDeg();
-    // }
 
     base.drive(fbSpeed, lrSpeed, rot, true, KPhysicalMaxDriveSpeedMPS * base.getDriveSpeedFactor());
   }

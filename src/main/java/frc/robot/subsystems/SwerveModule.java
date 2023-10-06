@@ -54,7 +54,6 @@ public class SwerveModule extends SubsystemBase {
     
     this.driveMotor.setSmartCurrentLimit(KDriveMotorCurrentLimit);
     this.angleMotor.setSmartCurrentLimit(KAngleMotorCurrentLimit);
-    // this.angleMotor.setSmartCurrentLimit(20);
 
     CANCoderConfiguration config = new CANCoderConfiguration();
 
@@ -99,19 +98,11 @@ public class SwerveModule extends SubsystemBase {
     desiredState = SwerveModuleState.optimize(desiredState, currentAngleR2D);
     angleMotorOutput = angleController.calculate(getAngleDeg(), desiredState.angle.getDegrees());
     
-    // driveMotorOutput = feedforward.calculate(desiredState.speedMetersPerSecond);
     driveMotorOutput = desiredState.speedMetersPerSecond / KPhysicalMaxDriveSpeedMPS;
-    // SmartDashboard.putNumber("MPS speed " + driveMotor.getDeviceId(), desiredState.speedMetersPerSecond);
-    // driveMotorOutput = desiredState.speedMetersPerSecond / SmartDashboard.getNumber("div", 4.6);
-
-    // double velocityOutput = driveController.calculate(getDriveEncoderVel(), desiredState.speedMetersPerSecond);
     
     // Angle calculation
-    // SmartDashboard.putNumber("driveOutput " + driveMotor.getDeviceId(), driveMotorOutput);
-    // SmartDashboard.putNumber("current " + driveMotor.getDeviceId(), driveMotor.getOutputCurrent());
     angleMotor.set(angleMotorOutput);
     driveMotor.set(driveMotorOutput);
-    // driveMotor.setVoltage(driveMotorOutput);
   }
   
   public void lockWheel() {
