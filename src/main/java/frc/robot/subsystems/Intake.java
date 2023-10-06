@@ -179,10 +179,9 @@ public class Intake extends SubsystemBase {
     else if (speed <= -maxspeed) {
       speed = -maxspeed;
     }
-    SmartDashboard.putNumber("swivel speed!", speed);
     moveSwivel(speed);
   }
-
+  
   /**
    * Moves the swivel at a certain speed
    * @param speed
@@ -197,6 +196,7 @@ public class Intake extends SubsystemBase {
       swivel.set(ControlMode.PercentOutput, speed);
     }
     lastSwivelPos = getSwivelEncoder();
+    SmartDashboard.putNumber("swivel speed!", speed);
   }
 
   public void setIntakeEncoder(double position) {

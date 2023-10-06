@@ -196,8 +196,8 @@ public final class Constants {
   public static final double KIntakeSwivelOffset = 1;
   public static final double KIntakeSwivelTopPos = 19;
   public static final double KIntakeSwivelShootPos = 59;
-  // public static final double KSwivelBottomPosition = 120;
-  public static final double KSwivelBottomPosition = 137;
+  public static final double KSwivelBottomPosition = 120;
+  // public static final double KSwivelBottomPosition = 137;
 
   //Speeds and stuff
   public static final double KIntakeConeSpaghettitSpeed = 0.8;
