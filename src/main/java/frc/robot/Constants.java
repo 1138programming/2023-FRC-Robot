@@ -139,21 +139,10 @@ public final class Constants {
   // public static final int KDriveHighSpeed = 3;
   
     // Offsets for absolute encoders, used to set up angle encoders
-    // public static final double KFrontLeftOffset = -77.90;
-    // public static final double KFrontRightOffset = -217;
-    // public static final double KBackLeftOffset = -54.67;
-    // public static final double KBackRightOffset = -75.23; 
     public static final double KFrontLeftOffset = -257.90;
     public static final double KFrontRightOffset = -37.00;
     public static final double KBackLeftOffset = -234.67;
-    public static final double KBackRightOffset = -255.23; 
-    
-  
-  // public static final double KFrontLeftOffset = -147.22;
-  // public static final double KFrontRightOffset = -36.56;
-  // public static final double KBackLeftOffset = -340.14;
-  // public static final double KBackRightOffset = -47.37;
-  
+    public static final double KBackRightOffset = -255.23;  
   
     // Describes the locations of the swerve modules relative to the center of the robot
   // Important for kinematics
@@ -193,11 +182,10 @@ public final class Constants {
   
   public static final double KIntakeOffset = 150;
   public static final double KIntakeSwivelOffset = 1;
-  // public static final double KIntakeSwivelTopPos = 19;
   public static final double KIntakeSwivelTopPos = 29;
   public static final double KIntakeSwivelShootPos = 59;
   public static final double KSwivelBottomPosition = 140;
-  // public static final double KSwivelBottomPosition = 137;
+  public static final double KSwivelGearRatio = 14/34;
 
   //Speeds and stuff
   public static final double KIntakeConeSpaghettitSpeed = 0.8;
@@ -205,6 +193,7 @@ public final class Constants {
   public static final double KIntakeCubeSpaghettitSpeed = 0.8; // CHANGE 
   
   public static final double KIntakeSwivelSpeed = 0.45;  
+  public static final double KIntakeSwivelMaxPassiveSpeed = 0.25;
   
   
   

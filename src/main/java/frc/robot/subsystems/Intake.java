@@ -112,12 +112,6 @@ public class Intake extends SubsystemBase {
    * Spins the "spaghetti" motors (the spinners in the intake)
    */
   public void spaghettiSpin() {
-    // if (intakeMode) {
-    //   spaghetti.set(ControlMode.PercentOutput, KIntakeConeSpaghettitSpeed);
-    // }
-    // else if (!intakeMode) {
-    //   spaghetti.set(ControlMode.PercentOutput, KIntakeCubeSpaghettitSpeed);
-    // }
     spaghetti.set(ControlMode.PercentOutput, KIntakeCubeSpaghettitSpeed);
   }
   
@@ -126,22 +120,15 @@ public class Intake extends SubsystemBase {
   }
   
   public void spaghettiSpinReverse() {
-    if (intakeMode) {
-      spaghetti.set(ControlMode.PercentOutput, -KIntakeConeSpaghettitSpeed);
-    }
-    else if (!intakeMode) {
-      spaghetti.set(ControlMode.PercentOutput, -KIntakeCubeSpaghettitSpeed);
-    }
+    spaghetti.set(ControlMode.PercentOutput, -KIntakeCubeSpaghettitSpeed);
   }
 
   public void setLEDToColor(int R, int G, int B) {
-    // ledsOff();
     for (int i = 0; i < ledBuffer.getLength(); i++) {
       ledBuffer.setRGB(i, R, G, B);
     }
     ledStrip.setData(ledBuffer);
   }
-
 
   public void ledsOff() {
     ledStrip.stop();
@@ -187,8 +174,6 @@ public class Intake extends SubsystemBase {
    * @param speed
    */
   public void moveSwivel(double speed) {
-    // if (intakeSwivelCanCoder.)
-    // May need a rate limiter...
     if (speed > 0 && getTopLimitSwitch()) {
       swivel.set(ControlMode.PercentOutput, 0);
     }
@@ -196,7 +181,6 @@ public class Intake extends SubsystemBase {
       swivel.set(ControlMode.PercentOutput, speed);
     }
     lastSwivelPos = getSwivelEncoder();
-    SmartDashboard.putNumber("swivel speed!", speed);
   }
 
   public void setIntakeEncoder(double position) {
@@ -204,11 +188,11 @@ public class Intake extends SubsystemBase {
   }
   
   public void resetSwivelEncoder() {
-    finalCancoderVal  = getSwivelEncoder() % (360 * 14/32);
+    finalCancoderVal  = getSwivelEncoder() % (360 * KSwivelGearRatio);
   }
   public double getSwivelEncoder() {
     if (getSwivelEncoderRaw() < 50 && finalCancoderVal >= 100) {
-      finalCancoderVal = 360 * 14/34 + getSwivelEncoderRaw();
+      finalCancoderVal = 360 * KSwivelGearRatio + getSwivelEncoderRaw();
     }
     else {
       finalCancoderVal = getSwivelEncoderRaw();
@@ -217,7 +201,7 @@ public class Intake extends SubsystemBase {
   }
 
   public double getSwivelEncoderRaw() {
-    return intakeSwivelCanCoder.getAbsolutePosition() * 14/34;
+    return intakeSwivelCanCoder.getAbsolutePosition() * KSwivelGearRatio;
   }
 
   public boolean getTopLimitSwitch() {
@@ -231,16 +215,12 @@ public class Intake extends SubsystemBase {
     lastSwivelPos = lastEncoderPos;
   }
 
-  public void resetPIDController() {
-    // intakeController.reset();
-  }
-
   public void intakeStop() {
     double swivelSpeed = -intakeController.calculate(getSwivelEncoder(), lastSwivelPos);
-    if (swivelSpeed < -0.25) {
-      swivelSpeed = -0.25;
-    } else if (swivelSpeed > 0.25) {
-      swivelSpeed = 0.25;
+    if (swivelSpeed < -KIntakeSwivelMaxPassiveSpeed) {
+      swivelSpeed = -KIntakeSwivelMaxPassiveSpeed;
+    } else if (swivelSpeed > KIntakeSwivelMaxPassiveSpeed) {
+      swivelSpeed = KIntakeSwivelMaxPassiveSpeed;
     }
     swivel.set(ControlMode.PercentOutput, swivelSpeed);
     // swivel.set(ControlMode.PercentOutput, 0);

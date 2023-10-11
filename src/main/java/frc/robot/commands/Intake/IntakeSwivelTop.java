@@ -40,7 +40,6 @@ public class IntakeSwivelTop extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     intake.setLastEncoderPos(KIntakeSwivelTopPos);
-    intake.resetPIDController();
   }
 
   // Returns true when the command should end.
