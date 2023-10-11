@@ -225,7 +225,7 @@ public class Base extends SubsystemBase {
   public void periodic() {
     // SmartDashboard.putNumber("pitch", getPitch());
     // SmartDashboard.putBoolean("DEFENSE MODE", getDefenseMode());
-    // SmartDashboard.putNumber("Gyro", getHeadingDeg());
+    SmartDashboard.putNumber("Gyro", getHeadingDeg());
 
     // SmartDashboard.putNumber("Front left module", frontLeftModule.getAngleDeg());
     // SmartDashboard.putNumber("Front right module", frontRightModule.getAngleDeg());

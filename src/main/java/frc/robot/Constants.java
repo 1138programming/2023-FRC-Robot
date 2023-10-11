@@ -118,8 +118,7 @@ public final class Constants {
   
   public static final double KAngleMotorRotToDeg = 35;
   public static final double KPhysicalMaxDriveSpeedMPS = KNeoMaxRPM * KDriveMotorRPMToMetersPerSec;
-  // public static final double KPhysicalMaxDriveSpeedMPS = 4.45;
-  public static final double KMaxAngularSpeed = 3.5; // MAY NEED CHANGING
+  public static final double KMaxAngularSpeed = 3.5; 
 
   public static final double KTimedDriveSpeed = 0.3;
   
@@ -194,9 +193,10 @@ public final class Constants {
   
   public static final double KIntakeOffset = 150;
   public static final double KIntakeSwivelOffset = 1;
-  public static final double KIntakeSwivelTopPos = 19;
+  // public static final double KIntakeSwivelTopPos = 19;
+  public static final double KIntakeSwivelTopPos = 29;
   public static final double KIntakeSwivelShootPos = 59;
-  public static final double KSwivelBottomPosition = 120;
+  public static final double KSwivelBottomPosition = 140;
   // public static final double KSwivelBottomPosition = 137;
 
   //Speeds and stuff
@@ -383,7 +383,11 @@ public final class Constants {
   // Poses for DriveToPose autons
   public static final Pose2d KOpenSideCubePickupBlue = new Pose2d(4.3, -0.45, new Rotation2d());
   public static final Pose2d KOpenSideBackToCommunityBlue = new Pose2d(0.5, -0.2, Rotation2d.fromDegrees(145));
-  public static final Pose2d KOpenSideShootPositionBlue = new Pose2d(0.2, -0.2, Rotation2d.fromDegrees(180));
+  public static final Pose2d KOpenSideShootPositionBlue = new Pose2d(0.27, -0.2, Rotation2d.fromDegrees(180));
+
+  public static final Pose2d KOpenSideCubePickupRed = new Pose2d(4.3, 0.45, new Rotation2d());
+  public static final Pose2d KOpenSideBackToCommunityRed = new Pose2d(0.5, 0.2, Rotation2d.fromDegrees(145));
+  public static final Pose2d KOpenSideShootPositionRed = new Pose2d(0.27, 0.2, Rotation2d.fromDegrees(180));
 
   public static final Pose2d KCableSideCubePickupBlue = new Pose2d(4.3, 0.45, new Rotation2d());
   public static final Pose2d KCableSideCrossCableBlue = new Pose2d(2.85, 0.28, new Rotation2d());
@@ -391,9 +395,6 @@ public final class Constants {
   public static final Pose2d KCableSideBackToCommunityBlue = new Pose2d(0.3, 0, new Rotation2d());
   public static final Pose2d KCableSideShootPositionBlue = new Pose2d(0.3, 0, Rotation2d.fromDegrees(180));
   
-  public static final Pose2d KOpenSideCubePickupRed = new Pose2d(4.3, 0.45, new Rotation2d());
-  public static final Pose2d KOpenSideBackToCommunityRed = new Pose2d(0.5, 0.2, Rotation2d.fromDegrees(145));
-  public static final Pose2d KOpenSideShootPositionRed = new Pose2d(0.2, 0.2, Rotation2d.fromDegrees(180));
   
   public static PathConstraints KPathPLannerConstraints = new PathConstraints(KPPMaxVelocity, KPPMaxAcceleration);
 
@@ -428,13 +429,13 @@ public final class Constants {
   // public static final double KLiftMidScoreEncoderVal = 3.60;
   
   public static final double KFlipperOffShelfPos = 138; // TBD
-  public static final double KFlipperStowedPos = 19;  // TBD
+  public static final double KFlipperStowedPos = 25;  // TBD
   
   public static final double KFlipperSwivelSpeed = 0.1;
   public static final double KFlipperDeadzone = 0.5;
 
-  // public static final double KFlipperSwivelOffset = 328;
-  public static final double KFlipperSwivelOffset = 318;
+  public static final double KFlipperSwivelOffset = 223;
+  // public static final double KFlipperSwivelOffset = 318;
 
   public static final double KFlipperMaxSpeed = 0.5;
   public static final double KFlipperMinSpeed = 0.15;

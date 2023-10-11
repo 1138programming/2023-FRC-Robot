@@ -55,6 +55,7 @@ import frc.robot.commands.Scoring.Lift.OuttakeRollers;
 //  Limelight
 import frc.robot.commands.Limelight.LimelightMoveToAprilTag;
 import frc.robot.commands.Limelight.LimelightMoveToConeNode;
+import frc.robot.CommandGroups.Auton.CableSideConeHighCubeLowRed;
 import frc.robot.CommandGroups.Auton.ConeHighBalanceMobility;
 import frc.robot.CommandGroups.Auton.OpenSideConeHighCubeLowBlue;
 import frc.robot.CommandGroups.Auton.OpenSideConeHighCubeLowRed;
@@ -355,6 +356,9 @@ public class RobotContainer {
    */ 
   public Command getAutonomousCommand()
   {
+    // return new OpenSideConeHighCubeLowBlue(base, intake, limelight, lift);
+    // return new OpenSideConeHighCubeLowRed(base, intake, limelight, lift);
+    // return coneHighLeave;
     return coneHighBalance;
   }
 

@@ -10,6 +10,7 @@ import static frc.robot.Constants.*;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class DriveWithJoysticks extends CommandBase {
@@ -46,6 +47,8 @@ public class DriveWithJoysticks extends CommandBase {
     rot = Robot.m_robotContainer.getLogiRightXAxis();
 
     base.drive(fbSpeed, lrSpeed, rot, true, KPhysicalMaxDriveSpeedMPS * base.getDriveSpeedFactor());
+    SmartDashboard.putNumber("fbSpeed", fbSpeed);
+    SmartDashboard.putNumber("lrSpeed", lrSpeed);
   }
 
   // Called once the command ends or is interrupted.

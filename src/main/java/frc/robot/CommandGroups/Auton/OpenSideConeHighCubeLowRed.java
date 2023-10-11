@@ -52,13 +52,12 @@ public class OpenSideConeHighCubeLowRed extends SequentialCommandGroup {
       new ParallelRaceGroup(
         new DriveToPose(base, KOpenSideBackToCommunityRed),
         new IntakeSwivelTop(intake),
-        // new IntakeUpAuton(intake, 3),
         new WaitCommand(3)
       ),
-      new ParallelRaceGroup(
+      new ParallelDeadlineGroup(
+        new WaitCommand(2.3),
         new DriveToPose(base, KOpenSideShootPositionRed),
-        new IntakeSwivelBottom(intake),
-        new WaitCommand(2)
+        new IntakeSwivelBottom(intake)
       ),
       new ParallelDeadlineGroup(
         new WaitCommand(1), 

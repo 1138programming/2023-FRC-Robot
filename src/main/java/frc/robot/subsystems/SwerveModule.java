@@ -97,6 +97,7 @@ public class SwerveModule extends SubsystemBase {
     Rotation2d currentAngleR2D = getAngleR2D();
     desiredState = SwerveModuleState.optimize(desiredState, currentAngleR2D);
     angleMotorOutput = angleController.calculate(getAngleDeg(), desiredState.angle.getDegrees());
+    SmartDashboard.putNumber("desired state " + driveMotor.getDeviceId(), desiredState.speedMetersPerSecond);
     
     driveMotorOutput = desiredState.speedMetersPerSecond / KPhysicalMaxDriveSpeedMPS;
     
