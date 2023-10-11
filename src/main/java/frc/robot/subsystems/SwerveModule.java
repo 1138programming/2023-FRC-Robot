@@ -88,7 +88,9 @@ public class SwerveModule extends SubsystemBase {
   }
   
   @Override
-  public void periodic() {}
+  public void periodic() {
+    SmartDashboard.putNumber("cancoder angle " + driveMotor.getDeviceId(), canCoder.getAbsolutePosition());
+  }
   
   public void setDesiredState(SwerveModuleState desiredState) {
     double angleMotorOutput;
@@ -97,7 +99,7 @@ public class SwerveModule extends SubsystemBase {
     Rotation2d currentAngleR2D = getAngleR2D();
     desiredState = SwerveModuleState.optimize(desiredState, currentAngleR2D);
     angleMotorOutput = angleController.calculate(getAngleDeg(), desiredState.angle.getDegrees());
-    SmartDashboard.putNumber("desired state " + driveMotor.getDeviceId(), desiredState.speedMetersPerSecond);
+    // SmartDashboard.putNumber("angle " + driveMotor.getDeviceId(), );
     
     driveMotorOutput = desiredState.speedMetersPerSecond / KPhysicalMaxDriveSpeedMPS;
     
