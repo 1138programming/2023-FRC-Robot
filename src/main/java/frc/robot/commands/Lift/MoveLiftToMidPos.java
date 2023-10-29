@@ -37,7 +37,7 @@ public class MoveLiftToMidPos extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(liftSetpoint - lift.getLiftPos()) < KLiftDeadzone) 
+    return (Math.abs(liftSetpoint - lift.getLiftPos()) < KLiftDeadzone)
       && (Math.abs(flipperSetpoint - lift.getFlipperPos()) < KFlipperDeadzone);
   }
 }

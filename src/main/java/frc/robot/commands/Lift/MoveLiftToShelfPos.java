@@ -33,13 +33,11 @@ public class MoveLiftToShelfPos extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     lift.moveLift(0);
-
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return (Math.abs(setpoint - lift.getLiftPos()) < KLiftDeadzone);
     return false;
   }
 }

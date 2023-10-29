@@ -13,7 +13,6 @@ public class FlipperOuttake extends CommandBase {
   public FlipperOuttake(Lift lift) {
     this.lift = lift;
     addRequirements(lift);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -23,7 +22,6 @@ public class FlipperOuttake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // lift.spinRoller(-0.5);
     lift.outtakeRoller();
   }
 

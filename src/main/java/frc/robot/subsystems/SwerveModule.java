@@ -14,7 +14,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -37,9 +36,7 @@ public class SwerveModule extends SubsystemBase {
   private double offset;
 
   private SimpleMotorFeedforward feedforward;
-  private PIDController driveController;  
-
-  private SlewRateLimiter speedLimiter;
+  private PIDController driveController;
 
   public SwerveModule(int angleMotorID, int driveMotorID, int encoderPort, double offset, 
                       boolean driveMotorReversed, boolean angleMotorReversed) {
@@ -54,15 +51,13 @@ public class SwerveModule extends SubsystemBase {
     
     this.driveMotor.setSmartCurrentLimit(KDriveMotorCurrentLimit);
     this.angleMotor.setSmartCurrentLimit(KAngleMotorCurrentLimit);
-
+    
     CANCoderConfiguration config = new CANCoderConfiguration();
-
     config.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
     config.absoluteSensorRange = AbsoluteSensorRange.Signed_PlusMinus180;
     config.sensorDirection = false;
     config.magnetOffsetDegrees = offset;
-
-
+    
     canCoder = new CANCoder(encoderPort);
     canCoder.configAllSettings(config);
     canCoder.setPositionToAbsolute();
@@ -78,32 +73,23 @@ public class SwerveModule extends SubsystemBase {
     angleController = new PIDController(KAngleP, KAngleI, KAngleD);
     angleController.enableContinuousInput(-180, 180); // Tells PIDController that 180 deg is same in both directions
 
-
     setAbsoluteOffset(offset);
     // this.driveMotor.burnFlash();
     feedforward = new SimpleMotorFeedforward(ks, kv, ka);
     driveController = new PIDController(0.64442, 0, 0);
-
-    SmartDashboard.putNumber("div", 4.6);
   }
   
-  @Override
-  public void periodic() {
-    SmartDashboard.putNumber("cancoder angle " + driveMotor.getDeviceId(), canCoder.getAbsolutePosition());
-  }
   
   public void setDesiredState(SwerveModuleState desiredState) {
     double angleMotorOutput;
     double driveMotorOutput;
-
+    
     Rotation2d currentAngleR2D = getAngleR2D();
     desiredState = SwerveModuleState.optimize(desiredState, currentAngleR2D);
     angleMotorOutput = angleController.calculate(getAngleDeg(), desiredState.angle.getDegrees());
-    // SmartDashboard.putNumber("angle " + driveMotor.getDeviceId(), );
     
     driveMotorOutput = desiredState.speedMetersPerSecond / KPhysicalMaxDriveSpeedMPS;
     
-    // Angle calculation
     angleMotor.set(angleMotorOutput);
     driveMotor.set(driveMotorOutput);
   }
@@ -116,26 +102,26 @@ public class SwerveModule extends SubsystemBase {
     else {
       angleMotorOutput = angleController.calculate(getAngleDeg(), -45);
     }
-
+    
     angleMotor.set(angleMotorOutput);
     driveMotor.set(0);
   }
-
+  
   public SwerveModulePosition getPosition() {
     SwerveModulePosition position = new SwerveModulePosition(getDriveEncoderPos(), getAngleR2D());
     return position;
   }
-
+  
   public void stop() {
     driveMotor.set(0);
     angleMotor.set(0);
   }
-
+  
   public void resetRelEncoders() {
     driveEncoder.setPosition(0);
-    angleEncoder.setPosition(getMagDeg());
+    angleEncoder.setPosition(getAngleDeg());
   }
-
+  
   public void setAbsoluteOffset(double offset) {
     this.offset = offset;
   }
@@ -143,7 +129,7 @@ public class SwerveModule extends SubsystemBase {
   public double getAbsoluteOffset() {
     return offset;
   }
-
+  
   // Drive Encoder getters
   public double getDriveEncoderPos() {
     return driveEncoder.getPosition();
@@ -151,22 +137,20 @@ public class SwerveModule extends SubsystemBase {
   public double getDriveEncoderVel() {
     return driveEncoder.getVelocity();
   }
-
+  
   // Angle Encoder getters
   public double getMagDegRaw() {
     double pos = canCoder.getPosition();
     return pos;
   }
-  public double getMagDeg() {
+  public double getAngleDeg() {
     return getMagDegRaw() % 360;
   }
 
-  public double getAngleDeg() {
-    // double angle = angleEncoder.getPosition() % 360;
-    double angle = getMagDeg();
-    return angle;
-  }
   public Rotation2d getAngleR2D() {
     return Rotation2d.fromDegrees(getAngleDeg()); 
   }
+
+  @Override
+  public void periodic() {}
 }

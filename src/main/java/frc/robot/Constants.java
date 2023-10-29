@@ -204,13 +204,10 @@ public final class Constants {
   public static final double KIntakeI = 0.001; // TBD 
   public static final double KIntakeD = 0; // TBD
   
-  // public static final double KIntakeSwivelCanCoderRatio = 1;
-  public static final double KIntakeSwivelCanCoderRatio = 14/34;
+  public static final double KIntakeSwivelCanCoderRatio = 0.41176470588;
 
   // Timing for lift
   public static final double KIntakeThenLiftTime = 0.5;
-  
-  
   
   // Scoring
   public static final int KScoringEncoder1ID = 6; //name can be changed later

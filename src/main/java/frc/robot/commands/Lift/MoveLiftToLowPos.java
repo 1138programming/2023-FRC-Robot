@@ -38,8 +38,7 @@ public class MoveLiftToLowPos extends CommandBase {
   @Override
   public boolean isFinished() {
     return (Math.abs(liftSetpoint - lift.getLiftPos()) < KLiftDeadzone) 
-      && (Math.abs(flipperSetpoint - lift.getFlipperPos()) < KFlipperDeadzone 
-    
+      && (Math.abs(flipperSetpoint - lift.getFlipperPos()) < KFlipperDeadzone
     );
   }
 }

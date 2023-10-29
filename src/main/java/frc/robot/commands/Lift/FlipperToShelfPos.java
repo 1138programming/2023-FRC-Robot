@@ -12,7 +12,7 @@ import static frc.robot.Constants.*;
 public class FlipperToShelfPos extends CommandBase {
   private Lift lift;
   private double setPosition = KFlipperOffShelfPos;
-  
+
   /** Creates a new FlipperToReadyPos. */
   public FlipperToShelfPos(Lift lift) {
     this.lift = lift;

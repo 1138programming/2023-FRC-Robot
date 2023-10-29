@@ -27,7 +27,6 @@ public class MoveLiftToReadyPos extends CommandBase {
     lift.setLiftPos(liftSetpoint);
     lift.flipToPos(flipperSetpoint);
     lift.stopRollers();
-
   }
 
   // Called once the command ends or is interrupted.
@@ -39,9 +38,6 @@ public class MoveLiftToReadyPos extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return (Math.abs(liftSetpoint - lift.getLiftPos()) < KLiftDeadzone) 
-    //   && (Math.abs(flipperSetpoint - lift.getFlipperPos()) < KFlipperDeadzone 
-    // );
     return lift.getBottomLimitSwitch() && (Math.abs(flipperSetpoint - lift.getFlipperPos()) < KFlipperDeadzone);
   }
 }

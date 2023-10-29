@@ -40,6 +40,5 @@ public class MoveLiftToHighPos extends CommandBase {
     return (Math.abs(liftSetpoint - lift.getLiftPos()) < KLiftDeadzone) 
       && (Math.abs(flipperSetpoint - lift.getFlipperPos()) < KFlipperDeadzone 
     );
-    // return (Math.abs(liftSetpoint - lift.getLiftPos()) < KLiftDeadzone);
   }
 }

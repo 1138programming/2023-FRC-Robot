@@ -7,7 +7,6 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -15,7 +14,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -32,17 +30,16 @@ public class Base extends SubsystemBase {
   private AHRS gyro;
 
   private SwerveDriveKinematics kinematics;
- 
   private SwerveDriveOdometry odometry;
   private Pose2d pose;
-
-  private boolean defenseMode = false;
   
   private double driveSpeedFactor;
   private double rotSpeedFactor;
-
+  
   private double xyP = 0;
   private double rotP = 0;
+  
+  private boolean defenseMode = false;
   
   public Base() {
     frontLeftModule = new SwerveModule(
@@ -155,10 +152,6 @@ public class Base extends SubsystemBase {
      );
   }
 
-  // public Command followTrajectoryWPILib(Trajectory traj) {
-  //   // return ne Se
-  // }
-
   public Pose2d getPose() {
     return pose;
   }
@@ -199,10 +192,16 @@ public class Base extends SubsystemBase {
     return positions;
   }
   
+  public void resetOdometry() {
+    resetAllRelEncoders();
+    pose = new Pose2d();
+    
+    odometry.resetPosition(getHeading(), getPositions(), pose);
+  }
+
   public Rotation2d getHeading() {
     return Rotation2d.fromDegrees(getHeadingDeg());
   }
-
   public double getHeadingDeg() {
     return -gyro.getAngle();
   }
@@ -213,58 +212,35 @@ public class Base extends SubsystemBase {
   public double getPitch() {
     return gyro.getPitch();
   }
-
-  public void resetOdometry() {
-    resetAllRelEncoders();
-    pose = new Pose2d();
-    
-    odometry.resetPosition(getHeading(), getPositions(), pose);
-  }
-
-  @Override
-  public void periodic() {
-    // SmartDashboard.putNumber("pitch", getPitch());
-    // SmartDashboard.putBoolean("DEFENSE MODE", getDefenseMode());
-    SmartDashboard.putNumber("Gyro", getHeadingDeg());
-
-    // SmartDashboard.putNumber("Front left module", frontLeftModule.getAngleDeg());
-    // SmartDashboard.putNumber("Front right module", frontRightModule.getAngleDeg());
-    // SmartDashboard.putNumber("Back left module", backLeftModule.getAngleDeg());
-    // SmartDashboard.putNumber("Back right module", backRightModule.getAngleDeg());
-
-    // SmartDashboard.putNumber("front left mag", frontLeftModule.getMagDeg());
-    // SmartDashboard.putNumber("front right mag", frontRightModule.getMagDeg());
-    // SmartDashboard.putNumber("back left mag", backLeftModule.getMagDeg());
-    // SmartDashboard.putNumber("back right mag", backRightModule.getMagDeg());
-
-    SmartDashboard.putString("odometry pose", odometry.getPoseMeters().toString());
-
-    odometry.update(getHeading(), getPositions());
-    pose = odometry.getPoseMeters();
-  }
-
-  public double getDriveSpeedFactor()
-  {
+  
+  public double getDriveSpeedFactor() {
     return driveSpeedFactor;
   }
-  public void setDriveSpeedFactor(double speedFactor)
-  {
+  public void setDriveSpeedFactor(double speedFactor) {
     driveSpeedFactor = speedFactor;
   }
-
-  public void setRotSpeedFactor(double speedFactor)
-  {
-    rotSpeedFactor = speedFactor;
-  }
+  
   public double getRotSpeedFactor() {
     return rotSpeedFactor;
   }
-
+  public void setRotSpeedFactor(double speedFactor) {
+    rotSpeedFactor = speedFactor;
+  }
+  
   public boolean getDefenseMode() {
     return defenseMode;
   }
   public void setDefenseMode(boolean defenseMode) {
     this.defenseMode = defenseMode;
+  }
+
+  @Override
+  public void periodic() {
+    SmartDashboard.putNumber("Gyro", getHeadingDeg());
+    SmartDashboard.putString("odometry pose", odometry.getPoseMeters().toString());
+
+    odometry.update(getHeading(), getPositions());
+    pose = odometry.getPoseMeters();
   }
 }
   

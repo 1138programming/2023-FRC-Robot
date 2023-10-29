@@ -6,9 +6,9 @@ package frc.robot.commands.Lift;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Lift;
-public class StopScoring extends CommandBase {
+public class ScoringStop extends CommandBase {
   Lift lift;
-  public StopScoring(Lift lift) {
+  public ScoringStop(Lift lift) {
     this.lift = lift;
     addRequirements(lift);
   }
@@ -19,9 +19,7 @@ public class StopScoring extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() 
-  {
-    
+  public void execute() {
     lift.stop();
   }
 
