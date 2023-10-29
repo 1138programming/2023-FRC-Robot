@@ -34,9 +34,6 @@ public final class Constants {
   
   // End of Sensing - CANBUS **************************************************
   
-  // Sensing - DIO ----------------------------------------------------------------
-  
-  
   // Scoring - 2 in total
   
   public static final int KScoringTopLimitSwitch = 6;
@@ -184,18 +181,14 @@ public final class Constants {
   public static final double KIntakeSwivelOffset = 1;
   public static final double KIntakeSwivelTopPos = 29;
   public static final double KIntakeSwivelShootPos = 59;
-  public static final double KSwivelBottomPosition = 140;
-  public static final double KSwivelGearRatio = 14/34;
+  public static final double KSwivelBottomPosition = 137;
 
   //Speeds and stuff
-  public static final double KIntakeConeSpaghettitSpeed = 0.8;
-  // public static final double KIntakeCubeSpaghettitSpeed = 0.8; // CHANGE
-  public static final double KIntakeCubeSpaghettitSpeed = 0.8; // CHANGE 
+  public static final double KIntakeSpaghettiSpeed = 0.8;
+  public static final double KIntakeSpaghettiShootSpeed = -0.85;
   
-  public static final double KIntakeSwivelSpeed = 0.45;  
+  public static final double KIntakeSwivelSpeed = 0.45;
   public static final double KIntakeSwivelMaxPassiveSpeed = 0.25;
-  
-  
   
   // Intake
   // Swivel Encoder

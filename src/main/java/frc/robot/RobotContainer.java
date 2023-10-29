@@ -28,48 +28,33 @@ import frc.robot.commands.Intake.IntakeSwivelBottom;
 import frc.robot.commands.Intake.IntakeMoveSwivelDown;
 import frc.robot.commands.Intake.IntakeMoveSwivelUp;
 import frc.robot.commands.Intake.IntakeSpaghettiShoot;
-import frc.robot.commands.Intake.IntakeSpinReverse;
 import frc.robot.commands.Intake.SetConeMode;
 import frc.robot.commands.Intake.SetCubeMode;
-import frc.robot.commands.Intake.SetLEDsToColor;
+import frc.robot.commands.Lift.FlipperIntake;
+import frc.robot.commands.Lift.LiftStop;
+import frc.robot.commands.Lift.FlipperMoveSwivel;
+import frc.robot.commands.Lift.MoveLift;
+import frc.robot.commands.Lift.MoveLiftToHighPos;
+import frc.robot.commands.Lift.MoveLiftToLowPos;
+import frc.robot.commands.Lift.MoveLiftToMidPos;
+import frc.robot.commands.Lift.MoveLiftToReadyPos;
+import frc.robot.commands.Lift.MoveLiftToShelfPos;
+import frc.robot.commands.Lift.FlipperOuttake;
 import frc.robot.subsystems.Base;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.Limelight;
-
-//Claw and LIft
-import frc.robot.commands.Scoring.Lift.FlipperToStowedSetPos;
-import frc.robot.commands.Scoring.Lift.FlipperToShelfPos;
-import frc.robot.commands.Scoring.Lift.LiftStop;
-import frc.robot.commands.Scoring.Lift.MoveFlipperRoller;
-import frc.robot.commands.Scoring.Lift.MoveFlipperSwivel;
-import frc.robot.commands.Scoring.Lift.MoveLift;
-import frc.robot.commands.Scoring.Lift.MoveLiftToHighPos;
-import frc.robot.commands.Scoring.Lift.MoveLiftToLowPos;
-import frc.robot.commands.Scoring.Lift.MoveLiftToMidPos;
-import frc.robot.commands.Scoring.Lift.MoveLiftToReadyPos;
-import frc.robot.commands.Scoring.Lift.MoveLiftToShelfPos;
-import frc.robot.commands.Scoring.Lift.IntakeRollers;
-import frc.robot.commands.Scoring.Lift.OuttakeRollers;
-
 //  Limelight
-import frc.robot.commands.Limelight.LimelightMoveToAprilTag;
-import frc.robot.commands.Limelight.LimelightMoveToConeNode;
-import frc.robot.CommandGroups.Auton.CableSideConeHighCubeLowRed;
-import frc.robot.CommandGroups.Auton.ConeHighBalanceMobility;
-import frc.robot.CommandGroups.Auton.OpenSideConeHighCubeLowBlue;
-import frc.robot.CommandGroups.Auton.OpenSideConeHighCubeLowRed;
-import frc.robot.CommandGroups.Auton.ConeOnly.ConeHighBalance;
-import frc.robot.CommandGroups.Auton.ConeOnly.ConeHighLeave;
-import frc.robot.CommandGroups.Auton.CubeOnly.CubeShootBalance;
+import frc.robot.CommandGroups.Auton.AutonSequences.ConeHighBalance;
+import frc.robot.CommandGroups.Auton.AutonSequences.ConeHighLeave;
+import frc.robot.CommandGroups.Auton.AutonSequences.CubeShootBalance;
+import frc.robot.CommandGroups.Auton.AutonSequences.OpenSideConeHighCubeLowBlue;
+import frc.robot.CommandGroups.Auton.AutonSequences.OpenSideConeHighCubeLowRed;
+import frc.robot.commands.Base.DriveWithJoysticks;
+import frc.robot.commands.Base.SetDefenseModeFalse;
+import frc.robot.commands.Base.SetDefenseModeTrue;
 import frc.robot.commands.Base.ToggleSpeed;
-import frc.robot.commands.Base.DefenseMode.SetDefenseModeFalse;
-import frc.robot.commands.Base.DefenseMode.SetDefenseModeTrue;
-import frc.robot.commands.Base.DefenseMode.ToggleDefenseMode;
-import frc.robot.commands.Base.Drives.DriveWithJoysticks;
-import frc.robot.commands.Base.Resets.ResetEncoders;
 import frc.robot.commands.Base.Resets.ResetEncodersTeleop;
-import frc.robot.commands.Base.Resets.ResetGyro;
 
 
 
@@ -109,19 +94,14 @@ public class RobotContainer {
   // Scoring
   private final LiftStop liftstop = new LiftStop(lift);
 
-  private final MoveFlipperRoller flipperRollerCubeIntake = new MoveFlipperRoller(lift, -0.2);
-  private final MoveFlipperRoller flipperRollerCubeOuttake = new MoveFlipperRoller(lift, 0.1);
-  private final MoveFlipperRoller flipperRollerConeIntake = new MoveFlipperRoller(lift, 0.2);
-  private final MoveFlipperRoller flipperRollerConeOuttake = new MoveFlipperRoller(lift, -0.1);
-
-  private final MoveFlipperSwivel moveFlipperIn = new MoveFlipperSwivel(lift, 0.3);
-  private final MoveFlipperSwivel moveFlipperOut = new MoveFlipperSwivel(lift, -0.3);
+  private final FlipperMoveSwivel moveFlipperIn = new FlipperMoveSwivel(lift, 0.3);
+  private final FlipperMoveSwivel moveFlipperOut = new FlipperMoveSwivel(lift, -0.3);
 
   private final MoveLift moveLiftUp = new MoveLift(lift, 0.3);
   private final MoveLift moveLiftDown = new MoveLift(lift, -0.3);
 
-  private final IntakeRollers intakeRollers = new IntakeRollers(lift);
-  private final OuttakeRollers outtakeRollers = new OuttakeRollers(lift);
+  private final FlipperIntake intakeRollers = new FlipperIntake(lift);
+  private final FlipperOuttake outtakeRollers = new FlipperOuttake(lift);
   
   private final SetConeMode setConeMode = new SetConeMode(intake, limelight, lift);
   private final SetCubeMode setCubeMode = new SetCubeMode(intake, limelight, lift);
@@ -133,10 +113,8 @@ public class RobotContainer {
   private final MoveLiftToShelfPos moveLiftToShelfPos = new MoveLiftToShelfPos(lift);
 
   // Autons
-  private final CubeShootBalance cubeShootLeave = new CubeShootBalance(base, intake, limelight, lift);
   private final ConeHighBalance coneHighBalance = new ConeHighBalance(base, intake, limelight, lift);
   private final ConeHighLeave coneHighLeave = new ConeHighLeave(base, intake, limelight, lift);
-  private final ConeHighBalanceMobility coneHighBalanceMobility = new ConeHighBalanceMobility(base, intake, limelight, lift);
   private final OpenSideConeHighCubeLowBlue openSideConeHighCubeLowBlue = new OpenSideConeHighCubeLowBlue(base, intake, limelight, lift);
   private final OpenSideConeHighCubeLowRed openSideConeHighCubeLowRed = new OpenSideConeHighCubeLowRed(base, intake, limelight, lift);
 
@@ -211,18 +189,13 @@ public class RobotContainer {
 
   // Top Left SD = 1, numbered from left to right
   public JoystickButton streamDeck1, streamDeck2, streamDeck3, streamDeck4, streamDeck5, streamDeck6, streamDeck7, streamDeck8, streamDeck9, // Vjoy 2
-    streamDeck10, streamDeck11, 
-    streamDeck12, streamDeck13, streamDeck14, streamDeck15;
+    streamDeck10, streamDeck11, streamDeck12, streamDeck13, streamDeck14, streamDeck15; 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     base.setDefaultCommand(driveWithJoysticks);
-    // base.setDefaultCommand(new BaseStop(base));
     intake.setDefaultCommand(intakeStop);
-
     lift.setDefaultCommand(liftstop);
-
-    // flipper.setDefaultCommand(flipperStop);
 
     //Game controllers
     logitech = new Joystick(KLogitechPort); //Logitech Dual Action
@@ -297,11 +270,15 @@ public class RobotContainer {
   private void configureButtonBindings() {
     logitechBtnLB.onTrue(toggleMaxSpeed);
     logitechBtnRB.onTrue(toggleLowSpeed);
-    if (!logitechBtnLB.getAsBoolean()) {
+
+    // if LB and RB are held and one is released, go back to previous speed
+    if (!logitechBtnLB.getAsBoolean()) { 
       logitechBtnRB.onFalse(toggleMidSpeed);
     } else {
       logitechBtnRB.onFalse(toggleMaxSpeed);
     }
+
+    // if LB and RB are held and one is released, go back to previous speed
     if (!logitechBtnRB.getAsBoolean()) {
       logitechBtnLB.onFalse(toggleMidSpeed);
     } else {
@@ -313,7 +290,7 @@ public class RobotContainer {
     
     logitechBtnY.onTrue(new ResetEncodersTeleop(base));
     
-    
+    // Stream deck allows for multiple pages: comp buttons are used during competitions
     comp1.onTrue(moveLiftToHighPos);
     comp2.whileTrue(moveLiftToShelfPos);
     comp2.onFalse(moveLiftToReadyPos);
@@ -332,16 +309,17 @@ public class RobotContainer {
     comp12.onFalse(intakeSwivelTop);
     comp13.onTrue(moveLiftToReadyPos);
     comp14.onTrue(intakeSwivelBottomNoCollect);
-
+    
+    // Testing buttons are used to test individual motors/functions in practice
     streamDeck1.whileTrue(moveLiftUp);
     streamDeck2.whileTrue(moveLiftDown);
-    streamDeck3.whileTrue(flipperRollerCubeIntake);
-    streamDeck4.whileTrue(flipperRollerConeIntake);
+
+
     streamDeck5.whileTrue(intakeRollers);
     streamDeck6.whileTrue(moveFlipperIn);
     streamDeck7.whileTrue(moveFlipperOut);
-    streamDeck8.whileTrue(flipperRollerCubeOuttake);
-    streamDeck9.whileTrue(flipperRollerConeOuttake);
+
+
     streamDeck10.whileTrue(outtakeRollers);
     streamDeck11.whileTrue(moveSwivelUp);
     streamDeck12.whileTrue(moveSwivelDown);

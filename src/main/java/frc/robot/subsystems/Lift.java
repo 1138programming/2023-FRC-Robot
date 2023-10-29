@@ -6,18 +6,15 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderConfiguration;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import com.revrobotics.CANSparkMax; // Neos and 775
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType; // Covers Neos and 775 
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,22 +30,16 @@ public class Lift extends SubsystemBase {
   private CANCoderConfiguration config;
 
   private PIDController liftControl;
-  private PIDController liftDownController;
  
   private PIDController flipperController;
 
-  private SlewRateLimiter liftLimiter;
-
   private Encoder liftShaftEncoder;
- 
-  private RelativeEncoder flipperEncoder;
 
   private DigitalInput liftSwitch;
 
   private boolean objectMode;
 
   private double finalCancoderVal;
-  private double lastFlipperPos;
 
   public Lift()
   {
@@ -64,8 +55,6 @@ public class Lift extends SubsystemBase {
     liftControl = new PIDController(KLiftP, KLiftI, KLiftD);
     // liftDownController = new PIDController(0.01, 0, 0);
     flipperController = new PIDController(KFlipperP, KFlipperI, KFlipperD);
-
-    liftLimiter = new SlewRateLimiter(1);
     
     // liftEncoder = lift.getEncoder();
     liftShaftEncoder = new Encoder(KLiftEncoderA, KLiftEncoderB);
@@ -86,13 +75,8 @@ public class Lift extends SubsystemBase {
     liftSwitch = new DigitalInput(KScoringBottomLimitSwitch);
 
     finalCancoderVal = 5;
-    lastFlipperPos = 5;
 
     objectMode = KConeMode;
-
-    // SmartDashboard.putNumber("Lift P edit", KLiftP);
-    // SmartDashboard.putNumber("Lift I edit", KLiftI);
-    // SmartDashboard.putNumber("Lift D edit", KLiftD);
   }
 
   @Override
@@ -153,20 +137,13 @@ public class Lift extends SubsystemBase {
   }
 
   public void moveFlipperSwivel(double speed) {
-    SmartDashboard.putNumber("FIRST FLIPPER SPEED", speed);
     if (speed > KFlipperMaxSpeed) {
       speed = KFlipperMaxSpeed;
     } else if (speed < -KFlipperMaxSpeed) {
       speed = -KFlipperMaxSpeed;
     }
-    // if (speed < KFlipperMinSpeed) {
-    //   speed = KFlipperMinSpeed;
-    // } else if (speed < -KFlipperMinSpeed) {
-    //   speed = -KFlipperMinSpeed;
-    // }
-    SmartDashboard.putNumber("FLIPPER SPEED", speed);
+
     flipperSwivel.set(ControlMode.PercentOutput, speed);
-    lastFlipperPos = getFlipperPos();
   }
 
   public double getFlipperPos(){

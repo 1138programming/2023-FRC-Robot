@@ -2,21 +2,21 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Intake;
+package frc.robot.CommandGroups.Auton.AutonUtility;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
-
+import frc.robot.subsystems.Base;
 import static frc.robot.Constants.*;
 
-public class IntakeSwivelBottom extends CommandBase {
-  /** Creates a new IntakeSwivelBottum. */
-  private Intake intake;
-  private double intakeSetpoint = KSwivelBottomPosition;
-
-  public IntakeSwivelBottom(Intake intake) {
-    this.intake = intake;
-    addRequirements(intake);
+public class DriveForward extends CommandBase {
+  private Base base;
+  private double speed;
+  /** Creates a new DriveForward. */
+  public DriveForward(Base base, double speed) {
+    this.base = base;
+    this.speed = speed;
+    addRequirements(base);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -26,18 +26,18 @@ public class IntakeSwivelBottom extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.swivelSpinToPos(intakeSetpoint);
+    base.drive(speed, 0, 0, true, KPhysicalMaxDriveSpeedMPS);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.intakeStop();
+    base.drive(0, 0, 0, true, KPhysicalMaxDriveSpeedMPS);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(intake.getSwivelEncoder() - intakeSetpoint) < KIntakeSwivelOffset;
+    return false;
   }
 }

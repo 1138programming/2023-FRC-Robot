@@ -25,21 +25,19 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 
 public class Intake extends SubsystemBase {
-  // "spaghetti" refers to the spaghetti-looking motors that actually do the intaking.
-  private TalonSRX spaghetti;
   private TalonSRX swivel;
+  private TalonSRX spaghetti;   // "spaghetti" refers to the spaghetti-looking motors that actually do the intaking.
 
   private CANCoder intakeSwivelCanCoder; 
 
   private PIDController intakeController;
 
   private DigitalInput intakeTopLimit;
-  private DigitalInput intakeBottomLimit;
 
-  CANCoderConfiguration config;
+  private CANCoderConfiguration config;
 
-  AddressableLED ledStrip;
-  AddressableLEDBuffer ledBuffer;
+  private AddressableLED ledStrip;
+  private AddressableLEDBuffer ledBuffer;
 
   private boolean intakeMode;
 
@@ -62,7 +60,6 @@ public class Intake extends SubsystemBase {
 
     intakeController = new PIDController(KIntakeP, KIntakeI, KIntakeD);
 
-    intakeBottomLimit = new DigitalInput(KIntakeBottomLimitId);
     intakeTopLimit = new DigitalInput(KIntakeTopLimitId);
 
     ledStrip = new AddressableLED(KLEDPort);
@@ -100,19 +97,14 @@ public class Intake extends SubsystemBase {
 
     if (getTopLimitSwitch()) {
       resetSwivelEncoder();
-    }
-    if (getBottumLimitSwitch()) {
-      resetSwivelEncoder();
-    }
-    
-    
+    }    
   }
 
   /**
    * Spins the "spaghetti" motors (the spinners in the intake)
    */
   public void spaghettiSpin() {
-    spaghetti.set(ControlMode.PercentOutput, KIntakeCubeSpaghettitSpeed);
+    spaghetti.set(ControlMode.PercentOutput, KIntakeSpaghettiSpeed);
   }
   
   public void spaghettiSpinReverse(double speed) {
@@ -120,7 +112,7 @@ public class Intake extends SubsystemBase {
   }
   
   public void spaghettiSpinReverse() {
-    spaghetti.set(ControlMode.PercentOutput, -KIntakeCubeSpaghettitSpeed);
+    spaghetti.set(ControlMode.PercentOutput, -KIntakeSpaghettiSpeed);
   }
 
   public void setLEDToColor(int R, int G, int B) {
@@ -143,18 +135,12 @@ public class Intake extends SubsystemBase {
 
   public void setConeMode() {
     intakeMode = KConeMode;
-
     // yellow
     setLEDToColor(150, 150, 0);
   }
 
   public boolean getObjectMode() {
     return intakeMode;
-  }
-
-  // get the operating mode of the intake
-  public boolean isConeMode() {
-    return intakeMode; 
   }
 
   public void swivelSpinToPos(double setPoint) {
@@ -188,11 +174,11 @@ public class Intake extends SubsystemBase {
   }
   
   public void resetSwivelEncoder() {
-    finalCancoderVal  = getSwivelEncoder() % (360 * KSwivelGearRatio);
+    finalCancoderVal  = getSwivelEncoder() % (360 * KIntakeSwivelCanCoderRatio);
   }
   public double getSwivelEncoder() {
     if (getSwivelEncoderRaw() < 50 && finalCancoderVal >= 100) {
-      finalCancoderVal = 360 * KSwivelGearRatio + getSwivelEncoderRaw();
+      finalCancoderVal = 360 * KIntakeSwivelCanCoderRatio + getSwivelEncoderRaw();
     }
     else {
       finalCancoderVal = getSwivelEncoderRaw();
@@ -201,14 +187,11 @@ public class Intake extends SubsystemBase {
   }
 
   public double getSwivelEncoderRaw() {
-    return intakeSwivelCanCoder.getAbsolutePosition() * KSwivelGearRatio;
+    return intakeSwivelCanCoder.getAbsolutePosition() * KIntakeSwivelCanCoderRatio;
   }
 
   public boolean getTopLimitSwitch() {
     return intakeTopLimit.get();
-  }
-  public boolean getBottumLimitSwitch() {
-    return intakeBottomLimit.get(); 
   }
   
   public void setLastEncoderPos(double lastEncoderPos) {
@@ -223,7 +206,6 @@ public class Intake extends SubsystemBase {
       swivelSpeed = KIntakeSwivelMaxPassiveSpeed;
     }
     swivel.set(ControlMode.PercentOutput, swivelSpeed);
-    // swivel.set(ControlMode.PercentOutput, 0);
     spaghetti.set(ControlMode.PercentOutput, 0);
   }
 }
