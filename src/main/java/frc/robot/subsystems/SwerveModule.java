@@ -96,7 +96,7 @@ public class SwerveModule extends SubsystemBase {
   
   public void lockWheel() {
     double angleMotorOutput;
-    if (angleMotor.getDeviceId() == KFrontLeftAngleID || angleMotor.getDeviceId() == KBackRightAngleID) {
+    if (angleMotor.getDeviceId() == KFrontLeftAngleMotorID || angleMotor.getDeviceId() == KBackRightAngleMotorID) {
       angleMotorOutput = angleController.calculate(getAngleDeg(), 45);
     }
     else {

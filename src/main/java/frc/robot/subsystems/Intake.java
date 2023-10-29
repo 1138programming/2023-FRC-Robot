@@ -49,8 +49,8 @@ public class Intake extends SubsystemBase {
     SmartDashboard.putNumber("IntakeSwivelPid I", KIntakeI);
     SmartDashboard.putNumber("IntakeSwivelPid D", KIntakeD);
 
-    spaghetti = new TalonSRX(KSpaghettiIntakeId);
-    swivel = new TalonSRX(KSwivelIntakeId);
+    spaghetti = new TalonSRX(KSpaghettiIntakeMotorID);
+    swivel = new TalonSRX(KSwivelIntakeMotorID);
 
     swivel.setNeutralMode(NeutralMode.Brake);
     spaghetti.setNeutralMode(NeutralMode.Coast);

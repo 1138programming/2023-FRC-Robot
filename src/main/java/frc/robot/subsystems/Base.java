@@ -38,37 +38,37 @@ public class Base extends SubsystemBase {
   
   private double xyP = 0;
   private double rotP = 0;
-  
+
   private boolean defenseMode = false;
   
   public Base() {
     frontLeftModule = new SwerveModule(
-      KFrontLeftAngleID,
-      KFrontLeftDriveID,
+      KFrontLeftAngleMotorID,
+      KFrontLeftDriveMotorID,
       KFrontLeftMagEncoderID,
       KFrontLeftOffset,
       KFrontLeftDriveReversed,
       KFrontLeftAngleReversed
     );
     frontRightModule = new SwerveModule(
-      KFrontRightAngleID,
-      KFrontRightDriveID,
+      KFrontRightAngleMotorID,
+      KFrontRightDriveMotorID,
       KFrontRightMagEncoderID, 
       KFrontRightOffset,
       KFrontRightDriveReversed,
       KFrontRightAngleReversed
     );
     backLeftModule = new SwerveModule(
-      KBackLeftAngleID,
-      KBackLeftDriveID,
+      KBackLeftAngleMotorID,
+      KBackLeftDriveMotorID,
       KBackLeftMagEncoderID, 
       KBackLeftOffset,
       KBackLeftDriveReversed,
       KBackLeftAngleReversed
     );
     backRightModule = new SwerveModule(
-      KBackRightAngleID,
-      KBackRightDriveID,
+      KBackRightAngleMotorID,
+      KBackRightDriveMotorID,
       KBackRightMagEncoderID, 
       KBackRightOffset,
       KBackRightDriveReversed,

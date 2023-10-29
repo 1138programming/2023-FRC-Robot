@@ -41,9 +41,9 @@ public class Lift extends SubsystemBase {
 
   public Lift()
   {
-    flipperSwivel = new TalonFX(KFlipperSwivelMotor);
-    lift = new CANSparkMax(KLiftMotor, MotorType.kBrushless);
-    flipperRoller = new CANSparkMax(KFlipperRollerMotor, MotorType.kBrushless);
+    flipperSwivel = new TalonFX(KFlipperSwivelMotorID);
+    lift = new CANSparkMax(KLiftMotorID, MotorType.kBrushless);
+    flipperRoller = new CANSparkMax(KFlipperRollerMotorID, MotorType.kBrushless);
    
     flipperSwivel.setNeutralMode(NeutralMode.Brake);
     lift.setIdleMode(IdleMode.kBrake);
