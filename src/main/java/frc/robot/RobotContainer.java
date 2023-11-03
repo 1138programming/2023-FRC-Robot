@@ -193,6 +193,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    SmartDashboard.putNumber("Auton Number", 1);
+
     base.setDefaultCommand(driveWithJoysticks);
     intake.setDefaultCommand(intakeStop);
     lift.setDefaultCommand(liftstop);
@@ -307,7 +309,8 @@ public class RobotContainer {
     comp11.onTrue(moveLiftToLowPos);
     comp12.whileTrue(intakeRollers);
     comp12.onFalse(intakeSwivelTop);
-    comp13.onTrue(moveLiftToReadyPos);
+    comp13.onTrue(moveSwivelDown);
+    // comp13.onTrue(moveLiftToReadyPos);
     comp14.onTrue(intakeSwivelBottomNoCollect);
     
     // Testing buttons are used to test individual motors/functions in practice
@@ -324,6 +327,7 @@ public class RobotContainer {
     streamDeck11.whileTrue(moveSwivelUp);
     streamDeck12.whileTrue(moveSwivelDown);
     streamDeck13.whileTrue(intakeSpinForward);
+    streamDeck13.whileTrue(intakeSpinForward);
     streamDeck14.whileTrue(intakeShootOut);
   }
 
@@ -334,10 +338,8 @@ public class RobotContainer {
    */ 
   public Command getAutonomousCommand()
   {
-    // return new OpenSideConeHighCubeLowBlue(base, intake, limelight, lift);
-    // return new OpenSideConeHighCubeLowRed(base, intake, limelight, lift);
-    // return coneHighLeave;
-    return coneHighBalance;
+      return coneHighLeave;
+      // return new OpenSideConeHighCubeLowRed(base, intake, limelight, lift);
   }
 
   public static double scaleBetween(double unscaledNum, double minAllowed, double maxAllowed, double min, double max) {

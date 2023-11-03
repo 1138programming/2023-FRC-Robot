@@ -43,6 +43,7 @@ public class Intake extends SubsystemBase {
 
   private double finalCancoderVal;
   private double lastSwivelPos;
+  private double relativeEncoderVal;
 
   public Intake() {
     SmartDashboard.putNumber("IntakeSwivelPid P", KIntakeP);
@@ -55,7 +56,6 @@ public class Intake extends SubsystemBase {
     swivel.setNeutralMode(NeutralMode.Brake);
     spaghetti.setNeutralMode(NeutralMode.Coast);
     
-    swivel.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
     spaghetti.setInverted(true); 
 
     intakeController = new PIDController(KIntakeP, KIntakeI, KIntakeD);
@@ -71,6 +71,7 @@ public class Intake extends SubsystemBase {
         
     config = new CANCoderConfiguration();
     
+    // config.initializationStrategy = SensorInitializationStrategy.BootToZero;
     config.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;
     config.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;
     config.magnetOffsetDegrees = KIntakeOffset;
@@ -82,7 +83,8 @@ public class Intake extends SubsystemBase {
     intakeSwivelCanCoder.setPositionToAbsolute();
     
     finalCancoderVal = 0;
-    lastSwivelPos = 20;
+    lastSwivelPos = 40;
+    relativeEncoderVal = 0;
     intakeMode = KConeMode;
   }
 
@@ -90,10 +92,14 @@ public class Intake extends SubsystemBase {
   public void periodic() {
 
     SmartDashboard.putBoolean("Mode", intakeMode);
-    SmartDashboard.putNumber("Swivel Cancoder", getSwivelEncoder());
+    SmartDashboard.putNumber("Intake Swivel Cancoder", getSwivelEncoder());
     SmartDashboard.putNumber("raw", intakeSwivelCanCoder.getAbsolutePosition());
-    SmartDashboard.putNumber("Raw Swivel CanCoder", getSwivelEncoderRaw());
+    // SmartDashboard.putNumber("Raw Swivel CanCoder", getSwivelEncoderRaw());
     SmartDashboard.putBoolean("limit INTAKE", getTopLimitSwitch());
+    SmartDashboard.putNumber("Relative Encoder Val", getRelativeEncoderVal());
+
+    
+    // SmartDashboard.put
 
     if (getTopLimitSwitch()) {
       resetSwivelEncoder();
@@ -144,8 +150,8 @@ public class Intake extends SubsystemBase {
   }
 
   public void swivelSpinToPos(double setPoint) {
-    double speed = -intakeController.calculate(getSwivelEncoder(), setPoint);
-    double maxspeed = 0.8;
+    double speed = intakeController.calculate(getSwivelEncoder(), setPoint);
+    double maxspeed = 0.7;
     if (speed >= maxspeed) {
       speed = maxspeed;
     }
@@ -160,8 +166,9 @@ public class Intake extends SubsystemBase {
    * @param speed
    */
   public void moveSwivel(double speed) {
-    if (speed > 0 && getTopLimitSwitch()) {
+    if (speed < 0 && getTopLimitSwitch()) {
       swivel.set(ControlMode.PercentOutput, 0);
+
     }
     else {
       swivel.set(ControlMode.PercentOutput, speed);
@@ -190,6 +197,11 @@ public class Intake extends SubsystemBase {
     return intakeSwivelCanCoder.getAbsolutePosition() * KIntakeSwivelCanCoderRatio;
   }
 
+  public double getRelativeEncoderVal() {
+    relativeEncoderVal = (finalCancoderVal - getSwivelEncoder());
+    return relativeEncoderVal;
+  }
+
   public boolean getTopLimitSwitch() {
     return intakeTopLimit.get();
   }
@@ -199,7 +211,7 @@ public class Intake extends SubsystemBase {
   }
 
   public void intakeStop() {
-    double swivelSpeed = -intakeController.calculate(getSwivelEncoder(), lastSwivelPos);
+    double swivelSpeed = intakeController.calculate(getSwivelEncoder(), lastSwivelPos);
     if (swivelSpeed < -KIntakeSwivelMaxPassiveSpeed) {
       swivelSpeed = -KIntakeSwivelMaxPassiveSpeed;
     } else if (swivelSpeed > KIntakeSwivelMaxPassiveSpeed) {

@@ -77,7 +77,7 @@ public class Lift extends SubsystemBase {
   @Override
   public void periodic() {
     if (getBottomLimitSwitch()) {
-      setLiftEncoderPos(0);
+      resetLiftEncoder();
     }
 
     SmartDashboard.putNumber("lift encoder", getLiftPos());
@@ -141,7 +141,7 @@ public class Lift extends SubsystemBase {
   public double getLiftPos() {
     return liftShaftEncoder.getDistance();
   }
-  public void setLiftEncoderPos(double pos) {
+  public void resetLiftEncoder() {
     liftShaftEncoder.reset();
   }
 

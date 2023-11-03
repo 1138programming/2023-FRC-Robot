@@ -32,6 +32,8 @@ public class ConeHighBalance extends SequentialCommandGroup {
       new SetConeMode(intake, limelight, lift),
       new ResetEncodersTeleop(base),
       new ParallelRaceGroup(
+
+        
         new WaitCommand(1.5),
         new ParallelDeadlineGroup(
           new WaitCommand(1.5),
